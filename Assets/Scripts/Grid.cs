@@ -30,12 +30,26 @@ public class Grid : MonoBehaviour
 
         if(_tileList == null) _tileList = new List<Tile>();
 
-        for (int i = 0; i< XLenght; i++)
+        for (int i = 0; i< YLenght; i++)
         {
-            for (int j = 0; j < YLenght; j++)
+            for (int j = 0; j < XLenght; j++)
             {
-                _tileList.Add(Instantiate(GridManager.Instance.PrefabTile.GetComponent<Tile>()));
+                Tile clone = Instantiate(GridManager.Instance.PrefabTile.GetComponent<Tile>());
+                clone.XCoord = j;
+                clone.YCoord = i;
+                clone.transform.position = new Vector3(clone.XCoord, 0, clone.YCoord);
+                _tileList.Add(clone);
             }
         }
+    }
+
+    public void AddTile(Tile tile)
+    {
+        _tileList.Add(tile);
+    }
+
+    public void RemoveTile(Tile tile)
+    {
+        _tileList.Remove(tile);
     }
 }
