@@ -36,16 +36,18 @@ public class TimeManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine("TideTic");
+        StartCoroutine("FoamTic");
         StartCoroutine("LifeTic");
     }
 
-    public IEnumerator TideTic()
+    public IEnumerator FoamTic()
     {
         while (true)
         {
-            yield return new WaitForSeconds(5f);
+            //yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 4f));
+            yield return new WaitForSeconds(1f);
             isAscending = !isAscending;
+            //WaterManager.Instance.FoamCoordY += isAscending ? 1 : -1;
         }
     }
 

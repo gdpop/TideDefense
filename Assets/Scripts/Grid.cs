@@ -39,25 +39,25 @@ public class Grid : MonoBehaviour
 
         if (_tileList == null) _tileList = new List<Tile>();
 
-        for (int i = 0; i < YLenght; i++)
+        for (int i = 0; i < XLenght; i++)
         {
-            for (int j = 0; j < XLenght; j++)
+            for (int j = 0; j < YLenght; j++)
             {
                 Tile clone = Instantiate(GridManager.Instance.PrefabTile.GetComponent<Tile>());
-                clone.XCoord = j;
-                clone.YCoord = i;
+                clone.XCoord = i;
+                clone.YCoord = j;
                 clone.transform.position = new Vector3(clone.XCoord, 0, clone.YCoord);
 
                 _tileList.Add(clone);
 
-                if (i == 0)
-                    SetTile(j, i, TileState.Water);
 
-                if (GetCastleTiles(new Vector2(j, i)))
-                    SetTile(j, i, TileState.Castle);
+                if (GetCastleTiles(new Vector2(i, j)))
+                    SetTile(i, j, TileState.Castle);
                 else
-                    SetTile(j, i, TileState.WetMoat);
+                    SetTile(i, j, TileState.Sand);
 
+                if (j <= WaterManager.Instance.FoamCoordY)
+                    SetTile(i, j, TileState.Water);
             }
         }
     }
