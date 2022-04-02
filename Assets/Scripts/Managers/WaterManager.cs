@@ -47,7 +47,7 @@ public class WaterManager : MonoBehaviour
 
     private void AscendingTide()
     {
-        print(wave.Length);
+        //sprint(wave.Length);
         for (int i = 0; i < wave.Length; i++)
         {
             int delta = Random.Range(0, 2);
@@ -93,7 +93,7 @@ public class WaterManager : MonoBehaviour
     {
         while (true)
         {
-            print("TIC");
+            //print("TIC");
             if (TideManager.Instance.isAscending)
             {
                 AscendingTide();
