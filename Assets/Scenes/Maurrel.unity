@@ -166,8 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54cfd7d1b1bbfbe429a83e30f2a0c562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _casualGridX: 60
-  _casualGridY: 50
+  _casualGridX: 30
+  _casualGridY: 18
   CurrentGrid: {fileID: 0}
   PrefabTile: {fileID: 3338888454299096852, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
 --- !u!1 &503918471
