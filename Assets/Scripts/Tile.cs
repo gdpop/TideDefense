@@ -88,6 +88,12 @@ public class Tile : MonoBehaviour
         switch (State)
         {
             case TileState.Sand:
+                bool canBuild = SandManager.Instance.RemoveSand(1);
+                if (canBuild)
+                {
+                    State = TileState.Tower;
+                    GridManager.Instance.CurrentGrid.SetTile(XCoord, YCoord, State);
+                }
                 break;
             case TileState.WetSand:
                 break;
@@ -96,19 +102,13 @@ public class Tile : MonoBehaviour
             case TileState.Moat:
                 break;
             case TileState.Tower:
-                bool canBuild = SandManager.Instance.RemoveSand(1);
-                if (canBuild)
-                {
-                    State = TileState.Tower;
-                    GridManager.Instance.CurrentGrid.SetTile(XCoord, YCoord, State);
-                }
                 break;
         }
     }
 
     private void ChangeColor(Color color)
     {
-        // _renderer.material.color = color;
-        gameObject.SetActive(color == Color.yellow);
+        _renderer.material.color = color;
+        //gameObject.SetActive(color == Color.yellow);
     }
 }
