@@ -57,12 +57,11 @@ public class WaterManager : MonoBehaviour
 
     private void AscendingTide(bool ascend)
     {
-        print(ascend);
-        for (int mix = 0; mix < waveTilesYCoord.Length; mix++) print(waveTilesYCoord[mix]);
+        //print(ascend);
+        //for (int mix = 0; mix < waveTilesYCoord.Length; mix++) print(waveTilesYCoord[mix]);
         int foamAxisMax = 1;
         for (int i = 0; i < _gridXLength; i++)
         {
-            print(i + "//" + _gridXLength);
             Tile prevTile = GridManager.Instance.CurrentGrid.GetTile(i, waveTilesYCoord[i]);
             int delta = Random.Range(ascend ? 0 : -foamAxisMax, ascend ? foamAxisMax+1 : 1);
             //print(("delta:" + delta));
@@ -73,42 +72,53 @@ public class WaterManager : MonoBehaviour
             //print("ascend " + ascend);
             if(prevTile.YCoord < newY)
             {
-                for(int indexInBetweenTiles = 0; indexInBetweenTiles <= newY; indexInBetweenTiles++)
+                for(int indexInBetweenTiles = 0; indexInBetweenTiles < newY; indexInBetweenTiles++)
                 {
                     Tile inBetweenTile = GridManager.Instance.CurrentGrid.GetTile(i , indexInBetweenTiles);
                     //print("inBetweenTile.State " + inBetweenTile.State);
 
                     GridManager.Instance.CurrentGrid.SetTile(i, inBetweenTile.YCoord, TileState.Water);
-                    //switch (inBetweenTile.State)
-                    //{
-                    //    case TileState.Sand:
-                    //        GridManager.Instance.CurrentGrid.SetTile(i, inBetweenTile.YCoord, TileState.Water);
-                    //        //waveTilesYCoord[i] = newY;
-                    //        break;
-                    //    case TileState.Tower:
-                    //        // Ici on met un dégât à la tour et on return;
-                    //        break;
-                    //    case TileState.Moat:
-                    //        // Ici on met un dégât à la tour et on return; 
-                    //        break;
-                    //    default:
-                    //        //GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.Water);
-                    //        //if (i < waveTilesYCoord.Length - 1)  waveTilesYCoord[i]++;
-                    //        GridManager.Instance.CurrentGrid.SetTile(i, inBetweenTile.YCoord, TileState.Water);
-                    //        //waveTilesYCoord[i] = newY;
-                    //        break;
-                    //}
                 }
-
+                Tile newTile = GridManager.Instance.CurrentGrid.GetTile(i, newY);
+                switch (newTile.State)
+                {
+                    case TileState.Tower:
+                        newTile.LooseOneLifePoint();
+                        continue;
+                    case TileState.Castle:
+                        Castle.Instance.LooseOneLifePoint();
+                        continue;
+                    default:
+                        break;
+                }
+                GridManager.Instance.CurrentGrid.SetTile(i, newTile.YCoord, TileState.Water);
             }
             else
             {
 
-                for(int ind = prevTile.YCoord; ind > newY; ind--) GridManager.Instance.CurrentGrid.SetTile(i, ind, TileState.WetSand);
+                for (int ind = prevTile.YCoord; ind > newY; ind--)
+                {
+                    Tile newTile = GridManager.Instance.CurrentGrid.GetTile(i, ind);
+                    
+                    switch (newTile._previousState)
+                    {
+                        case TileState.Sand:
+                            print("Previous State : " + newTile._previousState);
+                            GridManager.Instance.CurrentGrid.SetTile(i, ind, TileState.WetSand);
+                            break;
+                        case TileState.Moat:
+                            print("Previous State : " + newTile._previousState);
+                            GridManager.Instance.CurrentGrid.SetTile(i, ind, TileState.WetMoat);
+                            break;
+                        default:
+                            GridManager.Instance.CurrentGrid.SetTile(i, prevTile.YCoord, TileState.WetSand);
+                            break;
+                    }
+                    
+                }
                 //GridManager.Instance.CurrentGrid.SetTile(i, newY, TileState.Water);
-                GridManager.Instance.CurrentGrid.SetTile(i, prevTile.YCoord, TileState.WetSand);
+                //GridManager.Instance.CurrentGrid.SetTile(i, prevTile.YCoord, TileState.WetSand);
             }
-            print("ID X: " + i + "// Ascent: " + ascend + "// prevTile.YCoord" + prevTile.YCoord + "// newY:" + newY);
             waveTilesYCoord[i] = newY;
         }
     }

@@ -87,7 +87,10 @@ public class Grid : MonoBehaviour
     {
         GetTile(coordX, coordY).Set(newState);
     }
-
+    public void SetTile(int coordX, int coordY, bool previousStyle = false)
+    {
+        GetTile(coordX, coordY).Set(TileState.Sand, previousStyle);
+    }
     private bool GetCastleTiles(Vector2 currentCoords)
     {
 

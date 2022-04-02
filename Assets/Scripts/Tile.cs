@@ -32,6 +32,7 @@ public class Tile : MonoBehaviour
 	}
 
 	public TileState State;
+	public TileState _previousState;
 
 	private bool _isHovered = false;
 	private bool _isClicked = false;
@@ -51,7 +52,7 @@ public class Tile : MonoBehaviour
 		_initialY = transform.position.y;
 	}
 
-	public void Set(TileState state)
+	public void Set(TileState state, bool previousStyle = false)
 	{
 		//print("avant old State:" + State + " ----> " + state);
 		if (state == State)
@@ -59,9 +60,12 @@ public class Tile : MonoBehaviour
 			return;
 		}
 
-		TimeManager.Instance.tick -= LooseOneLifePoint;
+		TileState tileState = previousStyle ? _previousState : state;
 
-		State = state;
+		TimeManager.Instance.tick -= LooseOneLifePoint;
+		_previousState = State;
+
+		State = tileState;
 		switch (State)
 		{
 			case TileState.Sand:
@@ -177,6 +181,7 @@ public class Tile : MonoBehaviour
 
 	public void LooseOneLifePoint()
     {
+		print("Loose life point");
 		LooseLife(1);
 	}
 	public void LooseLife(int lifeInput)
