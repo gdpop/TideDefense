@@ -57,7 +57,7 @@ public class SandManager : MonoBehaviour
     }
     public bool RemoveSand(int sandUnit)
     {
-        if (sandUnit >= 0)
+        if (sandUnit <= 0)
             throw new Exception("Incorrect Value");
 
         int newSandValue;
