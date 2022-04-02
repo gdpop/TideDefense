@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum TileState
+{
+    Sand,
+    Water,
+    Tower,
+    Moat,
+}
 public class Tile : MonoBehaviour
 {
     private int _xCoord;
@@ -18,10 +25,13 @@ public class Tile : MonoBehaviour
 
     Renderer renderer;
 
+    public TileState State;
+
     Color initColor;
     // Start is called before the first frame update
     void Start()
     {
+        State = TileState.Sand;
         renderer = transform.GetChild(0).GetComponent<Renderer>();
         initColor = renderer.material.color;
     }
