@@ -24,6 +24,7 @@ public class InputManager : MonoBehaviour
     #endregion
     #endregion
 
+    private Tile hoveredTile;
     void Start()
     {
         
@@ -45,8 +46,8 @@ public class InputManager : MonoBehaviour
         {
             Tile tile = hit.transform.GetComponent<Tile>();
             if (tile == null) return;
-
-            //tile.OnHover(active);
+            hoveredTile = tile;
+            tile.OnHover(true);
             Transform objectHit = hit.transform;
 
             // Do something with the object that was hit by the raycast.

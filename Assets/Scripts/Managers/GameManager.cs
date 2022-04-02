@@ -33,11 +33,11 @@ public class GameManager : MonoBehaviour
     #endregion
     #endregion
 
-    public GameState ActualGameState;
+    public GameState CurrentGameState;
 
     void Start()
     {
-        ActualGameState = GameState.MainMenu;
+        CurrentGameState = GameState.MainMenu;
         GridManager.Instance.CreateGrid();
     }
 
