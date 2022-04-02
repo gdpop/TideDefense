@@ -46,13 +46,25 @@ public class WaterManager : MonoBehaviour
     {
         for (int i = 0; i < wave.Length; i++)
         {
-            Tile tile = GridManager.Instance.CurrentGrid.GetTile(i, wave[i + 1]);
+            int delta = Random.Range(1, 4);
+            while (delta > 0)
+            {
+                Tile tile = GridManager.Instance.CurrentGrid.GetTile(i, wave[i] + 1);
 
-            // switch (tile.GetType)
-            // {
+                switch (tile.State)
+                {
+                    case TileState.Sand:
+                        delta--;
+                        wave[i]++;
+                        GridManager.Instance.CurrentGrid.SetTile(i, wave[i], TileState.Water);
+                        break;
+                    case TileState.Tower:
+                        delta = 0;
+                        break;
 
-            //     default:
-            // }
+                }
+            }
+
         }
     }
 
@@ -60,13 +72,12 @@ public class WaterManager : MonoBehaviour
     {
         for (int i = 0; i < wave.Length; i++)
         {
-            Tile tile = GridManager.Instance.CurrentGrid.GetTile(i, wave[i + 1]);
+            if (GridManager.Instance.CurrentGrid.GetTile(i, wave[i - 1]))
+            {
+                GridManager.Instance.CurrentGrid.SetTile(i, wave[i - 1], TileState.WetSand);
+                wave[i]--;
+            }
 
-            // switch (tile.GetType)
-            // {
-
-            //     default:
-            // }
         }
     }
 
