@@ -11,7 +11,10 @@ public enum TileState
 	Tower,
 	Moat,
 	WetMoat,
+	Castle,
+	None
 }
+
 public class Tile : MonoBehaviour
 {
 	private int _xCoord;
@@ -35,18 +38,23 @@ public class Tile : MonoBehaviour
 	private Tweener _moveTween;
 	private float _initialY = 0;
 
+	private void Awake()
+	{
+		State = TileState.None;
+	}
+
 	void Start()
 	{
-		if (YCoord == 0)
-		{
-			Set(TileState.Water);
-			ChangeModel(1);
-		}
-		else
-		{
-			Set(TileState.Sand);
-			ChangeModel(0);
-		}
+		//if (YCoord == 0)
+		//{
+		//    Set(TileState.Water);
+		//    ChangeModel(1);
+		//}
+		//else
+		//{
+		//    Set(TileState.Sand);
+		//    ChangeModel(0);
+		//}
 
 		_initialY = transform.position.y;
 	}
@@ -72,15 +80,17 @@ public class Tile : MonoBehaviour
 				break;
 			case TileState.Tower:
 				ChangeModel(3);
-                UpdateTowerModel();
-                RempartManager.Instance.RefreshRempartAroundCoordinates(_xCoord, _yCoord);
-
+				UpdateTowerModel();
+				RempartManager.Instance.RefreshRempartAroundCoordinates(_xCoord, _yCoord);
 				break;
 			case TileState.Moat:
 				ChangeModel(4);
 				break;
 			case TileState.WetMoat:
 				ChangeModel(5);
+				break;
+			case TileState.Castle:
+				ChangeModel(6);
 				break;
 			default:
 				ChangeModel(0);
@@ -120,6 +130,7 @@ public class Tile : MonoBehaviour
 
 	private void OnTileLeftClick()
 	{
+		Debug.Log("[Tile] Coords : " + XCoord + " / " + YCoord);
 		switch (State)
 		{
 			case TileState.Sand:
@@ -176,31 +187,30 @@ public class Tile : MonoBehaviour
 		// _renderer.material.color = color;
 		for (int i = 0; i < transform.childCount; i++)
 		{
-			transform.GetChild(i).gameObject.SetActive(i == stateId);
+			transform.GetChild(i)?.gameObject.SetActive(i == stateId);//For castle tiles GetChild is null so everything is diabled
 		}
 	}
+
+	#region Tower
 
 	private GameObject GetModel(int stateID)
 	{
 		return transform.GetChild(stateID).gameObject;
 	}
 
-	#region Tower
-
 	public void UpdateTowerModel()
 	{
 
-        Debug.Log($"REMPART : {_xCoord} : {_yCoord}");
+		Debug.Log($"REMPART : {_xCoord} : {_yCoord}");
 		RempartBlock rempartBlock = RempartManager.Instance.GetRempartBlockFromCoord(_xCoord, _yCoord);
-        Debug.Log("Type : "  + rempartBlock.type);
-        GameObject towerObject = GetModel(3);
-        RempartManager.Instance.PrintGridStatus(_xCoord, _yCoord);
+		Debug.Log("Type : " + rempartBlock.type);
+		GameObject towerObject = GetModel(3);
+		RempartManager.Instance.PrintGridStatus(_xCoord, _yCoord);
 
-        MeshFilter towerMeshFilter = towerObject.GetComponent<MeshFilter>();
-        towerMeshFilter.mesh = rempartBlock.mesh;
+		MeshFilter towerMeshFilter = towerObject.GetComponent<MeshFilter>();
+		towerMeshFilter.mesh = rempartBlock.mesh;
 
 	}
 
 	#endregion
-
 }

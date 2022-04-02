@@ -174,13 +174,13 @@ MonoBehaviour:
   - type: 10
     mesh: {fileID: 8490822814134871468, guid: f3403fa63c2729d4bbd5dae530749723, type: 3}
   - type: 2
-    mesh: {fileID: -8621252705875480706, guid: 48c388af1d31f694f80d25197f1b0363, type: 3}
+    mesh: {fileID: -7646251665422531609, guid: 321d2ae6f36ca7d40aa507eb81b69812, type: 3}
   - type: 1
-    mesh: {fileID: -1353840912253308728, guid: 4818d73b1bcb53146b3bfd9cb2275fbc, type: 3}
+    mesh: {fileID: -1353840912253308728, guid: 185abaa7a51368949a42685cb4e2bc85, type: 3}
   - type: 4
-    mesh: {fileID: -4594641081135935260, guid: 185abaa7a51368949a42685cb4e2bc85, type: 3}
+    mesh: {fileID: -4594641081135935260, guid: 4818d73b1bcb53146b3bfd9cb2275fbc, type: 3}
   - type: 8
-    mesh: {fileID: -1945954078682677667, guid: f8eff184f253d804b9c9196fa002af46, type: 3}
+    mesh: {fileID: -1945954078682677667, guid: 48c388af1d31f694f80d25197f1b0363, type: 3}
   - type: 3
     mesh: {fileID: -1114847297201662150, guid: 395460564dbda4f4ab8a4bbbdfa624da, type: 3}
   - type: 6
@@ -416,67 +416,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!1001 &3396419227511119541
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3338888454299096852, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
-      propertyPath: m_Name
-      value: Tile
-      objectReference: {fileID: 0}
-    - target: {fileID: 3338888454299096852, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3338888454299096853, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3338888454299096853, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3338888454299096853, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3338888454299096853, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3338888454299096853, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3338888454299096853, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3338888454299096853, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3338888454299096853, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3338888454299096853, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3338888454299096853, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3338888454299096853, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
 --- !u!1001 &4930197336315672620
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -492,6 +431,10 @@ PrefabInstance:
       propertyPath: _casualGridY
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 4930197336231792766, guid: ec79db20312166c41a8d5e9434190265, type: 3}
+      propertyPath: _castlePrefab
+      value: 
+      objectReference: {fileID: 5054061949793797294, guid: 93244c1e2126e6a40a198569d079569d, type: 3}
     - target: {fileID: 4930197337039789964, guid: ec79db20312166c41a8d5e9434190265, type: 3}
       propertyPath: maxSandLevel
       value: 1000
@@ -507,6 +450,14 @@ PrefabInstance:
     - target: {fileID: 4930197337039789964, guid: ec79db20312166c41a8d5e9434190265, type: 3}
       propertyPath: _towerPriceValue
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930197337217587593, guid: ec79db20312166c41a8d5e9434190265, type: 3}
+      propertyPath: _castleCoords.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930197337217587593, guid: ec79db20312166c41a8d5e9434190265, type: 3}
+      propertyPath: _castleCoords.y
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4930197337728177284, guid: ec79db20312166c41a8d5e9434190265, type: 3}
       propertyPath: m_Name

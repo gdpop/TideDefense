@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: f8eff184f253d804b9c9196fa002af46
+guid: 321d2ae6f36ca7d40aa507eb81b69812
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Rempart
-    second: {fileID: 2100000, guid: 2ef3d9dfd20b32943b997cb1daeffbc4, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

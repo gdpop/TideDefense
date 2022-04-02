@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CastleManager : MonoBehaviour
+public class Castle : MonoBehaviour
 {
     #region SINGLETON
-    private static CastleManager instance = null;
+    private static Castle instance = null;
 
-    public static CastleManager Instance
+    public static Castle Instance
     {
         get
         {
