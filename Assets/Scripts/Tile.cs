@@ -73,6 +73,8 @@ public class Tile : MonoBehaviour
 			case TileState.Tower:
 				ChangeModel(3);
                 UpdateTowerModel();
+                RempartManager.Instance.RefreshRempartAroundCoordinates(_xCoord, _yCoord);
+
 				break;
 			case TileState.Moat:
 				ChangeModel(4);
@@ -185,17 +187,17 @@ public class Tile : MonoBehaviour
 
 	#region Tower
 
-	private void UpdateTowerModel()
+	public void UpdateTowerModel()
 	{
-		RempartBlock rempartBlock = RempartManager.Instance.GetRempartBlockFromCoord(_xCoord, _yCoord);
 
+        Debug.Log($"REMPART : {_xCoord} : {_yCoord}");
+		RempartBlock rempartBlock = RempartManager.Instance.GetRempartBlockFromCoord(_xCoord, _yCoord);
+        Debug.Log("Type : "  + rempartBlock.type);
         GameObject towerObject = GetModel(3);
+        RempartManager.Instance.PrintGridStatus(_xCoord, _yCoord);
 
         MeshFilter towerMeshFilter = towerObject.GetComponent<MeshFilter>();
-        towerMeshFilter.mesh = rempartBlock.meshMesh;
-
-        //
-        
+        towerMeshFilter.mesh = rempartBlock.mesh;
 
 	}
 

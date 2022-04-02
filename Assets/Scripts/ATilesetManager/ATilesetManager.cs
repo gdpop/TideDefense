@@ -4,11 +4,12 @@ using UnityEngine;
 public abstract class ATilesetManager : MonoBehaviour
 {
 
-	protected List<Vector3> _neighboorsCoordinates = new List<Vector3>();
+	protected List<Vector3> _neighboorsCoordinatesEight = new List<Vector3>();
+	protected List<Vector3> _neighboorsCoordinatesFour = new List<Vector3>();
 
 	protected virtual void OnEnable()
 	{
-		_neighboorsCoordinates = new List<Vector3>(8)
+		_neighboorsCoordinatesEight = new List<Vector3>(8)
 		{
 			new Vector2(0,1),
 			new Vector2(1,1),
@@ -18,6 +19,14 @@ public abstract class ATilesetManager : MonoBehaviour
 			new Vector2(-1,-1),
 			new Vector2(-1,0),
 			new Vector2(-1,1),
+		};
+
+		_neighboorsCoordinatesFour = new List<Vector3>(4)
+		{
+			new Vector2(0,1),
+			new Vector2(1,0),
+			new Vector2(0,-1),
+			new Vector2(-1,0),
 		};
 	}
 

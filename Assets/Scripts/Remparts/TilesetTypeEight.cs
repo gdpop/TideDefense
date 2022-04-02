@@ -1,6 +1,6 @@
-public enum TilesetType
+public enum TilesetTypeEight
 {
-	Empty = -1,
+		Empty = -1,
 
 	Single = 0,
 
@@ -24,4 +24,6 @@ public enum TilesetType
 	Tri_TRL = 162,
 
 	Foursome = 170,
+
 }
+

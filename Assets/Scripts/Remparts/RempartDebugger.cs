@@ -130,17 +130,18 @@ public class RempartDebugger : MonoBehaviour
 
 	public RempartBlock GetRempartBlockFromCoord(int x, int y)
 	{
-		TilesetType type = (TilesetType)GetRempartNeighboors(x, y);
+		return default;
+		// TilesetTypeEight type = (TilesetTypeFour)GetRempartNeighboors(x, y);
 
-		RempartBlock block = _rempartBlocks.Find(item => item.type == type);
+		// RempartBlock block = _rempartBlocks.Find(item => item.type == type);
 
-		if (block.mesh != null)
-			return block;
-		else
-		{
-			Debug.LogWarning("Couldn't GetRempartMeshFromCoord");
-			return new RempartBlock();
-		}
+		// if (block.mesh != null)
+		// 	return block;
+		// else
+		// {
+		// 	Debug.LogWarning("Couldn't GetRempartMeshFromCoord");
+		// 	return new RempartBlock();
+		// }
 	}
 
 	#region Debugs
@@ -198,9 +199,9 @@ public class RempartDebugger : MonoBehaviour
 
 		RempartBlock block = GetRempartBlockFromCoord(1, 1);
 
-		GameObject newChild = Instantiate(block.mesh, transform) as GameObject;
+		// GameObject newChild = Instantiate(block.mesh, transform) as GameObject;
 		
-		newChild.transform.localPosition = Vector3.zero;
+		// newChild.transform.localPosition = Vector3.zero;
 
 	}
 

@@ -45,4 +45,5 @@ public class GridManager : MonoBehaviour
 
         Debug.Log("grid created: x:" + CurrentGrid.XLenght + " // y:" + CurrentGrid.YLenght);
     }
+
 }
