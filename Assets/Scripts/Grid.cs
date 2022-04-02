@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-    private uint _xLenght;
-    public uint XLenght {
+    private int _xLenght;
+    public int XLenght
+    {
         get { return _xLenght; }
         set { _xLenght = value; }
     }
 
-    private uint _yLenght;
-    public uint YLenght {
+    private int _yLenght;
+    public int YLenght
+    {
         get { return _yLenght; }
         set { _yLenght = value; }
     }
@@ -25,12 +27,12 @@ public class Grid : MonoBehaviour
 
     public void Generate(int xLength, int yLength)
     {
-        XLenght = (uint)xLength;
-        YLenght = (uint)yLength;
+        XLenght = (int)xLength;
+        YLenght = (int)yLength;
 
-        if(_tileList == null) _tileList = new List<Tile>();
+        if (_tileList == null) _tileList = new List<Tile>();
 
-        for (int i = 0; i< YLenght; i++)
+        for (int i = 0; i < YLenght; i++)
         {
             for (int j = 0; j < XLenght; j++)
             {
@@ -53,14 +55,14 @@ public class Grid : MonoBehaviour
         _tileList.Remove(tile);
     }
 
-    // si ça retourne null c'est qu'il a pas trouvé de tile à ces coordonnées
+    // si ï¿½a retourne null c'est qu'il a pas trouvï¿½ de tile ï¿½ ces coordonnï¿½es
     public Tile GetTile(int coordX, int coordY)
     {
-        foreach(Tile tile in _tileList)
+        foreach (Tile tile in _tileList)
         {
             if (tile.XCoord == coordX && tile.YCoord == coordY) return tile;
         }
-        Debug.LogError("pas trouvé de tile à ces coordonnées");
+        Debug.LogError("pas trouvï¿½ de tile ï¿½ ces coordonnï¿½es");
         return null;
     }
 
