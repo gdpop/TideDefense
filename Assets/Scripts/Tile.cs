@@ -194,7 +194,7 @@ public class Tile : MonoBehaviour
 	{
 		// Do hover effect
 		transform.position = new Vector3(transform.position.x, _initialY, transform.position.z);
-		_moveTween = transform.DOMoveY(_initialY + (active ? .3f : 0), .25f).SetEase(Ease.Flash);
+		_moveTween = transform.DOMoveY(_initialY + (active ? .15f : 0), .18f).SetEase(Ease.Flash);
 	}
 	private void ClickEffect(bool active)
 	{
