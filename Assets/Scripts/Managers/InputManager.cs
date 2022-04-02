@@ -44,13 +44,24 @@ public class InputManager : MonoBehaviour
 
         if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, layerMask))
         {
-            Tile tile = hit.transform.GetComponent<Tile>();
-            if (tile == null) return;
+
+            Tile tile = hit.transform.transform.parent.GetComponent<Tile>();
+            print(tile.name);
+            if (tile == null)
+            {
+                if (hoveredTile != null) hoveredTile.OnHover(false);
+                return;
+            }
+            if (hoveredTile != null && tile != hoveredTile) hoveredTile.OnHover(false);
             hoveredTile = tile;
             tile.OnHover(true);
             Transform objectHit = hit.transform;
 
             // Do something with the object that was hit by the raycast.
+        }
+        else
+        {
+            if (hoveredTile != null) hoveredTile.OnHover(false);
         }
     }
 }
