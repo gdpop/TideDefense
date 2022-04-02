@@ -47,16 +47,12 @@ public class Tile : MonoBehaviour
             Set(TileState.Sand);
             ChangeModel(0);
         }
-        //if(YCoord == 0) ChangeModel(1);
-        //else ChangeModel(0);
 
         _initialY = transform.position.y;
-        Debug.Log("Tile is : " + State);
     }
 
     public void Set(TileState state)
     {
-        Debug.Log(("SET : " + state) + " previous state : " + State);
         if (state == State)
         {
             return;
@@ -97,29 +93,36 @@ public class Tile : MonoBehaviour
         //ChangeModel(active ? Color.red : initColor);
     }
 
-    public void OnClick(bool active)
+    public void OnLeftClick(bool active)
     {
         if (_isClicked == active) return;
-        Debug.Log("OnClick " + active);
         _isClicked = active;
         ClickEffect(active);
         //if (_isHovered) HoverEffect(active);
         //ChangeModel(active ? Color.green : _isHovered ? Color.red : initColor);
         if (!_isClicked)
-            OnTileClick();
+            OnTileLeftClick();
     }
 
-    private void OnTileClick()
+    public void OnRightClick(bool active)
     {
-        Debug.Log("OnTileClick : " + State);
-        Debug.Log("SandValue : " + SandManager.Instance.sandLevel);
+        if (_isClicked == active) return;
+        _isClicked = active;
+        ClickEffect(active);
+        //if (_isHovered) HoverEffect(active);
+        //ChangeModel(active ? Color.green : _isHovered ? Color.red : initColor);
+        if (!_isClicked)
+            OnTileRightClick();
+    }
+
+    private void OnTileLeftClick()
+    {
         switch (State)
         {
             case TileState.Sand:
-                bool canBuild = SandManager.Instance.RemoveSand(1);
+                bool canBuild = SandManager.Instance.RemoveSand(SandManager.Instance.TowerPriceValue);
                 if (canBuild)
                 {
-                    Debug.Log("Switch Is Sand --> Will become : " + TileState.Tower);
                     GridManager.Instance.CurrentGrid.SetTile(XCoord, YCoord, TileState.Tower);
                 }
                 break;
@@ -132,6 +135,24 @@ public class Tile : MonoBehaviour
             case TileState.Tower:
                 break;
         }    
+    }
+    private void OnTileRightClick()
+    {
+        switch (State)
+        {
+            case TileState.Sand:
+                SandManager.Instance.AddSand(SandManager.Instance.MoatEarnValue);
+                GridManager.Instance.CurrentGrid.SetTile(XCoord, YCoord, TileState.Moat);
+                break;
+            case TileState.WetSand:
+                break;
+            case TileState.WetMoat:
+                break;
+            case TileState.Moat:
+                break;
+            case TileState.Tower:
+                break;
+        }
     }
 
     private void HoverEffect(bool active)
