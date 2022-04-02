@@ -12,13 +12,13 @@ GameObject:
   - component: {fileID: 8988032429151851412}
   - component: {fileID: 501507844594846700}
   - component: {fileID: 7062586531662504943}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9154132647352793698
 Transform:
   m_ObjectHideFlags: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1347080173337664640}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 22.669691, y: -16.829533, z: 42.755264}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.37, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5b562959baded644b8d2b637c86388ed, type: 2}
+  - {fileID: 2100000, guid: dd083a5175900b845bc9c0807d3e5d60, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

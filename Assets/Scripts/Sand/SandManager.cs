@@ -21,6 +21,13 @@ public class SandManager : MonoBehaviour
     #endregion
     public int sandLevel { get; private set; }
 
+    [Header("Sand Parameters"), SerializeField] int _maxSandLevel;
+    [SerializeField] private int _towerPriceValue;
+    [SerializeField] private int _moatEarnValue;
+
+    public int TowerPriceValue { get { return _towerPriceValue; } }
+    public int MoatEarnValue { get { return _moatEarnValue; } }
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -28,7 +35,6 @@ public class SandManager : MonoBehaviour
             Destroy(this.gameObject);
         }
         instance = this;
-        sandLevel = 1000;
     }
 
 
@@ -51,6 +57,18 @@ public class SandManager : MonoBehaviour
         if (sandUnit <= 0)
             throw new Exception("Incorrect Value");
 
+        if (sandLevel == _maxSandLevel)
+            return;
+
+        int newSandValue;
+        newSandValue = sandLevel + sandUnit;
+
+        if(newSandValue > _maxSandLevel)
+        {
+            sandLevel = _maxSandLevel;
+            return;
+        }
+
         UpdateSandLevel(sandUnit);
     }
     public bool RemoveSand(int sandUnit)
@@ -71,5 +89,6 @@ public class SandManager : MonoBehaviour
     private void UpdateSandLevel(int sandUnit)
     {
         sandLevel += sandUnit;
+        Debug.Log("[SandManager] Sand level updated : " + sandLevel);
     }
 }
