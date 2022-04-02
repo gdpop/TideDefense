@@ -16,8 +16,8 @@ public class WaterManager : MonoBehaviour
     }
     #region [ MONOBEHAVIOR ]
 
-    private uint gridXLength;
-    private uint[] wave;
+    private int gridXLength;
+    private int[] wave;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -35,10 +35,38 @@ public class WaterManager : MonoBehaviour
         StartCoroutine(Tic());
 
         gridXLength = GridManager.Instance.CurrentGrid.XLenght;
-        wave = new uint[gridXLength];
+        wave = new int[gridXLength];
         for (int i = 0; i < wave.Length; i++)
         {
             wave[i] = 0;
+        }
+    }
+
+    private void RisingTide()
+    {
+        for (int i = 0; i < wave.Length; i++)
+        {
+            Tile tile = GridManager.Instance.CurrentGrid.GetTile(i, wave[i + 1]);
+
+            // switch (tile.GetType)
+            // {
+
+            //     default:
+            // }
+        }
+    }
+
+    private void RecedingTide()
+    {
+        for (int i = 0; i < wave.Length; i++)
+        {
+            Tile tile = GridManager.Instance.CurrentGrid.GetTile(i, wave[i + 1]);
+
+            // switch (tile.GetType)
+            // {
+
+            //     default:
+            // }
         }
     }
 
@@ -46,10 +74,16 @@ public class WaterManager : MonoBehaviour
     {
         while (true)
         {
-            for (int i = 0; i < wave.Length; i++)
+            if (TimeManager.Instance.isRecedingTide)
             {
-                // GridManager.Instance.GetTileByCoord()
+                RecedingTide();
             }
+
+            if (TimeManager.Instance.isRisingTide)
+            {
+                RisingTide();
+            }
+
             yield return new WaitForSeconds(1f);
         }
     }
