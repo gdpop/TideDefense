@@ -29,14 +29,18 @@ public class WaterManager : MonoBehaviour
     #endregion
     #endregion
 
-
+    private int _foamCoordY = 5;
+    public int FoamCoordY {
+        get { return _foamCoordY; }
+        set { _foamCoordY = value; }
+    }
     public void Init()
     {
         _gridXLength = GridManager.Instance.CurrentGrid.XLenght;
-        waveTilesYCoord = new int[_gridXLength];
+        waveTilesYCoord = new int[GridManager.Instance.CurrentGrid.XLenght];
         for (int i = 0; i < waveTilesYCoord.Length; i++)
         {
-            waveTilesYCoord[i] = 0;
+            waveTilesYCoord[i] = FoamCoordY;
         }
     }
 
@@ -45,34 +49,55 @@ public class WaterManager : MonoBehaviour
         StartCoroutine("Tic");
     }
 
-    private void AscendingTide()
+
+    private void AscendingTide(bool ascend)
     {
-        for (int i = 0; i < waveTilesYCoord.Length; i++)
+        print(ascend);
+        for (int mix = 0; mix < waveTilesYCoord.Length; mix++) print(waveTilesYCoord[mix]);
+        int foamAxisMax = 2;
+        for (int i = 0; i < _gridXLength; i++)
         {
-            int delta = Random.Range(1, 3);
+            print(i + "//" + _gridXLength);
+            Tile prevTile = GridManager.Instance.CurrentGrid.GetTile(i, waveTilesYCoord[i]);
+            int delta = Random.Range(ascend ? 0 : -foamAxisMax - 1, ascend ? foamAxisMax+1 : 0);
+            print(("delta:" + delta));
+            int newY = prevTile.YCoord + delta;
+            newY = Mathf.Clamp(newY, FoamCoordY-foamAxisMax, FoamCoordY +foamAxisMax);
+            print("newY" + newY);
+            if (newY == waveTilesYCoord[i]) continue;
+            
+            Tile nextTile = GridManager.Instance.CurrentGrid.GetTile(i, newY);
 
-            for (int j = 0; j < delta; j++)
+            if(ascend)
             {
-                Tile nextTile = GridManager.Instance.CurrentGrid.GetTile(i, waveTilesYCoord[i] + 1);
-
                 switch (nextTile.State)
                 {
                     case TileState.Sand:
-                        GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.Water);
-                        waveTilesYCoord[i]++;
+                        GridManager.Instance.CurrentGrid.SetTile(i, newY, TileState.Water);
+                        //waveTilesYCoord[i] = newY;
                         break;
                     case TileState.Tower:
+                        // Ici on met un dégât à la tour et on return;
                         break;
                     case TileState.Moat:
-                        GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.Water);
+                        // Ici on met un dégât à la tour et on return; 
                         break;
                     default:
-                        GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.Water);
-                        waveTilesYCoord[i]++;
+                        //GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.Water);
+                        //if (i < waveTilesYCoord.Length - 1)  waveTilesYCoord[i]++;
+                        GridManager.Instance.CurrentGrid.SetTile(i, newY, TileState.Water);
+                        //waveTilesYCoord[i] = newY;
                         break;
                 }
             }
+            else
+            {
 
+                for(int ind = prevTile.YCoord; ind > newY; ind--) GridManager.Instance.CurrentGrid.SetTile(i, ind, TileState.WetSand);
+                //GridManager.Instance.CurrentGrid.SetTile(i, prevTile.YCoord, TileState.WetSand);
+                GridManager.Instance.CurrentGrid.SetTile(i, newY, TileState.Water);
+            }
+            waveTilesYCoord[i] = newY;
         }
     }
 
@@ -83,7 +108,7 @@ public class WaterManager : MonoBehaviour
             if (GridManager.Instance.CurrentGrid.GetTile(i, waveTilesYCoord[i]) != null)
             {
                 GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.WetSand);
-                waveTilesYCoord[i]--;
+                if(i>=1) waveTilesYCoord[i]--;
             }
 
         }
@@ -93,16 +118,7 @@ public class WaterManager : MonoBehaviour
     {
         while (true)
         {
-            if (TimeManager.Instance.isAscending)
-            {
-                AscendingTide();
-            }
-            else
-            {
-                DescendingTide();
-            }
-
-
+            AscendingTide(TimeManager.Instance.isAscending);
             yield return new WaitForSeconds(1f);
         }
     }

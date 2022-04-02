@@ -53,6 +53,7 @@ public class Tile : MonoBehaviour
 
 	public void Set(TileState state)
 	{
+		//print("avant old State:" + State + " ----> " + state);
 		if (state == State)
 		{
 			return;
