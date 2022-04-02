@@ -29,6 +29,10 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private int _casualGridY;
 
+    [SerializeField]
+    private GameObject _castlePrefab;
+    public GameObject CastlePrefab { get { return _castlePrefab; } }   
+
     public TilesRendererData TilesRenderer;
 
     [HideInInspector]
@@ -36,9 +40,11 @@ public class GridManager : MonoBehaviour
     public GameObject PrefabTile;
     public void CreateGrid()
     {
+        GameObject go = new GameObject("Grid");
+
         if (CurrentGrid == null)
         {
-            CurrentGrid = new Grid();
+            CurrentGrid = go.AddComponent<Grid>();
             CurrentGrid.Generate(_casualGridX, _casualGridY);
         }
         else CurrentGrid.Generate(_casualGridX, _casualGridY);

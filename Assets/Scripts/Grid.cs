@@ -19,10 +19,17 @@ public class Grid : MonoBehaviour
     }
 
     private List<Tile> _tileList;
+    private Vector2 _castleCoords;
+
+    private void Awake()
+    {
+        Debug.Log("CastleCoords : " + LevelManager.Instance.CastleCoords);
+        _castleCoords = LevelManager.Instance.CastleCoords;
+        _tileList = new List<Tile>();
+    }
 
     void Start()
     {
-        _tileList = new List<Tile>();
     }
 
     public void Generate(int xLength, int yLength)
@@ -40,7 +47,17 @@ public class Grid : MonoBehaviour
                 clone.XCoord = j;
                 clone.YCoord = i;
                 clone.transform.position = new Vector3(clone.XCoord, 0, clone.YCoord);
+
                 _tileList.Add(clone);
+
+                if (i == 0)
+                    SetTile(j, i, TileState.Water);
+
+                if (GetCastleTiles(new Vector2(j, i)))
+                    SetTile(j, i, TileState.Castle);
+                else
+                    SetTile(j, i, TileState.Sand);
+
             }
         }
     }
@@ -70,5 +87,20 @@ public class Grid : MonoBehaviour
     {
         Debug.Log("Set Tile : " + newState);
         GetTile(coordX, coordY).Set(newState);
+    }
+
+    private bool GetCastleTiles(Vector2 currentCoords)
+    {
+
+        if (currentCoords == _castleCoords)
+            Instantiate(GridManager.Instance.CastlePrefab, new Vector3(_castleCoords.x, 0, _castleCoords.y), Quaternion.identity);
+
+        if (currentCoords.x == _castleCoords.x || currentCoords.x == (_castleCoords.x + 1) || currentCoords.x == (_castleCoords.x - 1))
+        {
+            if (currentCoords.y == _castleCoords.y || currentCoords.y == (_castleCoords.y + 1) || currentCoords.y == (_castleCoords.y - 1))
+                return true;
+        }
+            
+        return false;
     }
 }
