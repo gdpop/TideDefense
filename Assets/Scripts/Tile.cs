@@ -181,7 +181,6 @@ public class Tile : MonoBehaviour
 
 	public void LooseOneLifePoint()
     {
-		print("Loose life point");
 		LooseLife(1);
 	}
 	public void LooseLife(int lifeInput)
