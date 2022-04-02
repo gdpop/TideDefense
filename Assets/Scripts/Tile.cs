@@ -16,15 +16,27 @@ public class Tile : MonoBehaviour
         set { _yCoord = value; }
     }
 
+    Renderer renderer;
+
+    Color initColor;
     // Start is called before the first frame update
     void Start()
     {
-        
+        renderer = transform.GetChild(0).GetComponent<Renderer>();
+        initColor = renderer.material.color;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void OnHover(bool active)
+    {
+        Renderer renderer = GetComponent<Renderer>();
+
+        //Call SetColor using the shader property name "_Color" and setting the color to red
+        renderer.material.SetColor("_Color", active ? Color.red : initColor);
     }
 }
