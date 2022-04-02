@@ -159,7 +159,9 @@ public class Tile : MonoBehaviour
 		switch (State)
 		{
 			case TileState.Sand:
-				LooseLife(1);
+				bool canDig = SandManager.Instance.AddSand(SandManager.Instance.MoatEarnValue);
+				if(canDig)
+					LooseLife(1);
 				break;
 			case TileState.WetSand:
 				break;
@@ -214,7 +216,6 @@ public class Tile : MonoBehaviour
 		switch (State)
 		{
 			case TileState.Sand:
-				SandManager.Instance.AddSand(SandManager.Instance.MoatEarnValue);
 				GridManager.Instance.CurrentGrid.SetTile(XCoord, YCoord, TileState.Moat);
 				break;
 			case TileState.WetSand:

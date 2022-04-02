@@ -56,7 +56,7 @@ public class Grid : MonoBehaviour
                 if (GetCastleTiles(new Vector2(j, i)))
                     SetTile(j, i, TileState.Castle);
                 else
-                    SetTile(j, i, TileState.Sand);
+                    SetTile(j, i, TileState.WetMoat);
 
             }
         }
