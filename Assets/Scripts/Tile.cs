@@ -11,6 +11,8 @@ public enum TileState
 }
 public class Tile : MonoBehaviour
 {
+    [SerializeField] TilesRendererData renderData;
+
     private int _xCoord;
     public int XCoord {
         get { return _xCoord; }
@@ -59,5 +61,29 @@ public class Tile : MonoBehaviour
         _isClicked = active;
         //Call SetColor using the shader property name "_Color" and setting the color to red
         _renderer.material.color = active ? Color.yellow : _isHovered ? Color.red : initColor;
+
+        ClickOnTile(State);
+    }
+
+    private void ClickOnTile( TileState state)
+    {
+
+        switch (State)
+        {
+            case TileState.Sand:
+                bool canBuild = SandManager.Instance.RemoveSand(-1);
+                if (canBuild)
+                {
+                    State = TileState.Tower;
+
+                }
+                break;
+            case TileState.Tower: 
+                break;
+            case TileState.Water: 
+                break;
+            case TileState.Moat: 
+                break;
+        }
     }
 }
