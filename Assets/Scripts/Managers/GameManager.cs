@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         CurrentGameState = GameState.MainMenu;
         GridManager.Instance.CreateGrid();
         WaterManager.Instance.Init();
-        //WaterManager.Instance.StartWater();
+        WaterManager.Instance.StartWater();
     }
 
     public void EndGame()
