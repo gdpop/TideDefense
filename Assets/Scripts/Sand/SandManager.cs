@@ -22,6 +22,11 @@ public class SandManager : MonoBehaviour
     public int sandLevel { get; private set; }
 
     [Header("Sand Parameters"), SerializeField] int _maxSandLevel;
+    public int MaxSandLevel
+    {
+        get { return _maxSandLevel; }
+        set { _maxSandLevel = value; }
+    }
     [SerializeField] private int _towerPriceValue;
     [SerializeField] private int _castleUpgradeValue;
     [SerializeField] private int _moatEarnValue;
@@ -43,13 +48,13 @@ public class SandManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 
@@ -65,7 +70,7 @@ public class SandManager : MonoBehaviour
         int newSandValue;
         newSandValue = sandLevel + sandUnit;
 
-        if(newSandValue > _maxSandLevel)
+        if (newSandValue > _maxSandLevel)
         {
             sandLevel = _maxSandLevel;
             return;
@@ -91,6 +96,7 @@ public class SandManager : MonoBehaviour
     private void UpdateSandLevel(int sandUnit)
     {
         sandLevel += sandUnit;
+        UIManager.Instance.UpdateSand(sandLevel);
         Debug.Log("[SandManager] Sand level updated : " + sandLevel);
     }
 }
