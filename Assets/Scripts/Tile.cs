@@ -32,11 +32,14 @@ public class Tile : MonoBehaviour
 	}
 
 	public TileState State;
+	public TileState _previousState;
 
 	private bool _isHovered = false;
 	private bool _isClicked = false;
 	private Tweener _moveTween;
 	private float _initialY = 0;
+
+	private int lifePoints;
 
 	private void Awake()
 	{
@@ -45,52 +48,57 @@ public class Tile : MonoBehaviour
 
 	void Start()
 	{
-		//if (YCoord == 0)
-		//{
-		//    Set(TileState.Water);
-		//    ChangeModel(1);
-		//}
-		//else
-		//{
-		//    Set(TileState.Sand);
-		//    ChangeModel(0);
-		//}
-
+		
 		_initialY = transform.position.y;
 	}
 
-	public void Set(TileState state)
+	public void Set(TileState state, bool previousStyle = false)
 	{
+		//print("avant old State:" + State + " ----> " + state);
 		if (state == State)
 		{
 			return;
 		}
 
-		State = state;
+		TileState tileState = previousStyle ? _previousState : state;
+
+		TimeManager.Instance.tick -= LooseOneLifePoint;
+		_previousState = State;
+
+		State = tileState;
 		switch (State)
 		{
 			case TileState.Sand:
 				ChangeModel(0);
+				lifePoints = LevelManager.Instance.SandLifePoints;
 				break;
 			case TileState.Water:
 				ChangeModel(1);
+				lifePoints = 0;
 				break;
 			case TileState.WetSand:
 				ChangeModel(2);
+				lifePoints = LevelManager.Instance.WetSandLifePoints;
+				TimeManager.Instance.tick += LooseOneLifePoint;
 				break;
 			case TileState.Tower:
 				ChangeModel(3);
 				UpdateTowerModel();
 				RempartManager.Instance.RefreshRempartAroundCoordinates(_xCoord, _yCoord);
+				lifePoints = LevelManager.Instance.TowerLifePoints;
 				break;
 			case TileState.Moat:
 				ChangeModel(4);
+				lifePoints = LevelManager.Instance.MoatLifePoints;
 				break;
 			case TileState.WetMoat:
 				ChangeModel(5);
+				lifePoints = LevelManager.Instance.WetMoatLifePoints;
+				TimeManager.Instance.tick += LooseOneLifePoint;
 				break;
 			case TileState.Castle:
 				ChangeModel(6);
+				lifePoints = 0;
 				break;
 			default:
 				ChangeModel(0);
@@ -98,15 +106,16 @@ public class Tile : MonoBehaviour
 		}
 	}
 
-	public void OnHover(bool active)
+	public virtual void OnHover(bool active)
 	{
 		if (_isHovered == active) return;
 		_isHovered = active;
-		HoverEffect(active);
-		//ChangeModel(active ? Color.red : initColor);
+
+		if(State == TileState.Sand)
+			HoverEffect(active);
 	}
 
-	public void OnLeftClick(bool active)
+	public virtual void OnLeftClick(bool active)
 	{
 		if (_isClicked == active) return;
 		_isClicked = active;
@@ -117,7 +126,7 @@ public class Tile : MonoBehaviour
 			OnTileLeftClick();
 	}
 
-	public void OnRightClick(bool active)
+	public virtual void OnRightClick(bool active)
 	{
 		if (_isClicked == active) return;
 		_isClicked = active;
@@ -128,7 +137,7 @@ public class Tile : MonoBehaviour
 			OnTileRightClick();
 	}
 
-	private void OnTileLeftClick()
+	protected virtual void OnTileLeftClick()
 	{
 		Debug.Log("[Tile] Coords : " + XCoord + " / " + YCoord);
 		switch (State)
@@ -150,13 +159,14 @@ public class Tile : MonoBehaviour
 				break;
 		}
 	}
-	private void OnTileRightClick()
+	protected virtual void OnTileRightClick()
 	{
 		switch (State)
 		{
 			case TileState.Sand:
-				SandManager.Instance.AddSand(SandManager.Instance.MoatEarnValue);
-				GridManager.Instance.CurrentGrid.SetTile(XCoord, YCoord, TileState.Moat);
+				bool canDig = SandManager.Instance.AddSand(SandManager.Instance.MoatEarnValue);
+				if(canDig)
+					LooseLife(1);
 				break;
 			case TileState.WetSand:
 				break;
@@ -169,11 +179,26 @@ public class Tile : MonoBehaviour
 		}
 	}
 
+	public void LooseOneLifePoint()
+    {
+		LooseLife(1);
+	}
+	public void LooseLife(int lifeInput)
+    {
+		if (lifeInput <= 0)
+			throw new System.Exception("Invalid value");
+
+		int newLifePoints = lifePoints -= lifeInput;
+
+		if (newLifePoints <= 0)
+			Die();
+    }
+
 	private void HoverEffect(bool active)
 	{
 		// Do hover effect
 		transform.position = new Vector3(transform.position.x, _initialY, transform.position.z);
-		_moveTween = transform.DOMoveY(_initialY + (active ? .3f : 0), .25f).SetEase(Ease.Flash);
+		_moveTween = transform.DOMoveY(_initialY + (active ? .15f : 0), .18f).SetEase(Ease.Flash);
 	}
 	private void ClickEffect(bool active)
 	{
@@ -188,6 +213,28 @@ public class Tile : MonoBehaviour
 		for (int i = 0; i < transform.childCount; i++)
 		{
 			transform.GetChild(i)?.gameObject.SetActive(i == stateId);//For castle tiles GetChild is null so everything is diabled
+		}
+	}
+
+	private void Die()
+    {
+		switch (State)
+		{
+			case TileState.Sand:
+				GridManager.Instance.CurrentGrid.SetTile(XCoord, YCoord, TileState.Moat);
+				break;
+			case TileState.WetSand:
+				GridManager.Instance.CurrentGrid.SetTile(XCoord, YCoord, TileState.Sand);
+				break;
+			case TileState.WetMoat:
+				GridManager.Instance.CurrentGrid.SetTile(XCoord, YCoord, TileState.WetSand);
+				break;
+			case TileState.Moat:
+				GridManager.Instance.CurrentGrid.SetTile(XCoord, YCoord, TileState.WetMoat);
+				break;
+			case TileState.Tower:
+				GridManager.Instance.CurrentGrid.SetTile(XCoord, YCoord, TileState.Sand);
+				break;
 		}
 	}
 

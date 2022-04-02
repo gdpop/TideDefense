@@ -29,15 +29,24 @@ public class WaterManager : MonoBehaviour
     #endregion
     #endregion
 
-
+    private int _previousFoamCoordY = 0;
+    private int _foamCoordY = 5;
+    public int FoamCoordY {
+        get { return _foamCoordY; }
+        set {
+            _previousFoamCoordY = _foamCoordY;
+            _foamCoordY = value; }
+    }
     public void Init()
     {
+        _previousFoamCoordY = FoamCoordY;
         _gridXLength = GridManager.Instance.CurrentGrid.XLenght;
-        waveTilesYCoord = new int[_gridXLength];
+        waveTilesYCoord = new int[GridManager.Instance.CurrentGrid.XLenght];
         for (int i = 0; i < waveTilesYCoord.Length; i++)
         {
-            waveTilesYCoord[i] = 0;
+            waveTilesYCoord[i] = FoamCoordY;
         }
+        TimeManager.Instance.tideTick += UpdateTideAxis;
     }
 
     public void StartWater()
@@ -45,64 +54,95 @@ public class WaterManager : MonoBehaviour
         StartCoroutine("Tic");
     }
 
-    private void AscendingTide()
+
+    private void AscendingTide(bool ascend)
     {
-        for (int i = 0; i < waveTilesYCoord.Length; i++)
+        //print(ascend);
+        //for (int mix = 0; mix < waveTilesYCoord.Length; mix++) print(waveTilesYCoord[mix]);
+        int foamAxisMax = 1;
+        for (int i = 0; i < _gridXLength; i++)
         {
-            int delta = Random.Range(1, 3);
-
-            for (int j = 0; j < delta; j++)
+            Tile prevTile = GridManager.Instance.CurrentGrid.GetTile(i, waveTilesYCoord[i]);
+            int delta = Random.Range(ascend ? 0 : -foamAxisMax, ascend ? foamAxisMax+1 : 1);
+            //print(("delta:" + delta));
+            int newY = prevTile.YCoord + delta;
+            newY = Mathf.Clamp(newY, FoamCoordY-foamAxisMax, FoamCoordY +foamAxisMax);
+            //print("newY" + newY);
+            if (newY == prevTile.YCoord) continue;
+            //print("ascend " + ascend);
+            if(prevTile.YCoord < newY)
             {
-                Tile nextTile = GridManager.Instance.CurrentGrid.GetTile(i, waveTilesYCoord[i] + 1);
-
-                switch (nextTile.State)
+                for(int indexInBetweenTiles = 0; indexInBetweenTiles < newY; indexInBetweenTiles++)
                 {
-                    case TileState.Sand:
-                        GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.Water);
-                        waveTilesYCoord[i]++;
-                        break;
+                    Tile inBetweenTile = GridManager.Instance.CurrentGrid.GetTile(i , indexInBetweenTiles);
+                    //print("inBetweenTile.State " + inBetweenTile.State);
+
+                    GridManager.Instance.CurrentGrid.SetTile(i, inBetweenTile.YCoord, TileState.Water);
+                }
+                Tile newTile = GridManager.Instance.CurrentGrid.GetTile(i, newY);
+                switch (newTile.State)
+                {
                     case TileState.Tower:
-                        break;
-                    case TileState.Moat:
-                        GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.Water);
-                        break;
+                        newTile.LooseOneLifePoint();
+                        continue;
+                    case TileState.Castle:
+                        Castle.Instance.LooseOneLifePoint();
+                        continue;
                     default:
-                        GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.Water);
-                        waveTilesYCoord[i]++;
                         break;
                 }
+                GridManager.Instance.CurrentGrid.SetTile(i, newTile.YCoord, TileState.Water);
             }
+            else
+            {
 
+                for (int ind = prevTile.YCoord; ind > newY; ind--)
+                {
+                    Tile newTile = GridManager.Instance.CurrentGrid.GetTile(i, ind);
+                    
+                    switch (newTile._previousState)
+                    {
+                        case TileState.Sand:
+                            print("Previous State : " + newTile._previousState);
+                            GridManager.Instance.CurrentGrid.SetTile(i, ind, TileState.WetSand);
+                            break;
+                        case TileState.Moat:
+                            print("Previous State : " + newTile._previousState);
+                            GridManager.Instance.CurrentGrid.SetTile(i, ind, TileState.WetMoat);
+                            break;
+                        default:
+                            GridManager.Instance.CurrentGrid.SetTile(i, prevTile.YCoord, TileState.WetSand);
+                            break;
+                    }
+                    
+                }
+                //GridManager.Instance.CurrentGrid.SetTile(i, newY, TileState.Water);
+                //GridManager.Instance.CurrentGrid.SetTile(i, prevTile.YCoord, TileState.WetSand);
+            }
+            waveTilesYCoord[i] = newY;
         }
     }
 
-    private void DescendingTide()
+    private void FixTilesAfterFoamYChange()
     {
-        for (int i = 0; i < waveTilesYCoord.Length; i++)
-        {
-            if (GridManager.Instance.CurrentGrid.GetTile(i, waveTilesYCoord[i]) != null)
-            {
-                GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.WetSand);
-                waveTilesYCoord[i]--;
-            }
 
-        }
+    }
+
+
+    private void UpdateTideAxis()
+    {
+        if (TimeManager.Instance.isAscending2)
+            _foamCoordY++;
+        else
+            _foamCoordY--;
+
     }
 
     public IEnumerator Tic()
     {
         while (true)
         {
-            if (TideManager.Instance.isAscending)
-            {
-                AscendingTide();
-            }
-            else
-            {
-                DescendingTide();
-            }
-
-
+            AscendingTide(TimeManager.Instance.isAscending);
             yield return new WaitForSeconds(1f);
         }
     }

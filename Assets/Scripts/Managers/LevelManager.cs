@@ -7,6 +7,22 @@ public class LevelManager : MonoBehaviour
     #region SINGLETON
     private static LevelManager instance = null;
 
+    [Header("LifePoints")]
+    [SerializeField] private int _sandLifePoints;
+    public int SandLifePoints { get { return _sandLifePoints; } }
+
+    [SerializeField] private int _wetSandLifePoints;
+    public int WetSandLifePoints { get { return _wetSandLifePoints; } }
+
+    [SerializeField] private int _towerLifePoints;
+    public int TowerLifePoints { get { return _towerLifePoints; } }
+
+    [SerializeField] private int _moatLifePoints;
+    public int MoatLifePoints { get { return _moatLifePoints; } }
+
+    [SerializeField] private int _wetMoatLifePoints;
+    public int WetMoatLifePoints { get { return _wetMoatLifePoints; } }
+
     public static LevelManager Instance
     {
         get

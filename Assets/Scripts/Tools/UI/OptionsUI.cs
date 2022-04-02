@@ -298,23 +298,7 @@ public class OptionsUI : UIPanel
         //if (UM_GameService.SignInClient.PlayerInfo.State == UM_PlayerState.SignedIn)
         //    return;
 
-#if !UNITY_EDITOR
-        if (signIn)
-        {
-            UM_GameService.SignInClient.SingIn((result) =>
-            {
-                if (result.IsSucceeded)
-                {
-                    Debug.Log("Player is signed in");
-                    OnSignIn.SafeInvoke();
-                }
-                else
-                {
-                    Debug.Log("signed in failed: " + result.Error.FullMessage);
-                }
-            });
-        }
-#endif
+
 
     }
     public void OnClickRemoveAds()

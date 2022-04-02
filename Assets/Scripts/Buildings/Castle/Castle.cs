@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Castle : MonoBehaviour
+public class Castle : Tile
 {
     #region SINGLETON
     private static Castle instance = null;
@@ -40,9 +40,34 @@ public class Castle : MonoBehaviour
         
     }
 
-    public void OnCLick()
-    {
 
+    public override void OnHover(bool active)
+    {
+        return;
+    }
+
+    public override void OnLeftClick(bool active)
+    {
+        base.OnLeftClick(active);
+    }
+
+    public override void OnRightClick(bool active)
+    {
+        return;
+    }
+
+    protected override void OnTileLeftClick()
+    {
+        bool canUpgrade = SandManager.Instance.RemoveSand(SandManager.Instance.CastleUpgradeValue);
+        if (canUpgrade)
+        {
+            AddLifePoint(SandManager.Instance.CastleUpgradeValue);
+        }
+    }
+    protected override void OnTileRightClick()
+    {
+        
+        return;
     }
 
     public void AddLifePoint(int lifeInput)
