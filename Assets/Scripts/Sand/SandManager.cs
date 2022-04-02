@@ -51,8 +51,6 @@ public class SandManager : MonoBehaviour
         if (sandUnit <= 0)
             throw new Exception("Incorrect Value");
 
-            sandLevel += sandUnit;
-
         UpdateSandLevel(sandUnit);
     }
     public bool RemoveSand(int sandUnit)
@@ -61,12 +59,12 @@ public class SandManager : MonoBehaviour
             throw new Exception("Incorrect Value");
 
         int newSandValue;
-        newSandValue = sandLevel + sandUnit;
+        newSandValue = sandLevel - sandUnit;
 
         if (newSandValue < 0)
             return false;
 
-        UpdateSandLevel(sandUnit);
+        UpdateSandLevel(-sandUnit);
         return true;
     }
 

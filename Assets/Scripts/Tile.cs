@@ -6,8 +6,10 @@ public enum TileState
 {
     Sand,
     Water,
+    WetSand,
     Tower,
     Moat,
+    WetMoat,
 }
 public class Tile : MonoBehaviour
 {
@@ -23,30 +25,40 @@ public class Tile : MonoBehaviour
         set { _yCoord = value; }
     }
 
-    Renderer renderer;
+    // juste pour le debug
+    private Renderer _renderer;
 
     public TileState State;
 
     Color initColor;
-    // Start is called before the first frame update
+
+    private bool _isHovered = false;
+    private bool _isClicked = false;
     void Start()
     {
         State = TileState.Sand;
-        renderer = transform.GetChild(0).GetComponent<Renderer>();
-        initColor = renderer.material.color;
+        _renderer = transform.GetChild(0).GetComponent<Renderer>();
+        initColor = _renderer.material.color;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Set(TileState state)
     {
-        
+        State = state;
     }
 
     public void OnHover(bool active)
     {
-        Renderer renderer = GetComponent<Renderer>();
-
+        if (_isHovered == active) return;
+        _isHovered = active;
         //Call SetColor using the shader property name "_Color" and setting the color to red
-        renderer.material.SetColor("_Color", active ? Color.red : initColor);
+        _renderer.material.color = active ? Color.red : initColor;
+    }
+
+    public void OnClick(bool active)
+    {
+        if (_isClicked == active) return;
+        _isClicked = active;
+        //Call SetColor using the shader property name "_Color" and setting the color to red
+        _renderer.material.color = active ? Color.yellow : _isHovered ? Color.red : initColor;
     }
 }

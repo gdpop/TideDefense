@@ -16,6 +16,8 @@ public class CastleManager : MonoBehaviour
     }
     #endregion
 
+    [SerializeField] private int maxLifePoints;
+
     int _lifePoint;
 
     private void Awake()
@@ -48,8 +50,12 @@ public class CastleManager : MonoBehaviour
         if (lifeInput <= 0)
             throw new System.Exception("Invalid input value");
 
-        _lifePoint += lifeInput;
-        UpdateCastle();
+        int newLifePoints = _lifePoint += lifeInput;
+
+        if (newLifePoints >= maxLifePoints)
+            return;
+
+        UpdateCastle(lifeInput);
     }
     public void RemoveLifePoint(int lifeInput)
     {
@@ -58,12 +64,17 @@ public class CastleManager : MonoBehaviour
 
         int newLifePoints = _lifePoint += lifeInput;
 
-        //if (newLifePoints <= 0)
-        //    GameManager.instance
+        if (newLifePoints <= 0)
+        {
+            GameManager.Instance.EndGame();
+            return;
+        }
+
+        UpdateCastle(lifeInput);
     }
 
-    private void UpdateCastle()
+    private void UpdateCastle(int lifeInput)
     {
-
+        _lifePoint += lifeInput;
     }
 }
