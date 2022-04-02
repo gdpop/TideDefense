@@ -16,7 +16,7 @@ public class WaterManager : MonoBehaviour
     }
     #region [ MONOBEHAVIOR ]
 
-    private int gridXLength;
+    private int _gridXLength;
     private int[] wave;
     private void Awake()
     {
@@ -30,23 +30,27 @@ public class WaterManager : MonoBehaviour
     #endregion
 
 
-    private void Start()
+    public void Init()
     {
-        StartCoroutine(Tic());
-
-        gridXLength = GridManager.Instance.CurrentGrid.XLenght;
-        wave = new int[gridXLength];
+        _gridXLength = GridManager.Instance.CurrentGrid.XLenght;
+        wave = new int[_gridXLength];
         for (int i = 0; i < wave.Length; i++)
         {
             wave[i] = 0;
         }
     }
 
+    public void StartWater()
+    {
+        StartCoroutine("Tic");
+    }
+
     private void AscendingTide()
     {
+        print(wave.Length);
         for (int i = 0; i < wave.Length; i++)
         {
-            int delta = Random.Range(1, 4);
+            int delta = Random.Range(0, 2);
             while (delta > 0)
             {
                 Tile tile = GridManager.Instance.CurrentGrid.GetTile(i, wave[i] + 1);
@@ -61,7 +65,11 @@ public class WaterManager : MonoBehaviour
                     case TileState.Tower:
                         delta = 0;
                         break;
-
+                    default:
+                        delta--;
+                        wave[i]++;
+                        GridManager.Instance.CurrentGrid.SetTile(i, wave[i], TileState.Water);
+                        break;
                 }
             }
 
@@ -70,28 +78,29 @@ public class WaterManager : MonoBehaviour
 
     private void DescendingTide()
     {
-        for (int i = 0; i < wave.Length; i++)
-        {
-            if (GridManager.Instance.CurrentGrid.GetTile(i, wave[i - 1]))
-            {
-                GridManager.Instance.CurrentGrid.SetTile(i, wave[i - 1], TileState.WetSand);
-                wave[i]--;
-            }
+        // for (int i = 0; i < wave.Length; i++)
+        // {
+        //     if (GridManager.Instance.CurrentGrid.GetTile(i, wave[i - 1]) != null)
+        //     {
+        //         GridManager.Instance.CurrentGrid.SetTile(i, wave[i - 1], TileState.WetSand);
+        //         wave[i]--;
+        //     }
 
-        }
+        // }
     }
 
-    IEnumerator Tic()
+    public IEnumerator Tic()
     {
         while (true)
         {
+            print("TIC");
             if (TideManager.Instance.isAscending)
             {
                 AscendingTide();
             }
             else
             {
-                DescendingTide();
+                // DescendingTide();
             }
 
 

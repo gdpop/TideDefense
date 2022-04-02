@@ -16,8 +16,10 @@ public class GameManager : MonoBehaviour
     #region SINGLETON
     private static GameManager instance = null;
 
-    public static GameManager Instance {
-        get {
+    public static GameManager Instance
+    {
+        get
+        {
             return instance;
         }
     }
@@ -39,6 +41,8 @@ public class GameManager : MonoBehaviour
     {
         CurrentGameState = GameState.MainMenu;
         GridManager.Instance.CreateGrid();
+        WaterManager.Instance.Init();
+        WaterManager.Instance.StartWater();
     }
 
     public void EndGame()
