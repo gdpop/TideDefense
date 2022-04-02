@@ -52,4 +52,15 @@ public class Grid : MonoBehaviour
     {
         _tileList.Remove(tile);
     }
+
+    // si ça retourne null c'est qu'il a pas trouvé de tile à ces coordonnées
+    public Tile GetTile(int coordX, int coordY)
+    {
+        foreach(Tile tile in _tileList)
+        {
+            if (tile.XCoord == coordX && tile.YCoord == coordY) return tile;
+        }
+        Debug.LogError("pas trouvé de tile à ces coordonnées");
+        return null;
+    }
 }
