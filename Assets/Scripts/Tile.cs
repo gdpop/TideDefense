@@ -37,7 +37,9 @@ public class Tile : MonoBehaviour
 
     void Start()
     {
-        State = TileState.Sand;
+        if(XCoord == 0) Set(TileState.Water);
+        else Set(TileState.Sand);
+
         _initialY = transform.position.y;
     }
 
