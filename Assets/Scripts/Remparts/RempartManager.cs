@@ -110,7 +110,7 @@ public class RempartManager : MonoBehaviour
 	/// <summary> 
 	///	Clockwise from the top, get a bitmask of neight	
 	///</summary>
-	public void GetRempartNeighboors(int x, int y)
+	public int GetRempartNeighboors(int x, int y)
 	{
 		string bitmask = "";
 
@@ -122,8 +122,25 @@ public class RempartManager : MonoBehaviour
 
 		// converting to integer
 		Debug.Log(bitmask);
-        int enumValue = Convert.ToInt32(bitmask, 2);
+		int enumValue = Convert.ToInt32(bitmask, 2);
 		Debug.Log(enumValue);
+
+		return enumValue;
+	}
+
+	public RempartBlock GetRempartBlockFromCoord(int x, int y)
+	{
+		RempartType type = (RempartType)GetRempartNeighboors(x, y);
+
+		RempartBlock block = _rempartBlocks.Find(item => item.type == type);
+
+		if (block.mesh != null)
+			return block;
+		else
+		{
+			Debug.LogWarning("Couldn't GetRempartMeshFromCoord");
+			return new RempartBlock();
+		}
 	}
 
 	#region Debugs
@@ -168,6 +185,22 @@ public class RempartManager : MonoBehaviour
 	public void GetRempartNeighboors()
 	{
 		GetRempartNeighboors(_debugX, _debugY);
+	}
+
+	public void DebugUpdateMesh()
+	{
+		if (transform.childCount > 0)
+		{
+			Debug.Log("putain");
+			Transform child = transform.GetChild(0);
+			DestroyImmediate(child.gameObject);
+		}
+
+		RempartBlock block = GetRempartBlockFromCoord(1, 1);
+
+		GameObject newChild = Instantiate(block.mesh, transform) as GameObject;
+		
+		newChild.transform.localPosition = Vector3.zero;
 
 	}
 

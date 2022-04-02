@@ -1,6 +1,6 @@
 public enum RempartType
 {
-	Empty,
+	Empty = -1,
 
 	Single = 0,
 

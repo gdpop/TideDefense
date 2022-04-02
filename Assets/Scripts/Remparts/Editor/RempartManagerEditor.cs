@@ -24,5 +24,10 @@ public class RempartManagerEditor : Editor
 		{
 			_target.PrintGridStatus();
 		}
+
+		if (GUILayout.Button("Update Rempart"))
+		{
+			_target.DebugUpdateMesh();
+		}
 	}
 }
