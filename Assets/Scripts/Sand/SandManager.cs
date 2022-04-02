@@ -28,7 +28,7 @@ public class SandManager : MonoBehaviour
             Destroy(this.gameObject);
         }
         instance = this;
-
+        sandLevel = 1000;
     }
 
 

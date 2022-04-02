@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,40 +28,49 @@ public class Tile : MonoBehaviour
         set { _yCoord = value; }
     }
 
-    // juste pour le debug
-    private Renderer _renderer;
-
     public TileState State;
-
-    Color initColor;
 
     private bool _isHovered = false;
     private bool _isClicked = false;
+    private Tweener _moveTween;
+    private float _initialY = 0;
+
     void Start()
     {
-        State = TileState.Sand;
-        _renderer = transform.GetChild(0).GetComponent<Renderer>();
-        //initColor = _renderer.material.color;
-        initColor = Color.yellow;
-        ChangeColor(Color.yellow);
+        if(YCoord == 0) Set(TileState.Water);
+        else Set(TileState.Sand);
+
+        _initialY = transform.position.y;
     }
 
     public void Set(TileState state)
     {
+        if (state == State)
+            return;
+
         State = state;
         switch (State)
         {
+            case TileState.Sand:
+                ChangeModel(0);
+                break;
             case TileState.Water:
-                ChangeColor(Color.blue);
+                ChangeModel(1);
                 break;
             case TileState.WetSand:
-                ChangeColor(Color.cyan);
+                ChangeModel(2);
                 break;
             case TileState.Tower:
-                ChangeColor(Color.black);
+                ChangeModel(3);
+                break;
+            case TileState.Moat:
+                ChangeModel(4);
+                break;
+            case TileState.WetMoat:
+                ChangeModel(5);
                 break;
             default:
-                ChangeColor(Color.yellow);
+                ChangeModel(0);
                 break;
         }
     }
@@ -69,17 +79,17 @@ public class Tile : MonoBehaviour
     {
         if (_isHovered == active) return;
         _isHovered = active;
-        //Call SetColor using the shader property name "_Color" and setting the color to red
-        ChangeColor(active ? Color.red : initColor);
+        HoverEffect(active);
+        //ChangeModel(active ? Color.red : initColor);
     }
 
     public void OnClick(bool active)
     {
         if (_isClicked == active) return;
         _isClicked = active;
-        //Call SetColor using the shader property name "_Color" and setting the color to red
-        ChangeColor(active? Color.green: _isHovered? Color.red: initColor);
-
+        ClickEffect(active);
+        //if (_isHovered) HoverEffect(active);
+        //ChangeModel(active ? Color.green : _isHovered ? Color.red : initColor);
         OnTileClick();
     }
 
@@ -103,12 +113,28 @@ public class Tile : MonoBehaviour
                 break;
             case TileState.Tower:
                 break;
-        }
+        }    
     }
 
-    private void ChangeColor(Color color)
+    private void HoverEffect(bool active)
     {
-        _renderer.material.color = color;
-        //gameObject.SetActive(color == Color.yellow);
+        // Do hover effect
+        transform.position = new Vector3(transform.position.x, _initialY, transform.position.z);
+        _moveTween = transform.DOMoveY(_initialY + (active ? .3f : 0), .25f).SetEase(Ease.Flash);
+    }
+    private void ClickEffect(bool active)
+    {
+        // Do hover effect
+        transform.position = new Vector3(transform.position.x, _initialY, transform.position.z);
+        _moveTween = transform.DOMoveY(_initialY - (active ? .15f : 0), .1f).SetEase(Ease.Flash);
+    }
+
+    private void ChangeModel(int stateId)
+    {
+        // _renderer.material.color = color;
+        for(int i = 0; i<transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(i == stateId);
+        }
     }
 }

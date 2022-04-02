@@ -7,8 +7,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/SpawnManagerScriptableObject", order = 1)]
 public class TilesRendererData : ScriptableObject
 {
-    [field: SerializeField] public MeshFilter sandTileMeshFilter;
-    [field: SerializeField] public MeshFilter moatTileMeshFilter;
-    [field: SerializeField] public MeshFilter rampart1MeshFilter;
-    [field: SerializeField] public MeshFilter rampart2MeshFilter;
+    [field: SerializeField] public GameObject sandTileVisual;
+    [field: SerializeField] public GameObject moatTileVisual;
+    [field: SerializeField] public GameObject rampart1Visual;
+    [field: SerializeField] public GameObject rampart2Visual;
 }

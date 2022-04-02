@@ -29,6 +29,8 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private int _casualGridY;
 
+    public TilesRendererData TilesRenderer;
+
     [HideInInspector]
     public Grid CurrentGrid;
     public GameObject PrefabTile;
