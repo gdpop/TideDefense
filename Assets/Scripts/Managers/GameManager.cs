@@ -41,4 +41,9 @@ public class GameManager : MonoBehaviour
         GridManager.Instance.CreateGrid();
     }
 
+    public void EndGame()
+    {
+
+    }
+
 }
