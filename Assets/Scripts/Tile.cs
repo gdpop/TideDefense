@@ -6,13 +6,13 @@ public enum TileState
 {
     Sand,
     Water,
+    WetSand,
     Tower,
     Moat,
+    WetMoat,
 }
 public class Tile : MonoBehaviour
 {
-    [SerializeField] TilesRendererData renderData;
-
     private int _xCoord;
     public int XCoord {
         get { return _xCoord; }
@@ -38,13 +38,26 @@ public class Tile : MonoBehaviour
     {
         State = TileState.Sand;
         _renderer = transform.GetChild(0).GetComponent<Renderer>();
-        initColor = _renderer.material.color;
+        //initColor = _renderer.material.color;
+        initColor = Color.yellow;
+        ChangeColor(Color.yellow);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Set(TileState state)
     {
-        
+        State = state;
+        switch(State)
+        {
+            case TileState.Water:
+                ChangeColor(Color.blue);
+                break;
+            case TileState.WetSand:
+                ChangeColor(Color.cyan);
+                break;
+            default:
+                ChangeColor(Color.yellow);
+                break;
+        }
     }
 
     public void OnHover(bool active)
@@ -52,7 +65,7 @@ public class Tile : MonoBehaviour
         if (_isHovered == active) return;
         _isHovered = active;
         //Call SetColor using the shader property name "_Color" and setting the color to red
-        _renderer.material.color = active ? Color.red : initColor;
+        ChangeColor(active ? Color.red : initColor);
     }
 
     public void OnClick(bool active)
@@ -60,30 +73,11 @@ public class Tile : MonoBehaviour
         if (_isClicked == active) return;
         _isClicked = active;
         //Call SetColor using the shader property name "_Color" and setting the color to red
-        _renderer.material.color = active ? Color.yellow : _isHovered ? Color.red : initColor;
-
-        ClickOnTile(State);
+        ChangeColor(active? Color.green: _isHovered? Color.red: initColor);
     }
 
-    private void ClickOnTile( TileState state)
+    private void ChangeColor(Color color)
     {
-
-        switch (State)
-        {
-            case TileState.Sand:
-                bool canBuild = SandManager.Instance.RemoveSand(-1);
-                if (canBuild)
-                {
-                    State = TileState.Tower;
-
-                }
-                break;
-            case TileState.Tower: 
-                break;
-            case TileState.Water: 
-                break;
-            case TileState.Moat: 
-                break;
-        }
+        _renderer.material.color = color;
     }
 }
