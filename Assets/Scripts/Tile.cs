@@ -74,6 +74,31 @@ public class Tile : MonoBehaviour
         _isClicked = active;
         //Call SetColor using the shader property name "_Color" and setting the color to red
         ChangeColor(active? Color.green: _isHovered? Color.red: initColor);
+
+        OnTileClick();
+    }
+
+    private void OnTileClick()
+    {
+        switch (State)
+        {
+            case TileState.Sand:
+                break;
+            case TileState.WetSand:
+                break;
+            case TileState.WetMoat:
+                break;
+            case TileState.Moat:
+                break;
+            case TileState.Tower:
+                bool canBuild = SandManager.Instance.RemoveSand(1);
+                if (canBuild)
+                {
+                    State = TileState.Tower;
+                    GridManager.Instance.CurrentGrid.SetTile(XCoord, YCoord, State);
+                }
+                break;
+        }    
     }
 
     private void ChangeColor(Color color)
