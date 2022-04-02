@@ -64,7 +64,7 @@ public class SandManager : MonoBehaviour
         if (newSandValue < 0)
             return false;
 
-        UpdateSandLevel(newSandValue);
+        UpdateSandLevel(-sandUnit);
         return true;
     }
 
