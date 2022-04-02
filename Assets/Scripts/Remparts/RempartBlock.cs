@@ -4,6 +4,6 @@ using UnityEngine;
 [Serializable]
 public struct RempartBlock
 {
-	public RempartType type;
+	public TilesetType type;
 	public GameObject mesh;
 }

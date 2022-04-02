@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(RempartManager))]
+[CustomEditor(typeof(RempartDebugger))]
 public class RempartManagerEditor : Editor
 {
 	public override void OnInspectorGUI()
 	{
 		base.OnInspectorGUI();
 
-		RempartManager _target = (RempartManager)target;
+		RempartDebugger _target = (RempartDebugger)target;
 
 		if (GUILayout.Button("Set Rempart"))
 		{

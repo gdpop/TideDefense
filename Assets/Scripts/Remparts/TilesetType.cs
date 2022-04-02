@@ -1,4 +1,4 @@
-public enum RempartType
+public enum TilesetType
 {
 	Empty = -1,
 
