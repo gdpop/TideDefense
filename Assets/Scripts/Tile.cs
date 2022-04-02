@@ -38,12 +38,26 @@ public class Tile : MonoBehaviour
     {
         State = TileState.Sand;
         _renderer = transform.GetChild(0).GetComponent<Renderer>();
-        initColor = _renderer.material.color;
+        //initColor = _renderer.material.color;
+        initColor = Color.yellow;
+        ChangeColor(Color.yellow);
     }
 
     public void Set(TileState state)
     {
         State = state;
+        switch(State)
+        {
+            case TileState.Water:
+                ChangeColor(Color.blue);
+                break;
+            case TileState.WetSand:
+                ChangeColor(Color.cyan);
+                break;
+            default:
+                ChangeColor(Color.yellow);
+                break;
+        }
     }
 
     public void OnHover(bool active)
@@ -51,7 +65,7 @@ public class Tile : MonoBehaviour
         if (_isHovered == active) return;
         _isHovered = active;
         //Call SetColor using the shader property name "_Color" and setting the color to red
-        _renderer.material.color = active ? Color.red : initColor;
+        ChangeColor(active ? Color.red : initColor);
     }
 
     public void OnClick(bool active)
@@ -59,6 +73,11 @@ public class Tile : MonoBehaviour
         if (_isClicked == active) return;
         _isClicked = active;
         //Call SetColor using the shader property name "_Color" and setting the color to red
-        _renderer.material.color = active ? Color.yellow : _isHovered ? Color.red : initColor;
+        ChangeColor(active? Color.green: _isHovered? Color.red: initColor);
+    }
+
+    private void ChangeColor(Color color)
+    {
+        _renderer.material.color = color;
     }
 }
