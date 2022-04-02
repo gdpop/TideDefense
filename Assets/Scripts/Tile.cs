@@ -33,7 +33,7 @@ public class Tile : MonoBehaviour
     public TileState State;
 
     private bool _isHovered = false;
-    private bool _isClicked = false;
+    protected bool _isClicked = false;
     private Tweener _moveTween;
     private float _initialY = 0;
 
@@ -95,7 +95,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void OnHover(bool active)
+    public virtual void OnHover(bool active)
     {
         if (_isHovered == active) return;
         _isHovered = active;
@@ -103,7 +103,7 @@ public class Tile : MonoBehaviour
         //ChangeModel(active ? Color.red : initColor);
     }
 
-    public void OnLeftClick(bool active)
+    public virtual void OnLeftClick(bool active)
     {
         if (_isClicked == active) return;
         _isClicked = active;
@@ -114,7 +114,7 @@ public class Tile : MonoBehaviour
             OnTileLeftClick();
     }
 
-    public void OnRightClick(bool active)
+    public virtual void OnRightClick(bool active)
     {
         if (_isClicked == active) return;
         _isClicked = active;
@@ -125,7 +125,7 @@ public class Tile : MonoBehaviour
             OnTileRightClick();
     }
 
-    private void OnTileLeftClick()
+    protected virtual void OnTileLeftClick()
     {
         Debug.Log("[Tile] Coords : " + XCoord + " / " + YCoord);
         switch (State)
@@ -147,7 +147,7 @@ public class Tile : MonoBehaviour
                 break;
         }    
     }
-    private void OnTileRightClick()
+    protected virtual void OnTileRightClick()
     {
         switch (State)
         {

@@ -23,9 +23,11 @@ public class SandManager : MonoBehaviour
 
     [Header("Sand Parameters"), SerializeField] int _maxSandLevel;
     [SerializeField] private int _towerPriceValue;
+    [SerializeField] private int _castleUpgradeValue;
     [SerializeField] private int _moatEarnValue;
 
     public int TowerPriceValue { get { return _towerPriceValue; } }
+    public int CastleUpgradeValue { get { return _castleUpgradeValue; } }
     public int MoatEarnValue { get { return _moatEarnValue; } }
 
     private void Awake()
