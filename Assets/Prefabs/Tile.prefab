@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3338888454299096853}
   - component: {fileID: 3338888454299096858}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,6 +60,10 @@ PrefabInstance:
     - target: {fileID: 990525634364077622, guid: 28701a8652f608841a54bf32c435b073, type: 3}
       propertyPath: m_Name
       value: Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 990525634364077622, guid: 28701a8652f608841a54bf32c435b073, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 990525634364077622, guid: 28701a8652f608841a54bf32c435b073, type: 3}
       propertyPath: m_IsActive
@@ -172,6 +176,10 @@ PrefabInstance:
       value: Moat
       objectReference: {fileID: 0}
     - target: {fileID: 4545646403175579036, guid: c653af7e4495e9f4b9426e3d7146a4d4, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4545646403175579036, guid: c653af7e4495e9f4b9426e3d7146a4d4, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -189,9 +197,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3338888454299096853}
     m_Modifications:
+    - target: {fileID: 501507844594846700, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4994bb6d761577e4093b6079728ee926, type: 2}
     - target: {fileID: 1347080173337664640, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
       propertyPath: m_Name
       value: Sand
+      objectReference: {fileID: 0}
+    - target: {fileID: 1347080173337664640, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1347080173337664640, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9154132647352793698, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
       propertyPath: m_RootOrder
@@ -199,7 +219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9154132647352793698, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 0.37
       objectReference: {fileID: 0}
     - target: {fileID: 9154132647352793698, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
       propertyPath: m_LocalPosition.x
@@ -258,6 +278,10 @@ PrefabInstance:
     - target: {fileID: 1347080173337664640, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
       propertyPath: m_Name
       value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 1347080173337664640, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1347080173337664640, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
       propertyPath: m_IsActive
@@ -324,6 +348,10 @@ PrefabInstance:
     - target: {fileID: 7117543839225431917, guid: 0492e45253482bc4db97e346cb91df1a, type: 3}
       propertyPath: m_Name
       value: WetMoat
+      objectReference: {fileID: 0}
+    - target: {fileID: 7117543839225431917, guid: 0492e45253482bc4db97e346cb91df1a, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7117543839225431917, guid: 0492e45253482bc4db97e346cb91df1a, type: 3}
       propertyPath: m_IsActive
@@ -434,6 +462,10 @@ PrefabInstance:
     - target: {fileID: 3159493584742788652, guid: 61b7613ac8272294e9f94ac8b218f3e0, type: 3}
       propertyPath: m_Name
       value: WetSand
+      objectReference: {fileID: 0}
+    - target: {fileID: 3159493584742788652, guid: 61b7613ac8272294e9f94ac8b218f3e0, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3159493584742788652, guid: 61b7613ac8272294e9f94ac8b218f3e0, type: 3}
       propertyPath: m_IsActive
