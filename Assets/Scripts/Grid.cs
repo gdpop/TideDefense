@@ -63,4 +63,9 @@ public class Grid : MonoBehaviour
         Debug.LogError("pas trouvé de tile à ces coordonnées");
         return null;
     }
+
+    public void SetTile(int coordX, int coordY, TileState newState)
+    {
+        GetTile(coordX, coordY).Set(newState);
+    }
 }

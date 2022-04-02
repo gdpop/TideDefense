@@ -6,8 +6,10 @@ public enum TileState
 {
     Sand,
     Water,
+    WetSand,
     Tower,
     Moat,
+    WetMoat,
 }
 public class Tile : MonoBehaviour
 {
@@ -39,10 +41,9 @@ public class Tile : MonoBehaviour
         initColor = _renderer.material.color;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Set(TileState state)
     {
-        
+        State = state;
     }
 
     public void OnHover(bool active)
