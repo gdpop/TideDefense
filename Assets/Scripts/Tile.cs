@@ -105,8 +105,9 @@ public class Tile : MonoBehaviour
 	{
 		if (_isHovered == active) return;
 		_isHovered = active;
-		HoverEffect(active);
-		//ChangeModel(active ? Color.red : initColor);
+
+		if(State == TileState.Sand)
+			HoverEffect(active);
 	}
 
 	public virtual void OnLeftClick(bool active)
