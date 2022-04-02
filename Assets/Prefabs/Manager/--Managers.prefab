@@ -165,9 +165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54cfd7d1b1bbfbe429a83e30f2a0c562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _casualGridX: 30
-  _casualGridY: 18
-  _castlePrefab: {fileID: 0}
+  _casualGridX: 15
+  _casualGridY: 20
+  _castlePrefab: {fileID: 5054061949793797294, guid: 93244c1e2126e6a40a198569d079569d, type: 3}
   TilesRenderer: {fileID: 0}
   CurrentGrid: {fileID: 0}
   PrefabTile: {fileID: 3338888454299096852, guid: c1d1483dd7c7b154fa0d0d6225b8e69a, type: 3}
@@ -214,6 +214,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e492a4c5e98c66047a79679854adc1f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _txtSand: {fileID: 0}
+  _slider: {fileID: 0}
 --- !u!1 &4930197337039790002
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,9 +259,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceac388c66dd9a44798f6d1b40d9e884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSandLevel: 0
-  _towerPriceValue: 0
-  _moatEarnValue: 0
+  _maxSandLevel: 10
+  _towerPriceValue: 2
+  _castleUpgradeValue: 1
+  _moatEarnValue: 1
 --- !u!1 &4930197337058127920
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,6 +307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAscending: 1
+  isAscending2: 1
 --- !u!1 &4930197337135123541
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,7 +394,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435ef2a2682d5da46ac605f725f50184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _castleCoords: {x: 0, y: 0}
+  _sandLifePoints: 0
+  _wetSandLifePoints: 0
+  _towerLifePoints: 0
+  _moatLifePoints: 0
+  _wetMoatLifePoints: 0
+  _castleCoords: {x: 7, y: 12}
 --- !u!1 &4930197337464419346
 GameObject:
   m_ObjectHideFlags: 0
