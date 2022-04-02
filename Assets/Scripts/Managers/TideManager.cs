@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeManager : MonoBehaviour
+public class TideManager : MonoBehaviour
 {
     #region SINGLETON
-    private static TimeManager instance = null;
+    private static TideManager instance = null;
 
-    public static TimeManager Instance
+    public static TideManager Instance
     {
         get
         {
@@ -16,8 +16,8 @@ public class TimeManager : MonoBehaviour
     }
     #region [ MONOBEHAVIOR ]
 
-    public bool isRecedingTide = false;
-    public bool isRisingTide = true;
+    public bool isAscending = true;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -32,6 +32,17 @@ public class TimeManager : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(Tic());
     }
+
+    IEnumerator Tic()
+    {
+        while (true)
+        {
+            isAscending = !isAscending;
+            yield return new WaitForSeconds(5f);
+        }
+    }
+
 
 }

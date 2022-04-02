@@ -42,7 +42,7 @@ public class WaterManager : MonoBehaviour
         }
     }
 
-    private void RisingTide()
+    private void AscendingTide()
     {
         for (int i = 0; i < wave.Length; i++)
         {
@@ -68,7 +68,7 @@ public class WaterManager : MonoBehaviour
         }
     }
 
-    private void RecedingTide()
+    private void DescendingTide()
     {
         for (int i = 0; i < wave.Length; i++)
         {
@@ -85,15 +85,15 @@ public class WaterManager : MonoBehaviour
     {
         while (true)
         {
-            if (TimeManager.Instance.isRecedingTide)
+            if (TideManager.Instance.isAscending)
             {
-                RecedingTide();
+                AscendingTide();
+            }
+            else
+            {
+                DescendingTide();
             }
 
-            if (TimeManager.Instance.isRisingTide)
-            {
-                RisingTide();
-            }
 
             yield return new WaitForSeconds(1f);
         }
