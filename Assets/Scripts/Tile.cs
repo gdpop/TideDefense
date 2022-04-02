@@ -58,6 +58,6 @@ public class Tile : MonoBehaviour
         if (_isClicked == active) return;
         _isClicked = active;
         //Call SetColor using the shader property name "_Color" and setting the color to red
-        _renderer.material.color = active ? Color.yellow : initColor;
+        _renderer.material.color = active ? Color.yellow : _isHovered ? Color.red : initColor;
     }
 }

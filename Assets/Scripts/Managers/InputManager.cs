@@ -34,6 +34,7 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         DetectHover();
+        DetectClick();
     }
 
     private void DetectHover()
@@ -66,16 +67,20 @@ public class InputManager : MonoBehaviour
             hoveredTile = null;
         }
 
-        if(Input.GetMouseButtonDown(0) && hoveredTile != null)
+
+    }
+
+    private void DetectClick()
+    {
+        if (Input.GetMouseButtonDown(0) && hoveredTile != null)
         {
             clickedTile = hoveredTile;
             clickedTile.OnClick(true);
         }
-        else if(Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
-            if(clickedTile != null) clickedTile.OnClick(false);
+            if (clickedTile != null) clickedTile.OnClick(false);
             clickedTile = null;
         }
-
     }
 }
