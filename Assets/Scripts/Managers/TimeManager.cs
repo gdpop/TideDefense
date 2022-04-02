@@ -45,7 +45,7 @@ public class TimeManager : MonoBehaviour
         while (true)
         {
             //yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 4f));
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
             isAscending = !isAscending;
             //WaterManager.Instance.FoamCoordY += isAscending ? 1 : -1;
         }

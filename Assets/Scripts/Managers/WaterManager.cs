@@ -66,29 +66,34 @@ public class WaterManager : MonoBehaviour
             print("newY" + newY);
             if (newY == waveTilesYCoord[i]) continue;
             
-            Tile nextTile = GridManager.Instance.CurrentGrid.GetTile(i, newY);
 
             if(ascend)
             {
-                switch (nextTile.State)
+                for(int indexInBetweenTiles = 1; indexInBetweenTiles <= delta; indexInBetweenTiles++)
                 {
-                    case TileState.Sand:
-                        GridManager.Instance.CurrentGrid.SetTile(i, newY, TileState.Water);
-                        //waveTilesYCoord[i] = newY;
-                        break;
-                    case TileState.Tower:
-                        // Ici on met un dégât à la tour et on return;
-                        break;
-                    case TileState.Moat:
-                        // Ici on met un dégât à la tour et on return; 
-                        break;
-                    default:
-                        //GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.Water);
-                        //if (i < waveTilesYCoord.Length - 1)  waveTilesYCoord[i]++;
-                        GridManager.Instance.CurrentGrid.SetTile(i, newY, TileState.Water);
-                        //waveTilesYCoord[i] = newY;
-                        break;
+                    Tile inBetweenTile = GridManager.Instance.CurrentGrid.GetTile(i , prevTile.YCoord+indexInBetweenTiles);
+
+                    switch (inBetweenTile.State)
+                    {
+                        case TileState.Sand:
+                            GridManager.Instance.CurrentGrid.SetTile(i, inBetweenTile.YCoord, TileState.Water);
+                            //waveTilesYCoord[i] = newY;
+                            break;
+                        case TileState.Tower:
+                            // Ici on met un dégât à la tour et on return;
+                            break;
+                        case TileState.Moat:
+                            // Ici on met un dégât à la tour et on return; 
+                            break;
+                        default:
+                            //GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.Water);
+                            //if (i < waveTilesYCoord.Length - 1)  waveTilesYCoord[i]++;
+                            GridManager.Instance.CurrentGrid.SetTile(i, inBetweenTile.YCoord, TileState.Water);
+                            //waveTilesYCoord[i] = newY;
+                            break;
+                    }
                 }
+
             }
             else
             {
