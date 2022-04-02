@@ -32,6 +32,7 @@ public class Tile : MonoBehaviour
 	}
 
 	public TileState State;
+	public TileState PreviousState;
 
 	private bool _isHovered = false;
 	private bool _isClicked = false;
@@ -60,7 +61,7 @@ public class Tile : MonoBehaviour
 		}
 
 		TimeManager.Instance.tick -= LooseOneLifePoint;
-
+		PreviousState = State;
 		State = state;
 		switch (State)
 		{
