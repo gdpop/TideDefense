@@ -25,6 +25,7 @@ public class InputManager : MonoBehaviour
     #endregion
 
     private Tile hoveredTile;
+    private Tile clickedTile;
     void Start()
     {
         
@@ -62,6 +63,19 @@ public class InputManager : MonoBehaviour
         else
         {
             if (hoveredTile != null) hoveredTile.OnHover(false);
+            hoveredTile = null;
         }
+
+        if(Input.GetMouseButtonDown(0) && hoveredTile != null)
+        {
+            clickedTile = hoveredTile;
+            clickedTile.OnClick(true);
+        }
+        else if(Input.GetMouseButtonUp(0))
+        {
+            if(clickedTile != null) clickedTile.OnClick(false);
+            clickedTile = null;
+        }
+
     }
 }

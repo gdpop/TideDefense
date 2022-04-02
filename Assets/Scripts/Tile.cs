@@ -31,6 +31,7 @@ public class Tile : MonoBehaviour
     Color initColor;
 
     private bool _isHovered = false;
+    private bool _isClicked = false;
     void Start()
     {
         State = TileState.Sand;
@@ -50,5 +51,13 @@ public class Tile : MonoBehaviour
         _isHovered = active;
         //Call SetColor using the shader property name "_Color" and setting the color to red
         _renderer.material.color = active ? Color.red : initColor;
+    }
+
+    public void OnClick(bool active)
+    {
+        if (_isClicked == active) return;
+        _isClicked = active;
+        //Call SetColor using the shader property name "_Color" and setting the color to red
+        _renderer.material.color = active ? Color.yellow : initColor;
     }
 }
