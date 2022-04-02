@@ -14,13 +14,15 @@ public enum TileState
 public class Tile : MonoBehaviour
 {
     private int _xCoord;
-    public int XCoord {
+    public int XCoord
+    {
         get { return _xCoord; }
         set { _xCoord = value; }
     }
 
     private int _yCoord;
-    public int YCoord {
+    public int YCoord
+    {
         get { return _yCoord; }
         set { _yCoord = value; }
     }
@@ -46,13 +48,16 @@ public class Tile : MonoBehaviour
     public void Set(TileState state)
     {
         State = state;
-        switch(State)
+        switch (State)
         {
             case TileState.Water:
                 ChangeColor(Color.blue);
                 break;
             case TileState.WetSand:
                 ChangeColor(Color.cyan);
+                break;
+            case TileState.Tower:
+                ChangeColor(Color.black);
                 break;
             default:
                 ChangeColor(Color.yellow);
@@ -98,11 +103,12 @@ public class Tile : MonoBehaviour
                     GridManager.Instance.CurrentGrid.SetTile(XCoord, YCoord, State);
                 }
                 break;
-        }    
+        }
     }
 
     private void ChangeColor(Color color)
     {
-        _renderer.material.color = color;
+        // _renderer.material.color = color;
+        gameObject.SetActive(color == Color.yellow);
     }
 }

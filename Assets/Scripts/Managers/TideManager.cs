@@ -32,15 +32,15 @@ public class TideManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(Tic());
+        StartCoroutine("Tic");
     }
 
-    IEnumerator Tic()
+    public IEnumerator Tic()
     {
         while (true)
         {
-            isAscending = !isAscending;
             yield return new WaitForSeconds(5f);
+            isAscending = !isAscending;
         }
     }
 

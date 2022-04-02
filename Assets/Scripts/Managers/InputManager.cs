@@ -7,8 +7,10 @@ public class InputManager : MonoBehaviour
     #region SINGLETON
     private static InputManager instance = null;
 
-    public static InputManager Instance {
-        get {
+    public static InputManager Instance
+    {
+        get
+        {
             return instance;
         }
     }
@@ -28,7 +30,7 @@ public class InputManager : MonoBehaviour
     private Tile clickedTile;
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -48,7 +50,7 @@ public class InputManager : MonoBehaviour
         {
 
             Tile tile = hit.transform.transform.parent.GetComponent<Tile>();
-            print(tile.name);
+
             if (tile == null)
             {
                 if (hoveredTile != null) hoveredTile.OnHover(false);
