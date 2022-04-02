@@ -52,7 +52,7 @@ public class TimeManager : MonoBehaviour
         while (true)
         {
             //yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 4f));
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(6f);
             isAscending = !isAscending;
             //WaterManager.Instance.FoamCoordY += isAscending ? 1 : -1;
         }
@@ -62,7 +62,7 @@ public class TimeManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(6f);
             tideTick.Invoke();
         }
     }
