@@ -29,13 +29,17 @@ public class WaterManager : MonoBehaviour
     #endregion
     #endregion
 
+    private int _previousFoamCoordY = 0;
     private int _foamCoordY = 5;
     public int FoamCoordY {
         get { return _foamCoordY; }
-        set { _foamCoordY = value; }
+        set {
+            _previousFoamCoordY = _foamCoordY;
+            _foamCoordY = value; }
     }
     public void Init()
     {
+        _previousFoamCoordY = FoamCoordY;
         _gridXLength = GridManager.Instance.CurrentGrid.XLenght;
         waveTilesYCoord = new int[GridManager.Instance.CurrentGrid.XLenght];
         for (int i = 0; i < waveTilesYCoord.Length; i++)
@@ -55,18 +59,17 @@ public class WaterManager : MonoBehaviour
     {
         print(ascend);
         for (int mix = 0; mix < waveTilesYCoord.Length; mix++) print(waveTilesYCoord[mix]);
-        int foamAxisMax = 2;
+        int foamAxisMax = 1;
         for (int i = 0; i < _gridXLength; i++)
         {
             print(i + "//" + _gridXLength);
             Tile prevTile = GridManager.Instance.CurrentGrid.GetTile(i, waveTilesYCoord[i]);
-            int delta = Random.Range(ascend ? 0 : -foamAxisMax - 1, ascend ? foamAxisMax+1 : 0);
+            int delta = Random.Range(ascend ? 0 : -foamAxisMax, ascend ? foamAxisMax+1 : 1);
             print(("delta:" + delta));
             int newY = prevTile.YCoord + delta;
             newY = Mathf.Clamp(newY, FoamCoordY-foamAxisMax, FoamCoordY +foamAxisMax);
             print("newY" + newY);
             if (newY == waveTilesYCoord[i]) continue;
-            
 
             if(ascend)
             {
@@ -105,6 +108,11 @@ public class WaterManager : MonoBehaviour
             }
             waveTilesYCoord[i] = newY;
         }
+    }
+
+    private void FixTilesAfterFoamYChange()
+    {
+
     }
 
     private void DescendingTide()
