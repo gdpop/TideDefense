@@ -368,6 +368,10 @@ PrefabInstance:
       propertyPath: _towerPriceValue
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4930197337039789964, guid: ec79db20312166c41a8d5e9434190265, type: 3}
+      propertyPath: _castleUpgradeValue
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4930197337217587593, guid: ec79db20312166c41a8d5e9434190265, type: 3}
       propertyPath: _castleCoords.x
       value: 7

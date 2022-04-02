@@ -1,136 +1,72 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[ExecuteInEditMode]
-public class RempartManager : MonoBehaviour
+public class RempartManager : ATilesetManager
 {
 
-	#region Fields
+	#region SINGLETON
+	private static RempartManager instance = null;
 
-	[SerializeField] private List<List<bool>> _gridRempartStatus = new List<List<bool>>();
+	public static RempartManager Instance
+	{
+		get
+		{
+			return instance;
+		}
+	}
 
-	[SerializeField] private int _width = 3;
-	[SerializeField] private int _height = 3;
+	#region [ MONOBEHAVIOR ]
 
-	[SerializeField] private int _debugX = 0;
-	[SerializeField] private int _debugY = 0;
-
-	private List<Vector3> _neighboorsCoordinates = new List<Vector3>();
-
-	[SerializeField] private List<RempartBlock> _rempartBlocks = new List<RempartBlock>();
-
+	private void Awake()
+	{
+		if (instance != null && instance != this)
+		{
+			Destroy(gameObject);
+		}
+		instance = this;
+	}
 
 	#endregion
 
-	#region Methods
+	#endregion
 
-	private void OnEnable()
+	[SerializeField] private List<RempartBlock> _rempartBlocks = new List<RempartBlock>();
+
+	public override bool CheckValidCoordinates(int x, int y)
 	{
-		InitializeGrid();
-
-		SetRempart(1, 1);
-		Debug.Log(GetRempart(1, 1));
-
-		PrintGridStatus();
+		return base.CheckValidCoordinates(x, y);
 	}
 
-	public void InitializeGrid()
-	{
-		_gridRempartStatus = new List<List<bool>>(_width);
-
-		for (int x = 0; x < _width; x++)
-		{
-			List<bool> _heights = new List<bool>(_height);
-
-			for (int y = 0; y < _height; y++)
-			{
-				_heights.Add(false);
-				// Debug.Log($" {x} : {y}");
-			}
-			_gridRempartStatus.Add(_heights);
-
-		}
-
-		_neighboorsCoordinates = new List<Vector3>(8)
-		{
-			new Vector2(0,1),
-			new Vector2(1,1),
-			new Vector2(1,0),
-			new Vector2(1,-1),
-			new Vector2(0,-1),
-			new Vector2(-1,-1),
-			new Vector2(-1,0),
-			new Vector2(-1,1),
-		};
-
-	}
-
-	public void SetRempart(int x, int y)
-	{
-		if (CheckValidCoordinates(x, y))
-			_gridRempartStatus[x][y] = true;
-
-	}
-
-	public void UnsetRempart(int x, int y)
-	{
-		if (CheckValidCoordinates(x, y))
-			_gridRempartStatus[x][y] = false;
-	}
-
-	public bool GetRempart(int x, int y)
-	{
-		if (CheckValidCoordinates(x, y))
-			return _gridRempartStatus[x][y];
-		else
-			return false;
-	}
-
-	public bool CheckValidCoordinates(int x, int y)
-	{
-		if (x < 0 || _width - 1 < x)
-		{
-			Debug.LogWarning($"{x}:{y} : {x} is wrong");
-			return false;
-		}
-
-		if (y < 0 || _height - 1 < y)
-		{
-			Debug.LogWarning($"{x}:{y} : {y} is wrong");
-			return false;
-		}
-
-		return true;
-	}
-
-
-	/// <summary> 
-	///	Clockwise from the top, get a bitmask of neight	
-	///</summary>
 	public int GetRempartNeighboors(int x, int y)
 	{
 		string bitmask = "";
 
-		for (int i = 0; i < _neighboorsCoordinates.Count; i++)
+		for (int i = 0; i < _neighboorsCoordinatesFour.Count; i++)
 		{
-			Vector2 offset = _neighboorsCoordinates[i];
-			bitmask += GetRempart(x + (int)offset.x, y + (int)offset.y) ? "1" : "0";
+			Vector2 offset = _neighboorsCoordinatesFour[i];
+			Tile tile = GridManager.Instance.CurrentGrid.GetTile(x + (int)offset.x, y + (int)offset.y);
+
+			if (tile == null)
+			{
+				bitmask += 0;
+				continue;
+			}
+
+			bitmask += (tile.State == TileState.Tower) ? "1" : "0";
 		}
 
 		// converting to integer
-		Debug.Log(bitmask);
+		// Debug.Log(bitmask);
 		int enumValue = Convert.ToInt32(bitmask, 2);
-		Debug.Log(enumValue);
+		// Debug.Log(enumValue);
 
 		return enumValue;
 	}
 
 	public RempartBlock GetRempartBlockFromCoord(int x, int y)
 	{
-		RempartType type = (RempartType)GetRempartNeighboors(x, y);
+		TilesetTypeFour type = (TilesetTypeFour)GetRempartNeighboors(x, y);
 
 		RempartBlock block = _rempartBlocks.Find(item => item.type == type);
 
@@ -143,69 +79,59 @@ public class RempartManager : MonoBehaviour
 		}
 	}
 
-	#region Debugs
 
-	[SerializeField, TextArea(4, 4)] private string _gridStatus = "";
-
-	[ContextMenu("Set DebugCoord")]
-	public void SetDebugCoord()
+	public void RefreshRempartAroundCoordinates(int x, int y)
 	{
-		SetRempart(_debugX, _debugY);
-		PrintGridStatus();
-		GetRempartNeighboors(1, 1);
+		Debug.Log("RefreshRempartAroundCoordinates");
+		for (int i = 0; i < _neighboorsCoordinatesFour.Count; i++)
+		{
+			Vector2 offset = _neighboorsCoordinatesFour[i];
+			Vector2 neighboorCoord = new Vector2(x + (int)offset.x, y + (int)offset.y);
+			Tile tile = GridManager.Instance.CurrentGrid.GetTile((int)neighboorCoord.x, (int)neighboorCoord.y);
+
+			if (tile == null)
+				continue;
+
+			if (tile.State == TileState.Tower)
+				tile.UpdateTowerModel();
+		}
+
 	}
 
-	[ContextMenu("Unset DebugCoord")]
-	public void UnsetDebugCoord()
-	{
-		UnsetRempart(_debugX, _debugY);
-		PrintGridStatus();
-		GetRempartNeighboors(1, 1);
-	}
+	[SerializeField] private MeshFilter _meshFilter = null;
+
+	[SerializeField] private TilesetTypeEight _type = TilesetTypeEight.Empty;
+
+	// [ContextMenu("Test MeshFilter")]
+	// public void TestMeshFilter()
+	// {
+	// 	_meshFilter.mesh = _rempartBlocks.Find(item => item.type == _type).mesh;
+	// }
 
 	[ContextMenu("Print Grid Status")]
-	public void PrintGridStatus()
+	public void PrintGridStatus(int x, int y)
 	{
-		string gridPrint = "";
-		for (int y = _height - 1; y >= 0; y--)
+		string gridPrint = tonFils;
+
+		for (int i = 0; i < _neighboorsCoordinatesFour.Count; i++)
 		{
-			string row = "";
-			for (int x = 0; x < _width; x++)
-				row += _gridRempartStatus[x][y] ? "1" : "0";
+			Vector2 offset = _neighboorsCoordinatesFour[i];
+			Vector2 neighboorCoord = new Vector2(x + (int)offset.x, y + (int)offset.y);
+			Tile tile = GridManager.Instance.CurrentGrid.GetTile((int)neighboorCoord.x, (int)neighboorCoord.y);
 
-			gridPrint += row + "\r\n";
+			if (tile == null)
+			{
+				gridPrint = gridPrint.Replace($"({i})", "0");
+				continue;
+			}
+
+			gridPrint = gridPrint.Replace($"({i})", tile.State == TileState.Tower ? "1" : "0");
 		}
-
 		Debug.Log(gridPrint);
-		_gridStatus = gridPrint;
+		// _gridStatus = gridPrint;
 
 	}
 
-	[ContextMenu("Get Rempart Neighboors")]
-	public void GetRempartNeighboors()
-	{
-		GetRempartNeighboors(_debugX, _debugY);
-	}
 
-	public void DebugUpdateMesh()
-	{
-		if (transform.childCount > 0)
-		{
-			Debug.Log("putain");
-			Transform child = transform.GetChild(0);
-			DestroyImmediate(child.gameObject);
-		}
-
-		RempartBlock block = GetRempartBlockFromCoord(1, 1);
-
-		GameObject newChild = Instantiate(block.mesh, transform) as GameObject;
-		
-		newChild.transform.localPosition = Vector3.zero;
-
-	}
-
-	#endregion
-
-	#endregion
-
+	private string tonFils = "(7)(0)(1)\r\n(6)X(2)\r\n(5)(4)(3)";
 }

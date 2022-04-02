@@ -21,7 +21,7 @@ public class GridManager : MonoBehaviour
             }
             instance = this;
         }
-    #endregion
+        #endregion
     #endregion
 
     [SerializeField]
@@ -51,4 +51,5 @@ public class GridManager : MonoBehaviour
 
         Debug.Log("grid created: x:" + CurrentGrid.XLenght + " // y:" + CurrentGrid.YLenght);
     }
+
 }

@@ -3,12 +3,7 @@ guid: 48c388af1d31f694f80d25197f1b0363
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Rempart
-    second: {fileID: 2100000, guid: 2ef3d9dfd20b32943b997cb1daeffbc4, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
