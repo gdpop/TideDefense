@@ -82,7 +82,6 @@ public class InputManager : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             if (clickedTile != null) clickedTile.OnClick(false);
-            clickedTile = null;
         }
     }
 }
