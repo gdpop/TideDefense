@@ -298,6 +298,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3338888454299096853}
     m_Modifications:
+    - target: {fileID: 501507844594846700, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5b562959baded644b8d2b637c86388ed, type: 2}
     - target: {fileID: 1347080173337664640, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
       propertyPath: m_Name
       value: Water

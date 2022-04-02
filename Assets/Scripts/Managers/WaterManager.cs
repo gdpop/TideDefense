@@ -49,28 +49,26 @@ public class WaterManager : MonoBehaviour
     {
         for (int i = 0; i < waveTilesYCoord.Length; i++)
         {
-            int delta = Random.Range(0, 2);
-            while (delta > 0)
+            int delta = Random.Range(1, 3);
+
+            for (int j = 0; j < delta; j++)
             {
                 Tile nextTile = GridManager.Instance.CurrentGrid.GetTile(i, waveTilesYCoord[i] + 1);
 
                 switch (nextTile.State)
                 {
                     case TileState.Sand:
-                        delta--;
-                        waveTilesYCoord[i]++;
                         GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.Water);
+                        waveTilesYCoord[i]++;
                         break;
                     case TileState.Tower:
-                        delta = 0;
                         break;
                     case TileState.Moat:
                         GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.Water);
                         break;
                     default:
-                        delta--;
-                        waveTilesYCoord[i]++;
                         GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.Water);
+                        waveTilesYCoord[i]++;
                         break;
                 }
             }
@@ -82,9 +80,9 @@ public class WaterManager : MonoBehaviour
     {
         for (int i = 0; i < waveTilesYCoord.Length; i++)
         {
-            if (GridManager.Instance.CurrentGrid.GetTile(i, waveTilesYCoord[i] - 1) != null)
+            if (GridManager.Instance.CurrentGrid.GetTile(i, waveTilesYCoord[i]) != null)
             {
-                GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i] - 1, TileState.WetSand);
+                GridManager.Instance.CurrentGrid.SetTile(i, waveTilesYCoord[i], TileState.WetSand);
                 waveTilesYCoord[i]--;
             }
 
