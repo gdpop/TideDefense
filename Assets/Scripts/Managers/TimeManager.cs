@@ -62,7 +62,7 @@ public class TimeManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(6f);
             tideTick.Invoke();
         }
     }
