@@ -27,20 +27,24 @@ public class TimeManager : MonoBehaviour
         instance = this;
         tick = () => { };
         tideTick = () => { };
+        attackTick = () => { };
     }
     #endregion
     #endregion
 
     public bool isAscending = true;
+    public bool isAscending2 = true;
 
     public Action tick;
     public Action tideTick;
+    public Action attackTick;
 
     private void Start()
     {
         StartCoroutine("FoamTic");
         StartCoroutine("LifeTic");
         StartCoroutine("TideTick");
+        StartCoroutine("AttackTick");
     }
 
     public IEnumerator FoamTic()
@@ -58,8 +62,18 @@ public class TimeManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(10f);
             tideTick.Invoke();
+        }
+    }
+
+    public IEnumerator AttackTick()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(30f);
+            attackTick.Invoke();
+            isAscending2 = !isAscending2;
         }
     }
 

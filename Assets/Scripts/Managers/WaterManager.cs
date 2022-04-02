@@ -122,7 +122,11 @@ public class WaterManager : MonoBehaviour
 
     private void UpdateTideAxis()
     {
-        _foamCoordY++;
+        if (TimeManager.Instance.isAscending2)
+            _foamCoordY++;
+        else
+            _foamCoordY--;
+
     }
 
     public IEnumerator Tic()
