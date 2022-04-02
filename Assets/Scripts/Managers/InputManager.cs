@@ -49,7 +49,6 @@ public class InputManager : MonoBehaviour
         if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, layerMask))
         {
             Tile tile = hit.transform.CompareTag("Castle") ? hit.transform.GetComponent<Tile>() : hit.transform.transform.parent.GetComponent<Tile>();
-            //Tile tile = hit.transform.transform.parent.GetComponent<Tile>();
 
             if (tile == null)
             {

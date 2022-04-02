@@ -26,6 +26,7 @@ public class SandManager : MonoBehaviour
     [SerializeField] private int _castleUpgradeValue;
     [SerializeField] private int _moatEarnValue;
 
+    public int MaxSandLevel { get { return _maxSandLevel; } }
     public int TowerPriceValue { get { return _towerPriceValue; } }
     public int CastleUpgradeValue { get { return _castleUpgradeValue; } }
     public int MoatEarnValue { get { return _moatEarnValue; } }
@@ -53,14 +54,14 @@ public class SandManager : MonoBehaviour
     }
 
 
-    public void AddSand(int sandUnit)
+    public bool AddSand(int sandUnit)
     {
 
         if (sandUnit <= 0)
             throw new Exception("Incorrect Value");
 
         if (sandLevel == _maxSandLevel)
-            return;
+            return false;
 
         int newSandValue;
         newSandValue = sandLevel + sandUnit;
@@ -68,10 +69,11 @@ public class SandManager : MonoBehaviour
         if(newSandValue > _maxSandLevel)
         {
             sandLevel = _maxSandLevel;
-            return;
+            return false;
         }
 
         UpdateSandLevel(sandUnit);
+        return true;
     }
     public bool RemoveSand(int sandUnit)
     {
@@ -90,6 +92,8 @@ public class SandManager : MonoBehaviour
 
     private void UpdateSandLevel(int sandUnit)
     {
-        sandLevel += sandUnit;
+        int newSandLevel = sandLevel + sandUnit;
+        sandLevel = newSandLevel;
+        UIManager.Instance.UpdateSand(newSandLevel);
     }
 }

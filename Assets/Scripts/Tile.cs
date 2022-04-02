@@ -106,8 +106,9 @@ public class Tile : MonoBehaviour
 	{
 		if (_isHovered == active) return;
 		_isHovered = active;
-		HoverEffect(active);
-		//ChangeModel(active ? Color.red : initColor);
+
+		if(State == TileState.Sand)
+			HoverEffect(active);
 	}
 
 	public virtual void OnLeftClick(bool active)
@@ -159,7 +160,9 @@ public class Tile : MonoBehaviour
 		switch (State)
 		{
 			case TileState.Sand:
-				LooseLife(1);
+				bool canDig = SandManager.Instance.AddSand(SandManager.Instance.MoatEarnValue);
+				if(canDig)
+					LooseLife(1);
 				break;
 			case TileState.WetSand:
 				break;
@@ -214,7 +217,6 @@ public class Tile : MonoBehaviour
 		switch (State)
 		{
 			case TileState.Sand:
-				SandManager.Instance.AddSand(SandManager.Instance.MoatEarnValue);
 				GridManager.Instance.CurrentGrid.SetTile(XCoord, YCoord, TileState.Moat);
 				break;
 			case TileState.WetSand:
