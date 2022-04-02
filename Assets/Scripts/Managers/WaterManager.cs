@@ -93,7 +93,7 @@ public class WaterManager : MonoBehaviour
     {
         while (true)
         {
-            if (TideManager.Instance.isAscending)
+            if (TimeManager.Instance.isAscending)
             {
                 AscendingTide();
             }

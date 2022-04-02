@@ -91,6 +91,5 @@ public class SandManager : MonoBehaviour
     private void UpdateSandLevel(int sandUnit)
     {
         sandLevel += sandUnit;
-        Debug.Log("[SandManager] Sand level updated : " + sandLevel);
     }
 }

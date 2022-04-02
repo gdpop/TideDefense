@@ -74,22 +74,22 @@ public class InputManager : MonoBehaviour
 
     private void DetectClick()
     {
-        if (Input.GetMouseButtonDown(0) && hoveredTile != null)
+        if (Input.GetMouseButtonDown(1) && hoveredTile != null)
         {
             clickedTile = hoveredTile;
             clickedTile.OnLeftClick(true);
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(1))
         {
             if (clickedTile != null) clickedTile.OnLeftClick(false);
         }
 
-        if (Input.GetMouseButtonDown(1) && hoveredTile != null)
+        if (Input.GetMouseButtonDown(0) && hoveredTile != null)
         {
             clickedTile = hoveredTile;
             clickedTile.OnRightClick(true);
         }
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(0))
         {
             if (clickedTile != null) clickedTile.OnRightClick(false);
         }

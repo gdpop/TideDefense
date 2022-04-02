@@ -380,6 +380,26 @@ PrefabInstance:
       propertyPath: _castleCoords.y
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 4930197337217587593, guid: ec79db20312166c41a8d5e9434190265, type: 3}
+      propertyPath: _moatLifePoints
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930197337217587593, guid: ec79db20312166c41a8d5e9434190265, type: 3}
+      propertyPath: _sandLifePoints
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930197337217587593, guid: ec79db20312166c41a8d5e9434190265, type: 3}
+      propertyPath: _towerLifePoints
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930197337217587593, guid: ec79db20312166c41a8d5e9434190265, type: 3}
+      propertyPath: _wetMoatLifePoints
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930197337217587593, guid: ec79db20312166c41a8d5e9434190265, type: 3}
+      propertyPath: _wetSandLifePoints
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4930197337728177284, guid: ec79db20312166c41a8d5e9434190265, type: 3}
       propertyPath: m_Name
       value: --Managers

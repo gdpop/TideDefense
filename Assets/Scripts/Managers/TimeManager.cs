@@ -1,13 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TideManager : MonoBehaviour
+public class TimeManager : MonoBehaviour
 {
     #region SINGLETON
-    private static TideManager instance = null;
+    private static TimeManager instance = null;
 
-    public static TideManager Instance
+    public static TimeManager Instance
     {
         get
         {
@@ -18,6 +19,8 @@ public class TideManager : MonoBehaviour
 
     public bool isAscending = true;
 
+    public Action tick;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -25,6 +28,7 @@ public class TideManager : MonoBehaviour
             Destroy(this.gameObject);
         }
         instance = this;
+        tick = () => { };
     }
     #endregion
     #endregion
@@ -32,10 +36,11 @@ public class TideManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine("Tic");
+        StartCoroutine("TideTic");
+        StartCoroutine("LifeTic");
     }
 
-    public IEnumerator Tic()
+    public IEnumerator TideTic()
     {
         while (true)
         {
@@ -44,5 +49,12 @@ public class TideManager : MonoBehaviour
         }
     }
 
-
+    public IEnumerator LifeTic()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2f);
+            tick.Invoke();
+        }
+    }
 }

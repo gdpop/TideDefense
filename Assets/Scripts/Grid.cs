@@ -85,7 +85,6 @@ public class Grid : MonoBehaviour
 
     public void SetTile(int coordX, int coordY, TileState newState)
     {
-        Debug.Log("Set Tile : " + newState);
         GetTile(coordX, coordY).Set(newState);
     }
 
