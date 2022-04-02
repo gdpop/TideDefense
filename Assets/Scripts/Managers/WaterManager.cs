@@ -42,6 +42,7 @@ public class WaterManager : MonoBehaviour
         {
             waveTilesYCoord[i] = FoamCoordY;
         }
+        TimeManager.Instance.tideTick += UpdateTideAxis;
     }
 
     public void StartWater()
@@ -112,6 +113,11 @@ public class WaterManager : MonoBehaviour
             }
 
         }
+    }
+
+    private void UpdateTideAxis()
+    {
+        _foamCoordY++;
     }
 
     public IEnumerator Tic()

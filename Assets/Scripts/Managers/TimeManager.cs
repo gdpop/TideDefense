@@ -17,9 +17,6 @@ public class TimeManager : MonoBehaviour
     }
     #region [ MONOBEHAVIOR ]
 
-    public bool isAscending = true;
-
-    public Action tick;
 
     private void Awake()
     {
@@ -29,15 +26,21 @@ public class TimeManager : MonoBehaviour
         }
         instance = this;
         tick = () => { };
+        tideTick = () => { };
     }
     #endregion
     #endregion
 
+    public bool isAscending = true;
+
+    public Action tick;
+    public Action tideTick;
 
     private void Start()
     {
         StartCoroutine("FoamTic");
         StartCoroutine("LifeTic");
+        StartCoroutine("TideTick");
     }
 
     public IEnumerator FoamTic()
@@ -45,9 +48,18 @@ public class TimeManager : MonoBehaviour
         while (true)
         {
             //yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 4f));
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
             isAscending = !isAscending;
             //WaterManager.Instance.FoamCoordY += isAscending ? 1 : -1;
+        }
+    }
+
+    public IEnumerator TideTick()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5f);
+            tideTick.Invoke();
         }
     }
 
