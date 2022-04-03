@@ -118,7 +118,6 @@ public class Castle : Tile
 
     private void AddUpgradePoint(int value) {
         _upgradePoints += value;
-        Debug.Log("Add Upgrade Point");
 
         if(CanUpgrade()) UpgradeCastle();
     }
@@ -132,7 +131,6 @@ public class Castle : Tile
     }
 
     private void UpgradeCastle() {
-        Debug.Log("Upgrading castle to level " + (_castleLevel + 1));
         upgrades[_castleLevel].model.SetActive(false);
         _castleLevel++;
         upgrades[_castleLevel].model.SetActive(true);
