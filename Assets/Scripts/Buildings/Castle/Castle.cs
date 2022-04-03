@@ -1,6 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
+[Serializable]
+public struct CastleUpgrades {
+    public int level;
+    public GameObject model;
+    public int nextUpgradeValue;
+}
 
 public class Castle : Tile
 {
@@ -18,7 +26,11 @@ public class Castle : Tile
 
     [SerializeField] private int maxLifePoints;
 
+    [SerializeField] private CastleUpgrades[] upgrades;
+
     int _lifePoint;
+    int _castleLevel = 0;
+    int _upgradePoints = 0;
 
     private void Awake()
     {
@@ -61,6 +73,7 @@ public class Castle : Tile
         bool canUpgrade = SandManager.Instance.RemoveSand(SandManager.Instance.CastleUpgradeValue);
         if (canUpgrade)
         {
+            AddUpgradePoint(1);
             AddLifePoint(SandManager.Instance.CastleUpgradeValue);
         }
     }
@@ -101,5 +114,26 @@ public class Castle : Tile
     private void UpdateCastle(int lifeInput)
     {
         _lifePoint += lifeInput;
+    }
+
+    private void AddUpgradePoint(int value) {
+        _upgradePoints += value;
+
+        if(CanUpgrade()) UpgradeCastle();
+    }
+
+    private bool CanUpgrade() {
+        if(_castleLevel >= upgrades.Length - 1) return false;
+        else {
+            if(_upgradePoints >= upgrades[_castleLevel].nextUpgradeValue) return true;
+            else return false;
+        }
+    }
+
+    private void UpgradeCastle() {
+        upgrades[_castleLevel].model.SetActive(false);
+        _castleLevel++;
+        upgrades[_castleLevel].model.SetActive(true);
+        _upgradePoints = 0;
     }
 }

@@ -50,6 +50,8 @@ public class Grid : MonoBehaviour
 
                 _tileList.Add(clone);
 
+                clone.transform.parent = transform;
+
 
                 if (GetCastleTiles(new Vector2(i, j)))
                     SetTile(i, j, TileState.Castle);
