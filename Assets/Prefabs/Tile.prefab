@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
+  _previousState: 0
 --- !u!1001 &439424527219435144
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -201,7 +202,7 @@ PrefabInstance:
     - target: {fileID: 4248043323118595720, guid: 28701a8652f608841a54bf32c435b073, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 2ef3d9dfd20b32943b997cb1daeffbc4, type: 2}
+      objectReference: {fileID: 2100000, guid: 21118040b7dfe0948923baeb3f118f80, type: 2}
     - target: {fileID: 5733738280119241364, guid: 28701a8652f608841a54bf32c435b073, type: 3}
       propertyPath: m_Mesh
       value: 
