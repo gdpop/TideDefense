@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54cfd7d1b1bbfbe429a83e30f2a0c562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _casualGridX: 15
+  _casualGridX: 14
   _casualGridY: 20
   _castlePrefab: {fileID: 5054061949793797294, guid: 93244c1e2126e6a40a198569d079569d, type: 3}
   TilesRenderer: {fileID: 0}
@@ -394,12 +394,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435ef2a2682d5da46ac605f725f50184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sandLifePoints: 0
-  _wetSandLifePoints: 0
-  _towerLifePoints: 0
-  _moatLifePoints: 0
-  _wetMoatLifePoints: 0
-  _castleCoords: {x: 7, y: 12}
+  _sandLifePoints: 1
+  _wetSandLifePoints: 2
+  _towerLifePoints: 2
+  _moatLifePoints: 1
+  _wetMoatLifePoints: 2
+  _castleCoords: {x: 7, y: 16}
 --- !u!1 &4930197337464419346
 GameObject:
   m_ObjectHideFlags: 0
