@@ -380,7 +380,7 @@ PrefabInstance:
     - target: {fileID: 501507844594846700, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 5b562959baded644b8d2b637c86388ed, type: 2}
+      objectReference: {fileID: 2100000, guid: 6c4fa53e6ad84d3459c3d4bb3a0420ce, type: 2}
     - target: {fileID: 1347080173337664640, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
       propertyPath: m_Name
       value: Water
@@ -391,10 +391,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1347080173337664640, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8988032429151851412, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 6894428203817054813, guid: 26ffe5b6e5722b74f96471ffddee5789, type: 3}
     - target: {fileID: 9154132647352793698, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
       propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9154132647352793698, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
+      propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9154132647352793698, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
@@ -403,7 +411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9154132647352793698, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.218
       objectReference: {fileID: 0}
     - target: {fileID: 9154132647352793698, guid: bda4ac632985ffa4f9dda769516f7647, type: 3}
       propertyPath: m_LocalPosition.z
