@@ -16,6 +16,8 @@ public class WaterManager : MonoBehaviour
     }
     #region [ MONOBEHAVIOR ]
 
+    [SerializeField] private WaterGenerator waterGenerator;
+
     private int _gridXLength;
     private int[] waveTilesYCoord;
     private void Awake()
@@ -47,6 +49,8 @@ public class WaterManager : MonoBehaviour
             waveTilesYCoord[i] = FoamCoordY;
         }
         TimeManager.Instance.tideTick += UpdateTideAxis;
+
+        if(waterGenerator) waterGenerator.InitWaveVisual(_gridXLength);
     }
 
     public void StartWater()
@@ -143,6 +147,7 @@ public class WaterManager : MonoBehaviour
         while (true)
         {
             AscendingTide(TimeManager.Instance.isAscending);
+            if(waterGenerator) waterGenerator.SendWaveData(waveTilesYCoord);
             yield return new WaitForSeconds(1f);
         }
     }
