@@ -51,7 +51,7 @@ MonoBehaviour:
   - type: 10
     mesh: {fileID: 8490822814134871468, guid: f3403fa63c2729d4bbd5dae530749723, type: 3}
   - type: 2
-    mesh: {fileID: -7646251665422531609, guid: 321d2ae6f36ca7d40aa507eb81b69812, type: 3}
+    mesh: {fileID: -8621252705875480706, guid: 321d2ae6f36ca7d40aa507eb81b69812, type: 3}
   - type: 1
     mesh: {fileID: -1353840912253308728, guid: 185abaa7a51368949a42685cb4e2bc85, type: 3}
   - type: 4
