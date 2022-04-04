@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class SandManager : MonoBehaviour
 {
     #region SINGLETON
@@ -31,6 +32,8 @@ public class SandManager : MonoBehaviour
     public int CastleUpgradeValue { get { return _castleUpgradeValue; } }
     public int MoatEarnValue { get { return _moatEarnValue; } }
 
+    public IntDelegate onUpdateSandLevel = null;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -38,21 +41,10 @@ public class SandManager : MonoBehaviour
             Destroy(this.gameObject);
         }
         instance = this;
+
+        onUpdateSandLevel = (int value)=>{};
     }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
 
     public bool AddSand(int sandUnit)
     {
@@ -75,6 +67,7 @@ public class SandManager : MonoBehaviour
         UpdateSandLevel(sandUnit);
         return true;
     }
+
     public bool RemoveSand(int sandUnit)
     {
         if (sandUnit <= 0)
@@ -94,6 +87,7 @@ public class SandManager : MonoBehaviour
     {
         int newSandLevel = sandLevel + sandUnit;
         sandLevel = newSandLevel;
+        onUpdateSandLevel.Invoke(sandLevel);
         UIManager.Instance.UpdateSand(newSandLevel);
     }
 }
