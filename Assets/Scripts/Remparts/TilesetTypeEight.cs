@@ -12,7 +12,7 @@ public enum TilesetTypeEight
 	Straight_Right = 32,
 	Straight_Top = 8,
 
-//
+
 	Corner_Bot_Left = 10,
 	Corner_Bot_Right = 40,
 	Corner_Top_Left = 130,
@@ -23,6 +23,8 @@ public enum TilesetTypeEight
 	Tri_TBR = 168,
 	Tri_TRL = 162,
 
+
+	// On reprends du service !
 	Foursome = 170,
 
 }
