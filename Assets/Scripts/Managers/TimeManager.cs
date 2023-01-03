@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
+
+    // Time is of the essence
     #region SINGLETON
     private static TimeManager instance = null;
 
