@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 namespace TideDefense
 {
@@ -29,9 +30,9 @@ namespace TideDefense
             onUpdateCurrentDeltaTime = (float value) => { };
             onUpdateCurrentTime = (float value) => { };
 
-            onSetTimeSpeedStopped = new Action();
-            onSetTimeSpeedNormal = new Action();
-            onSetTimeSpeedFast = new Action();
+            onSetTimeSpeedStopped = ()=>{};
+            onSetTimeSpeedNormal = ()=>{};
+            onSetTimeSpeedFast = ()=>{};
         }
     }
 }
