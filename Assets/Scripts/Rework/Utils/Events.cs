@@ -1,4 +1,6 @@
+using UnityEngine.Events;
+
 namespace TideDefense
 {
-    public class FloatEvent : UnityEvent<Float>();
+    public delegate void FloatEvent(float value);
 }

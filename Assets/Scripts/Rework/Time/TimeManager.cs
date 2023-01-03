@@ -21,7 +21,7 @@ namespace TideDefense
 
         protected void Update()
         {
-            _currentDeltaTime = Time.deltaTim * _currentTimeSpeed;
+            _currentDeltaTime = Time.deltaTime * _currentTimeSpeed;
             _timeChannel.onUpdateCurrentDeltaTime.Invoke(_currentDeltaTime);
 
             _currentTime += _currentDeltaTime;
