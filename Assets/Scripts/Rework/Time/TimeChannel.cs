@@ -33,5 +33,15 @@ namespace TideDefense
             onSetTimeSpeedNormal = ()=>{};
             onSetTimeSpeedFast = ()=>{};
         }
+
+        public void InvokeSetTimeStopped()
+        {
+            onSetTimeSpeedStopped.Invoke();
+        }
+
+        public void InvokeSetTimeNormal()
+        {
+            onSetTimeSpeedNormal.Invoke();
+        }
     }
 }

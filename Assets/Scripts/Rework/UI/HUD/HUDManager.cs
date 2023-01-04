@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace TideDefense
 {
     public class HUDManager : MonoBehaviour
@@ -5,7 +7,7 @@ namespace TideDefense
 		#region Fields
 
         [SerializeField]
-        private TimeManager _timeManager = null;
+        private TimeChannel _timeChannel = null;
 
         [SerializeField]
         private ToggleButton _pausePlayButton = null;
@@ -18,10 +20,10 @@ namespace TideDefense
 
         protected void Start()
         {
-            if (_timeManager != null)
+            if (_timeChannel != null)
             {
-                _timeManager.onSetTimeSpeedStopped += CallbackOnSetTimeSpeedStopped;
-                _timeManager.onSetTimeSpeedNormal += CallbackOnSetTimeSpeedNormal;
+                _timeChannel.onSetTimeSpeedStopped += CallbackOnSetTimeSpeedStopped;
+                _timeChannel.onSetTimeSpeedNormal += CallbackOnSetTimeSpeedNormal;
             }
         }
 

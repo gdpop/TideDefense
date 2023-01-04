@@ -13,11 +13,11 @@ namespace TideDefense
 
         protected void Start()
         {
-            if (_timeManager != null)
+            if (_timeChannel != null)
             {
-                _timeManager.onSetTimeSpeedStopped += CallbackOnSetTimeSpeedStopped;
-                _timeManager.onSetTimeSpeedNormal += CallbackOnSetTimeSpeedNormal;
-                _timeManager.onSetTimeSpeedFast += CallbackOnSetTimeSpeedFast;
+                _timeChannel.onSetTimeSpeedStopped += CallbackOnSetTimeSpeedStopped;
+                _timeChannel.onSetTimeSpeedNormal += CallbackOnSetTimeSpeedNormal;
+                _timeChannel.onSetTimeSpeedFast += CallbackOnSetTimeSpeedFast;
             }
         }
 

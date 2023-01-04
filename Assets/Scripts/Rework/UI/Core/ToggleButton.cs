@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TideDefense
 {
@@ -32,17 +33,18 @@ namespace TideDefense
         public virtual void SetStateFalse()
         {
             _currentState = false;
-            SetAnimatorStateFalse();
+            SetAnimatorStateTrue();
         }
 
         public virtual void SetStateTrue()
         {
             _currentState = true;
-            SetAnimatorStateTrue();
+            SetAnimatorStateFalse();
         }
 
-        protected virtual void OnClick()
+        public virtual void OnClick()
         {
+            Debug.Log("OnClick");
             if (_currentState)
             {
                 SetStateFalse();
