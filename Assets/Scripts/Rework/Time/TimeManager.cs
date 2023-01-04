@@ -4,8 +4,8 @@ namespace TideDefense
 {
     public class TimeManager : MonoBehaviour
     {
-
-        [SerializeField] private TimeChannel _timeChannel = null;
+        [SerializeField]
+        private TimeChannel _timeChannel = null;
 
         private float _currentTime = 0f;
         private float _currentTimeSpeed = 1f;
@@ -13,9 +13,11 @@ namespace TideDefense
 
         protected void Start()
         {
-            if(_timeChannel != null)
+            if (_timeManager != null)
             {
-                
+                _timeManager.onSetTimeSpeedStopped += CallbackOnSetTimeSpeedStopped;
+                _timeManager.onSetTimeSpeedNormal += CallbackOnSetTimeSpeedNormal;
+                _timeManager.onSetTimeSpeedFast += CallbackOnSetTimeSpeedFast;
             }
         }
 
@@ -28,6 +30,23 @@ namespace TideDefense
             _timeChannel.onUpdateCurrentTime.Invoke(_currentTime);
         }
 
-    }
+        #region Callabcks
 
+        private void CallbackOnSetTimeSpeedStopped()
+        {
+            _currentTimeSpeed = 0f;
+        }
+
+        private void CallbackOnSetTimeSpeedNormal()
+        {
+            _currentTimeSpeed = 1f;
+        }
+
+        private void CallbackOnSetTimeSpeedFast()
+        {
+            _currentTimeSpeed = _timeChannel.fastTimeSpeed;
+        }
+
+        #endregion
+    }
 }

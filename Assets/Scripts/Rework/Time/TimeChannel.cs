@@ -11,11 +11,10 @@ namespace TideDefense
     public class TimeChannel : ScriptableObject
     {
         [SerializeField]
-        private float _normalTimeSpeed = 1;
-        public float normalTimeSpeed
+        private float _fastTimeSpeed = 1;
+        public float fastTimeSpeed
         {
-            get { return _normalTimeSpeed; }
-            set { _normalTimeSpeed = value; }
+            get { return _fastTimeSpeed; }
         }
 
         public FloatEvent onUpdateCurrentDeltaTime;

@@ -57,15 +57,12 @@ namespace TideDefense
 
         protected void CallbackUpdateCurrentDeltaTime(float currentDeltaTime)
         {
-            // Debug.Log(currentDeltaTime);
-
             _tideProgress += currentDeltaTime * _tideProgressSpeed;
 
             _tidePhase = Convert.ToBoolean(1 - (int)Mathf.Floor(_tideProgress % 2));
             _tidePhaseProgress = (1.0f / Mathf.PI) * Mathf.Acos(Mathf.Sin(Mathf.PI * (_tideProgress + 0.5f)));
 
-            // Debug.Log($"_tidePhase : {_tidePhase}");
-            Debug.Log($"_tidePhase : {_tidePhase} | _tidePhaseProgress : {_tidePhaseProgress}");
+            // Debug.Log($"_tidePhase : {_tidePhase} | _tidePhaseProgress : {_tidePhaseProgress}");
 
             _seaTransform.position = new Vector3(0f, Mathf.Lerp(_minTideLevel, _maxTideLevel, _tidePhaseProgress), 0f);
         }
