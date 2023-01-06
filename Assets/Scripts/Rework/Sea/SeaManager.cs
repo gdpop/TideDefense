@@ -5,21 +5,38 @@ namespace TideDefense
 {
     public class SeaManager : MonoBehaviour
     {
-        #region Fields
+		#region Fields
 
         [SerializeField]
         private TimeChannel _timeChannel = null;
 
-        [SerializeField]
         private Transform _seaTransform = null;
 
-        #region Tide
+        [SerializeField]
+        private float _seaSpreadOffset = 0.2f;
+
+		#region Beach
 
         [SerializeField]
-        private float _minTideLevel = 0f;
+        private float _beachSlope = 0f;
 
         [SerializeField]
-        private float _maxTideLevel = 1f;
+        private Transform _beachBottom = null;
+
+		#endregion
+
+		#region Tide
+
+        /*
+            Level of the tide is a distance between the bottom of the ocean and a point on a beach.
+            It goes along the beach, not the y axis
+        */
+
+        [SerializeField]
+        private float _minTideLevel = 0.5f;
+
+        [SerializeField]
+        private float _maxTideLevel = 1.5f;
 
         private float _tideProgress = 0f;
         private bool _tidePhase = true;
@@ -31,45 +48,70 @@ namespace TideDefense
         [SerializeField]
         private float _tideProgressSpeed = 0.2f;
 
-        #endregion
+		#endregion
 
-        #endregion
+		#endregion
 
-        #region Methods
-
-        #endregion
+		#region Methods
 
 
+		#region MonoBehaviour
 
-        #region MonoBehaviour
-
+        protected void Awake()
+        {
+            _beachSlope = _beachBottom.transform.rotation.euleurAngles.x;
+            Debug.Log("BeachSlope : " + _beachSlope);
+        }
 
         protected void Start()
         {
             if (_timeChannel != null)
             {
                 _timeChannel.onUpdateCurrentDeltaTime += CallbackUpdateCurrentDeltaTime;
-                _timeChannel.onUpdateCurrentTime += CallbackUpdateCurrentTime;
             }
         }
 
-        #endregion
+		#endregion
 
         protected void CallbackUpdateCurrentDeltaTime(float currentDeltaTime)
         {
             _tideProgress += currentDeltaTime * _tideProgressSpeed;
 
             _tidePhase = Convert.ToBoolean(1 - (int)Mathf.Floor(_tideProgress % 2));
-            _tidePhaseProgress = (1.0f / Mathf.PI) * Mathf.Acos(Mathf.Sin(Mathf.PI * (_tideProgress + 0.5f)));
+            _tidePhaseProgress =
+                (1.0f / Mathf.PI) * Mathf.Acos(Mathf.Sin(Mathf.PI * (_tideProgress + 0.5f)));
 
             // Debug.Log($"_tidePhase : {_tidePhase} | _tidePhaseProgress : {_tidePhaseProgress}");
 
-            _seaTransform.position = new Vector3(0f, Mathf.Lerp(_minTideLevel, _maxTideLevel, _tidePhaseProgress), 0f);
+            _seaTransform.position = _beachBottom + new Vector3(
+                0f,
+                TideProgressToSeaHeight(_tideProgress),
+                0f
+            );
+
+			_seaTransform.scale = new Vector3(
+				1f,
+				TideProgressToSeaSpread(_tideProgress),
+				1f
+			);
         }
 
-        protected void CallbackUpdateCurrentTime(float currentTime)
+        /// <summary>
+        /// Give the height of the sea along the y axis when given the tide level
+        ///</summary>
+        private float TideProgressToSeaHeight(float tideLevel)
         {
-            // Debug.Log(currentTime);
+            return Mathf.Cos(90.0f - _beachSlope) * tideLevel;
         }
+
+        /// <summary>
+        ///	Give the spread(scale) of the sea when given the tide level
+        ///</summary>
+        private float TideProgressToSeaSpread(float tideLevel)
+        {
+            return _seaSpreadOffset + Mathf.Sin(90.0f - _beachSlope) * tideLevel;
+        }
+
+		#endregion
     }
 }
