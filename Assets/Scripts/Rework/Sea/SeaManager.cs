@@ -66,7 +66,27 @@ namespace TideDefense
 		[SerializeField]
 		private float _tideProgressSpeed = 0.2f;
 
+		/// <summary> 
+		///	Position of the edge of the tide	
+		/// </summary>
+		private Vector3 _currentTidePosition = null;
+		public Vector3 currentTidePosition
+		{
+			get{
+				return _currentTidePosition;
+			}
+		}
+
 		#endregion
+
+		#region Wave
+			
+		#endregion
+
+		[Header("Wave")]
+		[SerializeField] private GameObject _wavePrefab = null;
+
+		private Wave _currentWave = null;
 
 		#endregion
 
@@ -91,13 +111,14 @@ namespace TideDefense
 
 		#endregion
 
+		#region Tide
+			
 		protected void CallbackUpdateCurrentDeltaTime(float currentDeltaTime)
 		{
 			_tideProgress += currentDeltaTime * _tideProgressSpeed;
 
 			_tidePhase = Convert.ToBoolean(1 - (int)Mathf.Floor(_tideProgress % 2));
-			_tidePhaseProgress =
-				(1.0f / Mathf.PI) * Mathf.Acos(Mathf.Sin(Mathf.PI * (_tideProgress + 0.5f)));
+			_tidePhaseProgress = (1.0f / Mathf.PI) * Mathf.Acos(Mathf.Sin(Mathf.PI * (_tideProgress + 0.5f)));
 
 			// Debug.Log($"_tidePhase : {_tidePhase} | _tidePhaseProgress : {_tidePhaseProgress}");
 
@@ -112,6 +133,8 @@ namespace TideDefense
 				1f,
 				TideProgressToSeaSpread(_currentTideLevel)
 			);
+
+			_currentTidePosition = _beachBottom.position + _beachBottom.forward * _currentTideLevel;
 		}
 
 		/// <summary>
@@ -129,6 +152,27 @@ namespace TideDefense
 		{
 			return _seaSpreadOffset + Mathf.Sin(Mathf.Deg2Rad * (90.0f - _beachSlope)) * tideLevel;
 		}
+
+		#endregion
+
+		#region Wave
+		
+		[ContextMenu("Create Wave")]
+		private void CreateWave()
+		{
+			_currentWave = Object.Instantiate(_wavePrefab) as Wave;
+			_currentWave.Initialize(this);
+			_currentWave.onDisappear += CallbackDestroyCurrentWave;
+		}
+
+		public void CallbackDestroyCurrentWave()
+		{
+			_currentWave -= CallbackDestroyCurrentWave;
+			Destroy(_currentWave);
+			_currentWave = null;
+		}
+			
+		#endregion
 
 		#endregion
 	}
