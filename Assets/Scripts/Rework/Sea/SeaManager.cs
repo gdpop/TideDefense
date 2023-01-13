@@ -69,7 +69,7 @@ namespace TideDefense
 		/// <summary> 
 		///	Position of the edge of the tide	
 		/// </summary>
-		private Vector3 _currentTidePosition = null;
+		private Vector3 _currentTidePosition;
 		public Vector3 currentTidePosition
 		{
 			get{
@@ -160,15 +160,15 @@ namespace TideDefense
 		[ContextMenu("Create Wave")]
 		private void CreateWave()
 		{
-			_currentWave = Object.Instantiate(_wavePrefab) as Wave;
+			_currentWave = UnityEngine.Object.Instantiate(_wavePrefab).GetComponent<Wave>();
 			_currentWave.Initialize(this);
 			_currentWave.onDisappear += CallbackDestroyCurrentWave;
 		}
 
 		public void CallbackDestroyCurrentWave()
 		{
-			_currentWave -= CallbackDestroyCurrentWave;
-			Destroy(_currentWave);
+			_currentWave.onDisappear -= CallbackDestroyCurrentWave;
+			Destroy(_currentWave.gameObject);
 			_currentWave = null;
 		}
 			
