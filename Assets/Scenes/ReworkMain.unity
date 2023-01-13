@@ -469,6 +469,7 @@ MonoBehaviour:
   _minTideLevel: 4
   _maxTideLevel: 6
   _tideProgressSpeed: 0.2
+  _wavePrefab: {fileID: 5967860573822579037, guid: 0d9c12d340504e046be3dc8178f654b0, type: 3}
 --- !u!1 &864297812
 GameObject:
   m_ObjectHideFlags: 0

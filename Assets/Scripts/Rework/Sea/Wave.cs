@@ -1,5 +1,6 @@
 using UnityEngine;
-using UnityEngine.Collections;
+using System;
+using System.Collections;
 
 namespace TideDefense
 {
@@ -32,7 +33,7 @@ namespace TideDefense
 
         private IEnumerator DisappearBehaviour()
         {
-            yield return WaitForSeconds(2f);
+            yield return new WaitForSeconds(2f);
 
             onDisappear.Invoke();
 
