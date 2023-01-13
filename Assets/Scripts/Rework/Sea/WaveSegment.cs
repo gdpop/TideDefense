@@ -1,39 +1,46 @@
 namespace TideDefense
 {
     using UnityEngine;
+    using DG.Tweening;
 
     public class WaveSegment : MonoBehaviour
     {
 #region Fields
 
         [SerializeField]
-        private transform _visualTransform = null;
+        private Transform _visualTransform = null;
 
-        private Vector3 _visualLocalScale = null;
+        private Vector3 _visualLocalScale;
+
+        private int _segmentIndex = 0;
 
 #endregion
 
 #region Methods
 
-		public void Start()
-		{
-			_visualLocalScale = _visualTransform.localScale;
-		}
-
-
-        public void CrashOnBeach(float delay, float strength)
+        public void Start()
         {
-            DOVirtual.Float(
-                0f,
-                1f,
-                5f,
-                (float value) =>
-                {
-_visualLocalScale = 
+            _visualLocalScale = _visualTransform.localScale;
+            _segmentIndex = transform.GetSiblingIndex();
+        }
 
-                    _visualTransform.localScale = new Vector3(1);
-                }
-            );
+        public void CrashOnBeach(int firstSegmentIndex, float delay, float strength)
+        {
+            float totalDelay = Mathf.Abs(_segmentIndex - firstSegmentIndex) * delay;
+
+            DOVirtual
+                .Float(
+                    0f,
+                    Mathf.PI,
+                    5f,
+                    (float value) =>
+                    {
+                        _visualLocalScale.z = Mathf.Lerp(0f, strength, Mathf.Sin(value));
+                        _visualTransform.localScale = _visualLocalScale;
+                    }
+                )
+                .SetEase(Ease.InOutSine)
+                .SetDelay(totalDelay);
         }
 #endregion
     }
