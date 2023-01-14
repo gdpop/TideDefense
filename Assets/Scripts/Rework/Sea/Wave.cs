@@ -49,7 +49,6 @@ namespace TideDefense
         {
             _seaManager = seaManager;
             transform.position = _seaManager.currentTidePosition;
-            transform.rotation = Quaternion.Euler(0f, 180f,0f);
             _amountWaveSegment = _waveSegments.Count;
             CrashOnBeach();
         }
