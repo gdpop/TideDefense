@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sand
+  m_Name: Sand_Triplanar
   m_Shader: {fileID: -6465566751694194690, guid: 0cc148b2b0d0ac745bba3f1beecee284, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4

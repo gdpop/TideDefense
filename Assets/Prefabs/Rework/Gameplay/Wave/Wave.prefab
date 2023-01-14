@@ -48,14 +48,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af23499f5c423045ba67b96486d8b80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _seaChannel: {fileID: 11400000, guid: 5d55e33d958a093489b8240536192dc1, type: 2}
   _waveSegments:
   - {fileID: 8505756686873867235}
   - {fileID: 8013206899504170898}
   - {fileID: 1073244191482360603}
   - {fileID: 2579214865870066813}
   - {fileID: 4387382706444228809}
-  _mindelayWaveSegments: 0.3
-  _maxdelayWaveSegments: 0.6
 --- !u!1001 &1704002674539785058
 PrefabInstance:
   m_ObjectHideFlags: 0

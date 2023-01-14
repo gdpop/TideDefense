@@ -5,52 +5,35 @@ using System.Collections.Generic;
 
 namespace TideDefense
 {
+    public delegate void WaveSegmentDelegate(WaveSegment segment);
+
     public class Wave : MonoBehaviour
     {
-        #region Fields
+		#region Fields
+
+		[SerializeField] private SeaChannel _seaChannel = null;
 
         private SeaManager _seaManager = null;
 
+        /// <summary>
+        ///	Invoked whenever the wave has finished returning to the sea
+        ///</summary>
         public Action onDisappear = null;
 
         [SerializeField]
         private List<WaveSegment> _waveSegments = new List<WaveSegment>();
 
-        /// <summary> 
-        /// This is the minimal delay between two 
-        ///</summary>
-        [SerializeField]
-        private float _mindelayWaveSegments = 0.1f;
+        private int _amountWaveSegment = 0;
 
-        [SerializeField]
-        private float _maxdelayWaveSegments = 0.3f;
+        private bool _isCrashing = false;
 
-        #endregion
+        private int _amountWaveSegmentDisappeared = 0;
 
-        #region Methods
+		#endregion
 
-        public void Initialize(SeaManager seaManager)
-        {
-            _seaManager = seaManager;
-            transform.position = _seaManager.currentTidePosition;
-            StartCoroutine("DisappearBehaviour");
-        }
+		#region Methods
 
-        [ContextMenu("CrashOnBeach")]
-        public void CrashOnBeach()
-        {
-            // Simulate a wave with random delay between segments
-
-            int firstSegmentIndex = UnityEngine.Random.Range(0, _waveSegments.Count);
-            float delayWaveSegment = UnityEngine.Random.Range(_mindelayWaveSegments, _maxdelayWaveSegments);
-
-            //
-
-            foreach (WaveSegment segment in _waveSegments)
-            {
-                segment.CrashOnBeach(firstSegmentIndex, delayWaveSegment, 1f);
-            }
-        }
+		#region MonoBehaviour
 
         protected void LateUpdate()
         {
@@ -60,15 +43,55 @@ namespace TideDefense
             }
         }
 
+		#endregion
+
+        public void Initialize(SeaManager seaManager)
+        {
+            _seaManager = seaManager;
+            transform.position = _seaManager.currentTidePosition;
+            transform.rotation = Quaternion.Euler(0f, 180f,0f);
+            _amountWaveSegment = _waveSegments.Count;
+            CrashOnBeach();
+        }
+
+        [ContextMenu("CrashOnBeach")]
+        public void CrashOnBeach()
+        {
+            // Simulate a wave with random delay between segments
+
+            int firstSegmentIndex = UnityEngine.Random.Range(0, _amountWaveSegment);
+            float delayWaveSegment = UnityEngine.Random.Range(
+                _seaChannel.minDelayWaveSegments,
+                _seaChannel.maxDelayWaveSegments
+            );
+
+            // Launch crashing animation of every WaveSegments
+            foreach (WaveSegment segment in _waveSegments)
+            {
+                segment.CrashOnBeach(firstSegmentIndex, delayWaveSegment, 1f);
+                segment.onDisappear += CallbackWaveSegmentDisappear;
+            }
+
+            // Initialize variable to check when it's gonna crash
+            _amountWaveSegmentDisappeared = 0;
+        }
+
+        private void CallbackWaveSegmentDisappear(WaveSegment segment)
+        {
+            segment.onDisappear -= CallbackWaveSegmentDisappear;
+            _amountWaveSegmentDisappeared++;
+
+            if (_amountWaveSegmentDisappeared == _amountWaveSegment)
+            {
+                onDisappear.Invoke();
+            }
+        }
+
         private IEnumerator DisappearBehaviour()
         {
-            yield return new WaitForSeconds(2f);
-
-            onDisappear.Invoke();
-
             yield return null;
         }
 
-        #endregion
+		#endregion
     }
 }
