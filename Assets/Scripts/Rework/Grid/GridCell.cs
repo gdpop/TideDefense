@@ -2,7 +2,7 @@ namespace TideDefense
 {
     using UnityEngine;
 
-    public class GridCell : MonoBehaviour
+    public class GridCell
     {
 		#region Fields
 
