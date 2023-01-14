@@ -128,12 +128,13 @@ namespace TideDefense
                 + new Vector3(0f, TideProgressToSeaHeight(_currentTideLevel), 0f);
 
             _seaTransform.localScale = new Vector3(
-                10f,
+                _seaTransform.localScale.x,
                 1f,
                 TideProgressToSeaSpread(_currentTideLevel)
             );
 
             _currentTidePosition = _beachBottom.position + _beachBottom.forward * _currentTideLevel;
+            _currentTidePosition.x = 0;
         }
 
         /// <summary>
