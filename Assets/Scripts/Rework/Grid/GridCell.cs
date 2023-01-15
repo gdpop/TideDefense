@@ -2,5 +2,8 @@ namespace TideDefense
 {
     using PierreMizzi.Grid;
 
-    class GridCell : AGridCell { }
+    public class GridCell : AGridCell
+    {
+        public Rempart rempart;
+    }
 }

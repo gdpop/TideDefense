@@ -3,7 +3,7 @@ namespace TideDefense
     using UnityEngine;
 
     public delegate void OnClickBeach(RaycastHit hit);
-    public delegate void OnClickGrid(Vector2 coords);
+    public delegate void OnClickGrid(Vector2Int coords);
 
     [CreateAssetMenu(
         fileName = "GameplayChannel",
@@ -18,7 +18,7 @@ namespace TideDefense
         protected void OnEnable()
         {
             onClickBeach = (RaycastHit hit) => { };
-            onClickGrid = (Vector2 coords) => { };
+            onClickGrid = (Vector2Int coords) => { };
         }
     }
 }

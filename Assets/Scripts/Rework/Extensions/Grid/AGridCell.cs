@@ -7,10 +7,10 @@ namespace PierreMizzi.Grid
 		#region Fields
 
         [SerializeField]
-        protected Vector2 _coords = new Vector2();
-        public Vector2 coords
+        protected Vector2Int _coords = new Vector2Int();
+        public Vector2Int coords
         {
-            get { return coords; }
+            get { return _coords; }
             set { _coords = value; }
         }
 

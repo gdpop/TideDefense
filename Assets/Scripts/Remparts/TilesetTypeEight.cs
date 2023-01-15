@@ -1,6 +1,6 @@
 public enum TilesetTypeEight
 {
-		Empty = -1,
+	Empty = -1,
 
 	Single = 0,
 

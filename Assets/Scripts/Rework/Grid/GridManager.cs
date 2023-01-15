@@ -57,7 +57,17 @@ namespace TideDefense
 
         private void Start()
         {
+            _gridModel = new GridModel();
             _gridModel.Initialize<GridCell>(_xLength, _zLength, _cellSize);
+
+            if (_gameplayChannel != null)
+                _gameplayChannel.onClickBeach += CallbackOnClickBeach;
+        }
+
+        private void OnDestroy()
+        {
+            if (_gameplayChannel != null)
+                _gameplayChannel.onClickBeach -= CallbackOnClickBeach;
         }
 
         protected virtual void OnDrawGizmos()
@@ -70,10 +80,23 @@ namespace TideDefense
 
         private void CallbackOnClickBeach(RaycastHit hit)
         {
-            Vector2 clickedGridCoords = _gridModel.WorldPositionToCellCoordinates(hit.point);
+            Vector2Int clickedGridCoords = _gridModel.GetCellCoordinatesFromWorldPosition(hit.point);
 
             if (clickedGridCoords != Vector2.zero)
-                _gameplayChannel.onClickGrid(clickedGridCoords);
+                _gameplayChannel.onClickGrid.Invoke(clickedGridCoords);
+        }
+
+        public GridCell GetCellFromCoordinates(Vector2Int coords)
+        {
+            return _gridModel.GetCellFromCoordinates<GridCell>(coords);
+        }
+
+        public Vector3 GetWorldPositionFromCoordinates(Vector2Int coords)
+        {
+            Vector3 gridWorldPosition = _gridModel.GetPositionFromCoordinates(coords);
+            _yElevation = (coords.y * _cellSize + (_cellSize / 2f)) * Mathf.Tan(Mathf.Deg2Rad * _beachSlope);
+
+            return new Vector3(gridWorldPosition.x, _yElevation - 0.015f, gridWorldPosition.z);
         }
 
         #endregion

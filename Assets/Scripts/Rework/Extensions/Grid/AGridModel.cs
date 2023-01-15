@@ -2,9 +2,9 @@ namespace PierreMizzi.Grid
 {
     using UnityEngine;
     using System.Collections.Generic;
-	using System;
+    using System;
 
-	[ExecuteInEditMode]
+    [ExecuteInEditMode]
     public abstract class AGridModel
     {
 		#region Fields
@@ -44,7 +44,11 @@ namespace PierreMizzi.Grid
 
 		#region MonoBehaviour
 
-        public virtual void Initialize<T>(int xLength = 10, int zLength = 10, float cellSize = 0.25f) where T : AGridCell, new()
+        public virtual void Initialize<T>(
+            int xLength = 10,
+            int zLength = 10,
+            float cellSize = 0.25f
+        ) where T : AGridCell, new()
         {
             // _flattenBeachPosition = new Vector2(
             //     _beachTransform.position.x,
@@ -67,43 +71,76 @@ namespace PierreMizzi.Grid
         /// </summary>
         public void CreateLogicalGrid<T>() where T : AGridCell, new()
         {
+            _gridCellHash = new List<List<AGridCell>>();
+
             for (int x = 0; x < _xLength; x++)
             {
-                List<T> zColumn = new List<T>();
+                List<AGridCell> zColumn = new List<AGridCell>();
                 for (int z = 0; z < _zLength; z++)
                 {
-
                     T gridCell = new T();
-                    gridCell.coords = new Vector2(x, z);
+                    gridCell.coords = new Vector2Int(x, z);
                     zColumn.Add(gridCell);
                 }
-                _gridCellHash.Add(zColumn as List<AGridCell>);
+                _gridCellHash.Add(zColumn);
+
             }
         }
 
         /// <summary>
         ///	Given a WorldPosition, it returns the coordinates of the corresponding grid cell
         /// </summary>
-        public Vector2 WorldPositionToCellCoordinates(Vector3 worldPosition)
+        public Vector2Int GetCellCoordinatesFromWorldPosition(Vector3 worldPosition)
         {
             Vector2 flattenPos = new Vector2(worldPosition.x, worldPosition.z);
-            Vector2 coordinates = new Vector2(
-                Mathf.Floor(flattenPos.x / _cellSize),
-                Mathf.Floor(flattenPos.y / _cellSize)
+            Vector2Int coords = new Vector2Int(
+                (int)Mathf.Floor(flattenPos.x / _cellSize),
+                (int)Mathf.Floor(flattenPos.y / _cellSize)
             );
 
-            if (
-                coordinates.x < 0
-                || coordinates.x > _xLength - 1
-                || coordinates.y < 0
-                || coordinates.y > _zLength - 1
-            )
+            if (coords.x < 0 || coords.x > _xLength - 1 || coords.y < 0 || coords.y > _zLength - 1)
             {
-                Debug.Log($"Given position is out of grid : ({coordinates.x};{coordinates.y})");
-                return Vector2.zero;
+                Debug.Log($"Given position is out of grid : ({coords.x};{coords.y})");
+                return Vector2Int.zero;
             }
 
-            return coordinates;
+            return coords;
+        }
+
+        public T GetCellFromCoordinates<T>(Vector2Int coords) where T : AGridCell
+        {
+            if (CheckValidCoordinates(coords))
+            {
+                return _gridCellHash[coords.x][coords.y] as T;
+            }
+            else
+                return null;
+        }
+
+        public virtual bool CheckValidCoordinates(Vector2Int coords)
+        {
+            if (coords.x < 0 || _xLength - 1 < coords.x)
+            {
+                Debug.LogWarning($"{coords.x}:{coords.y} : {coords.x} is wrong");
+                return false;
+            }
+
+            if (coords.y < 0 || _zLength - 1 < coords.y)
+            {
+                Debug.LogWarning($"{coords.x}:{coords.y} : {coords.y} is wrong");
+                return false;
+            }
+
+            return true;
+        }
+
+        public Vector3 GetPositionFromCoordinates(Vector2Int coords)
+        {
+            return new Vector3(
+                (coords.x * _cellSize) + _cellSize / 2f,
+                0f,
+                (coords.y * _cellSize) + _cellSize / 2f
+            );
         }
 
 		#endregion
