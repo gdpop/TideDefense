@@ -40,6 +40,13 @@ namespace TideDefense
 
 		#endregion
 
+        #region Gameplay
+
+        [SerializeField]
+        private GameplayChannel _gameplayChannel = null;
+
+        #endregion
+
 		#region Grid Gizmos
 
         [Header("Gizmos")]
@@ -70,6 +77,11 @@ namespace TideDefense
 
         private void Start()
         {
+            if (_gameplayChannel != null)
+            {
+                _gameplayChannel.onClickBeach += CallbackOnClickBeach;
+            }
+
             _flattenBeachPosition = new Vector2(
                 _beachTransform.position.x,
                 _beachTransform.position.z
@@ -78,9 +90,17 @@ namespace TideDefense
             CreateLogicalGrid();
         }
 
+        private void OnDestroy()
+        {
+            if (_gameplayChannel != null)
+            {
+                _gameplayChannel.onClickBeach -= CallbackOnClickBeach;
+            }
+        }
+
 		#endregion
 
-		#region Methods
+		#region Grid
 
         /// <summary>
         ///	Fills the double entry array _gridCellHash with freshly created GridCell
@@ -126,8 +146,19 @@ namespace TideDefense
 
 		#endregion
 
-		#region Grid Gizmos
+        #region Gameplay
 
+        private void CallbackOnClickBeach(RaycastHit hit)
+        {
+            Vector2 clickedGridCoords = WorldPositionToCellCoordinates(hit.point);
+
+            if(clickedGridCoords != Vector2.zero)
+                _gameplayChannel.onClickGrid(clickedGridCoords);
+        }
+
+        #endregion
+
+		#region Grid Gizmos
 
         private void DrawGridGizmos()
         {
@@ -146,8 +177,8 @@ namespace TideDefense
                 Gizmos.DrawLine(from, to);
                 for (int z = 0; z < _zLength + 1; z++)
                 {
-					from = new Vector3(0, z * _yElevation, z * _cellSize);
-					to = new Vector3(_xLength * _cellSize, from.y, from.z);
+                    from = new Vector3(0, z * _yElevation, z * _cellSize);
+                    to = new Vector3(_xLength * _cellSize, from.y, from.z);
 
                     Gizmos.DrawLine(from, to);
                 }
@@ -155,16 +186,6 @@ namespace TideDefense
         }
 
 		#endregion
-
-
-        [SerializeField]
-        private Transform _debugTest = null;
-
-        [ContextMenu("Debug_Grid")]
-        public void Debug_Grid()
-        {
-            Debug.Log(WorldPositionToCellCoordinates(_debugTest.position));
-        }
 
 		#endregion
     }

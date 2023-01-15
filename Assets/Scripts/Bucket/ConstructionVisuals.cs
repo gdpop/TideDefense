@@ -3,10 +3,6 @@ using TMPro;
 using UnityEngine;
 
 
-// TODO : Sand Bar
-// TODO : Sand Counter
-// TODO : Available Rempart
-
 public class ConstructionVisuals : MonoBehaviour
 {
 

@@ -5,11 +5,11 @@ namespace TideDefense
 
     public class Application : MonoBehaviour
     {
-        private MouseInteractableManager _interactableManager = null;
+        private InteractableManager _interactableManager = null;
 
         private void Start()
         {
-            _interactableManager = new MouseInteractableManager();
+            _interactableManager = new InteractableManager();
         }
 
         private void Update()

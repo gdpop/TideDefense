@@ -312,6 +312,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -462981019419857548, guid: 404d7a7b2e1be734aa8caae8b4cd18c1, type: 3}
+--- !u!114 &374885262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374885260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bf557c794f3ca54cad185f2f14fa305, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
 --- !u!1 &477670694
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,10 +372,10 @@ MonoBehaviour:
   _zLength: 12
   _cellSize: 0.25
   _beachTransform: {fileID: 374885259}
+  _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
   _displayGizmos: 1
   _gizmoColor: {r: 0.6509434, g: 0, b: 0, a: 1}
   _beachSlope: 5
-  _debugTest: {fileID: 0}
 --- !u!1 &545097906
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,6 +613,49 @@ MonoBehaviour:
   _seaSpreadOffset: 0.2
   _tideProgressSpeed: 0.01
   _wavePrefab: {fileID: 5967860573822579037, guid: 0d9c12d340504e046be3dc8178f654b0, type: 3}
+--- !u!1 &778278679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 778278680}
+  - component: {fileID: 778278681}
+  m_Layer: 0
+  m_Name: GameplayManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &778278680
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778278679}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 869154630}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &778278681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778278679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 466198e74fbe269438a595ce13ae59b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &864297812
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,6 +730,8 @@ Transform:
   - {fileID: 864297813}
   - {fileID: 773745103}
   - {fileID: 477670695}
+  - {fileID: 778278680}
+  - {fileID: 1311810053}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1137,6 +1195,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211334994}
   m_CullTransparentMesh: 1
+--- !u!1 &1311810052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1311810053}
+  - component: {fileID: 1311810054}
+  m_Layer: 0
+  m_Name: RempartsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1311810053
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311810052}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 869154630}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1311810054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311810052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6172a36431b62a4d9ed2aa974b67247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
 --- !u!1 &1620342898
 GameObject:
   m_ObjectHideFlags: 0
