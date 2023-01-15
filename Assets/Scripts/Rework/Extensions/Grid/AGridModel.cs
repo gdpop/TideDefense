@@ -83,7 +83,6 @@ namespace PierreMizzi.Grid
                     zColumn.Add(gridCell);
                 }
                 _gridCellHash.Add(zColumn);
-
             }
         }
 
@@ -136,11 +135,14 @@ namespace PierreMizzi.Grid
 
         public Vector3 GetPositionFromCoordinates(Vector2Int coords)
         {
-            return new Vector3(
-                (coords.x * _cellSize) + _cellSize / 2f,
-                0f,
-                (coords.y * _cellSize) + _cellSize / 2f
-            );
+            if (CheckValidCoordinates(coords))
+                return new Vector3(
+                    (coords.x * _cellSize) + _cellSize / 2f,
+                    0f,
+                    (coords.y * _cellSize) + _cellSize / 2f
+                );
+            else
+                return Vector3.zero;
         }
 
 		#endregion

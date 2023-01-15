@@ -34,7 +34,7 @@ namespace TideDefense
                 return;
 
             RempartBlock rempartBlock = GetRempartBlockFromCoords(coords);
-            Vector3 worldPosition = _gridManager.GetWorldPositionFromCoordinates(coords);
+            Vector3 worldPosition = _gridManager.GetCellWorldPositionFromCoordinates(coords);
 
             Rempart rempart = UnityEngine.Object.Instantiate(
                 _prefabRempart,

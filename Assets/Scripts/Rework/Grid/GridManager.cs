@@ -80,7 +80,9 @@ namespace TideDefense
 
         private void CallbackOnClickBeach(RaycastHit hit)
         {
-            Vector2Int clickedGridCoords = _gridModel.GetCellCoordinatesFromWorldPosition(hit.point);
+            Vector2Int clickedGridCoords = _gridModel.GetCellCoordinatesFromWorldPosition(
+                hit.point
+            );
 
             if (clickedGridCoords != Vector2.zero)
                 _gameplayChannel.onClickGrid.Invoke(clickedGridCoords);
@@ -91,12 +93,29 @@ namespace TideDefense
             return _gridModel.GetCellFromCoordinates<GridCell>(coords);
         }
 
-        public Vector3 GetWorldPositionFromCoordinates(Vector2Int coords)
+        public Vector3 GetCellWorldPositionFromCoordinates(Vector2Int coords)
         {
+            if (!_gridModel.CheckValidCoordinates(coords))
+            {
+                Debug.LogError($"coords out of bound : {coords}");
+                return Vector3.zero;
+            }
+
             Vector3 gridWorldPosition = _gridModel.GetPositionFromCoordinates(coords);
-            _yElevation = (coords.y * _cellSize + (_cellSize / 2f)) * Mathf.Tan(Mathf.Deg2Rad * _beachSlope);
+
+            _yElevation =
+                (coords.y * _cellSize + (_cellSize / 2f)) * Mathf.Tan(Mathf.Deg2Rad * _beachSlope);
 
             return new Vector3(gridWorldPosition.x, _yElevation - 0.015f, gridWorldPosition.z);
+        }
+
+        public Vector3 GetCellWorldPositionFromWorldPosition(Vector3 worldPosition)
+        {
+            Vector2Int clickedGridCoords = _gridModel.GetCellCoordinatesFromWorldPosition(
+                worldPosition
+            );
+
+            return GetCellWorldPositionFromCoordinates(clickedGridCoords);
         }
 
         #endregion
