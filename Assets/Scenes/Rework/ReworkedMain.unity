@@ -371,10 +371,9 @@ MonoBehaviour:
   _xLength: 12
   _zLength: 12
   _cellSize: 0.25
-  _beachTransform: {fileID: 374885259}
-  _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
+  _gameplayChannel: {fileID: 0}
   _displayGizmos: 1
-  _gizmoColor: {r: 0.6509434, g: 0, b: 0, a: 1}
+  _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
   _beachSlope: 5
 --- !u!1 &545097906
 GameObject:

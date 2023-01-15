@@ -2,5 +2,5 @@ namespace TideDefense
 {
     using PierreMizzi.Grid;
 
-    class GridCell : AGridCell { }
+    public class GridModel : AGridModel { }
 }
