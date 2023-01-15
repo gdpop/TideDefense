@@ -30,24 +30,33 @@ namespace TideDefense
             // Debug.Log($"Clicked on the grid at {coords}");
             GridCell gridCell = _gridManager.GetCellFromCoordinates(coords);
 
-            if(gridCell == null || gridCell.rempart != null)
+            if (gridCell == null || gridCell.rempart != null)
                 return;
 
             RempartBlock rempartBlock = GetRempartBlockFromCoords(coords);
-
             Vector3 worldPosition = _gridManager.GetWorldPositionFromCoordinates(coords);
+
             Rempart rempart = UnityEngine.Object.Instantiate(
                 _prefabRempart,
                 worldPosition,
                 Quaternion.identity,
                 _rempartContainer
             );
-            
+
             rempart.SetRempartBlock(rempartBlock);
+            rempart.gridCell = gridCell;
+            rempart.rempartsManager = this;
             gridCell.rempart = rempart;
 
-            // Now we update all surrounding remparts            
+            // Now we update all surrounding remparts
             RefreshRempartAroundCoordinates(coords);
+        }
+
+        public void DestroyRempart(Rempart rempart)
+        {
+            rempart.gridCell.rempart = null;
+            RefreshRempartAroundCoordinates(rempart.gridCell.coords);
+            Destroy(rempart.gameObject);
         }
 
         public int GetRempartNeighboorsFromCoords(Vector2Int coords)
@@ -79,14 +88,13 @@ namespace TideDefense
 
         public void RefreshRempartAroundCoordinates(Vector2Int coords)
         {
-            Debug.Log("RefreshRempartAroundCoordinates");
             for (int i = 0; i < TilesetUtils.neighboorsCoordinatesFour.Count; i++)
             {
                 Vector2Int offset = TilesetUtils.neighboorsCoordinatesFour[i];
                 GridCell gridCell = _gridManager.GetCellFromCoordinates(
                     new Vector2Int(coords.x + offset.x, coords.y + offset.y)
                 );
-                Debug.Log($"Coords {offset} \r Rempart : {gridCell.rempart == null}");
+                // Debug.Log($"Coords {offset} \r Rempart : {gridCell.rempart == null}");
                 if (gridCell.rempart == null)
                     continue;
                 else

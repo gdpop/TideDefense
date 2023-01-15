@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c14b3d1dfa1954c9716228c466ab46, type: 3}
   m_Name: SeaChannel
   m_EditorClassIdentifier: 
-  _minTideLevel: 0.5
+  _minTideLevel: 1
   _maxTideLevel: 3
   _waveCrashEase:
     serializedVersion: 2
@@ -61,3 +61,27 @@ MonoBehaviour:
   _maxDelayBewteenWaves: 2
   _minDelayWaveSegments: 0.1
   _maxDelayWaveSegments: 0.15
+  _damageDealtByWave:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.7
+      inSlope: -0.07007045
+      outSlope: -0.07007045
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.20195271
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07656735
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

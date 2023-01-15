@@ -33,12 +33,21 @@ namespace TideDefense
 #region Wave Settings
 
         [Header("Wave Settings")]
+        [SerializeField]
+        private AnimationCurve _waveCrashEase = null;
+        public AnimationCurve waveCrashEase
+        {
+            get { return _waveCrashEase; }
+            set { _waveCrashEase = value; }
+        }
 
-		[SerializeField] private AnimationCurve _waveCrashEase = null;
-		public AnimationCurve waveCrashEase { get { return _waveCrashEase; } set { _waveCrashEase = value; } }
-
-		[SerializeField] private float _waveCrashDuration = 8f;
-		public float waveCrashDuration { get { return _waveCrashDuration; } set { _waveCrashDuration = value; } }
+        [SerializeField]
+        private float _waveCrashDuration = 8f;
+        public float waveCrashDuration
+        {
+            get { return _waveCrashDuration; }
+            set { _waveCrashDuration = value; }
+        }
 
         [SerializeField]
         private float _minDelayBetweenWaves = 1f;
@@ -79,6 +88,13 @@ namespace TideDefense
         public float maxDelayWaveSegments
         {
             get { return _maxDelayWaveSegments; }
+        }
+
+        [SerializeField]
+        private AnimationCurve _damageDealtByWave;
+        public AnimationCurve damageDealtByWave
+        {
+            get { return _damageDealtByWave; }
         }
 
 #endregion
