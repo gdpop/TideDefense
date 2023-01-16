@@ -2,6 +2,6 @@ namespace PierreMizzi.MouseInteractable
 {
 	public interface IInteractable
 	{
-		bool isInteractable;
+		bool isInteractable{get;set;}
 	}	
 }

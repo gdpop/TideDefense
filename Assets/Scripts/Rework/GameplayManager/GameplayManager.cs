@@ -16,8 +16,11 @@ namespace TideDefense
         [SerializeField]
         private GridManager _gridManager = null;
 
+        [SerializeField] private Transform _gameplayContainer = null;
+
         #region Bucket
 
+        [Header("Bucket")]
         [SerializeField]
         private ToolType _currentTool = ToolType.None;
 
@@ -28,6 +31,10 @@ namespace TideDefense
         private float _hoverBucketYOffset = 0.5f;
 
         private Vector3 _hoverBucketOffset = new Vector3();
+
+        [SerializeField] private Rigidbody _bucketConnectedBody = null;
+
+        [SerializeField] private Transform _bucketJoint = null;
 
         #endregion
 
@@ -95,13 +102,19 @@ namespace TideDefense
             _currentTool = ToolType.Bucket;
             _gameplayChannel.onChangeTool.Invoke(_currentTool);
 
+            // Manage ConnectedBody
+            _bucketConnectedBody.position = _bucket.transform.position + _hoverBucketOffset;
+
+            // Manage Bucket
             _bucket.SetGrabbed();
-            _bucket.transform.position = _bucket.transform.position + _hoverBucketOffset;
+            _bucket.transform.SetParent(_bucketJoint);
+            _bucket.transform.localPosition = new Vector3(0f, -0.5f, 0f);
+
         }
 
         private void MoveBucket(Vector3 hoveredPosition)
         {
-            _bucket.transform.position = hoveredPosition + _hoverBucketOffset;
+            _bucketConnectedBody.transform.position = hoveredPosition + _hoverBucketOffset;
         }
 
         private void DropBucket(Vector2Int coords)
@@ -109,8 +122,9 @@ namespace TideDefense
             _currentTool = ToolType.None;
             _gameplayChannel.onChangeTool.Invoke(_currentTool);
 
-            _bucket.SetDropped();
+            _bucket.transform.SetParent(_gameplayContainer);
             _bucket.transform.position = _gridManager.GetCellWorldPositionFromCoordinates(coords);
+            _bucket.SetDropped();
         }
 
         #endregion

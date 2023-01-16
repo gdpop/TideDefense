@@ -12,13 +12,12 @@ namespace TideDefense
 
 		#region Tool parent class ?
 
+		protected bool _isGrabbed = false;
 		protected ToolStatus _status = ToolStatus.Dropped;
 
 		#endregion
 
 		[SerializeField] private GameplayChannel _gameplayChannel = null;
-
-		protected bool _isGrabbed = false;
 
 		#region Hover Animation
 
@@ -26,14 +25,17 @@ namespace TideDefense
 		[SerializeField] private float _hoverDuration = 0.1f;
 		[SerializeField] private float _hoverYOffset = 0.1f;
 
+		private Vector3 _currentPosition = new Vector3();
+		private Vector3 _hoveredPosition = new Vector3();
+
 		private Tween _hoverTween = null;
 
 		#endregion
 
 		#region Grabbed Behaviour
 
-		private Rigidbody _rigidBody = null;
-		
+		private BoxCollider _boxCollider = null;
+
 		#endregion
 
 		#endregion
@@ -41,8 +43,14 @@ namespace TideDefense
 		#region Methods
 
 		#region MonoBehaviour
-			
+
+		private void Awake() {
+			_boxCollider = GetComponent<BoxCollider>();
+		}
+
 		private void Start() {
+			SetDropped();
+
 			if(_gameplayChannel != null)
 				_gameplayChannel.onChangeTool += CallbackOnChangeTool;
 		}
@@ -65,11 +73,17 @@ namespace TideDefense
 		public virtual void SetGrabbed()
 		{
 			_status = ToolStatus.Grabbed;
+			_boxCollider.enabled = false;
 		}
 
 		public virtual void SetDropped()
 		{
 			_status = ToolStatus.Dropped;
+			_boxCollider.enabled = true;
+			transform.rotation = Quaternion.identity;
+
+			_currentPosition = transform.position;
+			_hoveredPosition = transform.position + new Vector3(0f, _hoverYOffset, 0f);
 		}
 
 		#endregion
@@ -80,6 +94,9 @@ namespace TideDefense
 
 		public void OnLeftClick(RaycastHit hit)
 		{
+			if(!_isInteractable)
+				return;
+
 			_gameplayChannel.onClickBucket.Invoke();
 		}
 
@@ -100,23 +117,35 @@ namespace TideDefense
 
 		public void OnHover(RaycastHit hit)
 		{
-
+			if(!_isInteractable)
+				return;
 		}
 
 		public void OnHoverEnter(RaycastHit hit)
 		{
+			Debug.Log("OnHoverEnter");
+			if(!_isInteractable)
+				return;
+
 			_isHovered = true; 
 			if(!_isGrabbed)
 			{
-				_hoverTween = transform.DOMoveY(_hoverYOffset,_hoverDuration).SetEase(Ease.OutElastic);
+				_hoverTween.Kill();
+				_hoverTween = transform.DOMove(_hoveredPosition, _hoverDuration).SetEase(Ease.InCubic);
 			}
 		}
 
 		public void OnHoverExit()
 		{
+			Debug.Log("OnHoverExit");
+			if(!_isInteractable)
+				return;
+
+			_isHovered = false;
 			if(!_isGrabbed)
 			{
-				_hoverTween.PlayBackwards();
+				_hoverTween.Kill();
+				_hoverTween = transform.DOMove(_currentPosition, _hoverDuration).SetEase(Ease.OutCubic);
 			}
 		}
 			
