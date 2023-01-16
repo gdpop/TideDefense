@@ -34,7 +34,7 @@ namespace TideDefense
 
         [SerializeField] private Rigidbody _bucketConnectedBody = null;
 
-        [SerializeField] private Transform _bucketJoint = null;
+        [SerializeField] private Rigidbody _bucketJoint = null;
 
         #endregion
 
@@ -83,6 +83,10 @@ namespace TideDefense
 
         private void CallbackOnHoverBeach(RaycastHit hit)
         {
+            // _bucketConnectedBody.transform.position = hit.point + _hoverBucketOffset;
+            _bucketConnectedBody.MovePosition(hit.point + _hoverBucketOffset);
+
+
             if (_currentTool == ToolType.Bucket)
                 MoveBucket(hit.point);
         }
@@ -107,14 +111,13 @@ namespace TideDefense
 
             // Manage Bucket
             _bucket.SetGrabbed();
-            _bucket.transform.SetParent(_bucketJoint);
-            _bucket.transform.localPosition = new Vector3(0f, -0.5f, 0f);
+            _bucket.transform.SetParent(_bucketJoint.transform);
+            _bucket.transform.localPosition = new Vector3(0f, -0.25f, 0f);
 
         }
 
         private void MoveBucket(Vector3 hoveredPosition)
         {
-            _bucketConnectedBody.transform.position = hoveredPosition + _hoverBucketOffset;
         }
 
         private void DropBucket(Vector2Int coords)
@@ -122,9 +125,15 @@ namespace TideDefense
             _currentTool = ToolType.None;
             _gameplayChannel.onChangeTool.Invoke(_currentTool);
 
+
+
             _bucket.transform.SetParent(_gameplayContainer);
             _bucket.transform.position = _gridManager.GetCellWorldPositionFromCoordinates(coords);
             _bucket.SetDropped();
+
+            _bucketJoint.angularDrag = 0f;
+            _bucketJoint.angularVelocity = Vector3.zero;
+            _bucketJoint.transform.localRotation = Quaternion.identity;
         }
 
         #endregion

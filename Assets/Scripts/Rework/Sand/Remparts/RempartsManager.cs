@@ -72,7 +72,7 @@ namespace TideDefense
 
                 // Tile tile = GridManager.Instance.CurrentGrid.GetTile(x + (int)offset.x, y + (int)offset.y);
 
-                if (gridCell.rempart == null)
+                if (gridCell == null || gridCell.rempart == null)
                     bitmask += 0;
                 else
                     bitmask += 1;
@@ -95,7 +95,7 @@ namespace TideDefense
                     new Vector2Int(coords.x + offset.x, coords.y + offset.y)
                 );
                 // Debug.Log($"Coords {offset} \r Rempart : {gridCell.rempart == null}");
-                if (gridCell.rempart == null)
+                if (gridCell == null || gridCell.rempart == null)
                     continue;
                 else
                     gridCell.rempart.SetRempartBlock(GetRempartBlockFromCoords(gridCell.coords));

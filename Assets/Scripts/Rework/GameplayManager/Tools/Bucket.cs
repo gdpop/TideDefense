@@ -18,6 +18,7 @@ namespace TideDefense
 		#endregion
 
 		[SerializeField] private GameplayChannel _gameplayChannel = null;
+		[SerializeField] private BoxCollider _interactableBoxCollider = null;
 
 		#region Hover Animation
 
@@ -34,7 +35,7 @@ namespace TideDefense
 
 		#region Grabbed Behaviour
 
-		private BoxCollider _boxCollider = null;
+		[SerializeField] private BoxCollider _grabBoxCollider = null;
 
 		#endregion
 
@@ -44,9 +45,6 @@ namespace TideDefense
 
 		#region MonoBehaviour
 
-		private void Awake() {
-			_boxCollider = GetComponent<BoxCollider>();
-		}
 
 		private void Start() {
 			SetDropped();
@@ -73,13 +71,16 @@ namespace TideDefense
 		public virtual void SetGrabbed()
 		{
 			_status = ToolStatus.Grabbed;
-			_boxCollider.enabled = false;
+			_interactableBoxCollider.enabled = false;
+			_grabBoxCollider.enabled = true;
 		}
 
 		public virtual void SetDropped()
 		{
 			_status = ToolStatus.Dropped;
-			_boxCollider.enabled = true;
+			
+			_interactableBoxCollider.enabled = true;
+			_grabBoxCollider.enabled = false;
 			transform.rotation = Quaternion.identity;
 
 			_currentPosition = transform.position;

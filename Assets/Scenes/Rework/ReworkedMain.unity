@@ -212,8 +212,8 @@ CharacterJoint:
   m_ConnectedBody: {fileID: 1989171641}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
-  m_AutoConfigureConnectedAnchor: 1
+  m_Axis: {x: 0, y: 1, z: 0}
+  m_AutoConfigureConnectedAnchor: 0
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
@@ -221,22 +221,22 @@ CharacterJoint:
     spring: 0
     damper: 0
   m_LowTwistLimit:
-    limit: -177
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_HighTwistLimit:
-    limit: 177
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_SwingLimitSpring:
     spring: 0
     damper: 0
   m_Swing1Limit:
-    limit: 3
+    limit: 90
     bounciness: 0
     contactDistance: 0
   m_Swing2Limit:
-    limit: 177
+    limit: 90
     bounciness: 0
     contactDistance: 0
   m_EnableProjection: 0
@@ -245,7 +245,7 @@ CharacterJoint:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
+  m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
 --- !u!54 &332468422
@@ -818,9 +818,9 @@ MonoBehaviour:
   _gameplayContainer: {fileID: 545097907}
   _currentTool: 0
   _bucket: {fileID: 1424437352}
-  _hoverBucketYOffset: 1
+  _hoverBucketYOffset: 0.5
   _bucketConnectedBody: {fileID: 1989171641}
-  _bucketJoint: {fileID: 332468423}
+  _bucketJoint: {fileID: 332468422}
 --- !u!1 &864297812
 GameObject:
   m_ObjectHideFlags: 0
@@ -1794,6 +1794,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 545097907}
     m_Modifications:
+    - target: {fileID: 863926731, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+      propertyPath: m_Size.x
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 863926731, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+      propertyPath: m_Size.y
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 863926731, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+      propertyPath: m_Size.z
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102918535372186740, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1102918535372186741, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
       propertyPath: m_Name
       value: Bucket
@@ -1845,14 +1861,6 @@ PrefabInstance:
     - target: {fileID: 1102918535372186746, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1102918535372186747, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
-      propertyPath: _hoverYOffset
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 1102918535372186747, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
-      propertyPath: _hoverDuration
-      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
