@@ -2,7 +2,7 @@ namespace PierreMizzi.MouseInteractable
 {
     using UnityEngine;
 
-    public interface IHoverable
+    public interface IHoverable : IInteractable
     {
         bool isHovered { get; }
         void OnHoverEnter(RaycastHit hit);

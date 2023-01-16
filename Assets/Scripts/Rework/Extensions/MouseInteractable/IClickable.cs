@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PierreMizzi.MouseInteractable
 {
-    public interface IClickable
+    public interface IClickable : IInteractable
     {
         void OnLeftClick(RaycastHit hit);
         // public void OnClickDown;

@@ -47,8 +47,9 @@ namespace TideDefense
             if (_gameplayChannel != null)
             {
                 _gameplayChannel.onClickGrid += CallbackOnClickGrid;
-                _gameplayChannel.onClickBucket += CallbackOnClickBucket;
                 _gameplayChannel.onHoverBeach += CallbackOnHoverBeach;
+
+                _gameplayChannel.onClickBucket += CallbackOnClickBucket;
             }
         }
 
@@ -57,8 +58,9 @@ namespace TideDefense
             if (_gameplayChannel != null)
             {
                 _gameplayChannel.onClickGrid -= CallbackOnClickGrid;
-                _gameplayChannel.onClickBucket -= CallbackOnClickBucket;
                 _gameplayChannel.onHoverBeach -= CallbackOnHoverBeach;
+
+                _gameplayChannel.onClickBucket -= CallbackOnClickBucket;
             }
         }
 
@@ -74,11 +76,8 @@ namespace TideDefense
 
         private void CallbackOnHoverBeach(RaycastHit hit)
         {
-            // Vector3 gridWorldPosition = _gridManager.GetCellWorldPositionFromWorldPosition(hit.point);
             if (_currentTool == ToolType.Bucket)
-            {
                 MoveBucket(hit.point);
-            }
         }
 
 		#endregion
@@ -88,16 +87,16 @@ namespace TideDefense
         public void CallbackOnClickBucket()
         {
             if (_currentTool == ToolType.None)
-            {
                 GrabBucket();
-            }
         }
 
         private void GrabBucket()
         {
             _currentTool = ToolType.Bucket;
-            _bucket.transform.position = _bucket.transform.position + _hoverBucketOffset;
+            _gameplayChannel.onChangeTool.Invoke(_currentTool);
 
+            _bucket.SetGrabbed();
+            _bucket.transform.position = _bucket.transform.position + _hoverBucketOffset;
         }
 
         private void MoveBucket(Vector3 hoveredPosition)
@@ -108,6 +107,9 @@ namespace TideDefense
         private void DropBucket(Vector2Int coords)
         {
             _currentTool = ToolType.None;
+            _gameplayChannel.onChangeTool.Invoke(_currentTool);
+
+            _bucket.SetDropped();
             _bucket.transform.position = _gridManager.GetCellWorldPositionFromCoordinates(coords);
         }
 
