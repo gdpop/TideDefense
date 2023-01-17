@@ -41,15 +41,18 @@ namespace PierreMizzi.MouseInteractable
                 // Manage Hoverable
                 if (hit.transform.TryGetComponent<IHoverable>(out _raycastedHoverable))
                 {
-                    ManageHoverable(hit);
+                    if(_raycastedHoverable.isHoverable)
+                        ManageHoverable(hit);
+
+                    // Hoverable suddenly become non-hoverable while being raycasted, so we stop hovering it
+                    else if(_raycastedHoverable.isHovered)
+                        ForceHoverExit();
+
                 }
             }
             else if (_currentHoverable != null)
             {
-                _currentHoverable.OnHoverExit();
-                _currentHoverable = null;
-
-                _raycastedHoverable = null;
+                ForceHoverExit();
             }
         }
 
@@ -57,7 +60,8 @@ namespace PierreMizzi.MouseInteractable
         {
             if (Input.GetMouseButtonDown(MOUSE_LEFT))
             {
-                clickable.OnLeftClick(hit);
+                if(clickable.isClickable)
+                    clickable.OnLeftClick(hit);
             }
         }
 
@@ -85,5 +89,17 @@ namespace PierreMizzi.MouseInteractable
                 _currentHoverable.OnHover(hit);
             }
         }
+
+        /// <summary> 
+        /// Here we stop volontarily to hover the _currentHoverable
+        /// </summary>
+        private void ForceHoverExit()
+        {
+                _currentHoverable.OnHoverExit();
+                _currentHoverable = null;
+
+                _raycastedHoverable = null;
+        }
+
     }
 }

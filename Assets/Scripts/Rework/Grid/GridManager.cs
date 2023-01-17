@@ -85,14 +85,14 @@ namespace TideDefense
                 _gameplayChannel.onClickGrid.Invoke(gridCell, hit);
         }
 
-        public void DropToolOnGrid(ToolType toolType, GridCell gridCell)
+        public void DropToolOnGrid(BeachTool tool, GridCell gridCell)
         {
-            gridCell.currentTool = toolType;
+            gridCell.currentTool = tool;
         }
 
         public void PickToolOnGrid(GridCell gridCell)
         {
-            gridCell.currentTool = ToolType.None;
+            gridCell.currentTool = null;
         }
 
 

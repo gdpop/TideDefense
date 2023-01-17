@@ -5,6 +5,6 @@ namespace TideDefense
     public class GridCell : AGridCell
     {
         public Rempart rempart;
-        public ToolType currentTool = ToolType.None;
+        public BeachTool currentTool = null;
     }
 }

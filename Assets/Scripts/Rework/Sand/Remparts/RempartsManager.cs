@@ -30,7 +30,7 @@ namespace TideDefense
             if (
                 gridCell == null
                 || gridCell.rempart != null
-                || gridCell.currentTool != ToolType.None
+                || gridCell.currentTool != null
             )
                 return;
 

@@ -11,16 +11,19 @@ namespace TideDefense
 		#region Tool parent class ?
 
         [SerializeField]
-		private ToolType _toolType = ToolType.None;
-		public ToolType toolType { get { return _toolType; } }
+        private ToolType _toolType = ToolType.None;
+        public ToolType toolType
+        {
+            get { return _toolType; }
+        }
 
         protected bool _isGrabbed = false;
         public ToolStatus status = ToolStatus.Dropped;
 
-		/// <summary> 
-		/// Current Grid Cell the tool is dropped on
-		/// </summary>
-		[HideInInspector]
+        /// <summary>
+        /// Current Grid Cell the tool is dropped on
+        /// </summary>
+        [HideInInspector]
         public GridCell currentGridCell = null;
 
 		#endregion
@@ -86,12 +89,15 @@ namespace TideDefense
         private void CallbackOnChangeTool(BeachTool tool)
         {
             _isGrabbed = tool.toolType == _toolType;
+            Debug.Log($"{name} : current tool{tool}");
+            _isHoverable = tool == null;
+            _isClickable = tool == null;
         }
 
         public virtual void SetGrabbed()
         {
             status = ToolStatus.Grabbed;
-			currentGridCell = null;
+            currentGridCell = null;
             _isGrabbed = true;
 
             _interactableBoxCollider.enabled = false;
@@ -101,7 +107,7 @@ namespace TideDefense
         public virtual void SetDropped(GridCell gridCell)
         {
             status = ToolStatus.Dropped;
-			currentGridCell = gridCell;
+            currentGridCell = gridCell;
             _isGrabbed = false;
 
             _interactableBoxCollider.enabled = true;
@@ -113,7 +119,9 @@ namespace TideDefense
             _currentPosition = transform.position;
             _hoveredPosition = transform.position + new Vector3(0f, _hoverYOffset, 0f);
 
-            Debug.Log($"{toolType} has been drop on the grid : ({gridCell.coords.x}, {gridCell.coords.y})");
+            Debug.Log(
+                $"{toolType} has been drop on the grid : ({gridCell.coords.x}, {gridCell.coords.y})"
+            );
         }
 
 		#endregion
@@ -121,6 +129,13 @@ namespace TideDefense
 		#endregion
 
 		#region IClickable
+
+        private bool _isClickable = true;
+        public bool isClickable
+        {
+            get { return _isClickable; }
+            set { _isClickable = value; }
+        }
 
         public void OnLeftClick(RaycastHit hit)
         {
@@ -132,9 +147,8 @@ namespace TideDefense
 
 		#endregion
 
-		#region IHoverable
+        #region IInteractable
 
-        [SerializeField]
         private bool _isInteractable = true;
         public bool isInteractable
         {
@@ -142,7 +156,18 @@ namespace TideDefense
             set { _isInteractable = value; }
         }
 
+        #endregion
+
+		#region IHoverable
+
         [SerializeField]
+        private bool _isHoverable = true;
+        public bool isHoverable
+        {
+            get { return _isHoverable; }
+            set { _isHoverable = value; }
+        }
+
         private bool _isHovered = false;
         public bool isHovered
         {
@@ -158,7 +183,7 @@ namespace TideDefense
 
         public void OnHoverEnter(RaycastHit hit)
         {
-            if (!_isInteractable)
+            if (!isInteractable)
                 return;
 
             // Bucket makes a little jump above the ground

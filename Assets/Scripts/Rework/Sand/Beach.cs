@@ -15,11 +15,26 @@ namespace TideDefense
 
 		#endregion
 
-		#region Methods
+		#region IInteractable
+
+        [SerializeField]
+        private bool _isInteractable = true;
+        public bool isInteractable
+        {
+            get { return _isInteractable; }
+            set { _isInteractable = value; }
+        }
 
 		#endregion
 
 		#region IClickable
+
+        private bool _isClickable = true;
+        public bool isClickable
+        {
+            get { return _isClickable; }
+            set { _isClickable = value; }
+        }
 
         public void OnLeftClick(RaycastHit hit)
         {
@@ -30,9 +45,13 @@ namespace TideDefense
 
         #region IHoverable
 
-        [SerializeField] private bool _isInteractable = true;
-        public bool isInteractable { get { return _isInteractable; } set { _isInteractable = value; } }
-        
+        private bool _isHoverable = true;
+        public bool isHoverable
+        {
+            get { return _isHoverable; }
+            set { _isHoverable = value; }
+        }
+
         [SerializeField]
         private bool _isHovered = false;
         public bool isHovered

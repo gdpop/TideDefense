@@ -24,11 +24,13 @@ namespace TideDefense
         public ToolDelegate onChangeTool = null;
 
         public ToolDelegate onClickTool = null;
+        public ToolDelegate onHoverTool = null;
 
         protected void OnEnable()
         {
             onChangeTool = (BeachTool tool) => {};
             onClickTool = (BeachTool tool) => { };
+            onHoverTool = (BeachTool tool) => { };
 
 
             onClickBeach = (RaycastHit hit) => { };
