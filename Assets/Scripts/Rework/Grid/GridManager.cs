@@ -8,7 +8,8 @@ namespace TideDefense
 
 		#region Gameplay
 
-        private GridModel _gridModel = null;
+        [HideInInspector]
+        public GridModel gridModel = null;
 
         /// <summary>
         ///	Ammount of columns along the side of the beach
@@ -33,8 +34,6 @@ namespace TideDefense
 
         #endregion
 
-
-
 		#region Grid Gizmos
 
         [Header("Gizmos")]
@@ -57,8 +56,8 @@ namespace TideDefense
 
         private void Start()
         {
-            _gridModel = new GridModel();
-            _gridModel.Initialize<GridCell>(_xLength, _zLength, _cellSize);
+            gridModel = new GridModel();
+            gridModel.Initialize<GridCell>(_xLength, _zLength, _cellSize, _yElevation, _beachSlope);
 
             if (_gameplayChannel != null)
                 _gameplayChannel.onClickBeach += CallbackOnClickBeach;
@@ -80,43 +79,24 @@ namespace TideDefense
 
         private void CallbackOnClickBeach(RaycastHit hit)
         {
-            Vector2Int clickedGridCoords = _gridModel.GetCellCoordinatesFromWorldPosition(
-                hit.point
-            );
+            GridCell gridCell = gridModel.GetCellFromWorldPosition<GridCell>(hit.point);
 
-            if (clickedGridCoords != Vector2.zero)
-                _gameplayChannel.onClickGrid.Invoke(clickedGridCoords);
+            if (gridCell != null)
+                _gameplayChannel.onClickGrid.Invoke(gridCell, hit);
         }
 
-        public GridCell GetCellFromCoordinates(Vector2Int coords)
+        public void DropToolOnGrid(ToolType toolType, GridCell gridCell)
         {
-            return _gridModel.GetCellFromCoordinates<GridCell>(coords);
+            gridCell.currentTool = toolType;
         }
 
-        public Vector3 GetCellWorldPositionFromCoordinates(Vector2Int coords)
+        public void PickToolOnGrid(GridCell gridCell)
         {
-            if (!_gridModel.CheckValidCoordinates(coords))
-            {
-                Debug.LogError($"coords out of bound : {coords}");
-                return Vector3.zero;
-            }
-
-            Vector3 gridWorldPosition = _gridModel.GetPositionFromCoordinates(coords);
-
-            _yElevation =
-                (coords.y * _cellSize + (_cellSize / 2f)) * Mathf.Tan(Mathf.Deg2Rad * _beachSlope);
-
-            return new Vector3(gridWorldPosition.x, _yElevation - 0.015f, gridWorldPosition.z);
+            gridCell.currentTool = ToolType.None;
         }
 
-        public Vector3 GetCellWorldPositionFromWorldPosition(Vector3 worldPosition)
-        {
-            Vector2Int clickedGridCoords = _gridModel.GetCellCoordinatesFromWorldPosition(
-                worldPosition
-            );
 
-            return GetCellWorldPositionFromCoordinates(clickedGridCoords);
-        }
+
 
         #endregion
 

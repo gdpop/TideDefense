@@ -31,10 +31,7 @@ namespace PierreMizzi.Grid
         /// </summary>
         protected List<List<AGridCell>> _gridCellHash = new List<List<AGridCell>>();
 
-        // [SerializeField]
-        // private Transform _beachTransform = null;
-
-        // private Vector2 _flattenBeachPosition = new Vector2();
+        private static Vector2Int unvalidGridCoords = new Vector2Int(-1, -1);
 
 		#endregion
 
@@ -44,17 +41,9 @@ namespace PierreMizzi.Grid
 
 		#region MonoBehaviour
 
-        public virtual void Initialize<T>(
-            int xLength = 10,
-            int zLength = 10,
-            float cellSize = 0.25f
-        ) where T : AGridCell, new()
+        public virtual void Initialize<T>(int xLength, int zLength, float cellSize)
+            where T : AGridCell, new()
         {
-            // _flattenBeachPosition = new Vector2(
-            //     _beachTransform.position.x,
-            //     _beachTransform.position.z
-            // );
-
             _xLength = xLength;
             _zLength = zLength;
             _cellSize = cellSize;
@@ -89,7 +78,7 @@ namespace PierreMizzi.Grid
         /// <summary>
         ///	Given a WorldPosition, it returns the coordinates of the corresponding grid cell
         /// </summary>
-        public Vector2Int GetCellCoordinatesFromWorldPosition(Vector3 worldPosition)
+        public virtual Vector2Int GetCellCoordinatesFromWorldPosition(Vector3 worldPosition)
         {
             Vector2 flattenPos = new Vector2(worldPosition.x, worldPosition.z);
             Vector2Int coords = new Vector2Int(
@@ -100,17 +89,29 @@ namespace PierreMizzi.Grid
             if (coords.x < 0 || coords.x > _xLength - 1 || coords.y < 0 || coords.y > _zLength - 1)
             {
                 Debug.Log($"Given position is out of grid : ({coords.x};{coords.y})");
-                return Vector2Int.zero;
+                return unvalidGridCoords;
             }
 
             return coords;
         }
 
-        public T GetCellFromCoordinates<T>(Vector2Int coords) where T : AGridCell
+        public virtual T GetCellFromCoordinates<T>(Vector2Int coords) where T : AGridCell
         {
             if (CheckValidCoordinates(coords))
             {
                 return _gridCellHash[coords.x][coords.y] as T;
+            }
+            else
+                return null;
+        }
+
+        public virtual T GetCellFromWorldPosition<T>(Vector3 worldPosition) where T : AGridCell
+        {
+            Vector2Int coords = GetCellCoordinatesFromWorldPosition(worldPosition);
+
+            if (coords != unvalidGridCoords)
+            {
+                return GetCellFromCoordinates<T>(coords);
             }
             else
                 return null;
@@ -133,7 +134,7 @@ namespace PierreMizzi.Grid
             return true;
         }
 
-        public Vector3 GetPositionFromCoordinates(Vector2Int coords)
+        public virtual Vector3 GetPositionFromCoordinates(Vector2Int coords)
         {
             if (CheckValidCoordinates(coords))
                 return new Vector3(

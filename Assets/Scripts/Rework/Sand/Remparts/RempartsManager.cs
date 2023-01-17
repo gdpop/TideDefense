@@ -25,16 +25,17 @@ namespace TideDefense
 
 		#region Methods
 
-        public void BuildRempart(Vector2Int coords)
+        public void BuildRempart(GridCell gridCell)
         {
-            // Debug.Log($"Clicked on the grid at {coords}");
-            GridCell gridCell = _gridManager.GetCellFromCoordinates(coords);
-
-            if (gridCell == null || gridCell.rempart != null)
+            if (
+                gridCell == null
+                || gridCell.rempart != null
+                || gridCell.currentTool != ToolType.None
+            )
                 return;
 
-            RempartBlock rempartBlock = GetRempartBlockFromCoords(coords);
-            Vector3 worldPosition = _gridManager.GetCellWorldPositionFromCoordinates(coords);
+            RempartBlock rempartBlock = GetRempartBlockFromCoords(gridCell.coords);
+            Vector3 worldPosition = _gridManager.gridModel.GetCellWorldPositionFromCoordinates(gridCell.coords);
 
             Rempart rempart = UnityEngine.Object.Instantiate(
                 _prefabRempart,
@@ -49,7 +50,7 @@ namespace TideDefense
             gridCell.rempart = rempart;
 
             // Now we update all surrounding remparts
-            RefreshRempartAroundCoordinates(coords);
+            RefreshRempartAroundCoordinates(gridCell.coords);
         }
 
         public void DestroyRempart(Rempart rempart)
@@ -66,7 +67,7 @@ namespace TideDefense
             for (int i = 0; i < TilesetUtils.neighboorsCoordinatesFour.Count; i++)
             {
                 Vector2Int offset = TilesetUtils.neighboorsCoordinatesFour[i];
-                GridCell gridCell = _gridManager.GetCellFromCoordinates(
+                GridCell gridCell = _gridManager.gridModel.GetCellFromCoordinates<GridCell>(
                     new Vector2Int(coords.x + offset.x, coords.y + offset.y)
                 );
 
@@ -91,7 +92,7 @@ namespace TideDefense
             for (int i = 0; i < TilesetUtils.neighboorsCoordinatesFour.Count; i++)
             {
                 Vector2Int offset = TilesetUtils.neighboorsCoordinatesFour[i];
-                GridCell gridCell = _gridManager.GetCellFromCoordinates(
+                GridCell gridCell = _gridManager.gridModel.GetCellFromCoordinates<GridCell>(
                     new Vector2Int(coords.x + offset.x, coords.y + offset.y)
                 );
                 // Debug.Log($"Coords {offset} \r Rempart : {gridCell.rempart == null}");

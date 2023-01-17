@@ -4,7 +4,7 @@ namespace TideDefense
     using System;
 
     public delegate void OnRaycastEvent(RaycastHit hit);
-    public delegate void OnClickGrid(Vector2Int coords);
+    public delegate void OnClickGrid(GridCell clickedCell, RaycastHit hit);
 
     public delegate void OnChangeTool(ToolType toolType);
 
@@ -33,7 +33,7 @@ namespace TideDefense
 
             onClickBeach = (RaycastHit hit) => { };
             onHoverBeach = (RaycastHit hit) => { };
-            onClickGrid = (Vector2Int coords) => { };
+            onClickGrid = (GridCell clickedCell, RaycastHit hit) => { };
         }
     }
 }
