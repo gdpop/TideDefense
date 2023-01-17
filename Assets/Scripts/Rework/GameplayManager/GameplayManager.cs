@@ -1,6 +1,7 @@
 namespace TideDefense
 {
-    using UnityEngine;
+	using DG.Tweening;
+	using UnityEngine;
 
     public class GameplayManager : MonoBehaviour
     {
@@ -122,13 +123,63 @@ namespace TideDefense
             _gameplayChannel.onChangeTool.Invoke(_currentTool);
 
             // Manage ConnectedBody
-            _bucketConnectedBody.position = _bucket.transform.position + _hoverBucketOffset;
+            // _bucketConnectedBody.position = _bucket.transform.position + _hoverBucketOffset;
 
             // Manage Bucket
-            _bucket.SetGrabbed();
-            _bucket.transform.SetParent(_bucketJoint.transform);
-            _bucket.transform.localPosition = new Vector3(0f, -0.25f, 0f);
+            // _bucket.SetGrabbed();
+            // _bucket.transform.SetParent(_bucketJoint.transform);
+            // _bucket.transform.localPosition = new Vector3(0f, -0.25f, 0f);
 
+
+            // Reworked
+            Vector3 from = _bucket.transform.position;
+            LockBucketJoint();
+
+            DOVirtual.Float(0f, 1f, _grabDropTweenDuration,(float value)=>{
+                
+                _bucketJoint.transform.position = _bucketConnectedBody.position;
+                _bucket.transform.position = Vector3.Lerp(from, _grabBucketAnchor.position, value);
+                
+            }).SetEase(Ease.OutCirc).OnComplete(()=>{
+
+                FreeBucketJoint();
+                _bucket.transform.SetParent(_bucketJoint.transform);
+                _bucket.transform.localPosition = _grabBucketAnchor.localPosition;
+                _bucket.SetGrabbed();
+            });
+
+            // _bucket.transform.DOMove(_grabBucketAnchor.position, _grabDropTweenDuration).SetEase(Ease.OutCirc).OnComplete(()=>{
+
+            //     FreeBucketJoint();
+            //     _bucket.transform.SetParent(_bucketJoint.transform);
+            //     _bucket.transform.localPosition = _grabBucketAnchor.localPosition;
+            //     _bucket.SetGrabbed();
+            // });
+
+        }
+
+        [SerializeField] private float _grabDropTweenDuration = 0f;
+
+        [SerializeField] private Transform _grabBucketAnchor = null;
+
+        private void LockBucketJoint()
+        {
+            _bucketJoint.isKinematic = true;
+            _bucketJoint.useGravity = false;
+            _bucketJoint.angularDrag = 0;
+            _bucketJoint.angularVelocity = Vector3.zero;
+            _bucketJoint.transform.position = _bucketConnectedBody.position;
+            _bucketJoint.transform.localRotation = Quaternion.identity;
+        }
+
+        private void FreeBucketJoint()
+        {
+            _bucketJoint.isKinematic = false;
+            _bucketJoint.useGravity = true;
+            _bucketJoint.angularDrag = 0;
+            _bucketJoint.angularVelocity = Vector3.zero;
+            _bucketJoint.transform.position = _bucketConnectedBody.position;
+            _bucketJoint.transform.localRotation = Quaternion.identity;
         }
 
         private void InitializeBucket()
@@ -148,15 +199,14 @@ namespace TideDefense
             _currentTool = ToolType.None;
             _gameplayChannel.onChangeTool.Invoke(_currentTool);
 
-
-
+            LockBucketJoint();
             _bucket.transform.SetParent(_gameplayContainer);
-            _bucket.transform.position = _gridManager.gridModel.GetCellWorldPositionFromCoordinates(gridCell.coords);
-            _bucket.SetDropped(gridCell);
 
-            _bucketJoint.angularDrag = 0f;
-            _bucketJoint.angularVelocity = Vector3.zero;
-            _bucketJoint.transform.localRotation = Quaternion.identity;
+            Vector3 to = _gridManager.gridModel.GetCellWorldPositionFromCoordinates(gridCell.coords);
+
+            _bucket.transform.DOMove(to, _grabDropTweenDuration).SetEase(Ease.OutCirc).OnComplete(()=>{
+                _bucket.SetDropped(gridCell);
+            });
         }
 
         #endregion
