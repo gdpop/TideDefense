@@ -8,22 +8,38 @@ namespace TideDefense
     {
 		#region Fields
 
-
         [SerializeField]
         private GameplayChannel _gameplayChannel = null;
+        public GameplayChannel gameplayChannel
+        {
+            get { return _gameplayChannel; }
+        }
 
         [SerializeField]
         private RempartsManager _rempartsManager = null;
 
+        public RempartsManager rempartsManager
+        {
+            get { return _rempartsManager; }
+        }
+
         [SerializeField]
         private GridManager _gridManager = null;
+        public GridManager gridManager
+        {
+            get { return _gridManager; }
+        }
 
         [SerializeField]
         private Transform _gameplayContainer = null;
+        public Transform gameplayContainer
+        {
+            get { return _gameplayContainer; }
+        }
 
         #region Tool
 
-        /// <summary> 
+        /// <summary>
         /// Tool that does nothing. onChangeTool.Invoke(null); does nothing so I use it here
         /// </summary>
         private BeachTool _noneTool = new BeachTool();
@@ -45,6 +61,12 @@ namespace TideDefense
 
         [SerializeField]
         private Rigidbody _bucketJoint = null;
+
+        [SerializeField]
+        private float _grabDropTweenDuration = 0f;
+
+        [SerializeField]
+        private Transform _grabBucketAnchor = null;
 
         #endregion
 
@@ -168,12 +190,6 @@ namespace TideDefense
                 });
         }
 
-        [SerializeField]
-        private float _grabDropTweenDuration = 0f;
-
-        [SerializeField]
-        private Transform _grabBucketAnchor = null;
-
         private void LockBucketJoint()
         {
             _bucketJoint.isKinematic = true;
@@ -228,7 +244,6 @@ namespace TideDefense
                     tool.SetDropped(gridCell);
 
                     _currentTool = null;
-                    Debug.Log("OComplete Drop");
                     _gameplayChannel.onChangeTool.Invoke(_noneTool);
                 });
         }

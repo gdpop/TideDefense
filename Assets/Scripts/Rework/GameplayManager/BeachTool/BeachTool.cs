@@ -89,7 +89,6 @@ namespace TideDefense
         private void CallbackOnChangeTool(BeachTool tool)
         {
             _isGrabbed = tool.toolType == _toolType;
-            Debug.Log($"{name} : current tool{tool}");
             _isHoverable = tool == null;
             _isClickable = tool == null;
         }
@@ -119,9 +118,9 @@ namespace TideDefense
             _currentPosition = transform.position;
             _hoveredPosition = transform.position + new Vector3(0f, _hoverYOffset, 0f);
 
-            Debug.Log(
-                $"{toolType} has been drop on the grid : ({gridCell.coords.x}, {gridCell.coords.y})"
-            );
+            // Debug.Log(
+            //     $"{toolType} has been drop on the grid : ({gridCell.coords.x}, {gridCell.coords.y})"
+            // );
         }
 
 		#endregion
