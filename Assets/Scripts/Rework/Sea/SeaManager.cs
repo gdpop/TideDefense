@@ -107,22 +107,30 @@ namespace TideDefense
 
 		#region Tide
 
+        /// <summary> 
+        /// Mainly manages the tide ascending and descending motion.
+        /// </summary>
         protected void CallbackUpdateCurrentDeltaTime(float currentDeltaTime)
         {
             _tideProgress += currentDeltaTime * _tideProgressSpeed;
 
+            // Determine if it's ascending or descending now
             _tidePhase = Convert.ToBoolean(1 - (int)Mathf.Floor(_tideProgress % 2));
+
+            // Compute the normalized progress of the current phase
             _tidePhaseProgress =
                 (1.0f / Mathf.PI) * Mathf.Acos(Mathf.Sin(Mathf.PI * (_tideProgress + 0.5f)));
 
             // Debug.Log($"_tidePhase : {_tidePhase} | _tidePhaseProgress : {_tidePhaseProgress}");
 
+            // Update tide level
             _currentTideLevel = Mathf.Lerp(
                 _seaChannel.minTideLevel,
                 _seaChannel.maxTideLevel,
                 _tidePhaseProgress
             );
 
+            // Move the sea up and down, just like the surface would do in real life
             _seaTransform.position =
                 _beachBottom.position
                 + new Vector3(0f, TideProgressToSeaHeight(_currentTideLevel), 0f);
@@ -157,6 +165,9 @@ namespace TideDefense
 
 		#region Wave
 
+        /// <summary> 
+        /// Wait a random time between two waves
+        /// </summary>
 		public IEnumerator DelayBetweenWaveBehaviour()
 		{
 			float randomDelay = UnityEngine.Random.Range(_seaChannel.minDelayBetweenWaves, _seaChannel.maxDelayBewteenWaves);
@@ -168,7 +179,9 @@ namespace TideDefense
 			yield return null;
 		}
 
-        [ContextMenu("Create Wave")]
+        /// <summary> 
+        /// Creates a new wave that will crash on the beach
+        /// </summary>
         private void CreateWave()
         {
             _currentWave = UnityEngine.Object.Instantiate(_wavePrefab).GetComponent<Wave>();
@@ -176,6 +189,9 @@ namespace TideDefense
             _currentWave.onDisappear += CallbackDestroyCurrentWave;
         }
 
+        /// <summary> 
+        /// Wave crashed and returned back into the sea
+        /// </summary>
         public void CallbackDestroyCurrentWave()
         {
             _currentWave.onDisappear -= CallbackDestroyCurrentWave;

@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 077c1a4915d24954ca9ff1506e3c06e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _toolType: 1
+  status: 1
   _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
   _interactableBoxCollider: {fileID: 1102918535372186740}
   _hoverDuration: 0.1

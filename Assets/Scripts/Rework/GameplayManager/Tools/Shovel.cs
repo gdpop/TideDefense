@@ -2,7 +2,7 @@ namespace TideDefense
 {
 	using UnityEngine;
 	
-	public class Bucket : BeachTool
+	public class Shovel : BeachTool
 	{
 		#region Fields 
 		

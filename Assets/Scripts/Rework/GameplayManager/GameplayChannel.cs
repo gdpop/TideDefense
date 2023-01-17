@@ -6,7 +6,7 @@ namespace TideDefense
     public delegate void OnRaycastEvent(RaycastHit hit);
     public delegate void OnClickGrid(GridCell clickedCell, RaycastHit hit);
 
-    public delegate void OnChangeTool(ToolType toolType);
+    public delegate void ToolDelegate(BeachTool tool);
 
     [CreateAssetMenu(
         fileName = "GameplayChannel",
@@ -21,14 +21,14 @@ namespace TideDefense
         public OnClickGrid onClickGrid = null;
 
 
-        public OnChangeTool onChangeTool = null;
+        public ToolDelegate onChangeTool = null;
 
-        public Action onClickBucket = null;
+        public ToolDelegate onClickTool = null;
 
         protected void OnEnable()
         {
-            onChangeTool = (ToolType toolType) => {};
-            onClickBucket = () => { };
+            onChangeTool = (BeachTool tool) => {};
+            onClickTool = (BeachTool tool) => { };
 
 
             onClickBeach = (RaycastHit hit) => { };
