@@ -26,12 +26,12 @@ namespace TideDefense
 
         public virtual void Activate()
         {
-            Debug.Log($"Activated {this}");
+            // Debug.Log($"Activated {this}");
         }
 
         public virtual void Deactivate()
         {
-            Debug.Log($"Deactivate {this}");
+            // Debug.Log($"Deactivate {this}");
         }
 
         #endregion
