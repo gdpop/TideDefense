@@ -8,7 +8,9 @@ namespace TideDefense
     {
 		#region Fields
 
-		#region Tool parent class ?
+		#region Tool 
+
+        protected GameplayManager _manager = null;
 
         [SerializeField]
         private ToolType _toolType = ToolType.None;
@@ -70,13 +72,13 @@ namespace TideDefense
 		#region MonoBehaviour
 
 
-        private void Start()
+        protected virtual void Start()
         {
             if (_gameplayChannel != null)
                 _gameplayChannel.onChangeTool += CallbackOnChangeTool;
         }
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             if (_gameplayChannel != null)
                 _gameplayChannel.onChangeTool -= CallbackOnChangeTool;
@@ -86,7 +88,12 @@ namespace TideDefense
 
 		#region Tool parent class ?
 
-        private void CallbackOnChangeTool(BeachTool tool)
+        public virtual void Initialize(GameplayManager manager)
+        {
+            _manager = manager;
+        }
+
+        protected void CallbackOnChangeTool(BeachTool tool)
         {
             _isGrabbed = tool.toolType == _toolType;
             _isHoverable = tool == null;

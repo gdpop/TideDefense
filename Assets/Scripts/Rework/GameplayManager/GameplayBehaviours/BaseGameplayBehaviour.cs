@@ -1,3 +1,6 @@
+using System;
+using UnityEngine;
+
 namespace TideDefense
 {
     public class BaseGameplayBehaviour
@@ -11,19 +14,27 @@ namespace TideDefense
             get { return ToolType.None; }
         }
 
-        public virtual void Initialize(GameplayManager manager)
+        public BaseGameplayBehaviour() { }
+
+        public BaseGameplayBehaviour(GameplayManager manager)
         {
             _gameplayManager = manager;
         }
 
-        public virtual void Activate() { }
+        [Obsolete]
+        public virtual void Initialize(GameplayManager manager) { }
 
-        public virtual void Deactivate() { }
+        public virtual void Activate()
+        {
+            Debug.Log($"Activated {this}");
+        }
+
+        public virtual void Deactivate()
+        {
+            Debug.Log($"Deactivate {this}");
+        }
 
         #endregion
-
-
-
 
         #region Callbacks
 
