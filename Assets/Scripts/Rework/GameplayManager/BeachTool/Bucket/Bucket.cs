@@ -39,6 +39,13 @@ namespace TideDefense
 			
 		#endregion
 
+		#region Content
+			
+		public SandWaterFilling _content = new SandWaterFilling();
+
+		[SerializeField] private float _maxQuantity = 1f;
+
+		#endregion
 
 		#endregion 
 		
@@ -81,6 +88,26 @@ namespace TideDefense
 		public void HideDiggableHints()
 		{
 			_diggableHintsContainer.gameObject.SetActive(false);
+		}
+			
+		#endregion
+
+		#region Content
+
+		public void FillBucket(SandWaterFilling added)
+		{
+			// If what's added is too much, we only take what we need to fill the bucket
+			// added.sandConcentration is the same
+			if(added.quantity + _content.quantity > _maxQuantity)
+				added.quantity = _maxQuantity - _content.quantity;
+
+			_content.quantity = added.quantity;
+			_content.sandConcentration = ComputeSandwaterConcentration(_content, added);
+		}
+
+		public float ComputeSandwaterConcentration(SandWaterFilling current, SandWaterFilling added)
+		{
+			return (current.sandConcentration * current.quantity) + (added.sandConcentration * added.quantity) / (current.quantity + added.quantity);
 		}
 			
 		#endregion

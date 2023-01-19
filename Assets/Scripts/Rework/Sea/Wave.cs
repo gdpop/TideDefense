@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace TideDefense
@@ -57,17 +56,22 @@ namespace TideDefense
         public void CrashOnBeach()
         {
             // Simulate a wave with random delay between segments
-
             int firstSegmentIndex = UnityEngine.Random.Range(0, _amountWaveSegment);
             float delayWaveSegment = UnityEngine.Random.Range(
                 _seaChannel.minDelayWaveSegments,
                 _seaChannel.maxDelayWaveSegments
             );
 
+            // Set a random strength of the wave
+            float randomWaveStrength = UnityEngine.Random.Range(
+                _seaChannel.minWaveStrength,
+                _seaChannel.maxWaveStrength
+            );
+
             // Launch crashing animation of every WaveSegments
             foreach (WaveSegment segment in _waveSegments)
             {
-                segment.CrashOnBeach(firstSegmentIndex, delayWaveSegment, 1f);
+                segment.CrashOnBeach(firstSegmentIndex, delayWaveSegment, randomWaveStrength);
                 segment.onDisappear += CallbackWaveSegmentDisappear;
             }
 

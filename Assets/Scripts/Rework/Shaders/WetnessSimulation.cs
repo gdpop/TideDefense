@@ -20,6 +20,13 @@ namespace TideDefense
         [SerializeField]
         private float _updateFrequency = 0.5f;
 
+        [SerializeField] private float _evaporationSpeed = 0.1f;
+
+        public const string EVAPORATION_SPEED_PROPERTY = "_EvaporationSpeed";
+
+        public const string SEGMENTS_PROPERTY = "_SegmentsProgress";
+
+
         public IEnumerator UpdateTextureBehaviour()
         {
             while (true)
@@ -31,8 +38,11 @@ namespace TideDefense
             }
         }
 
+
+
         public void Start()
         {
+            
             Graphics.Blit(initialTexture, texture);
             buffer = new RenderTexture(
                 texture.width,
@@ -46,34 +56,12 @@ namespace TideDefense
             StartCoroutine("UpdateTextureBehaviour");
         }
 
-        public const string SEGMENTS_PROPERTY = "_SegmentsProgress";
 
         public void RefreshTextureCoverage(float[] textureCoveragePerSegment)
         {
             _textureCoveragePerSegment = textureCoveragePerSegment;
             material.SetFloatArray(SEGMENTS_PROPERTY, _textureCoveragePerSegment);
-        }
-
-
-        // public void WaveSimulation()
-        // {
-        //     _values = new List<float>(2){0, 0};
-        //     Debug.Log(_values.Count);
-        //     DOVirtual
-        //         .Float(
-        //             0f,
-        //             Mathf.PI,
-        //             5,
-        //             (float value) =>
-        //             {
-        //                 _values[0] = Mathf.Lerp(0f, 1f, Mathf.Sin(value));
-        //                 Debug.Log(_values[0]);
-        //                 material.SetFloatArray(SEGMENTS_PROPERTY, _values);
-        //             }
-        //         )
-        //         .SetEase(Ease.InOutSine)
-        //         .SetLoops(-1);
-        // }
+        }   
 
         public void UpdateTexture()
         {

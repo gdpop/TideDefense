@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace TideDefense
 {
-    
     [CreateAssetMenu(fileName = "SeaChannel", menuName = "TideDefense/SeaChannel", order = 0)]
     public class SeaChannel : ScriptableObject
     {
@@ -65,6 +64,22 @@ namespace TideDefense
             get { return _maxDelayBewteenWaves; }
         }
 
+        [SerializeField]
+        private float _minWaveStrength = 0.5f;
+        public float minWaveStrength
+        {
+            get { return _minWaveStrength; }
+            set { _minWaveStrength = value; }
+        }
+
+        [SerializeField]
+        private float _maxWaveStrength = 1.5f;
+        public float maxWaveStrength
+        {
+            get { return _maxWaveStrength; }
+            set { _maxWaveStrength = value; }
+        }
+
         #endregion
 
         #region Wave Segment Settings
@@ -100,6 +115,5 @@ namespace TideDefense
         }
 
         #endregion
-
     }
 }
