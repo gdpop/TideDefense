@@ -1,7 +1,8 @@
 namespace TideDefense
 {
     using System.Collections;
-    using UnityEngine;
+	using DG.Tweening;
+	using UnityEngine;
     using UnityEngine.Rendering;
 
     public class WetnessSimulation : MonoBehaviour
@@ -18,6 +19,8 @@ namespace TideDefense
         [SerializeField]
         private float _updateFrequency = 0.5f;
 
+        
+
         public IEnumerator UpdateTextureBehaviour()
         {
             while (true)
@@ -31,8 +34,6 @@ namespace TideDefense
         public void Start()
         {
             Graphics.Blit(initialTexture, texture);
-            // commandBuffer = new CommandBuffer();
-            // commandBuffer.Blit(initialTexture, texture);
             buffer = new RenderTexture(
                 texture.width,
                 texture.height,
@@ -40,7 +41,29 @@ namespace TideDefense
                 texture.format
             );
 
+            WaveSimulation();
+
             StartCoroutine("UpdateTextureBehaviour");
+        }
+
+        public float _value = 0f;
+        public const string VALUE_PROPERTY = "_Value";
+
+        public void WaveSimulation()
+        {
+            DOVirtual
+                .Float(
+                    0f,
+                    Mathf.PI,
+                    5,
+                    (float value) =>
+                    {
+                        _value = Mathf.Lerp(0f, 1f, Mathf.Sin(value));
+                        material.SetFloat(VALUE_PROPERTY, _value);
+                    }
+                )
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1);
         }
 
         [ContextMenu("UpdateTexture")]
@@ -48,8 +71,6 @@ namespace TideDefense
         {
             Graphics.Blit(texture, buffer, material);
             Graphics.Blit(buffer, texture);
-            // commandBuffer.Blit(texture, buffer, material);
-            // commandBuffer.Blit(buffer, texture);
         }
     }
 }

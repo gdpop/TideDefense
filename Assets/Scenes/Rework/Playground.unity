@@ -683,7 +683,8 @@ MonoBehaviour:
   texture: {fileID: 8400000, guid: 1b43c21d4eccaeb42ad4618ddece2134, type: 2}
   buffer: {fileID: 0}
   material: {fileID: 2100000, guid: a8169b151f29e85469e23ee6f1c77000, type: 2}
-  _updateFrequency: 0.1
+  _updateFrequency: 0.01
+  _value: 0
 --- !u!23 &1009688024
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -979,6 +980,7 @@ MonoBehaviour:
   buffer: {fileID: 0}
   material: {fileID: 2100000, guid: b2ac5a93a9e7fa54282373939a3a69bb, type: 2}
   _updateFrequency: 0.5
+  _value: 0
 --- !u!23 &2039478453
 MeshRenderer:
   m_ObjectHideFlags: 0

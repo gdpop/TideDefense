@@ -124,8 +124,8 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DrySand: {r: 1, g: 0.8302527, b: 0.2705883, a: 1}
+    - _DrySand: {r: 0.6698113, g: 0.5367603, b: 0.155868, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _WetSand: {r: 0.4433962, g: 0.3408906, b: 0, a: 1}
+    - _WetSand: {r: 0.3018868, g: 0.24007116, b: 0.0332265, a: 1}
   m_BuildTextureStacks: []

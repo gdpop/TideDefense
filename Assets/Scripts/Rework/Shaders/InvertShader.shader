@@ -3,7 +3,7 @@ Shader "Unlit/TonFils"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _EvaporationSpeed ("Evaporation Speed", float) = 0.01
+        _EvaporationSpeed ("Evaporation Speed", float) = 0.1
         _Value ("Value", float) = 0
     }
     SubShader
@@ -39,6 +39,8 @@ Shader "Unlit/TonFils"
             float _EvaporationSpeed;
             float _Value;
 
+            float _SegmentsValue[2];
+
             v2f vert (appdata v)
             {
                 v2f o;
@@ -53,7 +55,7 @@ Shader "Unlit/TonFils"
                 // sample the texture
                 float bufferColor = tex2D(_MainTex, i.uv).r - _EvaporationSpeed;
 
-                float value = step(_Value, i.uv.x);
+                float value = step(i.uv.x, _Value);
                 float result = clamp(bufferColor + value, 0, 1);
                 float4 col = float4(result, result, result, 1);
                 // float4 col = float4(value, value, value, 1);
