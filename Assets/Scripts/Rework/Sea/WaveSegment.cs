@@ -8,7 +8,7 @@ namespace TideDefense
 
     public class WaveSegment : MonoBehaviour
     {
-#region Fields
+        #region Fields
 
         [SerializeField]
         private SeaChannel _seaChannel = null;
@@ -26,6 +26,14 @@ namespace TideDefense
         /// </summary>
         private int _segmentIndex = 0;
 
+
+        private float _beachCoverage = 0f;
+
+        /// <summary> 
+        /// Similar to SeaManager.tideLevel. Represent how much he covers the beach with it's length
+        /// </summary>
+        public float beachCoverage { get { return _beachCoverage; } }
+
         private Tween _crashingTween = null;
 
         /// <summary>
@@ -35,9 +43,9 @@ namespace TideDefense
 
         private Rempart _collidedRempart = null;
 
-#endregion
+        #endregion
 
-#region Methods
+        #region Methods
 
         #region MonoBehaviour
 
@@ -71,7 +79,8 @@ namespace TideDefense
                     _seaChannel.waveCrashDuration,
                     (float value) =>
                     {
-                        _visualLocalScale.z = Mathf.Lerp(0f, strength, Mathf.Sin(value));
+                        _beachCoverage = Mathf.Lerp(0f, strength, Mathf.Sin(value));
+                        _visualLocalScale.z = beachCoverage;
                         _visualTransform.localScale = _visualLocalScale;
                     }
                 )
@@ -138,6 +147,8 @@ namespace TideDefense
             rempart.InflictDamage(amountDamageDealt);
         }
 
-#endregion
+        #endregion
+
+
     }
 }

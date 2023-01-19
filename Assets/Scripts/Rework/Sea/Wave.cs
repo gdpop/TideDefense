@@ -86,9 +86,13 @@ namespace TideDefense
             }
         }
 
-        private IEnumerator DisappearBehaviour()
+        public float GetBeachCoverageFromWaveSegment(int waveSegmentIndex)
         {
-            yield return null;
+            if(0 <= waveSegmentIndex && waveSegmentIndex < _waveSegments.Count)
+            {
+                return _waveSegments[waveSegmentIndex].beachCoverage;
+            }else         
+                return -1f;
         }
 
 		#endregion

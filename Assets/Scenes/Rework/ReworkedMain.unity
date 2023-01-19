@@ -451,7 +451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 404d7a7b2e1be734aa8caae8b4cd18c1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 404d7a7b2e1be734aa8caae8b4cd18c1, type: 3}
       propertyPath: m_LocalScale.z
@@ -498,9 +498,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 404d7a7b2e1be734aa8caae8b4cd18c1, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 404d7a7b2e1be734aa8caae8b4cd18c1, type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 404d7a7b2e1be734aa8caae8b4cd18c1, type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 404d7a7b2e1be734aa8caae8b4cd18c1, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b25eee1f4786e9a41be01121c8dd1126, type: 2}
+      objectReference: {fileID: 2100000, guid: 626f06f258f245e40a27a206fd8987f2, type: 2}
     - target: {fileID: 919132149155446097, guid: 404d7a7b2e1be734aa8caae8b4cd18c1, type: 3}
       propertyPath: m_Name
       value: Beach
@@ -544,8 +556,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
+  _seaChannel: {fileID: 11400000, guid: 5d55e33d958a093489b8240536192dc1, type: 2}
+  _wetnessSimulation: {fileID: 374885263}
   _isInteractable: 1
   _isHovered: 0
+--- !u!114 &374885263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374885260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201cf6cf0ca7ca14189533365e93a0a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialTexture: {fileID: 2800000, guid: e7a5cf99cded24b42a1ca8e64b0f3508, type: 3}
+  texture: {fileID: 8400000, guid: 1b43c21d4eccaeb42ad4618ddece2134, type: 2}
+  buffer: {fileID: 0}
+  material: {fileID: 2100000, guid: a8169b151f29e85469e23ee6f1c77000, type: 2}
+  _updateFrequency: 0.01
 --- !u!1001 &405038269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -986,6 +1017,7 @@ MonoBehaviour:
   _timeChannel: {fileID: 11400000, guid: db4350a1275f45845a3c084178f9727b, type: 2}
   _seaChannel: {fileID: 11400000, guid: 5d55e33d958a093489b8240536192dc1, type: 2}
   _seaTransform: {fileID: 1836497765}
+  _beach: {fileID: 374885262}
   _beachSlope: 5
   _beachBottom: {fileID: 374885259}
   _seaSpreadOffset: 0.2
@@ -2118,7 +2150,7 @@ Transform:
   m_GameObject: {fileID: 1836497764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.5, y: 0.04, z: -1.5}
-  m_LocalScale: {x: 4, y: 1, z: 5}
+  m_LocalScale: {x: 3, y: 1, z: 5}
   m_Children: []
   m_Father: {fileID: 545097907}
   m_RootOrder: 0

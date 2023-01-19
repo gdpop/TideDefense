@@ -647,7 +647,7 @@ GameObject:
   - component: {fileID: 1009688024}
   - component: {fileID: 1009688023}
   m_Layer: 0
-  m_Name: InverScript
+  m_Name: WetnessSimulationScript
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

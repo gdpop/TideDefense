@@ -1,6 +1,7 @@
 namespace TideDefense
 {
-    using PierreMizzi.MouseInteractable;
+	using System.Collections.Generic;
+	using PierreMizzi.MouseInteractable;
     using UnityEngine;
 
     // TODO : Refact parameters of the Beach : BeachSlope, BeachBottom ...
@@ -12,6 +13,15 @@ namespace TideDefense
 
         [SerializeField]
         private GameplayChannel _gameplayChannel = null;
+
+        [SerializeField] private SeaChannel _seaChannel = null;
+
+        #region Wetness
+
+        [Header("Wetness")]
+        [SerializeField] private WetnessSimulation _wetnessSimulation = null;
+            
+        #endregion
 
 		#endregion
 
@@ -76,5 +86,19 @@ namespace TideDefense
         }
 
         #endregion
+    
+        #region Wetness
+
+        public void UpdateWetness(float[] beachCoveragePerSegment)
+        {
+            for (int i = 0; i < beachCoveragePerSegment.Length; i++)
+                beachCoveragePerSegment[i] = beachCoveragePerSegment[i] / transform.localScale.z;
+            
+            _wetnessSimulation.RefreshTextureCoverage(beachCoveragePerSegment);
+            
+        }
+            
+        #endregion
+        
     }
 }

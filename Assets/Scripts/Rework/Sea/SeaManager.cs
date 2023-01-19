@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace TideDefense
 {
@@ -19,6 +20,8 @@ namespace TideDefense
 
 		#region Beach
 
+        [SerializeField] private Beach _beach = null;
+
         [SerializeField]
         private float _beachSlope = 5f;
 
@@ -35,6 +38,10 @@ namespace TideDefense
         [SerializeField]
         private float _seaSpreadOffset = 0.2f;
 
+        /// <summary> 
+        /// The Level of the tide goes along the slope of the beach. 
+        /// It's a non-normalized, non-negative value expressed in meter 
+        /// </summary>
         private float _currentTideLevel = 0f;
 
         /// <summary>
@@ -80,17 +87,20 @@ namespace TideDefense
 
 		#endregion
 
+        #region Wetness
+
+        private float[] _beachCoverageSegments = new float[12];
+            
+        #endregion
+
 		#endregion
 
 		#region Methods
-
 
 		#region MonoBehaviour
 
         protected void Awake()
         {
-            // _beachSlope = Mathf.Abs(_beachBottom.rotation.eulerAngles.x);
-            Debug.Log("BeachSlope : " + _beachSlope);
         }
 
         protected void Start()
@@ -101,6 +111,10 @@ namespace TideDefense
             }
 
 			StartCoroutine("DelayBetweenWaveBehaviour");
+        }
+
+        private void LateUpdate() {
+            UpdateBeachCoveragePerSegment();
         }
 
 		#endregion
@@ -203,5 +217,25 @@ namespace TideDefense
 		#endregion
 
 		#endregion
+
+        #region Wetness
+
+        public void UpdateBeachCoveragePerSegment()
+        {
+            float beachCoveragePerSegment = 0f;
+            for (int i = 0; i < _beachCoverageSegments.Length; i++)
+            {
+                beachCoveragePerSegment = _currentTideLevel;
+                if(_currentWave != null)
+                    beachCoveragePerSegment += _currentWave.GetBeachCoverageFromWaveSegment(i);
+                    
+                _beachCoverageSegments[i] = beachCoveragePerSegment;
+
+            }
+            // Debug.Log($"Segment[0] : beachCoverage with _tideLevel : {_beachCoverageSegments[0]}");
+            _beach.UpdateWetness(_beachCoverageSegments);
+        }
+            
+        #endregion
     }
 }

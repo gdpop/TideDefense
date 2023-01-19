@@ -1,11 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TideDefense
 {
+    
     [CreateAssetMenu(fileName = "SeaChannel", menuName = "TideDefense/SeaChannel", order = 0)]
     public class SeaChannel : ScriptableObject
     {
-#region Tide Settings
+        #region Tide Settings
 
 
         [Header("Tide Settings")]
@@ -28,9 +30,9 @@ namespace TideDefense
             get { return _maxTideLevel; }
         }
 
-#endregion
+        #endregion
 
-#region Wave Settings
+        #region Wave Settings
 
         [Header("Wave Settings")]
         [SerializeField]
@@ -63,9 +65,9 @@ namespace TideDefense
             get { return _maxDelayBewteenWaves; }
         }
 
-#endregion
+        #endregion
 
-#region Wave Segment Settings
+        #region Wave Segment Settings
 
         [Header("Wave Segments Settings")]
         /// <summary>
@@ -97,6 +99,7 @@ namespace TideDefense
             get { return _damageDealtByWave; }
         }
 
-#endregion
+        #endregion
+
     }
 }

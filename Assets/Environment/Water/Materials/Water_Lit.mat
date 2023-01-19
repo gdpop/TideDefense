@@ -13,10 +13,11 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: 3000
   stringTagMap:
-    RenderType: Opaque
-  disabledShaderPasses: []
+    RenderType: Transparent
+  disabledShaderPasses:
+  - SHADOWCASTER
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -99,7 +100,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -112,17 +113,17 @@ Material:
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 1
-    - _Surface: 0
+    - _SrcBlend: 5
+    - _Surface: 1
     - _WorkflowMode: 1
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
     - Color_35b43597a1914781ba744c0fe3405d5c: {r: 0.2783019, g: 0.7153866, b: 1, a: 0.09803922}
     - Color_50f428d3ebc440a5b845cd7bf2baf746: {r: 0.03951584, g: 0.14322868, b: 0.2264151, a: 0.7372549}
     - Color_733ad565e18b46f09543b3ee6cdb7077: {r: 0, g: 0.030660296, b: 0.23584908, a: 0.84313726}
     - Vector4_008ff1f6d22448d2a462d1a00dc7ee6e: {r: 1, g: 50, b: 0.5, a: 20}
     - WaterNormal_1_UVSettings: {r: 1, g: 50, b: 0.5, a: 20}
-    - _BaseColor: {r: 0.10220122, g: 0.33136794, b: 0.5, a: 1}
+    - _BaseColor: {r: 0.10220122, g: 0.33136794, b: 0.5, a: 0.77254903}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
