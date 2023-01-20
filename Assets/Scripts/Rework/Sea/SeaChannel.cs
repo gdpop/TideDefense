@@ -10,23 +10,21 @@ namespace TideDefense
 
 
         [Header("Tide Settings")]
-        /*
-            Fork of time between two different waves
-        */
+        
         [SerializeField]
-        private float _minTideLevel = 3.5f;
+        private float _minTideBeachCoverage = 3.5f;
 
-        public float minTideLevel
+        public float minTideBeachCoverage
         {
-            get { return _minTideLevel; }
+            get { return _minTideBeachCoverage; }
         }
 
         [SerializeField]
-        private float _maxTideLevel = 6.5f;
+        private float _maxTideBeachCoverage = 6.5f;
 
-        public float maxTideLevel
+        public float maxTideBeachCoverage
         {
-            get { return _maxTideLevel; }
+            get { return _maxTideBeachCoverage; }
         }
 
         #endregion

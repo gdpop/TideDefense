@@ -151,6 +151,12 @@ namespace TideDefense
             _gameplayChannel.onClickTool.Invoke(this);
         }
 
+       public  void OnStartLongLeftClick(){
+        
+       }
+       public  void OnProgerssLongLeftClick(float progress){}
+       public  void OnCancelLongLeftClick(){}
+
 		#endregion
 
         #region IInteractable

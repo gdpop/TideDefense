@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c14b3d1dfa1954c9716228c466ab46, type: 3}
   m_Name: SeaChannel
   m_EditorClassIdentifier: 
-  _minTideLevel: 1
-  _maxTideLevel: 3
+  _minTideBeachCoverage: 1.5
+  _maxTideBeachCoverage: 2
   _waveCrashEase:
     serializedVersion: 2
     m_Curve:
@@ -59,6 +59,8 @@ MonoBehaviour:
   _waveCrashDuration: 5
   _minDelayBetweenWaves: 1
   _maxDelayBewteenWaves: 2
+  _minWaveStrength: 0.5
+  _maxWaveStrength: 1.5
   _minDelayWaveSegments: 0.1
   _maxDelayWaveSegments: 0.15
   _damageDealtByWave:

@@ -45,10 +45,30 @@ namespace TideDefense
         private float _seaSpreadOffset = 0.2f;
 
         /// <summary>
-        /// The Level of the tide goes along the slope of the beach.
+        /// How much, in meter, the beach is covered by the sea because of the level of the tide.
         /// It's a non-normalized, non-negative value expressed in meter
         /// </summary>
-        private float _currentTideLevel = 0f;
+        private float _tideBeachCoverage = 0f;
+
+        /// <summary>
+        /// Current height of the sea from _tideBeachCoverage
+        /// </summary>
+        private float _seaHeight
+        {
+            get { return Mathf.Cos(Mathf.Deg2Rad * (90.0f - _beachSlope)) * _tideBeachCoverage; }
+        }
+
+        /// <summary>
+        /// Current spread of the sea from _tideBeachCoverage
+        /// </summary>
+        private float _seaSpread
+        {
+            get
+            {
+                return _seaSpreadOffset
+                    + Mathf.Sin(Mathf.Deg2Rad * (90.0f - _beachSlope)) * _tideBeachCoverage;
+            }
+        }
 
         /// <summary>
         /// "Time" value for the tide
@@ -143,41 +163,20 @@ namespace TideDefense
             // Debug.Log($"_tidePhase : {_tidePhase} | _tidePhaseProgress : {_tidePhaseProgress}");
 
             // Update tide level
-            _currentTideLevel = Mathf.Lerp(
-                _seaChannel.minTideLevel,
-                _seaChannel.maxTideLevel,
+            _tideBeachCoverage = Mathf.Lerp(
+                _seaChannel.minTideBeachCoverage,
+                _seaChannel.maxTideBeachCoverage,
                 _tidePhaseProgress
             );
 
             // Move the sea up and down, just like the surface would do in real life
-            _seaTransform.position =
-                _beachBottom.position
-                + new Vector3(0f, TideProgressToSeaHeight(_currentTideLevel), 0f);
+            _seaTransform.position = _beachBottom.position + new Vector3(0f, _seaHeight, 0f);
 
-            _seaTransform.localScale = new Vector3(
-                _seaTransform.localScale.x,
-                1f,
-                TideProgressToSeaSpread(_currentTideLevel)
-            );
+            _seaTransform.localScale = new Vector3(_seaTransform.localScale.x, 1f, _seaSpread);
 
-            _currentTidePosition = _beachBottom.position + _beachBottom.forward * _currentTideLevel;
+            _currentTidePosition =
+                _beachBottom.position + _beachBottom.forward * _tideBeachCoverage;
             _currentTidePosition.x = 0;
-        }
-
-        /// <summary>
-        /// Give the height of the sea along the y axis when given the tide level
-        ///</summary>
-        private float TideProgressToSeaHeight(float tideLevel)
-        {
-            return Mathf.Cos(Mathf.Deg2Rad * (90.0f - _beachSlope)) * tideLevel;
-        }
-
-        /// <summary>
-        ///	Give the spread(scale) of the sea when given the tide level
-        ///</summary>
-        private float TideProgressToSeaSpread(float tideLevel)
-        {
-            return _seaSpreadOffset + Mathf.Sin(Mathf.Deg2Rad * (90.0f - _beachSlope)) * tideLevel;
         }
 
 		#endregion
@@ -233,7 +232,7 @@ namespace TideDefense
             float beachCoveragePerSegment = 0f;
             for (int i = 0; i < _beachCoverageSegments.Length; i++)
             {
-                beachCoveragePerSegment = _currentTideLevel;
+                beachCoveragePerSegment = _tideBeachCoverage;
                 if (_currentWave != null)
                     beachCoveragePerSegment += _currentWave.GetBeachCoverageFromWaveSegment(i);
 

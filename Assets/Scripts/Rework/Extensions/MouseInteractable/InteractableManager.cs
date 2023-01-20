@@ -17,6 +17,15 @@ namespace PierreMizzi.MouseInteractable
         private const int MOUSE_LEFT = 0;
         private const int MOUSE_RIGHT = 1;
 
+        #region Click
+
+        public const float _clickHoldTreshold = 0f;
+        public const float _clickHoldDuration = 0f;
+
+        
+
+        #endregion
+
         public InteractableManager()
         {
             _camera = Camera.main;
@@ -63,6 +72,11 @@ namespace PierreMizzi.MouseInteractable
                 if(clickable.isClickable)
                     clickable.OnLeftClick(hit);
             }
+        }
+
+        public void ManageClickableWithHolding(RaycastHit hit, IClickable clickable)
+        {
+
         }
 
         public void ManageHoverable(RaycastHit hit)
