@@ -126,7 +126,7 @@ namespace TideDefense
             _hoveredPosition = transform.position + new Vector3(0f, _hoverYOffset, 0f);
 
             // Debug.Log(
-            //     $"{toolType} has been drop on the grid : ({gridCell.coords.x}, {gridCell.coords.y})"
+            //     $"{toolType} has been drop on the grid : ({gridCell.coords.x}, {gridCell.coords.y} | tool {currentGridCell.currentTool})"
             // );
         }
 

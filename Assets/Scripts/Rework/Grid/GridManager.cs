@@ -164,7 +164,6 @@ namespace TideDefense
                         && cellModel.currentTool.toolType == ToolType.Bucket
                     )
                     {
-                        Debug.Log($"We found the bucket, in {coords}");
                         Vector2Int neighboorCoords = new Vector2Int();
                         GridCell neighboorCellModel = null;
                         GridCellVisual cellVisual = null;
@@ -181,9 +180,9 @@ namespace TideDefense
                                     neighboorCoords
                                 );
 
+                                // We check the cell is actually empty
                                 if (neighboorCellModel.isEmpty)
                                 {
-                                    Debug.Log("neighboorCoords" + neighboorCoords);
                                     cellVisual = _gridCellVisualHash[neighboorCoords.x][
                                         neighboorCoords.y
                                     ];
@@ -213,18 +212,43 @@ namespace TideDefense
 
         public void DisplayBuildableHints()
         {
+            Vector2Int coords = new Vector2Int();
+            GridCell cellModel = null;
+            GridCellVisual cellVisual = null;
+
             for (int x = 0; x < _xLength; x++)
             {
-                for (int z = 0; z < _zLength; z++) { }
+                for (int z = 0; z < _zLength; z++)
+                {
+                    coords = new Vector2Int(x, z);
+
+                    cellModel = gridModel.GetCellFromCoordinates<GridCell>(coords);
+                    cellVisual = _gridCellVisualHash[x][z];
+
+                    if (cellModel.isEmpty)
+                        cellVisual.DisplayBuildableHints();
+                }
             }
         }
 
         public void HideBuildableHints()
         {
+            GridCellVisual cellVisual = null;
+
             for (int x = 0; x < _xLength; x++)
             {
-                for (int z = 0; z < _zLength; z++) { }
+                for (int z = 0; z < _zLength; z++)
+                {
+                    cellVisual = _gridCellVisualHash[x][z];
+                    cellVisual.HideBuildableHints();
+                }
             }
+        }
+
+        [ContextMenu("Test")]
+        public void Test()
+        {
+            gridModel.Test();
         }
 
         #endregion

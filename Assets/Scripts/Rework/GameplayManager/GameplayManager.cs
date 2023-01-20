@@ -94,8 +94,13 @@ namespace TideDefense
         [SerializeField]
         private Transform _grabBucketAnchor = null;
 
-        [SerializeField] private float _shovelFillingQuantity = 0.25f;
-        public float shovelFillingQuantity { get { return _shovelFillingQuantity; } set { _shovelFillingQuantity = value; } }
+        [SerializeField]
+        private float _shovelFillingQuantity = 0.25f;
+        public float shovelFillingQuantity
+        {
+            get { return _shovelFillingQuantity; }
+            set { _shovelFillingQuantity = value; }
+        }
 
         #endregion
 
@@ -196,6 +201,7 @@ namespace TideDefense
             {
                 _gridManager.DropToolOnGrid(tool, gridCell);
                 tool.SetDropped(gridCell);
+                _gridManager.gridModel.Test();
             }
         }
 

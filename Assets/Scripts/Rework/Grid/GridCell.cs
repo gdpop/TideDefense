@@ -11,5 +11,6 @@ namespace TideDefense
         {
             get { return rempart == null && currentTool == null; }
         }
+
     }
 }

@@ -23,6 +23,9 @@ namespace TideDefense
             {
                 _gameplayManager.gameplayChannel.onClickGrid += CallbackOnClickGrid;
             }
+
+            if (_gameplayManager.bucket.isFull)
+                _gameplayManager.gridManager.DisplayBuildableHints();
         }
 
         public override void Deactivate()
@@ -33,12 +36,13 @@ namespace TideDefense
             {
                 _gameplayManager.gameplayChannel.onClickGrid -= CallbackOnClickGrid;
             }
+
+            _gameplayManager.gridManager.HideBuildableHints();
         }
 
         public virtual void CallbackOnClickGrid(GridCell gridCell, RaycastHit hit)
         {
             _gameplayManager.DropTool(_gameplayManager.bucket, gridCell);
         }
-
     }
 }
