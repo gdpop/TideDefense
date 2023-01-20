@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4368370617011733345, guid: 941b35fe953fd0c4c86cc685c5f4b29c, type: 3}
+  - {fileID: 2100000, guid: bd0216224468b5446b1dacafbed353e2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -140,7 +140,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4368370617011733345, guid: 941b35fe953fd0c4c86cc685c5f4b29c, type: 3}
+  - {fileID: 2100000, guid: bd0216224468b5446b1dacafbed353e2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -221,7 +221,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4368370617011733345, guid: 941b35fe953fd0c4c86cc685c5f4b29c, type: 3}
+  - {fileID: 2100000, guid: bd0216224468b5446b1dacafbed353e2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -329,8 +329,7 @@ MonoBehaviour:
   _hoverDuration: 0.1
   _hoverYOffset: 0.05
   _grabBoxCollider: {fileID: 6606331094205615420}
-  _isInteractable: 1
-  _isHovered: 0
+  _isHoverable: 1
 --- !u!65 &6115956122589171843
 BoxCollider:
   m_ObjectHideFlags: 0

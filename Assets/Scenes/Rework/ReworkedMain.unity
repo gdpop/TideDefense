@@ -517,7 +517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 201cf6cf0ca7ca14189533365e93a0a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialTexture: {fileID: 2800000, guid: e7a5cf99cded24b42a1ca8e64b0f3508, type: 3}
+  initialTexture: {fileID: 8400000, guid: ae383d934c181ab45bbf20302da313c9, type: 2}
   texture: {fileID: 8400000, guid: 1b43c21d4eccaeb42ad4618ddece2134, type: 2}
   buffer: {fileID: 0}
   material: {fileID: 2100000, guid: a8169b151f29e85469e23ee6f1c77000, type: 2}
@@ -2096,6 +2096,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 545097907}
     m_Modifications:
+    - target: {fileID: 255777280371861317, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+      propertyPath: _contentVisualToPos
+      value: 
+      objectReference: {fileID: 1102918533977379862}
+    - target: {fileID: 255777280371861317, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+      propertyPath: _contentVisualFromPos
+      value: 
+      objectReference: {fileID: 1102918533977379863}
+    - target: {fileID: 255777280371861317, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+      propertyPath: _contentVisualFullAnchor
+      value: 
+      objectReference: {fileID: 1102918533977379862}
+    - target: {fileID: 255777280371861317, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+      propertyPath: _contentVisualEmptyAnchor
+      value: 
+      objectReference: {fileID: 1102918533977379863}
     - target: {fileID: 1102918535372186741, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
       propertyPath: m_Name
       value: Bucket
@@ -2144,6 +2160,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3395384982318968533, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+      propertyPath: m_Name
+      value: ContentVisual_Empty
+      objectReference: {fileID: 0}
+    - target: {fileID: 4538111159839847621, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+      propertyPath: m_Name
+      value: ContentVisual_Full
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
 --- !u!4 &1102918533977379860 stripped
@@ -2162,6 +2186,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec243e84560883478816eb6ef0c305d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1102918533977379862 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8539611627507026413, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+  m_PrefabInstance: {fileID: 1102918533977379859}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1102918533977379863 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3703410740350092644, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+  m_PrefabInstance: {fileID: 1102918533977379859}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5798785236532636950 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7580881033636655684, guid: 75bc6a8e288c6d744802c2266c437d3a, type: 3}
