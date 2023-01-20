@@ -53,10 +53,6 @@ namespace TideDefense
             _gameplayChannel.onClickBeach.Invoke(hit);
         }
 
-        public void OnStartLongLeftClick(){}
-        public void OnProgerssLongLeftClick(float progress){}
-        public void OnCancelLongLeftClick(){}
-
 		#endregion
 
         #region IHoverable

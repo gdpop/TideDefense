@@ -8,7 +8,7 @@ namespace TideDefense
     {
 		#region Fields
 
-		#region Tool 
+		#region Tool
 
         protected GameplayManager _manager = null;
 
@@ -150,12 +150,6 @@ namespace TideDefense
 
             _gameplayChannel.onClickTool.Invoke(this);
         }
-
-       public  void OnStartLongLeftClick(){
-        
-       }
-       public  void OnProgerssLongLeftClick(float progress){}
-       public  void OnCancelLongLeftClick(){}
 
 		#endregion
 
