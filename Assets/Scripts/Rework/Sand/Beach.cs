@@ -1,7 +1,7 @@
 namespace TideDefense
 {
-	using System.Collections.Generic;
-	using PierreMizzi.MouseInteractable;
+    using System.Collections.Generic;
+    using PierreMizzi.MouseInteractable;
     using UnityEngine;
 
     // TODO : Refact parameters of the Beach : BeachSlope, BeachBottom ...
@@ -14,13 +14,15 @@ namespace TideDefense
         [SerializeField]
         private GameplayChannel _gameplayChannel = null;
 
-        [SerializeField] private SeaChannel _seaChannel = null;
+        [SerializeField]
+        private SeaChannel _seaChannel = null;
 
         #region Wetness
 
         [Header("Wetness")]
-        [SerializeField] private WetnessSimulation _wetnessSimulation = null;
-            
+        [SerializeField]
+        private WetnessSimulation _wetnessSimulation = null;
+
         #endregion
 
 		#endregion
@@ -86,19 +88,38 @@ namespace TideDefense
         }
 
         #endregion
-    
+
         #region Wetness
 
         public void UpdateWetness(float[] beachCoveragePerSegment)
         {
             for (int i = 0; i < beachCoveragePerSegment.Length; i++)
                 beachCoveragePerSegment[i] = beachCoveragePerSegment[i] / transform.localScale.z;
-            
+
             _wetnessSimulation.RefreshTextureCoverage(beachCoveragePerSegment);
-            
         }
-            
+
+        [SerializeField]
+        private LayerMask _beachLayerMask;
+
+        public float GetWetnessFromWorldPosition(Vector3 position)
+        {
+            float wetness = 0f;
+
+            // Creates a ray above the beach, pointing down, for racast
+            Ray ray = new Ray(position + Vector3.up, Vector3.down);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, _beachLayerMask.value))
+            {
+                Debug.Log($"We raycasted with {hit.collider.name}");
+                wetness = _wetnessSimulation.GetWetnessFromUVCoords(hit.textureCoord);
+                Debug.Log($"Wetness : {wetness}");
+            }
+
+            return wetness;
+        }
+
         #endregion
-        
     }
 }

@@ -23,6 +23,13 @@ namespace TideDefense
         }
 
         [SerializeField]
+        private SeaManager _seaManager = null;
+        public SeaManager seaManager
+        {
+            get { return _seaManager; }
+        }
+
+        [SerializeField]
         private GridManager _gridManager = null;
         public GridManager gridManager
         {
@@ -86,6 +93,9 @@ namespace TideDefense
 
         [SerializeField]
         private Transform _grabBucketAnchor = null;
+
+        [SerializeField] private float _shovelFillingQuantity = 0.25f;
+        public float shovelFillingQuantity { get { return _shovelFillingQuantity; } set { _shovelFillingQuantity = value; } }
 
         #endregion
 

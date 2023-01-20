@@ -40,9 +40,23 @@ namespace TideDefense
         public virtual void CallbackOnClickGrid(GridCell gridCell, RaycastHit hit)
         {
             if (CheckGridCellNeighboorToBucket(gridCell))
-                Debug.Log("I fill the bucket !");
+            {
+                FillBucket(gridCell, hit);
+            }
             else
                 _gameplayManager.DropTool(_gameplayManager.shovel, gridCell);
+        }
+
+        public void FillBucket(GridCell gridCell, RaycastHit hit)
+        {
+            float wetness = _gameplayManager.seaManager.beach.GetWetnessFromWorldPosition(
+                hit.point
+            );
+
+            SandWaterFilling filling = new SandWaterFilling(_gameplayManager.shovelFillingQuantity, wetness / 2f);
+            // Debug.Log("filling");
+            // Debug.Log(filling.ToString());
+            _gameplayManager.bucket.FillBucket(filling);
         }
 
         /// <summary>

@@ -20,7 +20,13 @@ namespace TideDefense
 
 		#region Beach
 
-        [SerializeField] private Beach _beach = null;
+        [SerializeField]
+        private Beach _beach = null;
+
+        public Beach beach
+        {
+            get { return _beach; }
+        }
 
         [SerializeField]
         private float _beachSlope = 5f;
@@ -38,9 +44,9 @@ namespace TideDefense
         [SerializeField]
         private float _seaSpreadOffset = 0.2f;
 
-        /// <summary> 
-        /// The Level of the tide goes along the slope of the beach. 
-        /// It's a non-normalized, non-negative value expressed in meter 
+        /// <summary>
+        /// The Level of the tide goes along the slope of the beach.
+        /// It's a non-normalized, non-negative value expressed in meter
         /// </summary>
         private float _currentTideLevel = 0f;
 
@@ -90,7 +96,7 @@ namespace TideDefense
         #region Wetness
 
         private float[] _beachCoverageSegments = new float[12];
-            
+
         #endregion
 
 		#endregion
@@ -99,9 +105,7 @@ namespace TideDefense
 
 		#region MonoBehaviour
 
-        protected void Awake()
-        {
-        }
+        protected void Awake() { }
 
         protected void Start()
         {
@@ -110,10 +114,11 @@ namespace TideDefense
                 _timeChannel.onUpdateCurrentDeltaTime += CallbackUpdateCurrentDeltaTime;
             }
 
-			StartCoroutine("DelayBetweenWaveBehaviour");
+            StartCoroutine("DelayBetweenWaveBehaviour");
         }
 
-        private void LateUpdate() {
+        private void LateUpdate()
+        {
             UpdateBeachCoveragePerSegment();
         }
 
@@ -121,7 +126,7 @@ namespace TideDefense
 
 		#region Tide
 
-        /// <summary> 
+        /// <summary>
         /// Mainly manages the tide ascending and descending motion.
         /// </summary>
         protected void CallbackUpdateCurrentDeltaTime(float currentDeltaTime)
@@ -179,21 +184,24 @@ namespace TideDefense
 
 		#region Wave
 
-        /// <summary> 
+        /// <summary>
         /// Wait a random time between two waves
         /// </summary>
-		public IEnumerator DelayBetweenWaveBehaviour()
-		{
-			float randomDelay = UnityEngine.Random.Range(_seaChannel.minDelayBetweenWaves, _seaChannel.maxDelayBewteenWaves);
+        public IEnumerator DelayBetweenWaveBehaviour()
+        {
+            float randomDelay = UnityEngine.Random.Range(
+                _seaChannel.minDelayBetweenWaves,
+                _seaChannel.maxDelayBewteenWaves
+            );
 
-			yield return new WaitForSeconds(randomDelay);
+            yield return new WaitForSeconds(randomDelay);
 
-			CreateWave();
+            CreateWave();
 
-			yield return null;
-		}
+            yield return null;
+        }
 
-        /// <summary> 
+        /// <summary>
         /// Creates a new wave that will crash on the beach
         /// </summary>
         private void CreateWave()
@@ -203,7 +211,7 @@ namespace TideDefense
             _currentWave.onDisappear += CallbackDestroyCurrentWave;
         }
 
-        /// <summary> 
+        /// <summary>
         /// Wave crashed and returned back into the sea
         /// </summary>
         public void CallbackDestroyCurrentWave()
@@ -211,7 +219,7 @@ namespace TideDefense
             _currentWave.onDisappear -= CallbackDestroyCurrentWave;
             Destroy(_currentWave.gameObject);
             _currentWave = null;
-			StartCoroutine("DelayBetweenWaveBehaviour");
+            StartCoroutine("DelayBetweenWaveBehaviour");
         }
 
 		#endregion
@@ -226,16 +234,15 @@ namespace TideDefense
             for (int i = 0; i < _beachCoverageSegments.Length; i++)
             {
                 beachCoveragePerSegment = _currentTideLevel;
-                if(_currentWave != null)
+                if (_currentWave != null)
                     beachCoveragePerSegment += _currentWave.GetBeachCoverageFromWaveSegment(i);
-                    
-                _beachCoverageSegments[i] = beachCoveragePerSegment;
 
+                _beachCoverageSegments[i] = beachCoveragePerSegment;
             }
             // Debug.Log($"Segment[0] : beachCoverage with _tideLevel : {_beachCoverageSegments[0]}");
             _beach.UpdateWetness(_beachCoverageSegments);
         }
-            
+
         #endregion
     }
 }
