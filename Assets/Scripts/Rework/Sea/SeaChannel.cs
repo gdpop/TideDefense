@@ -105,6 +105,9 @@ namespace TideDefense
             get { return _maxDelayWaveSegments; }
         }
 
+        [SerializeField] private AnimationCurve _strengthIndividualWaveSegment = null;
+        public AnimationCurve strengthIndividualWaveSegment { get { return _strengthIndividualWaveSegment; } set { _strengthIndividualWaveSegment = value; } }
+
         [SerializeField]
         private AnimationCurve _damageDealtByWave;
         public AnimationCurve damageDealtByWave

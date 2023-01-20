@@ -13,6 +13,8 @@ namespace TideDefense
         [SerializeField]
         private SeaChannel _seaChannel = null;
 
+        private Wave _wave;
+
         [SerializeField]
         private Transform _visualTransform = null;
 
@@ -61,8 +63,10 @@ namespace TideDefense
 
         #endregion
 
-        public void CrashOnBeach(int firstSegmentIndex, float delay, float strength)
+        public void CrashOnBeach(Wave wave, int firstSegmentIndex, float delay, int strongestSegmentIndex, float strength)
         {
+            _wave = wave;
+
             _visualLocalScale = _visualTransform.localScale;
             _visualLocalInteractable.Initialize();
             _visualLocalInteractable.onTriggerEnter += CallbackOnTriggerEnter;
@@ -72,6 +76,10 @@ namespace TideDefense
             // How much delay should be applied based on firstSegmentIndex.The further the longer. Creates this "curve" effect of the wave
             float totalDelay = Mathf.Abs(_segmentIndex - firstSegmentIndex) * delay;
 
+            // Manage the individual strength of each segment for more chaotic looking wave
+            float individualStrength = Mathf.Abs(_segmentIndex - strongestSegmentIndex) / (float)_wave.amountWaveSegment;
+            individualStrength = _seaChannel.strengthIndividualWaveSegment.Evaluate(individualStrength); 
+
             _crashingTween = DOVirtual
                 .Float(
                     0f,
@@ -79,7 +87,7 @@ namespace TideDefense
                     _seaChannel.waveCrashDuration,
                     (float value) =>
                     {
-                        _beachCoverage = Mathf.Lerp(0f, strength, Mathf.Sin(value));
+                        _beachCoverage = Mathf.Lerp(0f, strength + individualStrength, Mathf.Sin(value));
                         _visualLocalScale.z = beachCoverage;
                         _visualTransform.localScale = _visualLocalScale;
                     }

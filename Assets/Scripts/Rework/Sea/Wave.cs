@@ -10,7 +10,8 @@ namespace TideDefense
     {
 		#region Fields
 
-		[SerializeField] private SeaChannel _seaChannel = null;
+        [SerializeField]
+        private SeaChannel _seaChannel = null;
 
         private SeaManager _seaManager = null;
 
@@ -22,7 +23,13 @@ namespace TideDefense
         [SerializeField]
         private List<WaveSegment> _waveSegments = new List<WaveSegment>();
 
-        private int _amountWaveSegment = 0;
+        public int amountWaveSegment
+        {
+            get 
+            {
+                return _waveSegments.Count;
+            }
+        }
 
         private bool _isCrashing = false;
 
@@ -48,7 +55,6 @@ namespace TideDefense
         {
             _seaManager = seaManager;
             transform.position = _seaManager.currentTidePosition;
-            _amountWaveSegment = _waveSegments.Count;
             CrashOnBeach();
         }
 
@@ -56,22 +62,32 @@ namespace TideDefense
         public void CrashOnBeach()
         {
             // Simulate a wave with random delay between segments
-            int firstSegmentIndex = UnityEngine.Random.Range(0, _amountWaveSegment);
+            int firstSegmentIndex = UnityEngine.Random.Range(0, amountWaveSegment);
             float delayWaveSegment = UnityEngine.Random.Range(
                 _seaChannel.minDelayWaveSegments,
                 _seaChannel.maxDelayWaveSegments
             );
 
             // Set a random strength of the wave
+            // Overal strength of the wave
             float randomWaveStrength = UnityEngine.Random.Range(
                 _seaChannel.minWaveStrength,
                 _seaChannel.maxWaveStrength
             );
 
+            // Strength of individual segments
+            int strongestSegmentIndex = UnityEngine.Random.Range(0, amountWaveSegment);
+
             // Launch crashing animation of every WaveSegments
             foreach (WaveSegment segment in _waveSegments)
             {
-                segment.CrashOnBeach(firstSegmentIndex, delayWaveSegment, randomWaveStrength);
+                segment.CrashOnBeach(
+                    this,
+                    firstSegmentIndex,
+                    delayWaveSegment,
+                    strongestSegmentIndex,
+                    randomWaveStrength
+                );
                 segment.onDisappear += CallbackWaveSegmentDisappear;
             }
 
@@ -84,7 +100,7 @@ namespace TideDefense
             segment.onDisappear -= CallbackWaveSegmentDisappear;
             _amountWaveSegmentDisappeared++;
 
-            if (_amountWaveSegmentDisappeared == _amountWaveSegment)
+            if (_amountWaveSegmentDisappeared == amountWaveSegment)
             {
                 onDisappear.Invoke();
             }
@@ -92,10 +108,11 @@ namespace TideDefense
 
         public float GetBeachCoverageFromWaveSegment(int waveSegmentIndex)
         {
-            if(0 <= waveSegmentIndex && waveSegmentIndex < _waveSegments.Count)
+            if (0 <= waveSegmentIndex && waveSegmentIndex < _waveSegments.Count)
             {
                 return _waveSegments[waveSegmentIndex].beachCoverage;
-            }else         
+            }
+            else
                 return -1f;
         }
 
