@@ -53,8 +53,11 @@ namespace TideDefense
                 hit.point
             );
 
-            SandWaterFilling filling = new SandWaterFilling(_gameplayManager.shovelFillingQuantity, wetness / 2f);
-            // Debug.Log("filling");
+            SandWaterFilling filling = new SandWaterFilling(
+                _gameplayManager.shovelFillingQuantity,
+                SandWaterFilling.GetSandConcentrationFromWetness(wetness)
+            );
+            // Debug.Log("Filling");
             // Debug.Log(filling.ToString());
             _gameplayManager.bucket.FillBucket(filling);
         }

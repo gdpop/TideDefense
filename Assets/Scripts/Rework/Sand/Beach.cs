@@ -110,11 +110,9 @@ namespace TideDefense
             Ray ray = new Ray(position + Vector3.up, Vector3.down);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, _beachLayerMask.value))
+            if (Physics.Raycast(ray, out hit, 2f, _beachLayerMask.value))
             {
-                Debug.Log($"We raycasted with {hit.collider.name}");
                 wetness = _wetnessSimulation.GetWetnessFromUVCoords(hit.textureCoord);
-                Debug.Log($"Wetness : {wetness}");
             }
 
             return wetness;

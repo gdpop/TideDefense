@@ -65,7 +65,7 @@ namespace TideDefense
 
         public float GetWetnessFromUVCoords(Vector2 uvCoords)
         {
-            Texture2D currenttexture = new Texture2D(
+            Texture2D texture2D = new Texture2D(
                 texture.width,
                 texture.height,
                 TextureFormat.ARGB32,
@@ -74,22 +74,22 @@ namespace TideDefense
             );
 
             // copy the single pixel value from the render texture to the texture2D on the GPU
-            Graphics.CopyTexture(texture, currenttexture);
 
+            RenderTexture.active = texture;
+            texture2D.ReadPixels(new Rect(0, 0, texture2D.width, texture2D.height), 0, 0);
+            texture2D.Apply();
+            RenderTexture.active = null;
 
-            Debug.Log(uvCoords);
-            Debug.Log(Mathf.RoundToInt(uvCoords.x * currenttexture.width));
-            Color pixel = currenttexture.GetPixel(
-                Mathf.RoundToInt(uvCoords.x * currenttexture.width),
-                Mathf.RoundToInt(uvCoords.y * currenttexture.height)
+            Color pixel = texture2D.GetPixel(
+                Mathf.RoundToInt(uvCoords.x * texture2D.width),
+                Mathf.RoundToInt(uvCoords.y * texture2D.height)
             );
-            Debug.Log(pixel);
-            currenttexture = null;
 
             return pixel.r;
         }
 
         [SerializeField]
         private Color _debugColor;
+
     }
 }

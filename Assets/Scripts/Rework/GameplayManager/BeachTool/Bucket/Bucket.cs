@@ -103,16 +103,9 @@ namespace TideDefense
             if (added.quantity + _content.quantity > _maxQuantity)
                 added.quantity = _maxQuantity - _content.quantity;
 
-            _content.quantity += added.quantity;
-            _content.sandConcentration = ComputeSandwaterConcentration(_content, added);
-			// Debug.Log("_content");
-			// Debug.Log(_content.ToString());
-        }
-
-        public float ComputeSandwaterConcentration(SandWaterFilling current, SandWaterFilling added)
-        {
-            return (current.sandConcentration * current.quantity)
-                + (added.sandConcentration * added.quantity) / (current.quantity + added.quantity);
+            _content = _content + added;
+            // Debug.Log("_content");
+            // Debug.Log(_content.ToString());
         }
 
 		#endregion
