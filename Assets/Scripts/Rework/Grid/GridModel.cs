@@ -20,9 +20,10 @@ namespace TideDefense
             _beachSlope = beachSlope;
 
             Initialize<GridCell>(xLength, zLength, cellSize);
-        }
 
-        
+
+            
+        }
 
         public Vector3 GetCellWorldPositionFromWorldPosition(Vector3 worldPosition)
         {

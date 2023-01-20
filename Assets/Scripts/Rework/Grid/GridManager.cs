@@ -1,5 +1,7 @@
 namespace TideDefense
 {
+    using System.Collections.Generic;
+    using PierreMizzi.TilesetUtils;
     using UnityEngine;
 
     public class GridManager : MonoBehaviour
@@ -34,6 +36,20 @@ namespace TideDefense
 
         #endregion
 
+        #region Grid View
+
+        [Header("Grid View")]
+        [SerializeField]
+        private Transform _gridCellVisualContainer = null;
+
+        [SerializeField]
+        private GridCellVisual _gridCellVisualPrefab = null;
+
+        [SerializeField]
+        private List<List<GridCellVisual>> _gridCellVisualHash = new List<List<GridCellVisual>>();
+
+        #endregion
+
 		#region Grid Gizmos
 
         [Header("Gizmos")]
@@ -54,10 +70,15 @@ namespace TideDefense
 
 		#region Methods
 
+        #region MonoBehaviour
+
+
         private void Start()
         {
             gridModel = new GridModel();
             gridModel.Initialize<GridCell>(_xLength, _zLength, _cellSize, _yElevation, _beachSlope);
+
+            InitializeGridView();
 
             if (_gameplayChannel != null)
                 _gameplayChannel.onClickBeach += CallbackOnClickBeach;
@@ -74,6 +95,8 @@ namespace TideDefense
             if (_displayGizmos)
                 DrawGridGizmos();
         }
+
+        #endregion
 
 		#region Gameplay
 
@@ -95,8 +118,114 @@ namespace TideDefense
             gridCell.currentTool = null;
         }
 
+        #endregion
 
+        #region Grid View
 
+        public void InitializeGridView()
+        {
+            for (int x = 0; x < _xLength; x++)
+            {
+                List<GridCellVisual> column = new List<GridCellVisual>();
+                for (int z = 0; z < _zLength; z++)
+                {
+                    GridCellVisual visual = Object.Instantiate(
+                        _gridCellVisualPrefab,
+                        _gridCellVisualContainer
+                    );
+
+                    Vector3 worldPosition =
+                        gridModel.GetCellWorldPositionFromCoordinates(new Vector2Int(x, z))
+                        + new Vector3(0f, 0.01f, 0f);
+                    visual.transform.position = worldPosition;
+                    visual.name = $"GridCellVisual_{x}_{z}";
+
+                    column.Add(visual);
+                }
+                _gridCellVisualHash.Add(column);
+            }
+        }
+
+        public void DisplayDiggableHints()
+        {
+            Vector2Int coords = new Vector2Int();
+
+            // We got throught the hash of GridCell of the model to find the GridCell containing the bucket
+            for (int x = 0; x < _xLength; x++)
+            {
+                for (int z = 0; z < _zLength; z++)
+                {
+                    coords = new Vector2Int(x, z);
+                    GridCell cellModel = gridModel.GetCellFromCoordinates<GridCell>(coords);
+
+                    // We found the GridCell containing the bucket !
+                    if (
+                        cellModel.currentTool != null
+                        && cellModel.currentTool.toolType == ToolType.Bucket
+                    )
+                    {
+                        Debug.Log($"We found the bucket, in {coords}");
+                        Vector2Int neighboorCoords = new Vector2Int();
+                        GridCell neighboorCellModel = null;
+                        GridCellVisual cellVisual = null;
+
+                        // We go through all 8 surrouding cells
+                        for (int i = 0; i < TilesetUtils.neighboorsCoordinatesEight.Count; i++)
+                        {
+                            neighboorCoords =
+                                cellModel.coords + TilesetUtils.neighboorsCoordinatesEight[i];
+                            // Check if the coords are not out of the grid AND check if the gridCell is empty
+                            if (gridModel.CheckValidCoordinates(neighboorCoords))
+                            {
+                                neighboorCellModel = gridModel.GetCellFromCoordinates<GridCell>(
+                                    neighboorCoords
+                                );
+
+                                if (neighboorCellModel.isEmpty)
+                                {
+                                    Debug.Log("neighboorCoords" + neighboorCoords);
+                                    cellVisual = _gridCellVisualHash[neighboorCoords.x][
+                                        neighboorCoords.y
+                                    ];
+                                    cellVisual.DisplayDiggableHints();
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void HideDiggableHints()
+        {
+            GridCellVisual cellVisual = null;
+
+            for (int x = 0; x < _xLength; x++)
+            {
+                for (int z = 0; z < _zLength; z++)
+                {
+                    cellVisual = _gridCellVisualHash[x][z];
+                    cellVisual.HideDiggableHints();
+                }
+            }
+        }
+
+        public void DisplayBuildableHints()
+        {
+            for (int x = 0; x < _xLength; x++)
+            {
+                for (int z = 0; z < _zLength; z++) { }
+            }
+        }
+
+        public void HideBuildableHints()
+        {
+            for (int x = 0; x < _xLength; x++)
+            {
+                for (int z = 0; z < _zLength; z++) { }
+            }
+        }
 
         #endregion
 

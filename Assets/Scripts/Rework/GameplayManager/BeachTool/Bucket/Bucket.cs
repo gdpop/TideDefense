@@ -33,9 +33,9 @@ namespace TideDefense
 
 		#region Diggable Hints
 
-        [Header("Diggable Hints")]
-        [SerializeField]
-        private Transform _diggableHintsContainer = null;
+        // [Header("Diggable Hints")]
+        // [SerializeField]
+        // private Transform _diggableHintsContainer = null;
 
 		#endregion
 
@@ -67,39 +67,39 @@ namespace TideDefense
         protected override void Start()
         {
             base.Start();
-            HideDiggableHints();
+            // HideDiggableHints();
         }
 
 		#endregion
 
 		#region Diggable Hints
 
-        public void DisplayDiggableHints()
-        {
-            _diggableHintsContainer.gameObject.SetActive(true);
-            ManageIndividualHints();
-        }
+        // public void DisplayDiggableHints()
+        // {
+        //     _diggableHintsContainer.gameObject.SetActive(true);
+        //     ManageIndividualHints();
+        // }
 
-        public void ManageIndividualHints()
-        {
-            Vector2Int checkCoords = new Vector2Int();
-            GameObject diggableHint = null;
-            bool isValidCoords = false;
+        // public void ManageIndividualHints()
+        // {
+        //     Vector2Int checkCoords = new Vector2Int();
+        //     GameObject diggableHint = null;
+        //     bool isValidCoords = false;
 
-            for (int i = 0; i < TilesetUtils.neighboorsCoordinatesEight.Count; i++)
-            {
-                checkCoords = currentGridCell.coords + TilesetUtils.neighboorsCoordinatesEight[i];
-                isValidCoords = _manager.gridManager.gridModel.CheckValidCoordinates(checkCoords);
+        //     for (int i = 0; i < TilesetUtils.neighboorsCoordinatesEight.Count; i++)
+        //     {
+        //         checkCoords = currentGridCell.coords + TilesetUtils.neighboorsCoordinatesEight[i];
+        //         isValidCoords = _manager.gridManager.gridModel.CheckValidCoordinates(checkCoords);
 
-                diggableHint = _diggableHintsContainer.GetChild(i).gameObject;
-                diggableHint.SetActive(isValidCoords);
-            }
-        }
+        //         diggableHint = _diggableHintsContainer.GetChild(i).gameObject;
+        //         diggableHint.SetActive(isValidCoords);
+        //     }
+        // }
 
-        public void HideDiggableHints()
-        {
-            _diggableHintsContainer.gameObject.SetActive(false);
-        }
+        // public void HideDiggableHints()
+        // {
+        //     _diggableHintsContainer.gameObject.SetActive(false);
+        // }
 
 		#endregion
 

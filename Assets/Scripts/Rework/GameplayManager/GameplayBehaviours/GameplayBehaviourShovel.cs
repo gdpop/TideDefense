@@ -18,7 +18,7 @@ namespace TideDefense
         public override void Activate()
         {
             base.Activate();
-            _gameplayManager.bucket.DisplayDiggableHints();
+            _gameplayManager.gridManager.DisplayDiggableHints();
 
             if (_gameplayManager.gameplayChannel != null)
             {
@@ -29,7 +29,7 @@ namespace TideDefense
         public override void Deactivate()
         {
             base.Deactivate();
-            _gameplayManager.bucket.HideDiggableHints();
+            _gameplayManager.gridManager.HideDiggableHints();
 
             if (_gameplayManager.gameplayChannel != null)
             {
