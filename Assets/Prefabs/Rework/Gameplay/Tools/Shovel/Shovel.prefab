@@ -286,6 +286,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6115956122589171853}
   - component: {fileID: 7580881033636655684}
+  - component: {fileID: 5438124883049104008}
+  - component: {fileID: 8709071456134496854}
   - component: {fileID: 6115956122589171843}
   - component: {fileID: 6606331094205615420}
   m_Layer: 0
@@ -326,10 +328,38 @@ MonoBehaviour:
   status: 1
   _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
   _interactableBoxCollider: {fileID: 6115956122589171843}
+  _clickable: {fileID: 5438124883049104008}
+  _hoverable: {fileID: 8709071456134496854}
   _hoverDuration: 0.1
   _hoverYOffset: 0.05
   _grabBoxCollider: {fileID: 6606331094205615420}
-  _isHoverable: 1
+--- !u!114 &5438124883049104008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6115956122589171842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ba39ae2c7998c4186b11cafea712b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isInteractable: 1
+--- !u!114 &8709071456134496854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6115956122589171842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9783f1c00059a4e90cb75d0309ec5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isInteractable: 1
+  _isHovered: 0
 --- !u!65 &6115956122589171843
 BoxCollider:
   m_ObjectHideFlags: 0
