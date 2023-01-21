@@ -991,7 +991,7 @@ MonoBehaviour:
   _hoverBucketYOffset: 0.5
   _bucketConnectedBody: {fileID: 1989171641}
   _bucketJoint: {fileID: 332468422}
-  _grabDropTweenDuration: 0.5
+  _grabDropTweenDuration: 0.2
   _grabBucketAnchor: {fileID: 1989086576}
   _shovelFillingQuantity: 0.25
 --- !u!1 &864297812
@@ -2129,6 +2129,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 545097907}
     m_Modifications:
+    - target: {fileID: 255777280371861317, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+      propertyPath: _hoverYOffset
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 1102918535372186741, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
       propertyPath: m_Name
       value: Bucket
