@@ -5,11 +5,12 @@ namespace TideDefense
 
     public class Application : MonoBehaviour
     {
+        [SerializeField] private LayerMask _interactableLayer;
         private InteractableManager _interactableManager = null;
-
+    
         private void Start()
         {
-            _interactableManager = new InteractableManager();
+            _interactableManager = new InteractableManager(_interactableLayer);
         }
 
         private void Update()

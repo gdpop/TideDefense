@@ -29,12 +29,19 @@ namespace PierreMizzi.MouseInteractable
             _leftHoldClickSetting = new HoldClickSetting(MOUSE_LEFT, 1f, 3f);
         }
 
+        public InteractableManager(LayerMask interactableLayerMask)
+        {
+            _interactableLayerMask = interactableLayerMask;
+            _camera = Camera.main;
+            _leftHoldClickSetting = new HoldClickSetting(MOUSE_LEFT, 1f, 3f);
+        }
+
         public void Update()
         {
             RaycastHit hit;
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, 100, _interactableLayerMask))
             {
                 // Manage Clickable Interactions
                 // {

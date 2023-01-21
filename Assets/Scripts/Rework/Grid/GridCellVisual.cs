@@ -63,7 +63,7 @@ namespace TideDefense
             // _clickable.OnLeftClick += CallbackOnLeftClick;
 
             InitiliazeHoldClickable();
-            InitiliazeHoverable();
+            // InitiliazeHoverable();
         }
 
         #region Hints

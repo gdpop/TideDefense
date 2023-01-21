@@ -11,9 +11,6 @@ namespace TideDefense
         [SerializeField]
         private GameplayChannel _gameplayChannel = null;
 
-        [SerializeField]
-        private SeaChannel _seaChannel = null;
-
         #region Wetness
 
         [Header("Wetness")]
@@ -23,9 +20,33 @@ namespace TideDefense
         [SerializeField]
         private LayerMask _beachLayerMask;
 
+        private Ray ray;
+        private RaycastHit hit;
+        private Camera _camera = null;
+
         #endregion
 
 		#endregion
+
+        #region Methods
+
+        #region MonoBehaviour
+
+        private void Start()
+        {
+            _camera = Camera.main;
+        }
+
+        private void Update()
+        {
+            ray = _camera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, 100, _beachLayerMask.value))
+            {
+                _gameplayChannel.onHoverBeach(hit);
+            }
+        }
+
+        #endregion
 
         #region Wetness
 
@@ -52,6 +73,14 @@ namespace TideDefense
 
             return wetness;
         }
+
+        #endregion
+
+        #region Raycast
+
+
+
+        #endregion
 
         #endregion
     }

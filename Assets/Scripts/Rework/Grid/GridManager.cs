@@ -170,7 +170,7 @@ namespace TideDefense
             GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(
                 visual.coords
             );
-            _gameplayChannel.onHoverGrid.Invoke(cellModel, hit);
+            // _gameplayChannel.onHoverGrid.Invoke(cellModel, hit);
         }
 
         public void CallbackOnHoverExit(GridCellVisual visual) { }

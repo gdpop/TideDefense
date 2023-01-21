@@ -528,11 +528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
-  _seaChannel: {fileID: 11400000, guid: 5d55e33d958a093489b8240536192dc1, type: 2}
   _wetnessSimulation: {fileID: 374885263}
-  _holdClickable: {fileID: 0}
-  _isInteractable: 1
-  _isHovered: 0
   _beachLayerMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -1289,6 +1285,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcdf28ba32d6be34980d594b80db760d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interactableLayer:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!4 &1006079755
 Transform:
   m_ObjectHideFlags: 0
@@ -1616,6 +1615,7 @@ MonoBehaviour:
     mesh: {fileID: -5359318733541254206, guid: 05f2821c5d3f8964aad599624ee741cb, type: 3}
   _prefabRempart: {fileID: 4343678338713374687, guid: 2b78dbc0df6d7fc4b907bffb5e182493, type: 3}
   _rempartContainer: {fileID: 1739542203}
+  _simpleRempart: {fileID: 0}
 --- !u!1 &1620342898
 GameObject:
   m_ObjectHideFlags: 0

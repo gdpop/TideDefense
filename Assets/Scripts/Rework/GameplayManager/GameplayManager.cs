@@ -119,8 +119,7 @@ namespace TideDefense
         {
             if (_gameplayChannel != null)
             {
-                // _gameplayChannel.onClickBeach -= CallbackOnClickBeach;
-                _gameplayChannel.onHoverGrid += CallbackOnHoverGrid;
+                _gameplayChannel.onHoverBeach += CallbackOnHoverGrid;
 
                 _gameplayChannel.onClickTool += CallbackOnClickTool;
             }
@@ -135,8 +134,7 @@ namespace TideDefense
         {
             if (_gameplayChannel != null)
             {
-                // _gameplayChannel.onClickBeach -= CallbackOnClickBeach;
-                _gameplayChannel.onHoverGrid -= CallbackOnHoverGrid;
+                _gameplayChannel.onHoverBeach -= CallbackOnHoverGrid;
 
                 _gameplayChannel.onClickTool -= CallbackOnClickTool;
             }
@@ -169,7 +167,7 @@ namespace TideDefense
 
         #endregion
 
-        private void CallbackOnHoverGrid(GridCellModel clickedCell, RaycastHit hit)
+        private void CallbackOnHoverGrid(RaycastHit hit)
         {
             _bucketConnectedBody.MovePosition(hit.point + _hoverBucketOffset);
         }

@@ -8,7 +8,6 @@ namespace TideDefense
     public delegate void ClickGrid(GridCellModel clickedCell, RaycastHit hit);
     public delegate void GridCellModelDelegate(GridCellModel cellMode);
 
-
     public delegate void ToolDelegate(BeachTool tool);
 
     [CreateAssetMenu(
@@ -28,7 +27,9 @@ namespace TideDefense
         public Action OnCancelHoldClickGrid;
 
         // Hover Grid
-        public ClickGrid onHoverGrid = null;
+        // public ClickGrid onHoverGrid = null;
+
+        public RaycastDelegate onHoverBeach = null;
 
         public ToolDelegate onChangeTool = null;
         public ToolDelegate onClickTool = null;
@@ -47,7 +48,9 @@ namespace TideDefense
             OnCompleteHoldClickGrid = (GridCellModel clickedCell) => { };
             OnCancelHoldClickGrid = () => { };
 
-            onHoverGrid = (GridCellModel clickedCell, RaycastHit hit) => { };
+            onHoverBeach = (RaycastHit hit) => { };
+
+            // onHoverGrid = (GridCellModel clickedCell, RaycastHit hit) => { };
         }
     }
 }
