@@ -53,7 +53,7 @@ namespace TideDefense
             Debug.Log($"Rempart {name} : health : {_health}");
 
             if(_health <= 0)
-                _rempartsManager.DestroyRempart(this);
+                _rempartsManager.DestroyRempartReworked(this);
         }
 
         #endregion

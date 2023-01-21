@@ -21,21 +21,22 @@ namespace TideDefense
         [SerializeField]
         private Transform _rempartContainer = null;
 
+        [SerializeField]
+        private Rempart _simpleRempart;
+
 		#endregion
 
 		#region Methods
 
         public void BuildRempart(GridCellModel gridCell)
         {
-            if (
-                gridCell == null
-                || gridCell.rempart != null
-                || gridCell.currentTool != null
-            )
+            if (gridCell == null || !gridCell.isEmpty)
                 return;
 
             RempartBlock rempartBlock = GetRempartBlockFromCoords(gridCell.coords);
-            Vector3 worldPosition = _gridManager.gridModel.GetCellWorldPositionFromCoordinates(gridCell.coords);
+            Vector3 worldPosition = _gridManager.gridModel.GetCellWorldPositionFromCoordinates(
+                gridCell.coords
+            );
 
             Rempart rempart = UnityEngine.Object.Instantiate(
                 _prefabRempart,
@@ -53,10 +54,34 @@ namespace TideDefense
             RefreshRempartAroundCoordinates(gridCell.coords);
         }
 
+        public void BuildRempartReworked(GridCellModel gridCell)
+        {
+            Vector3 worldPosition = _gridManager.gridModel.GetCellWorldPositionFromCoordinates(
+                gridCell.coords
+            );
+
+            Rempart rempart = UnityEngine.Object.Instantiate(
+                _prefabRempart,
+                worldPosition,
+                Quaternion.identity,
+                _rempartContainer
+            );
+
+            rempart.gridCell = gridCell;
+            rempart.rempartsManager = this;
+            gridCell.rempart = rempart;
+        }
+
         public void DestroyRempart(Rempart rempart)
         {
             rempart.gridCell.rempart = null;
             RefreshRempartAroundCoordinates(rempart.gridCell.coords);
+            Destroy(rempart.gameObject);
+        }
+
+        public void DestroyRempartReworked(Rempart rempart)
+        {
+            rempart.gridCell.rempart = null;
             Destroy(rempart.gameObject);
         }
 
@@ -67,9 +92,10 @@ namespace TideDefense
             for (int i = 0; i < TilesetUtils.neighboorsCoordinatesFour.Count; i++)
             {
                 Vector2Int offset = TilesetUtils.neighboorsCoordinatesFour[i];
-                GridCellModel gridCell = _gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(
-                    new Vector2Int(coords.x + offset.x, coords.y + offset.y)
-                );
+                GridCellModel gridCell =
+                    _gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(
+                        new Vector2Int(coords.x + offset.x, coords.y + offset.y)
+                    );
 
                 // Tile tile = GridManager.Instance.CurrentGrid.GetTile(x + (int)offset.x, y + (int)offset.y);
 
@@ -92,9 +118,10 @@ namespace TideDefense
             for (int i = 0; i < TilesetUtils.neighboorsCoordinatesFour.Count; i++)
             {
                 Vector2Int offset = TilesetUtils.neighboorsCoordinatesFour[i];
-                GridCellModel gridCell = _gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(
-                    new Vector2Int(coords.x + offset.x, coords.y + offset.y)
-                );
+                GridCellModel gridCell =
+                    _gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(
+                        new Vector2Int(coords.x + offset.x, coords.y + offset.y)
+                    );
                 // Debug.Log($"Coords {offset} \r Rempart : {gridCell.rempart == null}");
                 if (gridCell == null || gridCell.rempart == null)
                     continue;

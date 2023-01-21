@@ -14,30 +14,5 @@ namespace TideDefense
             _gameplayManager = manager;
         }
 
-        public override void Activate()
-        {
-            base.Activate();
-            if (_gameplayManager.gameplayChannel != null)
-            {
-                _gameplayManager.gameplayChannel.onClickGrid += CallbackOnClickGrid;
-            }
-        }
-
-        public override void Deactivate()
-        {
-            base.Deactivate();
-            if (_gameplayManager.gameplayChannel != null)
-            {
-                _gameplayManager.gameplayChannel.onClickGrid -= CallbackOnClickGrid;
-            }
-        }
-
-        public virtual void CallbackOnClickGrid(GridCellModel gridCell, RaycastHit hit)
-        {
-            _gameplayManager.rempartsManager.BuildRempart(gridCell);
-        }
-
-
-
     }
 }

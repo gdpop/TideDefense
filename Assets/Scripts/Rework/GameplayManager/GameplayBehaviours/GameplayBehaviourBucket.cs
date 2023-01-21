@@ -60,10 +60,9 @@ namespace TideDefense
 
         private void CallbackCompleteHoldClickGrid(GridCellModel clickedCell)
         {
-            Debug.Log("CallbackCompleteHoldClickGrid");
             if (_gameplayManager.bucket.isFull)
             {
-                _gameplayManager.rempartsManager.BuildRempart(clickedCell);
+                _gameplayManager.rempartsManager.BuildRempartReworked(clickedCell);
                 _gameplayManager.bucket.Empty();
             }
         }
