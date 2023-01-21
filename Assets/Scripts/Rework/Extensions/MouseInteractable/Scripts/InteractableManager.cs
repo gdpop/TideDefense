@@ -39,40 +39,51 @@ namespace PierreMizzi.MouseInteractable
             if (Physics.Raycast(ray, out hit))
             {
                 // Manage Clickable Interactions
-                if (hit.transform.TryGetComponent<IClickable>(out _currentClickable))
-                    ManageClickable(hit, _currentClickable);
-                else if (_currentClickable != null)
-                    _currentClickable = null;
+                {
+                    if (hit.transform.TryGetComponent<IClickable>(out _currentClickable))
+                        ManageClickable(hit, _currentClickable);
+                    else if (_currentClickable != null)
+                        _currentClickable = null;
+                }
 
                 // Manage HoldClickable
-                if (hit.transform.TryGetComponent<HoldClickable>(out _currentHoldClickable))
                 {
-                    ManageHoldClickable(_currentHoldClickable, _leftHoldClickSetting);
-                }
-                else if (_currentHoldClickable != null)
-                {
-                    ManageLeavingHoldClickable(_leftHoldClickSetting);
-                    _currentHoldClickable = null;
+                    if (hit.transform.TryGetComponent<HoldClickable>(out _currentHoldClickable))
+                    {
+                        // Check if it's interactable
+                        if (_currentHoldClickable.isInteractable)
+                            ManageHoldClickable(_currentHoldClickable, _leftHoldClickSetting);
+                        // If it's raycasted but no longer interactable, we leave it
+                        else
+                            ManageLeavingHoldClickable(_leftHoldClickSetting);
+                    }
+                    // If something different has been raycasted, we leave it
+                    else if (CheckValidHoldClickable(_currentHoldClickable))
+                    {
+                        ManageLeavingHoldClickable(_leftHoldClickSetting);
+                    }
                 }
 
                 // Manage Hoverable
-                if (hit.transform.TryGetComponent<IHoverable>(out _raycastedHoverable))
                 {
-                    if (_raycastedHoverable.isHoverable)
-                        ManageHoverable(hit);
-                    // Hoverable suddenly become non-hoverable while being raycasted, so we stop hovering it
-                    else if (_raycastedHoverable.isHovered)
-                        ForceExitHoverable();
+                    if (hit.transform.TryGetComponent<IHoverable>(out _raycastedHoverable))
+                    {
+                        if (_raycastedHoverable.isHoverable)
+                            ManageHoverable(hit);
+                        // Hoverable suddenly become non-hoverable while being raycasted, so we stop hovering it
+                        else if (_raycastedHoverable.isHovered)
+                            ForceExitHoverable();
+                    }
                 }
             }
             else if (_currentHoverable != null)
             {
                 ForceExitHoverable();
             }
-            else if (_currentHoldClickable != null)
+            // If nothing is being raycasted, we leave the current one
+            else if (CheckValidHoldClickable(_currentHoldClickable))
             {
                 ManageLeavingHoldClickable(_leftHoldClickSetting);
-                _currentHoldClickable = null;
             }
         }
 
@@ -142,9 +153,14 @@ namespace PierreMizzi.MouseInteractable
                 setting.currentHoldTime = 0f;
                 setting.currentHoldClickable = null;
             }
+            _currentHoldClickable = null;
         }
 
-            
+        private bool CheckValidHoldClickable(HoldClickable clickable)
+        {
+            return (clickable != null && clickable.isInteractable);
+        }
+
         #endregion
 
 
