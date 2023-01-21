@@ -102,6 +102,7 @@ namespace TideDefense
         private void InitializeContent()
         {
             _content = new SandWaterFilling();
+
             _bucketContentVisual.gameObject.SetActive(false);
             _bucketContentVisual.localPosition = GetContentVisualLocalPosFromQuantity(
                 _content.quantity
@@ -119,7 +120,10 @@ namespace TideDefense
                     _bucketContentVisual.localPosition = GetContentVisualLocalPosFromQuantity(
                         value
                     );
-                    _contentVisualPropertyBlock.SetFloat(SAND_CONCENTRATION_PROPERTY, _content.sandConcentration);
+                    _contentVisualPropertyBlock.SetFloat(
+                        SAND_CONCENTRATION_PROPERTY,
+                        _content.sandConcentration
+                    );
                     _bucketContentVisual.gameObject.SetActive(value > 0.02f);
                 }
             );
@@ -132,6 +136,17 @@ namespace TideDefense
                 _contentVisualFullAnchor.localPosition,
                 quantity
             );
+        }
+
+        public void Empty()
+        {
+            _content.quantity = 0;
+            ResetContentVisual();
+        }
+
+        private void ResetContentVisual()
+        {
+            _bucketContentVisual.gameObject.SetActive(false);
         }
 
 		#endregion

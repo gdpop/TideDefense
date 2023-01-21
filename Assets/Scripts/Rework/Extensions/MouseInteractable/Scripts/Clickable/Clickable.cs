@@ -2,7 +2,7 @@ namespace PierreMizzi.MouseInteractable
 {
     using UnityEngine;
 
-	public delegate void RaycastDelegate(RaycastHit hit); 
+	// public delegate void RaycastDelegate(RaycastHit hit); 
 
     public class Clickable : MonoBehaviour
 	{

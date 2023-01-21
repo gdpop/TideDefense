@@ -30,8 +30,8 @@ namespace TideDefense
 
         #region Clickable
 
-        [SerializeField]
-        private Clickable _clickable = null;
+        // [SerializeField]
+        // private Clickable _clickable = null;
 
         #endregion
 
@@ -60,7 +60,7 @@ namespace TideDefense
             _gridManager = gridManager;
             _coords = coords;
 
-            _clickable.OnLeftClick += CallbackOnLeftClick;
+            // _clickable.OnLeftClick += CallbackOnLeftClick;
 
             InitiliazeHoldClickable();
             InitiliazeHoverable();
@@ -110,12 +110,16 @@ namespace TideDefense
                     InteractableManager.MOUSE_LEFT
                 );
 
-                holdLeftClickBehaviour.OnStartHoldClick += CallbackStartHoldClickLeft;
-                holdLeftClickBehaviour.OnProgressHoldClick += CallbackProgressHoldClickLeft;
-                holdLeftClickBehaviour.OnCompleteHoldClick += CallbackCompleteHoldClickLeft;
-                holdLeftClickBehaviour.OnCancelHoldClick += CallbackCancelHoldClickLeft;
+                holdLeftClickBehaviour.onClick += CallbackOnLeftClick;
+
+                holdLeftClickBehaviour.onStartHoldClick += CallbackStartHoldClickLeft;
+                holdLeftClickBehaviour.onProgressHoldClick += CallbackProgressHoldClickLeft;
+                holdLeftClickBehaviour.onCompleteHoldClick += CallbackCompleteHoldClickLeft;
+                holdLeftClickBehaviour.onCancelHoldClick += CallbackCancelHoldClickLeft;
             }
         }
+
+
 
         public void CallbackStartHoldClickLeft()
         {

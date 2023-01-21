@@ -3,7 +3,20 @@ namespace TideDefense
     public struct SandWaterFilling
     {
         public float quantity;
-        public float sandConcentration;
+
+        private float _sandWaterConcentration;
+
+        public float sandConcentration
+        {
+            get
+            {
+                if (quantity <= 0f)
+                    return -1;
+                else
+                    return _sandWaterConcentration;
+            }
+            set { _sandWaterConcentration = value; }
+        }
         public float waterConcentration
         {
             get { return 1f - sandConcentration; }
@@ -12,7 +25,7 @@ namespace TideDefense
         public SandWaterFilling(float quantity = 0f, float sandConcentration = -1f)
         {
             this.quantity = quantity;
-            this.sandConcentration = sandConcentration;
+            this._sandWaterConcentration = sandConcentration;
         }
 
         public override string ToString()

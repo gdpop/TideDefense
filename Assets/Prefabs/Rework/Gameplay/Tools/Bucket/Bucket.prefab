@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1102918535372186746}
   - component: {fileID: 255777280371861317}
-  - component: {fileID: 2879753468614037230}
+  - component: {fileID: 544728692590333890}
   - component: {fileID: 4714137656133117095}
   - component: {fileID: 1102918535372186740}
   - component: {fileID: 863926731}
@@ -52,7 +52,7 @@ MonoBehaviour:
   status: 1
   _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
   _interactableBoxCollider: {fileID: 1102918535372186740}
-  _clickable: {fileID: 2879753468614037230}
+  _holdClickable: {fileID: 544728692590333890}
   _hoverable: {fileID: 4714137656133117095}
   _hoverDuration: 0.1
   _hoverYOffset: 0.1
@@ -62,7 +62,7 @@ MonoBehaviour:
   _contentVisualFullAnchor: {fileID: 8539611627507026413}
   _maxQuantity: 1
   _contentVisualPropertyBlock: {fileID: 1102918533977379863}
---- !u!114 &2879753468614037230
+--- !u!114 &544728692590333890
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,10 +71,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1102918535372186741}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13ba39ae2c7998c4186b11cafea712b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 337e98d3c1a20394aa5a0ebeb0330efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isInteractable: 1
+  _behaviours:
+  - _name: Left Button
+    _mouseButtonID: 0
 --- !u!114 &4714137656133117095
 MonoBehaviour:
   m_ObjectHideFlags: 0

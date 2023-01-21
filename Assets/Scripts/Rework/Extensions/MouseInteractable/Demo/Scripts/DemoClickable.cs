@@ -1,7 +1,9 @@
 namespace PierreMizzi.MouseInteractable
 {
-    using UnityEngine;
+	using System;
+	using UnityEngine;
 
+	[Obsolete]
 	public class DemoClickable : MonoBehaviour
 	{
 		[SerializeField] private Clickable _clickable = null;

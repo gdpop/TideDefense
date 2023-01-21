@@ -1,5 +1,3 @@
-using PierreMizzi.MouseInteractable;
-using PierreMizzi.TilesetUtils;
 using UnityEngine;
 
 namespace TideDefense
@@ -23,6 +21,14 @@ namespace TideDefense
             if (_gameplayManager.gameplayChannel != null)
             {
                 _gameplayManager.gameplayChannel.onClickGrid += CallbackOnClickGrid;
+
+                _gameplayManager.gameplayChannel.OnStartHoldClickGrid += CallbackStartHoldClickGrid;
+                _gameplayManager.gameplayChannel.OnProgressHoldClickGrid +=
+                    CallbackProgressHoldClickGrid;
+                _gameplayManager.gameplayChannel.OnCompleteHoldClickGrid +=
+                    CallbackCompleteHoldClickGrid;
+                _gameplayManager.gameplayChannel.OnCancelHoldClickGrid +=
+                    CallbackCancelHoldClickGrid;
             }
 
             if (_gameplayManager.bucket.isFull)
@@ -46,13 +52,24 @@ namespace TideDefense
             _gameplayManager.DropTool(_gameplayManager.bucket, gridCell);
         }
 
-        public void CallbackHoldLeftClickBeach() { 
+       #region HoldClick
 
-            if(_gameplayManager.bucket.isFull)
+        private void CallbackStartHoldClickGrid() { }
+
+        private void CallbackProgressHoldClickGrid(float value) { }
+
+        private void CallbackCompleteHoldClickGrid(GridCellModel clickedCell)
+        {
+            Debug.Log("CallbackCompleteHoldClickGrid");
+            if (_gameplayManager.bucket.isFull)
             {
-                // Où est-ce que t'as cliqué CONNNNNNNARD ????!!!!
-                // _gameplayManager.rempartsManager.BuildRempart();
+                _gameplayManager.rempartsManager.BuildRempart(clickedCell);
+                _gameplayManager.bucket.Empty();
             }
         }
+
+        private void CallbackCancelHoldClickGrid() { }
+
+       #endregion
     }
 }

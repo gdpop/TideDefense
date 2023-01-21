@@ -14,11 +14,17 @@ namespace PierreMizzi.MouseInteractable
             );
             if (leftClickBehaviour != null)
             {
-                leftClickBehaviour.OnStartHoldClick += CallbackStartHoldClick;
-                leftClickBehaviour.OnProgressHoldClick += CallbackProgressHoldClick;
-                leftClickBehaviour.OnCompleteHoldClick += CallbackCompleteHoldClick;
-                leftClickBehaviour.OnCancelHoldClick += CallbackCancelHoldClick;
+                leftClickBehaviour.onClick += CallbackClick;
+                leftClickBehaviour.onStartHoldClick += CallbackStartHoldClick;
+                leftClickBehaviour.onProgressHoldClick += CallbackProgressHoldClick;
+                leftClickBehaviour.onCompleteHoldClick += CallbackCompleteHoldClick;
+                leftClickBehaviour.onCancelHoldClick += CallbackCancelHoldClick;
             }
+        }
+
+        void CallbackClick(RaycastHit hit)
+        {
+            Debug.Log($"CallbackClick");
         }
 
         void CallbackStartHoldClick()

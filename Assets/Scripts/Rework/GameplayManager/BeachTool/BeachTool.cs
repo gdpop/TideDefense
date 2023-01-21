@@ -40,7 +40,7 @@ namespace TideDefense
         private BoxCollider _interactableBoxCollider = null;
 
         [SerializeField]
-        private Clickable _clickable = null;
+        private HoldClickable _holdClickable = null;
 
         [SerializeField]
         private Hoverable _hoverable = null;
@@ -82,10 +82,8 @@ namespace TideDefense
             if (_gameplayChannel != null)
                 _gameplayChannel.onChangeTool += CallbackOnChangeTool;
 
-            if (_clickable != null)
-                _clickable.OnLeftClick += CallbackOnLeftClick;
-
             InitializeHoverable();
+            InitializeClickable();
         }
 
         protected virtual void OnDestroy()
@@ -101,6 +99,7 @@ namespace TideDefense
         public virtual void Initialize(GameplayManager manager)
         {
             _manager = manager;
+            
         }
 
         protected void CallbackOnChangeTool(BeachTool tool)
@@ -145,7 +144,16 @@ namespace TideDefense
 
 		#region Clickable
 
-        public void CallbackOnLeftClick(RaycastHit hit)
+        private void InitializeClickable()
+        {
+            HoldClickBehaviour holdLeftClickBehaviour = _holdClickable.GetBehaviour(
+                InteractableManager.MOUSE_LEFT
+            );
+
+            holdLeftClickBehaviour.onClick += CallbackOnLeftClick;
+        }
+
+        private void CallbackOnLeftClick(RaycastHit hit)
         {
             _gameplayChannel.onClickTool.Invoke(this);
         }

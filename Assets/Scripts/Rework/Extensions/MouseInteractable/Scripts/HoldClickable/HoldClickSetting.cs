@@ -7,7 +7,8 @@ namespace PierreMizzi.MouseInteractable
     {
         // Settings
         public int mouseButtonID = -1;
-        public float clickHoldTreshold = 1f;
+        public float clickEnd = 0.3f;
+        public float clickHoldStart = 1f;
         public float clickHoldDuration = 2f;
 
         // Runtime
@@ -23,7 +24,7 @@ namespace PierreMizzi.MouseInteractable
         public HoldClickSetting(int mouseButtonID, float treshold, float duration)
         {
             this.mouseButtonID = mouseButtonID;
-            this.clickHoldTreshold = treshold;
+            this.clickHoldStart = treshold;
             this.clickHoldDuration = duration;
         }
 
@@ -34,9 +35,11 @@ namespace PierreMizzi.MouseInteractable
 
         public HoldClickStatus GetClickStatusFromClickTime(float time)
         {
-            if (0 <= currentHoldTime && currentHoldTime < clickHoldTreshold)
+            if (0f < currentHoldTime && currentHoldTime < clickEnd)
+                return HoldClickStatus.inClick;
+            if (clickEnd <= currentHoldTime && currentHoldTime < clickHoldStart)
                 return HoldClickStatus.inTreshold;
-            else if (clickHoldTreshold <= currentHoldTime && currentHoldTime < clickHoldDuration)
+            else if (clickHoldStart <= currentHoldTime && currentHoldTime < clickHoldDuration)
                 return HoldClickStatus.inLong;
             else if (clickHoldDuration < currentHoldTime)
                 return HoldClickStatus.completed;
@@ -47,28 +50,34 @@ namespace PierreMizzi.MouseInteractable
         private float GetHoldProgressFromHoldTime(float time)
         {
             return Mathf.Clamp(
-                UtilsClass.Remap(time, clickHoldTreshold, clickHoldDuration, 0f, 1f),
+                UtilsClass.Remap(time, clickHoldStart, clickHoldDuration, 0f, 1f),
                 0f,
                 1f
             );
         }
 
+        public void InvokeClick(RaycastHit hit)
+        {
+            if (currentHoldClickable != null)
+                currentHoldClickable.GetBehaviour(mouseButtonID).onClick.Invoke(hit);
+        }
+
         public void InvokeStartHoldClick()
         {
             if (currentHoldClickable != null)
-                currentHoldClickable.GetBehaviour(mouseButtonID).OnStartHoldClick.Invoke();
+                currentHoldClickable.GetBehaviour(mouseButtonID).onStartHoldClick.Invoke();
         }
 
         public void InvokeCompleteHoldClick()
         {
             if (currentHoldClickable != null)
-                currentHoldClickable.GetBehaviour(mouseButtonID).OnCompleteHoldClick.Invoke();
+                currentHoldClickable.GetBehaviour(mouseButtonID).onCompleteHoldClick.Invoke();
         }
 
         public void InvokeCancelHoldClick()
         {
             if (currentHoldClickable != null)
-                currentHoldClickable.GetBehaviour(mouseButtonID).OnCancelHoldClick.Invoke();
+                currentHoldClickable.GetBehaviour(mouseButtonID).onCancelHoldClick.Invoke();
         }
 
         public void InvokeProgressHoldClick()
@@ -76,7 +85,7 @@ namespace PierreMizzi.MouseInteractable
             if (currentHoldClickable != null)
                 currentHoldClickable
                     .GetBehaviour(mouseButtonID)
-                    .OnProgressHoldClick.Invoke(currentHoldProgress);
+                    .onProgressHoldClick.Invoke(currentHoldProgress);
         }
     }
 }

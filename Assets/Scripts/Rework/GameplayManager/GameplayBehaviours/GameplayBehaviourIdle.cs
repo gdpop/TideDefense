@@ -36,5 +36,8 @@ namespace TideDefense
         {
             _gameplayManager.rempartsManager.BuildRempart(gridCell);
         }
+
+
+
     }
 }

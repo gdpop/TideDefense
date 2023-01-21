@@ -119,6 +119,7 @@ namespace TideDefense
 
         public void CallbackLeftClick(GridCellVisual visual, RaycastHit hit)
         {
+            Debug.Log("Clicked !" +visual.coords);
             GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(
                 visual.coords
             );
@@ -131,14 +132,32 @@ namespace TideDefense
 
         public void CallbackStartHoldClickLeft(GridCellVisual visual)
         {
-            Debug.Log($"Started Hold Click on  : {visual.coords}");
+            if (_gameplayChannel != null)
+                _gameplayChannel.OnStartHoldClickGrid.Invoke();
         }
 
-        public void CallbackProgressHoldClickLeft(GridCellVisual visual, float progress) { }
+        public void CallbackProgressHoldClickLeft(GridCellVisual visual, float progress)
+        {
+            if (_gameplayChannel != null)
+                _gameplayChannel.OnProgressHoldClickGrid.Invoke(progress);
+        }
 
-        public void CallbackCompleteHoldClickLeft(GridCellVisual visual) { }
+        public void CallbackCompleteHoldClickLeft(GridCellVisual visual)
+        {
+            Debug.Log("Completed !" +visual.coords);
+            GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(
+                visual.coords
+            );
 
-        public void CallbackCancelHoldClickLeft(GridCellVisual visual) { }
+            if (_gameplayChannel != null)
+                _gameplayChannel.OnCompleteHoldClickGrid.Invoke(cellModel);
+        }
+
+        public void CallbackCancelHoldClickLeft(GridCellVisual visual)
+        {
+            if (_gameplayChannel != null)
+                _gameplayChannel.OnCancelHoldClickGrid.Invoke();
+        }
 
         #endregion
 

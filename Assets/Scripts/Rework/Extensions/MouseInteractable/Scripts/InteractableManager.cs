@@ -9,8 +9,6 @@ namespace PierreMizzi.MouseInteractable
         // TODO : Use LayerMask for raycasting
         private LayerMask _interactableLayerMask;
 
-        private Clickable _currentClickable;
-
         private Hoverable _raycastedHoverable;
         private Hoverable _currentHoverable;
 
@@ -39,12 +37,12 @@ namespace PierreMizzi.MouseInteractable
             if (Physics.Raycast(ray, out hit))
             {
                 // Manage Clickable Interactions
-                {
-                    if (hit.transform.TryGetComponent<Clickable>(out _currentClickable))
-                        ManageClickable(hit, _currentClickable);
-                    else if (_currentClickable != null)
-                        _currentClickable = null;
-                }
+                // {
+                //     if (hit.transform.TryGetComponent<Clickable>(out _currentClickable))
+                //         ManageClickable(hit, _currentClickable);
+                //     else if (_currentClickable != null)
+                //         _currentClickable = null;
+                // }
 
                 // Manage HoldClickable
                 {
@@ -52,15 +50,15 @@ namespace PierreMizzi.MouseInteractable
                     {
                         // Check if it's interactable
                         if (_currentHoldClickable.isInteractable)
-                            ManageHoldClickable(_currentHoldClickable, _leftHoldClickSetting);
+                            ManageHoldClickable(_currentHoldClickable, _leftHoldClickSetting, hit);
                         // If it's raycasted but no longer interactable, we leave it
                         else
-                            ManageLeavingHoldClickable(_leftHoldClickSetting);
+                            ManageLeavingHoldClickable(_leftHoldClickSetting, hit);
                     }
                     // If something different has been raycasted, we leave it
                     else if (CheckValidHoldClickable(_currentHoldClickable))
                     {
-                        ManageLeavingHoldClickable(_leftHoldClickSetting);
+                        ManageLeavingHoldClickable(_leftHoldClickSetting, hit);
                     }
                 }
 
@@ -83,26 +81,30 @@ namespace PierreMizzi.MouseInteractable
             // If nothing is being raycasted, we leave the current one
             else if (CheckValidHoldClickable(_currentHoldClickable))
             {
-                ManageLeavingHoldClickable(_leftHoldClickSetting);
+                ManageLeavingHoldClickable(_leftHoldClickSetting, new RaycastHit());
             }
         }
 
         #region Clickable
 
-        public void ManageClickable(RaycastHit hit, Clickable clickable)
-        {
-            if (Input.GetMouseButtonDown(MOUSE_LEFT))
-            {
-                if (clickable.isInteractable)
-                    clickable.OnLeftClick(hit);
-            }
-        }
+        // public void ManageClickable(RaycastHit hit, Clickable clickable)
+        // {
+        //     if (Input.GetMouseButtonDown(MOUSE_LEFT))
+        //     {
+        //         if (clickable.isInteractable)
+        //             clickable.OnLeftClick(hit);
+        //     }
+        // }
 
         #endregion
 
         #region HoldClickable
 
-        public void ManageHoldClickable(HoldClickable interactable, HoldClickSetting setting)
+        public void ManageHoldClickable(
+            HoldClickable interactable,
+            HoldClickSetting setting,
+            RaycastHit hit
+        )
         {
             // Checks if mouse is down for the given mouseButton
             if (Input.GetMouseButton(setting.mouseButtonID))
@@ -136,18 +138,24 @@ namespace PierreMizzi.MouseInteractable
             }
             else
             {
-                if (setting.currentStatus == HoldClickStatus.inLong)
-                    setting.InvokeCancelHoldClick();
+                // Debug.Log($"setting.clickHoldDuration : { setting.currentHoldTime }");
+                ManageLeavingHoldClickable(setting, hit);
+                // if (setting.currentStatus == HoldClickStatus.inClick)
+                //     setting.InvokeClick(hit);
+                // else if (setting.currentStatus == HoldClickStatus.inLong)
+                //     setting.InvokeCancelHoldClick();
 
-                setting.currentHoldTime = 0;
+                // setting.currentHoldTime = 0;
             }
         }
 
-        public void ManageLeavingHoldClickable(HoldClickSetting setting)
+        public void ManageLeavingHoldClickable(HoldClickSetting setting, RaycastHit hit)
         {
             if (setting.currentHoldClickable != null)
             {
-                if (setting.currentStatus == HoldClickStatus.inLong)
+                if (setting.currentStatus == HoldClickStatus.inClick)
+                    setting.InvokeClick(hit);
+                else if (setting.currentStatus == HoldClickStatus.inLong)
                     setting.InvokeCancelHoldClick();
 
                 setting.currentHoldTime = 0f;

@@ -2,9 +2,12 @@ namespace TideDefense
 {
     using UnityEngine;
     using System;
+    using PierreMizzi.MouseInteractable;
 
     public delegate void RaycastEvent(RaycastHit hit);
     public delegate void ClickGrid(GridCellModel clickedCell, RaycastHit hit);
+    public delegate void GridCellModelDelegate(GridCellModel cellMode);
+
 
     public delegate void ToolDelegate(BeachTool tool);
 
@@ -15,9 +18,17 @@ namespace TideDefense
     )]
     public class GameplayChannel : ScriptableObject
     {
-
-        public ClickGrid onHoverGrid = null;
+        // Click Grid
         public ClickGrid onClickGrid = null;
+
+        // Hold Click Grid
+        public Action OnStartHoldClickGrid;
+        public FloatEvent OnProgressHoldClickGrid;
+        public GridCellModelDelegate OnCompleteHoldClickGrid;
+        public Action OnCancelHoldClickGrid;
+
+        // Hover Grid
+        public ClickGrid onHoverGrid = null;
 
         public ToolDelegate onChangeTool = null;
         public ToolDelegate onClickTool = null;
@@ -25,15 +36,17 @@ namespace TideDefense
 
         protected void OnEnable()
         {
-            onChangeTool = (BeachTool tool) => {};
+            onChangeTool = (BeachTool tool) => { };
             onClickTool = (BeachTool tool) => { };
             onHoverTool = (BeachTool tool) => { };
 
-
-            // onClickBeach = (RaycastHit hit) => { };
-
             onClickGrid = (GridCellModel clickedCell, RaycastHit hit) => { };
-            
+
+            OnStartHoldClickGrid = () => { };
+            OnProgressHoldClickGrid = (float value) => { };
+            OnCompleteHoldClickGrid = (GridCellModel clickedCell) => { };
+            OnCancelHoldClickGrid = () => { };
+
             onHoverGrid = (GridCellModel clickedCell, RaycastHit hit) => { };
         }
     }
