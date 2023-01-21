@@ -2,7 +2,7 @@ namespace TideDefense
 {
     using PierreMizzi.Grid;
 
-    public class GridCell : AGridCell
+    public class GridCellModel : AGridCell
     {
         public Rempart rempart;
         public BeachTool currentTool = null;

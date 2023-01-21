@@ -17,8 +17,8 @@ namespace TideDefense
             get { return _fastTimeSpeed; }
         }
 
-        public FloatEvent onUpdateCurrentDeltaTime;
-        public FloatEvent onUpdateCurrentTime;
+        public FloatDelegate onUpdateCurrentDeltaTime;
+        public FloatDelegate onUpdateCurrentTime;
 
         public Action onSetTimeSpeedStopped = null;
         public Action onSetTimeSpeedNormal = null;

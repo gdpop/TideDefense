@@ -2,17 +2,17 @@ namespace PierreMizzi.MouseInteractable
 {
     using UnityEngine;
 
-	public class DemoClickable : MonoBehaviour,  IClickable
+	public class DemoClickable : MonoBehaviour
 	{
-		[SerializeField] private bool _isClickable = true;
-		public bool isClickable { get { return _isClickable; } set { _isClickable = value; } }
+		[SerializeField] private Clickable _clickable = null;
 
-		[SerializeField] private bool _isInteractable = true;
-		public bool isInteractable { get { return _isInteractable; } set { _isInteractable = value; } }
+		private void Start() {
+			_clickable.OnLeftClick += CallbackOnLeftClick;
+		}
 
-		public void OnLeftClick(RaycastHit hit)
+		private void CallbackOnLeftClick(RaycastHit hit)
 		{
-			Debug.Log("OnLeftClick");
+			Debug.Log("CallbackOnLeftClick");
 		}
 	}
 }

@@ -37,7 +37,7 @@ namespace TideDefense
             }
         }
 
-        public virtual void CallbackOnClickGrid(GridCell gridCell, RaycastHit hit)
+        public virtual void CallbackOnClickGrid(GridCellModel gridCell, RaycastHit hit)
         {
             if (CheckGridCellNeighboorToBucket(gridCell))
             {
@@ -47,7 +47,7 @@ namespace TideDefense
                 _gameplayManager.DropTool(_gameplayManager.shovel, gridCell);
         }
 
-        public void FillBucket(GridCell gridCell, RaycastHit hit)
+        public void FillBucket(GridCellModel gridCell, RaycastHit hit)
         {
             float wetness = _gameplayManager.seaManager.beach.GetWetnessFromWorldPosition(
                 hit.point
@@ -66,7 +66,7 @@ namespace TideDefense
         /// Verify if the clicked GridCell while grabbing the shovel is next to the bucket
         /// If it's next to the bucket, we fill it
         /// </summary>
-        public virtual bool CheckGridCellNeighboorToBucket(GridCell clickedgridCell)
+        public virtual bool CheckGridCellNeighboorToBucket(GridCellModel clickedgridCell)
         {
             Vector2Int checkedCoords = new Vector2Int();
             foreach (Vector2Int offset in TilesetUtils.neighboorsCoordinatesEight)

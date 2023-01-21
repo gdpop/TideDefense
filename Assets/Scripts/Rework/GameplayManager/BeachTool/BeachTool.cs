@@ -4,7 +4,7 @@ using DG.Tweening;
 
 namespace TideDefense
 {
-    public class BeachTool : MonoBehaviour, IClickable, IHoverable
+    public class BeachTool : MonoBehaviour
     {
 		#region Fields
 
@@ -26,7 +26,7 @@ namespace TideDefense
         /// Current Grid Cell the tool is dropped on
         /// </summary>
         [HideInInspector]
-        public GridCell currentGridCell = null;
+        public GridCellModel currentGridCell = null;
 
 		#endregion
 
@@ -38,6 +38,12 @@ namespace TideDefense
         /// </summary>
         [SerializeField]
         private BoxCollider _interactableBoxCollider = null;
+
+        [SerializeField]
+        private Clickable _clickable = null;
+
+        [SerializeField]
+        private Hoverable _hoverable = null;
 
 		#region Hover Animation
 
@@ -71,11 +77,15 @@ namespace TideDefense
 
 		#region MonoBehaviour
 
-
         protected virtual void Start()
         {
             if (_gameplayChannel != null)
                 _gameplayChannel.onChangeTool += CallbackOnChangeTool;
+
+            if (_clickable != null)
+                _clickable.OnLeftClick += CallbackOnLeftClick;
+
+            InitializeHoverable();
         }
 
         protected virtual void OnDestroy()
@@ -96,8 +106,7 @@ namespace TideDefense
         protected void CallbackOnChangeTool(BeachTool tool)
         {
             _isGrabbed = tool.toolType == _toolType;
-            _isHoverable = tool == null;
-            _isClickable = tool == null;
+            _hoverable.isInteractable = tool == null;
         }
 
         public virtual void SetGrabbed()
@@ -110,7 +119,7 @@ namespace TideDefense
             _grabBoxCollider.enabled = true;
         }
 
-        public virtual void SetDropped(GridCell gridCell)
+        public virtual void SetDropped(GridCellModel gridCell)
         {
             status = ToolStatus.Dropped;
             currentGridCell = gridCell;
@@ -134,66 +143,29 @@ namespace TideDefense
 
 		#endregion
 
-		#region IClickable
+		#region Clickable
 
-        private bool _isClickable = true;
-        public bool isClickable
+        public void CallbackOnLeftClick(RaycastHit hit)
         {
-            get { return _isClickable; }
-            set { _isClickable = value; }
-        }
-
-        public void OnLeftClick(RaycastHit hit)
-        {
-            if (!_isInteractable)
-                return;
-
             _gameplayChannel.onClickTool.Invoke(this);
         }
 
 		#endregion
 
-        #region IInteractable
+		#region Hoverable
 
-        private bool _isInteractable = true;
-        public bool isInteractable
+        public void InitializeHoverable()
         {
-            get { return _isInteractable; }
-            set { _isInteractable = value; }
+            if (_hoverable != null)
+            {
+                _hoverable.onHoverEnter += CallbackOnHoverEnter;
+                _hoverable.onHoverExit += CallbackOnHoverExit;
+            }
         }
 
-        #endregion
-
-		#region IHoverable
-
-        [SerializeField]
-        private bool _isHoverable = true;
-        public bool isHoverable
+        public void CallbackOnHoverEnter(RaycastHit hit)
         {
-            get { return _isHoverable; }
-            set { _isHoverable = value; }
-        }
-
-        private bool _isHovered = false;
-        public bool isHovered
-        {
-            get { return _isHovered; }
-            set { _isHovered = value; }
-        }
-
-        public void OnHover(RaycastHit hit)
-        {
-            if (!_isInteractable)
-                return;
-        }
-
-        public void OnHoverEnter(RaycastHit hit)
-        {
-            if (!isInteractable)
-                return;
-
             // Bucket makes a little jump above the ground
-            _isHovered = true;
             if (!_isGrabbed)
             {
                 _hoverTween.Kill();
@@ -203,13 +175,9 @@ namespace TideDefense
             }
         }
 
-        public void OnHoverExit()
+        public void CallbackOnHoverExit()
         {
-            if (!_isInteractable)
-                return;
-
             // Bucket goes back to position if not clicked
-            _isHovered = false;
             if (!_isGrabbed)
             {
                 _hoverTween.Kill();

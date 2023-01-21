@@ -1,13 +1,10 @@
 namespace TideDefense
 {
-    using System.Collections.Generic;
-    using PierreMizzi.MouseInteractable;
     using UnityEngine;
 
     // TODO : Refact parameters of the Beach : BeachSlope, BeachBottom ...
-    // TODO : Separate visual and logical elements
 
-    public class Beach : MonoBehaviour, IClickable, IHoverable
+    public class Beach : MonoBehaviour
     {
 		#region Fields
 
@@ -23,70 +20,12 @@ namespace TideDefense
         [SerializeField]
         private WetnessSimulation _wetnessSimulation = null;
 
+        [SerializeField]
+        private LayerMask _beachLayerMask;
+
         #endregion
 
 		#endregion
-
-		#region IInteractable
-
-        [SerializeField]
-        private bool _isInteractable = true;
-        public bool isInteractable
-        {
-            get { return _isInteractable; }
-            set { _isInteractable = value; }
-        }
-
-		#endregion
-
-		#region IClickable
-
-        private bool _isClickable = true;
-        public bool isClickable
-        {
-            get { return _isClickable; }
-            set { _isClickable = value; }
-        }
-
-        public void OnLeftClick(RaycastHit hit)
-        {
-            _gameplayChannel.onClickBeach.Invoke(hit);
-        }
-
-		#endregion
-
-        #region IHoverable
-
-        private bool _isHoverable = true;
-        public bool isHoverable
-        {
-            get { return _isHoverable; }
-            set { _isHoverable = value; }
-        }
-
-        [SerializeField]
-        private bool _isHovered = false;
-        public bool isHovered
-        {
-            get { return _isHovered; }
-            set { _isHovered = value; }
-        }
-
-        public void OnHoverEnter(RaycastHit hit)
-        {
-            isHovered = true;
-        }
-
-        public void OnHoverExit()
-        {
-            isHovered = false;
-        }
-        public void OnHover(RaycastHit hit)
-        {
-            _gameplayChannel.onHoverBeach.Invoke(hit);
-        }
-
-        #endregion
 
         #region Wetness
 
@@ -97,9 +36,6 @@ namespace TideDefense
 
             _wetnessSimulation.RefreshTextureCoverage(beachCoveragePerSegment);
         }
-
-        [SerializeField]
-        private LayerMask _beachLayerMask;
 
         public float GetWetnessFromWorldPosition(Vector3 position)
         {

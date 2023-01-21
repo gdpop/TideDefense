@@ -76,18 +76,15 @@ namespace TideDefense
         private void Start()
         {
             gridModel = new GridModel();
-            gridModel.Initialize<GridCell>(_xLength, _zLength, _cellSize, _yElevation, _beachSlope);
+            gridModel.Initialize<GridCellModel>(
+                _xLength,
+                _zLength,
+                _cellSize,
+                _yElevation,
+                _beachSlope
+            );
 
             InitializeGridView();
-
-            if (_gameplayChannel != null)
-                _gameplayChannel.onClickBeach += CallbackOnClickBeach;
-        }
-
-        private void OnDestroy()
-        {
-            if (_gameplayChannel != null)
-                _gameplayChannel.onClickBeach -= CallbackOnClickBeach;
         }
 
         protected virtual void OnDrawGizmos()
@@ -102,21 +99,64 @@ namespace TideDefense
 
         private void CallbackOnClickBeach(RaycastHit hit)
         {
-            GridCell gridCell = gridModel.GetCellFromWorldPosition<GridCell>(hit.point);
+            GridCellModel gridCell = gridModel.GetCellFromWorldPosition<GridCellModel>(hit.point);
 
             if (gridCell != null)
                 _gameplayChannel.onClickGrid.Invoke(gridCell, hit);
         }
 
-        public void DropToolOnGrid(BeachTool tool, GridCell gridCell)
+        public void DropToolOnGrid(BeachTool tool, GridCellModel gridCell)
         {
             gridCell.currentTool = tool;
         }
 
-        public void PickToolOnGrid(GridCell gridCell)
+        public void PickToolOnGrid(GridCellModel gridCell)
         {
             gridCell.currentTool = null;
         }
+
+        #region Clickable Callback
+
+        public void CallbackLeftClick(GridCellVisual visual, RaycastHit hit)
+        {
+            GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(
+                visual.coords
+            );
+            _gameplayChannel.onClickGrid.Invoke(cellModel, hit);
+        }
+
+        #endregion
+
+        #region HoldClickable Callback
+
+        public void CallbackStartHoldClickLeft(GridCellVisual visual)
+        {
+            Debug.Log($"Started Hold Click on  : {visual.coords}");
+        }
+
+        public void CallbackProgressHoldClickLeft(GridCellVisual visual, float progress) { }
+
+        public void CallbackCompleteHoldClickLeft(GridCellVisual visual) { }
+
+        public void CallbackCancelHoldClickLeft(GridCellVisual visual) { }
+
+        #endregion
+
+        #region Hoverable Callback
+
+        public void CallbackOnHoverEnter(GridCellVisual visual, RaycastHit hit) { }
+
+        public void CallbackOnHover(GridCellVisual visual, RaycastHit hit)
+        {
+            GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(
+                visual.coords
+            );
+            _gameplayChannel.onHoverGrid.Invoke(cellModel, hit);
+        }
+
+        public void CallbackOnHoverExit(GridCellVisual visual) { }
+
+        #endregion
 
         #endregion
 
@@ -133,6 +173,7 @@ namespace TideDefense
                         _gridCellVisualPrefab,
                         _gridCellVisualContainer
                     );
+                    visual.Initialize(this, new Vector2Int(x, z));
 
                     Vector3 worldPosition =
                         gridModel.GetCellWorldPositionFromCoordinates(new Vector2Int(x, z))
@@ -156,7 +197,9 @@ namespace TideDefense
                 for (int z = 0; z < _zLength; z++)
                 {
                     coords = new Vector2Int(x, z);
-                    GridCell cellModel = gridModel.GetCellFromCoordinates<GridCell>(coords);
+                    GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(
+                        coords
+                    );
 
                     // We found the GridCell containing the bucket !
                     if (
@@ -165,7 +208,7 @@ namespace TideDefense
                     )
                     {
                         Vector2Int neighboorCoords = new Vector2Int();
-                        GridCell neighboorCellModel = null;
+                        GridCellModel neighboorCellModel = null;
                         GridCellVisual cellVisual = null;
 
                         // We go through all 8 surrouding cells
@@ -176,9 +219,10 @@ namespace TideDefense
                             // Check if the coords are not out of the grid AND check if the gridCell is empty
                             if (gridModel.CheckValidCoordinates(neighboorCoords))
                             {
-                                neighboorCellModel = gridModel.GetCellFromCoordinates<GridCell>(
-                                    neighboorCoords
-                                );
+                                neighboorCellModel =
+                                    gridModel.GetCellFromCoordinates<GridCellModel>(
+                                        neighboorCoords
+                                    );
 
                                 // We check the cell is actually empty
                                 if (neighboorCellModel.isEmpty)
@@ -213,7 +257,7 @@ namespace TideDefense
         public void DisplayBuildableHints()
         {
             Vector2Int coords = new Vector2Int();
-            GridCell cellModel = null;
+            GridCellModel cellModel = null;
             GridCellVisual cellVisual = null;
 
             for (int x = 0; x < _xLength; x++)
@@ -222,7 +266,7 @@ namespace TideDefense
                 {
                     coords = new Vector2Int(x, z);
 
-                    cellModel = gridModel.GetCellFromCoordinates<GridCell>(coords);
+                    cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(coords);
                     cellVisual = _gridCellVisualHash[x][z];
 
                     if (cellModel.isEmpty)
@@ -243,12 +287,6 @@ namespace TideDefense
                     cellVisual.HideBuildableHints();
                 }
             }
-        }
-
-        [ContextMenu("Test")]
-        public void Test()
-        {
-            gridModel.Test();
         }
 
         #endregion

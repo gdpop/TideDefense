@@ -1,3 +1,4 @@
+using PierreMizzi.MouseInteractable;
 using PierreMizzi.TilesetUtils;
 using UnityEngine;
 
@@ -40,9 +41,18 @@ namespace TideDefense
             _gameplayManager.gridManager.HideBuildableHints();
         }
 
-        public virtual void CallbackOnClickGrid(GridCell gridCell, RaycastHit hit)
+        public virtual void CallbackOnClickGrid(GridCellModel gridCell, RaycastHit hit)
         {
             _gameplayManager.DropTool(_gameplayManager.bucket, gridCell);
+        }
+
+        public void CallbackHoldLeftClickBeach() { 
+
+            if(_gameplayManager.bucket.isFull)
+            {
+                // Où est-ce que t'as cliqué CONNNNNNNARD ????!!!!
+                // _gameplayManager.rempartsManager.BuildRempart();
+            }
         }
     }
 }

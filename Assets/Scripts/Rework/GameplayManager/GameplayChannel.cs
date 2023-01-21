@@ -3,8 +3,8 @@ namespace TideDefense
     using UnityEngine;
     using System;
 
-    public delegate void OnRaycastEvent(RaycastHit hit);
-    public delegate void OnClickGrid(GridCell clickedCell, RaycastHit hit);
+    public delegate void RaycastEvent(RaycastHit hit);
+    public delegate void ClickGrid(GridCellModel clickedCell, RaycastHit hit);
 
     public delegate void ToolDelegate(BeachTool tool);
 
@@ -15,14 +15,11 @@ namespace TideDefense
     )]
     public class GameplayChannel : ScriptableObject
     {
-        public OnRaycastEvent onClickBeach = null;
-        public OnRaycastEvent onHoverBeach = null;
 
-        public OnClickGrid onClickGrid = null;
-
+        public ClickGrid onHoverGrid = null;
+        public ClickGrid onClickGrid = null;
 
         public ToolDelegate onChangeTool = null;
-
         public ToolDelegate onClickTool = null;
         public ToolDelegate onHoverTool = null;
 
@@ -33,9 +30,11 @@ namespace TideDefense
             onHoverTool = (BeachTool tool) => { };
 
 
-            onClickBeach = (RaycastHit hit) => { };
-            onHoverBeach = (RaycastHit hit) => { };
-            onClickGrid = (GridCell clickedCell, RaycastHit hit) => { };
+            // onClickBeach = (RaycastHit hit) => { };
+
+            onClickGrid = (GridCellModel clickedCell, RaycastHit hit) => { };
+            
+            onHoverGrid = (GridCellModel clickedCell, RaycastHit hit) => { };
         }
     }
 }

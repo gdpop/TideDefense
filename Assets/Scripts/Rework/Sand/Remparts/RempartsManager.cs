@@ -25,7 +25,7 @@ namespace TideDefense
 
 		#region Methods
 
-        public void BuildRempart(GridCell gridCell)
+        public void BuildRempart(GridCellModel gridCell)
         {
             if (
                 gridCell == null
@@ -67,7 +67,7 @@ namespace TideDefense
             for (int i = 0; i < TilesetUtils.neighboorsCoordinatesFour.Count; i++)
             {
                 Vector2Int offset = TilesetUtils.neighboorsCoordinatesFour[i];
-                GridCell gridCell = _gridManager.gridModel.GetCellFromCoordinates<GridCell>(
+                GridCellModel gridCell = _gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(
                     new Vector2Int(coords.x + offset.x, coords.y + offset.y)
                 );
 
@@ -92,7 +92,7 @@ namespace TideDefense
             for (int i = 0; i < TilesetUtils.neighboorsCoordinatesFour.Count; i++)
             {
                 Vector2Int offset = TilesetUtils.neighboorsCoordinatesFour[i];
-                GridCell gridCell = _gridManager.gridModel.GetCellFromCoordinates<GridCell>(
+                GridCellModel gridCell = _gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(
                     new Vector2Int(coords.x + offset.x, coords.y + offset.y)
                 );
                 // Debug.Log($"Coords {offset} \r Rempart : {gridCell.rempart == null}");

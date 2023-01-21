@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace PierreMizzi.MouseInteractable
 {
@@ -22,7 +21,10 @@ namespace PierreMizzi.MouseInteractable
 
         public HoldClickBehaviour()
         {
+            OnStartHoldClick = ()=>{};
             OnProgressHoldClick = (float value) => { };
+            OnCompleteHoldClick = ()=>{};
+            OnCancelHoldClick = ()=>{};
         }
 
         public Action OnStartHoldClick;

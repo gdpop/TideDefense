@@ -19,7 +19,7 @@ namespace TideDefense
             _yElevation = yElevation;
             _beachSlope = beachSlope;
 
-            Initialize<GridCell>(xLength, zLength, cellSize);
+            Initialize<GridCellModel>(xLength, zLength, cellSize);
         }
 
         public Vector3 GetCellWorldPositionFromWorldPosition(Vector3 worldPosition)
@@ -45,27 +45,5 @@ namespace TideDefense
             return new Vector3(gridWorldPosition.x, _yElevation - 0.015f, gridWorldPosition.z);
         }
 
-        public void Test()
-        {
-            // GridCell testCell = GetCellFromCoordinates<GridCell>(new Vector2Int(0, 0));
-            // testCell.currentTool = new BeachTool();
-
-            // GetCellFromCoordinates<GridCell>(new Vector2Int(0, 0)).currentTool = new BeachTool();
-            // Debug.Log(GetCellFromCoordinates<GridCell>(new Vector2Int(0, 0)).currentTool != null);
-
-            // Vector2Int coords = new Vector2Int();
-            // GridCell cellModel = null;
-
-            // for (int x = 0; x < _xLength; x++)
-            // {
-            //     for (int z = 0; z < _zLength; z++)
-            //     {
-            //         coords = new Vector2Int(x, z);
-            //         cellModel = GetCellFromCoordinates<GridCell>(coords);
-            //         if (cellModel.currentTool != null)
-            //             Debug.Log($"Que se passe-t-il ? {cellModel.coords}");
-            //     }
-            // }
-        }
     }
 }

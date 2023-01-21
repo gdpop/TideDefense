@@ -9,10 +9,10 @@ namespace PierreMizzi.MouseInteractable
         // TODO : Use LayerMask for raycasting
         private LayerMask _interactableLayerMask;
 
-        private IClickable _currentClickable;
+        private Clickable _currentClickable;
 
-        private IHoverable _raycastedHoverable;
-        private IHoverable _currentHoverable;
+        private Hoverable _raycastedHoverable;
+        private Hoverable _currentHoverable;
 
         public const int MOUSE_LEFT = 0;
         public const int MOUSE_RIGHT = 1;
@@ -40,7 +40,7 @@ namespace PierreMizzi.MouseInteractable
             {
                 // Manage Clickable Interactions
                 {
-                    if (hit.transform.TryGetComponent<IClickable>(out _currentClickable))
+                    if (hit.transform.TryGetComponent<Clickable>(out _currentClickable))
                         ManageClickable(hit, _currentClickable);
                     else if (_currentClickable != null)
                         _currentClickable = null;
@@ -66,9 +66,9 @@ namespace PierreMizzi.MouseInteractable
 
                 // Manage Hoverable
                 {
-                    if (hit.transform.TryGetComponent<IHoverable>(out _raycastedHoverable))
+                    if (hit.transform.TryGetComponent<Hoverable>(out _raycastedHoverable))
                     {
-                        if (_raycastedHoverable.isHoverable)
+                        if (_raycastedHoverable.isInteractable)
                             ManageHoverable(hit);
                         // Hoverable suddenly become non-hoverable while being raycasted, so we stop hovering it
                         else if (_raycastedHoverable.isHovered)
@@ -87,13 +87,13 @@ namespace PierreMizzi.MouseInteractable
             }
         }
 
-        #region IClickable
+        #region Clickable
 
-        public void ManageClickable(RaycastHit hit, IClickable clickable)
+        public void ManageClickable(RaycastHit hit, Clickable clickable)
         {
             if (Input.GetMouseButtonDown(MOUSE_LEFT))
             {
-                if (clickable.isClickable)
+                if (clickable.isInteractable)
                     clickable.OnLeftClick(hit);
             }
         }
@@ -172,22 +172,25 @@ namespace PierreMizzi.MouseInteractable
             if (_currentHoverable == null)
             {
                 _currentHoverable = _raycastedHoverable;
-                _currentHoverable.OnHoverEnter(hit);
-                _currentHoverable.OnHover(hit);
+                _currentHoverable.isHovered = true;
+                _currentHoverable.onHoverEnter(hit);
+                _currentHoverable.onHover(hit);
             }
             // We're hovering the same IHoverable we previously raycasted
             else if (_currentHoverable == _raycastedHoverable)
             {
-                _currentHoverable.OnHover(hit);
+                _currentHoverable.onHover(hit);
             }
             // We raycasted another IHoverable
             else if (_currentHoverable != _raycastedHoverable)
             {
-                _currentHoverable.OnHoverExit();
+                _currentHoverable.onHoverExit();
+                _currentHoverable.isHovered = false;
 
                 _currentHoverable = _raycastedHoverable;
-                _currentHoverable.OnHoverEnter(hit);
-                _currentHoverable.OnHover(hit);
+                _currentHoverable.isHovered = true;
+                _currentHoverable.onHoverEnter(hit);
+                _currentHoverable.onHover(hit);
             }
         }
 
@@ -196,7 +199,8 @@ namespace PierreMizzi.MouseInteractable
         /// </summary>
         private void ForceExitHoverable()
         {
-            _currentHoverable.OnHoverExit();
+            _currentHoverable.onHoverExit();
+            _currentHoverable.isHovered = false;
             _currentHoverable = null;
 
             _raycastedHoverable = null;

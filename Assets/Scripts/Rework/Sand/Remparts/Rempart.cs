@@ -13,8 +13,8 @@ namespace TideDefense
             set { _rempartsManager = value; }
         }
 
-        private GridCell _gridCell = null;
-        public GridCell gridCell
+        private GridCellModel _gridCell = null;
+        public GridCellModel gridCell
         {
             get { return _gridCell; }
             set { _gridCell = value; }

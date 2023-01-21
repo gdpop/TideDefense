@@ -32,7 +32,7 @@ namespace TideDefense
             }
         }
 
-        public virtual void CallbackOnClickGrid(GridCell gridCell, RaycastHit hit)
+        public virtual void CallbackOnClickGrid(GridCellModel gridCell, RaycastHit hit)
         {
             _gameplayManager.rempartsManager.BuildRempart(gridCell);
         }

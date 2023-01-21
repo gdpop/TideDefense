@@ -120,7 +120,7 @@ namespace TideDefense
             if (_gameplayChannel != null)
             {
                 // _gameplayChannel.onClickBeach -= CallbackOnClickBeach;
-                _gameplayChannel.onHoverBeach += CallbackOnHoverBeach;
+                _gameplayChannel.onHoverGrid += CallbackOnHoverGrid;
 
                 _gameplayChannel.onClickTool += CallbackOnClickTool;
             }
@@ -136,7 +136,7 @@ namespace TideDefense
             if (_gameplayChannel != null)
             {
                 // _gameplayChannel.onClickBeach -= CallbackOnClickBeach;
-                _gameplayChannel.onHoverBeach -= CallbackOnHoverBeach;
+                _gameplayChannel.onHoverGrid -= CallbackOnHoverGrid;
 
                 _gameplayChannel.onClickTool -= CallbackOnClickTool;
             }
@@ -169,19 +169,19 @@ namespace TideDefense
 
         #endregion
 
-        private void CallbackOnHoverBeach(RaycastHit hit)
+        private void CallbackOnHoverGrid(GridCellModel clickedCell, RaycastHit hit)
         {
             _bucketConnectedBody.MovePosition(hit.point + _hoverBucketOffset);
         }
 
         #region Grid Manager
 
-        public void DropToolOnGrid(BeachTool tool, GridCell gridCell)
+        public void DropToolOnGrid(BeachTool tool, GridCellModel gridCell)
         {
             _gridManager.DropToolOnGrid(tool, gridCell);
         }
 
-        public void PickToolOnGrid(BeachTool tool, GridCell gridCell)
+        public void PickToolOnGrid(BeachTool tool, GridCellModel gridCell)
         {
             _gridManager.PickToolOnGrid(gridCell);
         }
@@ -193,7 +193,7 @@ namespace TideDefense
         private void InitializeTool(BeachTool tool)
         {
             tool.Initialize(this);
-            GridCell gridCell = _gridManager.gridModel.GetCellFromWorldPosition<GridCell>(
+            GridCellModel gridCell = _gridManager.gridModel.GetCellFromWorldPosition<GridCellModel>(
                 tool.transform.position
             );
 
@@ -201,7 +201,6 @@ namespace TideDefense
             {
                 _gridManager.DropToolOnGrid(tool, gridCell);
                 tool.SetDropped(gridCell);
-                _gridManager.gridModel.Test();
             }
         }
 
@@ -276,7 +275,7 @@ namespace TideDefense
             _bucketJoint.transform.localRotation = Quaternion.identity;
         }
 
-        public void DropTool(BeachTool tool, GridCell gridCell)
+        public void DropTool(BeachTool tool, GridCellModel gridCell)
         {
             LockBucketJoint();
             tool.transform.SetParent(_gameplayContainer);
