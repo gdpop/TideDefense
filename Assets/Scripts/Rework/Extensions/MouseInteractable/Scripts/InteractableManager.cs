@@ -1,5 +1,6 @@
 namespace PierreMizzi.MouseInteractable
 {
+    using CodesmithWorkshop.Useful;
     using UnityEngine;
 
     public class InteractableManager
@@ -14,38 +15,21 @@ namespace PierreMizzi.MouseInteractable
         private IHoverable _raycastedHoverable;
         private IHoverable _currentHoverable;
 
-        private const int MOUSE_LEFT = 0;
-        private const int MOUSE_RIGHT = 1;
+        public const int MOUSE_LEFT = 0;
+        public const int MOUSE_RIGHT = 1;
 
         #region Long Click
 
-        public ILongClickable _currentLongClickable = null;
+        private HoldClickSetting _leftHoldClickSetting = null;
 
-        public const float _clickHoldTreshold = 1f;
-        public const float _clickHoldDuration = 3f;
-
-        public float _currentClickTime = 0f;
-
-        public bool _hasStartedLongClick = false;
-
-        public ClickStatus _currentClickStatus
-        {
-            get { return GetClickStatusFromClickTime(_currentClickTime); }
-        }
-
-        public enum ClickStatus
-        {
-            None,
-            inTreshold,
-            inLong,
-            completed,
-        }
+        public HoldClickable _currentHoldClickable = null;
 
         #endregion
 
         public InteractableManager()
         {
             _camera = Camera.main;
+            _leftHoldClickSetting = new HoldClickSetting(MOUSE_LEFT, 1f, 3f);
         }
 
         public void Update()
@@ -61,13 +45,15 @@ namespace PierreMizzi.MouseInteractable
                 else if (_currentClickable != null)
                     _currentClickable = null;
 
-                // Debug.Log($"Check CurrentHoverable {_currentHoverable != null}");
-
-                // Manage Long Clickable
-                if (hit.transform.TryGetComponent<ILongClickable>(out _currentLongClickable))
-                    ManageLongClickable(hit, _currentLongClickable);
-                else if (_currentLongClickable != null)
-                    _currentLongClickable = null;
+                if (hit.transform.TryGetComponent<HoldClickable>(out _currentHoldClickable))
+                {
+                    ManageHoldClickable(_currentHoldClickable, _leftHoldClickSetting);
+                }
+                else if (_currentHoldClickable != null)
+                {
+                    ManageLeavingHoldClickable(_leftHoldClickSetting);
+                    _currentHoldClickable = null;
+                }
 
                 // Manage Hoverable
                 if (hit.transform.TryGetComponent<IHoverable>(out _raycastedHoverable))
@@ -76,12 +62,17 @@ namespace PierreMizzi.MouseInteractable
                         ManageHoverable(hit);
                     // Hoverable suddenly become non-hoverable while being raycasted, so we stop hovering it
                     else if (_raycastedHoverable.isHovered)
-                        ForceHoverExit();
+                        ForceExitHoverable();
                 }
             }
             else if (_currentHoverable != null)
             {
-                ForceHoverExit();
+                ForceExitHoverable();
+            }
+            else if (_currentHoldClickable != null)
+            {
+                ManageLeavingHoldClickable(_leftHoldClickSetting);
+                _currentHoldClickable = null;
             }
         }
 
@@ -89,7 +80,7 @@ namespace PierreMizzi.MouseInteractable
 
         public void ManageClickable(RaycastHit hit, IClickable clickable)
         {
-            if (Input.GetMouseButtonDown(MOUSE_LEFT))
+            if (Input.GetMouseButtonDown(MOUSE_RIGHT))
             {
                 if (clickable.isClickable)
                     clickable.OnLeftClick(hit);
@@ -98,46 +89,58 @@ namespace PierreMizzi.MouseInteractable
 
         #endregion
 
-        #region LonClickable
+        #region HoldClickable
 
-
-        public void ManageLongClickable(RaycastHit hit, ILongClickable interactable)
+        public void ManageHoldClickable(HoldClickable interactable, HoldClickSetting setting)
         {
-            if (Input.GetMouseButton(MOUSE_LEFT))
+            if (Input.GetMouseButton(setting.mouseButtonID))
             {
-                ClickStatus immediateStatus = GetClickStatusFromClickTime(_currentClickTime);
-                _currentClickTime += Time.deltaTime;
+                if (setting.currentHoldClickable == null)
+                    setting.currentHoldClickable = interactable;
 
-                if (immediateStatus != _currentClickStatus)
+                HoldClickStatus immediateStatus = setting.currentStatus;
+
+                setting.currentHoldTime += Time.deltaTime;
+
+                if (immediateStatus != setting.currentStatus)
                 {
-                    if (_currentClickStatus == ClickStatus.inLong)
-                        interactable.OnStartLongLeftClick();
-                    else if(_currentClickStatus == ClickStatus.completed)
-                        interactable.OnCompleteLongLeftClick();
+                    // Debug.Log($"CHANGED STATE {setting.currentStatus} : {setting.currentHoldTime}");
+                    switch (setting.currentStatus)
+                    {
+                        case HoldClickStatus.inLong:
+                            setting.InvokeStartHoldClick();
+                            break;
+                        case HoldClickStatus.completed:
+                            setting.InvokeCompleteHoldClick();
+                            break;
+                    }
                 }
 
-                // if(_currentClickStatus == ClickStatus.inLong)
-                    // interactable.OnProgressLongLeftClick();
+                if (setting.currentStatus == HoldClickStatus.inLong)
+                    setting.InvokeProgressHoldClick();
+            }
+            else
+            {
+                if (setting.currentStatus == HoldClickStatus.inLong)
+                    setting.InvokeCancelHoldClick();
+
+                setting.currentHoldTime = 0;
             }
         }
 
-        private ClickStatus GetClickStatusFromClickTime(float time)
+        public void ManageLeavingHoldClickable(HoldClickSetting setting)
         {
-            if (0 <= _currentClickTime && _currentClickTime < _clickHoldTreshold)
-                return ClickStatus.inTreshold;
-            else if (
-                _clickHoldTreshold <= _currentClickTime && _currentClickTime < _clickHoldTreshold
-            )
-                return ClickStatus.inLong;
-            else if (_clickHoldTreshold < _clickHoldDuration)
-                return ClickStatus.completed;
+            if (setting.currentHoldClickable != null)
+            {
+                if (setting.currentStatus == HoldClickStatus.inLong)
+                    setting.InvokeCancelHoldClick();
+
+                setting.currentHoldTime = 0f;
+                setting.currentHoldClickable = null;
+            }
         }
 
-        private float GetProgressFromClickTime(float time)
-        {
-            return  time / (_clickHoldDuration - _clickHoldTreshold);
-        }
-
+            
         #endregion
 
 
@@ -171,7 +174,7 @@ namespace PierreMizzi.MouseInteractable
         /// <summary>
         /// Here we stop volontarily to hover the _currentHoverable
         /// </summary>
-        private void ForceHoverExit()
+        private void ForceExitHoverable()
         {
             _currentHoverable.OnHoverExit();
             _currentHoverable = null;
