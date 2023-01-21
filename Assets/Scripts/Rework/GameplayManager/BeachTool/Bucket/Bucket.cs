@@ -3,6 +3,7 @@ namespace TideDefense
     using DG.Tweening;
     using PierreMizzi.TilesetUtils;
     using UnityEngine;
+    using VirtuoseReality.Rendering;
 
     /*
     
@@ -33,10 +34,25 @@ namespace TideDefense
 
 		#region Content
 
+        [Header("Content Visual")]
+        [SerializeField]
+        private Transform _bucketContentVisual = null;
+
+        [SerializeField]
+        private Transform _contentVisualEmptyAnchor = null;
+
+        [SerializeField]
+        private Transform _contentVisualFullAnchor = null;
+
         public SandWaterFilling _content = new SandWaterFilling();
 
         [SerializeField]
         private float _maxQuantity = 1f;
+
+        [SerializeField]
+        private MaterialPropertyBlockModifier _contentVisualPropertyBlock = null;
+
+        private const string SAND_CONCENTRATION_PROPERTY = "_SandConcentration";
 
         public bool isFull
         {
@@ -83,16 +99,6 @@ namespace TideDefense
             // Debug.Log(_content.ToString());
         }
 
-        [Header("Content Visual")]
-        [SerializeField]
-        private Transform _bucketContentVisual = null;
-
-        [SerializeField]
-        private Transform _contentVisualEmptyAnchor = null;
-
-        [SerializeField]
-        private Transform _contentVisualFullAnchor = null;
-
         private void InitializeContent()
         {
             _content = new SandWaterFilling();
@@ -113,6 +119,7 @@ namespace TideDefense
                     _bucketContentVisual.localPosition = GetContentVisualLocalPosFromQuantity(
                         value
                     );
+                    _contentVisualPropertyBlock.SetFloat(SAND_CONCENTRATION_PROPERTY, _content.sandConcentration);
                     _bucketContentVisual.gameObject.SetActive(value > 0.02f);
                 }
             );

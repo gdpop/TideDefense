@@ -49,6 +49,13 @@ namespace TideDefense
             );
 
             StartCoroutine("UpdateTextureBehaviour");
+
+            material.SetFloat(EVAPORATION_SPEED_PROPERTY, _evaporationSpeed);
+        }
+
+        private void OnValidate()
+        {
+            material.SetFloat(EVAPORATION_SPEED_PROPERTY, _evaporationSpeed);
         }
 
         public void RefreshTextureCoverage(float[] textureCoveragePerSegment)
@@ -87,9 +94,6 @@ namespace TideDefense
 
             return pixel.r;
         }
-
-        [SerializeField]
-        private Color _debugColor;
 
     }
 }

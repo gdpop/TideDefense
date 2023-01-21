@@ -552,7 +552,7 @@ MonoBehaviour:
   buffer: {fileID: 0}
   material: {fileID: 2100000, guid: a8169b151f29e85469e23ee6f1c77000, type: 2}
   _updateFrequency: 0.01
-  _evaporationSpeed: 0.1
+  _evaporationSpeed: 0.005
   _debugColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.8}
 --- !u!1001 &432844277
 PrefabInstance:
@@ -2129,6 +2129,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 545097907}
     m_Modifications:
+    - target: {fileID: 255777280371861317, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+      propertyPath: _contentVisualPropertyBlock
+      value: 
+      objectReference: {fileID: 1102918533977379863}
     - target: {fileID: 1102918535372186741, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
       propertyPath: m_Name
       value: Bucket
@@ -2195,6 +2199,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec243e84560883478816eb6ef0c305d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1102918533977379862 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3133925800280066517, guid: 5d6867296f9a97441963e992923d4cf9, type: 3}
+  m_PrefabInstance: {fileID: 1102918533977379859}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1102918533977379863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102918533977379862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b51b2a5c411554a7981f82b4a7a2e5d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_materialIndex: 0
+  m_propreties:
+  - name: _SandConcentration
+    type: 1
+    floatValue: 0
+    intValue: 0
+    colorValue:
+      serializedVersion: 2
+      rgba: 0
+    textureValue: {fileID: 0}
+    vectorValue: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &5798785236532636950 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7580881033636655684, guid: 75bc6a8e288c6d744802c2266c437d3a, type: 3}

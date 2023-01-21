@@ -1,6 +1,5 @@
 namespace PierreMizzi.MouseInteractable
 {
-    using CodesmithWorkshop.Useful;
     using UnityEngine;
 
     public class InteractableManager
@@ -45,6 +44,7 @@ namespace PierreMizzi.MouseInteractable
                 else if (_currentClickable != null)
                     _currentClickable = null;
 
+                // Manage HoldClickable
                 if (hit.transform.TryGetComponent<HoldClickable>(out _currentHoldClickable))
                 {
                     ManageHoldClickable(_currentHoldClickable, _leftHoldClickSetting);
@@ -80,7 +80,7 @@ namespace PierreMizzi.MouseInteractable
 
         public void ManageClickable(RaycastHit hit, IClickable clickable)
         {
-            if (Input.GetMouseButtonDown(MOUSE_RIGHT))
+            if (Input.GetMouseButtonDown(MOUSE_LEFT))
             {
                 if (clickable.isClickable)
                     clickable.OnLeftClick(hit);
@@ -93,8 +93,10 @@ namespace PierreMizzi.MouseInteractable
 
         public void ManageHoldClickable(HoldClickable interactable, HoldClickSetting setting)
         {
+            // Checks if mouse is down for the given mouseButton
             if (Input.GetMouseButton(setting.mouseButtonID))
             {
+                // Assign the newly clicked HoldClickable object
                 if (setting.currentHoldClickable == null)
                     setting.currentHoldClickable = interactable;
 
@@ -102,6 +104,7 @@ namespace PierreMizzi.MouseInteractable
 
                 setting.currentHoldTime += Time.deltaTime;
 
+                // Here we check is the status changed this frame, and then fire the event according to the new status
                 if (immediateStatus != setting.currentStatus)
                 {
                     // Debug.Log($"CHANGED STATE {setting.currentStatus} : {setting.currentHoldTime}");
@@ -116,6 +119,7 @@ namespace PierreMizzi.MouseInteractable
                     }
                 }
 
+                // If it's being held, we fire the Progress event
                 if (setting.currentStatus == HoldClickStatus.inLong)
                     setting.InvokeProgressHoldClick();
             }
