@@ -16,7 +16,7 @@ namespace TideDefense
 
         public override void Activate()
         {
-            _gameplayManager.UIChannel.onRefreshControlHints(ControlHintType.None);            
+            _gameplayManager.UIChannel.onHideAllControlHint.Invoke();     
         }
 
         public override void Deactivate()

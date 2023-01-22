@@ -46,24 +46,65 @@ namespace TideDefense
                 VisualElement element = root.Q<VisualElement>(type.ToString());
 
 				if(element != null)
+                {
                     _controlHintLabels.Add(type, element);
+                    element.style.display = DisplayStyle.None;
+                }
             }
 
-            DisplayControlHint(ControlHintType.None);
-
             if(_UIChannel != null)
-                _UIChannel.onRefreshControlHints += DisplayControlHint;
+            {
+                _UIChannel.onHideAllControlHint += CallbackHideAllControlHint;
+                _UIChannel.onDisplayControlHint += CallbackDisplayControlHint;
+                _UIChannel.onHideControlHint += CallbackHideControlHint;
+            }
         }
 
         private void OnDestroy() {
             if(_UIChannel != null)
-                _UIChannel.onRefreshControlHints -= DisplayControlHint;
+            {
+                _UIChannel.onHideAllControlHint -= CallbackHideAllControlHint;
+                _UIChannel.onDisplayControlHint -= CallbackDisplayControlHint;
+                _UIChannel.onHideControlHint -= CallbackHideControlHint;
+
+            }
+                
         }
 
-        private void DisplayControlHint(params ControlHintType[] types)
+        private void CallbackHideAllControlHint()
         {
-            foreach (KeyValuePair<ControlHintType, VisualElement> pair in _controlHintLabels)
-                pair.Value.style.display = types.Contains(pair.Key) ? DisplayStyle.Flex : DisplayStyle.None;
+            foreach (KeyValuePair<ControlHintType,VisualElement> pair in _controlHintLabels)
+            {
+                    pair.Value.style.display = DisplayStyle.None;
+            }
+        }
+
+        private void CallbackDisplayControlHint(params ControlHintType[] types)
+        {
+            foreach (ControlHintType type in types)
+            {
+                if(!_controlHintLabels.ContainsKey(type))
+                    continue;
+                VisualElement element = _controlHintLabels[type];
+
+                if(element != null)
+                    element.style.display = DisplayStyle.Flex;
+            }
+        }
+
+        private void CallbackHideControlHint(params ControlHintType[] types)
+        {
+            
+
+            foreach (ControlHintType type in types)
+            {
+                if(!_controlHintLabels.ContainsKey(type))
+                    continue;
+                VisualElement element = _controlHintLabels[type];
+
+                if(element != null)
+                    element.style.display = DisplayStyle.None;
+            }
         }
 
 		#endregion

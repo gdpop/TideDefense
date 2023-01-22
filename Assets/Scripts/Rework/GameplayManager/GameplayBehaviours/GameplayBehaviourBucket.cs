@@ -31,18 +31,13 @@ namespace TideDefense
                 _gameplayManager.gameplayChannel.OnCancelHoldClickGrid +=
                     CallbackCancelHoldClickGrid;
             }
-
-            ControlHintType[] hints = new ControlHintType[2];
-            hints[0] = ControlHintType.DropTool;
+            _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.DropTool);
 
             if (_gameplayManager.bucket.isFull)
             {
-                hints[1] = ControlHintType.BuildSandTower;
+                _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.BuildSandTower);
                 _gameplayManager.gridManager.DisplayBuildableHints();
             }
-            
-            _gameplayManager.UIChannel.onRefreshControlHints(hints);
-
         }
 
         public override void Deactivate()
@@ -74,6 +69,7 @@ namespace TideDefense
             {
                 _gameplayManager.rempartsManager.BuildRempartReworked(clickedCell);
                 _gameplayManager.bucket.Empty();
+                _gameplayManager.UIChannel.onHideControlHint.Invoke(ControlHintType.BuildSandTower);
             }
         }
 
