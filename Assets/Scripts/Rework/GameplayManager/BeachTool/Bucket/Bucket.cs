@@ -52,7 +52,7 @@ namespace TideDefense
         [SerializeField]
         private MaterialPropertyBlockModifier _contentVisualPropertyBlock = null;
 
-        private const string SAND_CONCENTRATION_PROPERTY = "_SandConcentration";
+        public static string SAND_CONCENTRATION_PROPERTY = "_SandConcentration";
 
         public bool isFull
         {

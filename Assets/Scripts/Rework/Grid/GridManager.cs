@@ -119,7 +119,6 @@ namespace TideDefense
 
         public void CallbackLeftClick(GridCellVisual visual, RaycastHit hit)
         {
-            Debug.Log("Clicked !" +visual.coords);
             GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(
                 visual.coords
             );

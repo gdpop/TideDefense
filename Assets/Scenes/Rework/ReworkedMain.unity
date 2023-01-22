@@ -308,6 +308,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4437509671044078262, guid: 2b78dbc0df6d7fc4b907bffb5e182493, type: 3}
+      propertyPath: m_propreties.Array.data[0].floatValue
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b78dbc0df6d7fc4b907bffb5e182493, type: 3}
 --- !u!1 &241336067
@@ -2323,6 +2327,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SandCastle_Flag
       objectReference: {fileID: 0}
+    - target: {fileID: 2767946717946041928, guid: 1db2129d877b33641a1752effd14651c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3252276725837565170, guid: 1db2129d877b33641a1752effd14651c, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -2456,6 +2464,10 @@ PrefabInstance:
     - target: {fileID: 3997232142462997969, guid: 3fe7e9dac41cb4f4a8a2d127efd2f50a, type: 3}
       propertyPath: m_Name
       value: SandTower_Flag
+      objectReference: {fileID: 0}
+    - target: {fileID: 3997232142462997969, guid: 3fe7e9dac41cb4f4a8a2d127efd2f50a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4337764514984857451, guid: 3fe7e9dac41cb4f4a8a2d127efd2f50a, type: 3}
       propertyPath: m_RootOrder

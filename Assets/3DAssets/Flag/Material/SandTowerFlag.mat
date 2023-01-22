@@ -37,6 +37,7 @@ Material:
     - Vector1_73fa02717b314958adcd2f36b3dbcae2: 0.001
     - Vector1_9887a89aac9c4c9d920c33454918a936: 0.74
     - _Health: 1
+    - _Quality: 0
     - _Scale: 18
     m_Colors:
     - _HightHealthColor: {r: 1, g: 0.696732, b: 0.2704402, a: 1}

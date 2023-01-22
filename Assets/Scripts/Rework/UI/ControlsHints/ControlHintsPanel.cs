@@ -52,6 +52,8 @@ namespace TideDefense
                 }
             }
 
+
+
             if(_UIChannel != null)
             {
                 _UIChannel.onHideAllControlHint += CallbackHideAllControlHint;
