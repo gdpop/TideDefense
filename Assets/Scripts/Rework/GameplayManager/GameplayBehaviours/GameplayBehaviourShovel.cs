@@ -24,6 +24,9 @@ namespace TideDefense
             {
                 _gameplayManager.gameplayChannel.onClickGrid += CallbackOnClickGrid;
             }
+
+            _gameplayManager.UIChannel.onRefreshControlHints(ControlHintType.DropTool, ControlHintType.FillBucket);
+
         }
 
         public override void Deactivate()

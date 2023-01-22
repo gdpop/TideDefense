@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TideDefense
@@ -31,8 +32,17 @@ namespace TideDefense
                     CallbackCancelHoldClickGrid;
             }
 
+            ControlHintType[] hints = new ControlHintType[2];
+            hints[0] = ControlHintType.DropTool;
+
             if (_gameplayManager.bucket.isFull)
+            {
+                hints[1] = ControlHintType.BuildSandTower;
                 _gameplayManager.gridManager.DisplayBuildableHints();
+            }
+            
+            _gameplayManager.UIChannel.onRefreshControlHints(hints);
+
         }
 
         public override void Deactivate()

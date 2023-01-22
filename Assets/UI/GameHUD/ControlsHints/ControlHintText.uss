@@ -1,0 +1,8 @@
+.ControlsHintsLabel {
+    font-size: 15px;
+    -unity-text-align: upper-left;
+    -unity-font-style: normal;
+    text-shadow: 0 0 4px rgba(31, 31, 31, 0.85);
+    -unity-font: resource('FlatSkin/Font/Roboto-Regular');
+    color: rgba(255, 255, 255, 255);
+}

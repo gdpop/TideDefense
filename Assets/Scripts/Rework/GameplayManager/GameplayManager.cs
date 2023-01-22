@@ -15,6 +15,9 @@ namespace TideDefense
             get { return _gameplayChannel; }
         }
 
+        [SerializeField] private UIChannel _UIChannel = null;
+        public UIChannel UIChannel { get { return _UIChannel; } set { _UIChannel = value; } }
+
         [SerializeField]
         private RempartsManager _rempartsManager = null;
         public RempartsManager rempartsManager

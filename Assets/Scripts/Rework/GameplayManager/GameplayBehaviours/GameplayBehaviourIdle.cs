@@ -14,5 +14,16 @@ namespace TideDefense
             _gameplayManager = manager;
         }
 
+        public override void Activate()
+        {
+            _gameplayManager.UIChannel.onRefreshControlHints(ControlHintType.None);            
+        }
+
+        public override void Deactivate()
+        {
+            // Debug.Log($"Deactivate {this}");
+        }
+        
+
     }
 }
