@@ -3,8 +3,9 @@ namespace TideDefense
     using System.Collections.Generic;
     using DG.Tweening;
     using UnityEngine;
+	using VirtuoseReality.Extension.AudioManager;
 
-    public class GameplayManager : MonoBehaviour
+	public class GameplayManager : MonoBehaviour
     {
 		#region Fields
 
@@ -259,6 +260,9 @@ namespace TideDefense
                     _currentTool.transform.localPosition = _grabBucketAnchor.localPosition;
                     _currentTool.SetGrabbed();
                 });
+        
+            SoundManager.PlaySound(SoundDataIDStatic.BEACH_TOOL_GRAB);
+            
         }
 
         private void LockBucketJoint()
@@ -300,6 +304,9 @@ namespace TideDefense
 
                     SetCurrentTool(_noneTool);
                 });
+       
+            SoundManager.PlaySound(SoundDataIDStatic.BEACH_TOOL_DROP);
+
         }
 
         #endregion

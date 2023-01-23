@@ -30,11 +30,6 @@ namespace VirtuoseReality.Extension.AudioManager
 		/// VoiceLines by characters
 		/// </summary>
 		VoiceLine = 1 << 4,
-
-		/// <summary>
-		///A6CT sounds
-		/// </summary>
-		A6cT = 1 << 5,
 	}
 
 }

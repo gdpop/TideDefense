@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf2351776f653b4b9d3eb40701b378c, type: 3}
+  m_Name: SFX_SeaAndWaves
+  m_EditorClassIdentifier: 
+  m_description: Water related SFX
+  m_type: 4
+  m_soundDatas:
+  - m_ID: Wave01
+    m_clip: {fileID: 8300000, guid: 6d08e4a9ce100e848ae3d8609c95f7c1, type: 3}
+    m_mixer: {fileID: -2236835460170759577, guid: cb2a3666e93b31146ba7a4c9ea38c02e, type: 2}
+  - m_ID: Wave02
+    m_clip: {fileID: 8300000, guid: e2f5b6f75f3d4cd4cb28d5aed0886c06, type: 3}
+    m_mixer: {fileID: -2236835460170759577, guid: cb2a3666e93b31146ba7a4c9ea38c02e, type: 2}
+  - m_ID: Wave03
+    m_clip: {fileID: 8300000, guid: 0ed727153e241b54ba569fc8eb47ed80, type: 3}
+    m_mixer: {fileID: -2236835460170759577, guid: cb2a3666e93b31146ba7a4c9ea38c02e, type: 2}
+  - m_ID: Wave04
+    m_clip: {fileID: 8300000, guid: 5adaddc0571fbfb45a7e55d1999c74e0, type: 3}
+    m_mixer: {fileID: -2236835460170759577, guid: cb2a3666e93b31146ba7a4c9ea38c02e, type: 2}
+  - m_ID: Wave05
+    m_clip: {fileID: 8300000, guid: 0e641d56b62260f4c928dcad6fe25855, type: 3}
+    m_mixer: {fileID: -2236835460170759577, guid: cb2a3666e93b31146ba7a4c9ea38c02e, type: 2}
+  m_generateStatic: 1
+  m_audioClips: []
+  m_mixerGroup: {fileID: -2236835460170759577, guid: cb2a3666e93b31146ba7a4c9ea38c02e, type: 2}

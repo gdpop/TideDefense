@@ -1,5 +1,6 @@
 using PierreMizzi.TilesetUtils;
 using UnityEngine;
+using VirtuoseReality.Extension.AudioManager;
 
 namespace TideDefense
 {
@@ -44,6 +45,8 @@ namespace TideDefense
         {
             if (CheckGridCellNeighboorToBucket(gridCell))
             {
+                SoundManager.PlaySound(SoundDataIDStatic.SHOVEL_DIG);
+
                 FillBucket(gridCell, hit);
                 if(_gameplayManager.bucket.isFull)
                     _gameplayManager.UIChannel.onHideControlHint.Invoke(ControlHintType.FillBucket);

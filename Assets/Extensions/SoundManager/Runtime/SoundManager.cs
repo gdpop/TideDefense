@@ -78,6 +78,8 @@ namespace VirtuoseReality.Extension.AudioManager
 				library.Init();
 
 			m_isInitialized = true;
+
+			Debug.Log("SoundManagerTool is initialized !");
 		}
 
 		#endregion
@@ -126,6 +128,8 @@ namespace VirtuoseReality.Extension.AudioManager
 
 			if(!m_isInitialized)
 				return null;
+			
+			// Debug.Log("Play : " + soundDataID);
 
 			// Check if all libraries has this ID stored
 			SoundData soundData = GetSoundData(soundDataID);

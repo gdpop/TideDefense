@@ -78,6 +78,10 @@ namespace TideDefense
             set { _maxWaveStrength = value; }
         }
 
+        [HideInInspector]
+        private List<string> _waveSoundDataIDs = new List<string>();
+        public List<string> waveSoundDataIDs { get { return _waveSoundDataIDs; } }
+
         #endregion
 
         #region Wave Segment Settings
@@ -116,5 +120,15 @@ namespace TideDefense
         }
 
         #endregion
+
+        private void OnEnable() {
+            _waveSoundDataIDs = new List<string>(){
+                SoundDataIDStatic.WAVE01,
+                SoundDataIDStatic.WAVE02,
+                SoundDataIDStatic.WAVE03,
+                SoundDataIDStatic.WAVE04,
+                SoundDataIDStatic.WAVE05,
+            };
+        }
     }
 }

@@ -1,6 +1,7 @@
 using PierreMizzi.MouseInteractable;
 using UnityEngine;
 using DG.Tweening;
+using VirtuoseReality.Extension.AudioManager;
 
 namespace TideDefense
 {
@@ -133,6 +134,8 @@ namespace TideDefense
             _currentPosition = transform.position;
             _hoveredPosition = transform.position + new Vector3(0f, _hoverYOffset, 0f);
 
+            SoundManager.PlaySound(SoundDataIDStatic.DROP_BEACH_TOOL_SHOVEL);
+
             // Debug.Log(
             //     $"{toolType} has been drop on the grid : ({gridCell.coords.x}, {gridCell.coords.y} | tool {currentGridCell.currentTool})"
             // );
@@ -176,6 +179,7 @@ namespace TideDefense
             // Bucket makes a little jump above the ground
             if (!_isGrabbed)
             {
+                SoundManager.PlaySound(SoundDataIDStatic.BEACH_TOOL_HOVER_IN);
                 _hoverTween.Kill();
                 _hoverTween = transform
                     .DOMove(_hoveredPosition, _hoverDuration)
@@ -188,6 +192,7 @@ namespace TideDefense
             // Bucket goes back to position if not clicked
             if (!_isGrabbed)
             {
+                SoundManager.PlaySound(SoundDataIDStatic.BEACH_TOOL_HOVER_OUT);
                 _hoverTween.Kill();
                 _hoverTween = transform
                     .DOMove(_currentPosition, _hoverDuration)

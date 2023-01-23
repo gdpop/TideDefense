@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using CodesmithWorkshop.Useful;
+using VirtuoseReality.Extension.AudioManager;
 
 namespace TideDefense
 {
@@ -34,6 +36,7 @@ namespace TideDefense
         private bool _isCrashing = false;
 
         private int _amountWaveSegmentDisappeared = 0;
+
 
 		#endregion
 
@@ -93,6 +96,8 @@ namespace TideDefense
 
             // Initialize variable to check when it's gonna crash
             _amountWaveSegmentDisappeared = 0;
+
+            PlayRandomWaveSound();
         }
 
         private void CallbackWaveSegmentDisappear(WaveSegment segment)
@@ -117,5 +122,12 @@ namespace TideDefense
         }
 
 		#endregion
+
+
+        private void PlayRandomWaveSound()
+        {
+            string randomSoundDataID = UtilsClass.PickRandomInList<string>(_seaChannel.waveSoundDataIDs);
+            SoundManager.PlaySound(randomSoundDataID);
+        }
     }
 }

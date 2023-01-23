@@ -29,9 +29,11 @@ When you call **SoundManagerTool**.PlaySound, the function return the **SoundSou
 - First import SoundManager inside Assets/Plugins
 - Left Click -> Extensions -> Sound Manager -> SoundManagerToolSettings
 - Left Click -> Extensions -> Sound Manager -> SoundDataLibrary
-- Once you have a SoundDataLibrary, you need to add SoundData. A SounData is composed of a an ID(string) and an AudioClip. You can add an optional AudioMixer for balancing
-Note : You can fast fill a library by filling the list below with Audioclip. It will automaticaly generate SoundData with AudioClip's name has ID(string)
-- Add SoundDataLibraries to SoundManagerToolSettings
+- Once you have a **SoundDataLibrary**, you need to add **SoundData**. A **SounData** is composed of a an ID(string) and an AudioClip. You can add an optional AudioMixer for balancing
+Note : You can fast fill a library by filling the list below with Audioclip. It will automaticaly generate **SoundData** with AudioClip's name has ID(string)
+- Add **SoundDataLibraries** to **SoundManagerToolSettings**
+- Select **SoundManagerToolSettings** and click "Generate SoundDataID static class"
+- Copy the content in a newly create .cs file named "SoundDataID"
+- Give a reference of **SoundManagerToolSettings** to any script in your scene so it can be initialized
 
 Then from any scripts, you can call SoundManager.PlaySound(string SoundDataID) and play a sound
-
