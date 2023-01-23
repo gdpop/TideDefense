@@ -1854,6 +1854,7 @@ MonoBehaviour:
   _gridManager: {fileID: 477670696}
   _prefabSandTower: {fileID: 3919147030147858698, guid: 2b78dbc0df6d7fc4b907bffb5e182493, type: 3}
   _fortificationContainer: {fileID: 1739542203}
+  _sandCastle: {fileID: 1815023534}
 --- !u!1 &1620342898
 GameObject:
   m_ObjectHideFlags: 0
@@ -1984,6 +1985,17 @@ Transform:
   m_Father: {fileID: 545097907}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1815023534 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8499028628380994751, guid: 7c2f85d1f4204524785ee49ebdb8526e, type: 3}
+  m_PrefabInstance: {fileID: 1122507591}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863336faeac36244fbdcf042b80146f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1836497764
 GameObject:
   m_ObjectHideFlags: 0
