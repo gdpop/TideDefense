@@ -54,7 +54,8 @@ namespace TideDefense
 
         public virtual void CallbackOnClickGrid(GridCellModel gridCell, RaycastHit hit)
         {
-            _gameplayManager.DropTool(_gameplayManager.bucket, gridCell);
+            if(gridCell.isEmpty)
+                _gameplayManager.DropTool(_gameplayManager.bucket, gridCell);
         }
 
        #region HoldClick
@@ -67,7 +68,7 @@ namespace TideDefense
         {
             if (_gameplayManager.bucket.isFull)
             {
-                _gameplayManager.rempartsManager.BuildRempartReworked(clickedCell);
+                _gameplayManager.rempartsManager.BuildSandTower(clickedCell, _gameplayManager.bucket.content.sandConcentration);
                 _gameplayManager.bucket.Empty();
                 _gameplayManager.UIChannel.onHideControlHint.Invoke(ControlHintType.BuildSandTower);
             }

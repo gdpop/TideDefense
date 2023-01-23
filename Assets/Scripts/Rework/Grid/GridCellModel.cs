@@ -4,12 +4,12 @@ namespace TideDefense
 
     public class GridCellModel : AGridCell
     {
-        public Rempart rempart;
+        public Building building;
         public BeachTool currentTool = null;
 
         public bool isEmpty
         {
-            get { return rempart == null && currentTool == null; }
+            get { return building == null && currentTool == null; }
         }
 
     }

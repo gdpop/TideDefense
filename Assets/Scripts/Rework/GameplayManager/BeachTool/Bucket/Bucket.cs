@@ -44,7 +44,13 @@ namespace TideDefense
         [SerializeField]
         private Transform _contentVisualFullAnchor = null;
 
-        public SandWaterFilling _content = new SandWaterFilling();
+        private SandWaterFilling _content = new SandWaterFilling();
+
+        public SandWaterFilling content {
+            get{
+                return _content;
+            }
+        }
 
         [SerializeField]
         private float _maxQuantity = 1f;

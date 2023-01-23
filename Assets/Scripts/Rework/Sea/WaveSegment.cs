@@ -2,7 +2,6 @@ namespace TideDefense
 {
     using UnityEngine;
     using DG.Tweening;
-    using System;
     using PierreMizzi.Collisions;
     using System.Collections;
 
@@ -43,7 +42,7 @@ namespace TideDefense
         /// </summary>
         public WaveSegmentDelegate onDisappear = null;
 
-        private Rempart _collidedRempart = null;
+        private Building _collidedBuilding = null;
 
         #endregion
 
@@ -53,12 +52,12 @@ namespace TideDefense
 
         private void CallbackOnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent<Rempart>(out _collidedRempart))
+            if (other.TryGetComponent<Building>(out _collidedBuilding))
             {
-                CrashOnRempart(_collidedRempart);
+                CrashOnBuilding(_collidedBuilding);
             }
-            else if (_collidedRempart != null)
-                _collidedRempart = null;
+            else if (_collidedBuilding != null)
+                _collidedBuilding = null;
         }
 
         #endregion
@@ -106,7 +105,7 @@ namespace TideDefense
         /// <summary>
         /// Manages segments tween behaviour and damages dealt to the rempart
         /// </summary>
-        private void CrashOnRempart(Rempart collidedRempart)
+        private void CrashOnBuilding(Building collidedBuilding)
         {
             // Pauses the tween
             _crashingTween.Pause();
@@ -136,7 +135,7 @@ namespace TideDefense
             );
 
             // Inflict damage to the rempart
-            ManageDamagedRempart(collidedRempart, elapsedPercentage);
+            ManageDamagedRempart(collidedBuilding, elapsedPercentage);
         }
 
         private IEnumerator WaitForRewind()
@@ -145,14 +144,14 @@ namespace TideDefense
             ReturnedToSea();
         }
 
-        private void ManageDamagedRempart(Rempart rempart, float elapsedPercentage)
+        private void ManageDamagedRempart(Building building, float elapsedPercentage)
         {
             float normalizedElapsedPercentage = elapsedPercentage * 2f;
             float amountDamageDealt = _seaChannel.damageDealtByWave.Evaluate(normalizedElapsedPercentage);
 
             Debug.Log($"normalized : {normalizedElapsedPercentage} | damageDealt : {amountDamageDealt}");
 
-            rempart.InflictDamage(amountDamageDealt);
+            building.InflictDamage(amountDamageDealt);
         }
 
         #endregion

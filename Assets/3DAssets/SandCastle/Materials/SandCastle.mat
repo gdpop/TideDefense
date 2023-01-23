@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SandTowerFlag
-  m_Shader: {fileID: -6465566751694194690, guid: d8c0a5d9db21b894fae7ca3768b92b66, type: 3}
+  m_Name: SandCastle
+  m_Shader: {fileID: -6465566751694194690, guid: a85c39a06cc1b3044be2533eda8375b7, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -32,14 +32,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_14e896d3ee0446679e2d1c2a98b715af: 0.05
-    - Vector1_2a2d8b623e5e4169a2b0cd0d0e4684f1: 0.35
-    - Vector1_73fa02717b314958adcd2f36b3dbcae2: 0.001
-    - Vector1_9887a89aac9c4c9d920c33454918a936: 0.74
-    - _Health: 1
-    - _Quality: 0
-    - _Scale: 18
-    m_Colors:
-    - _HightHealthColor: {r: 1, g: 0.696732, b: 0.2704402, a: 1}
-    - _LowHealthColor: {r: 0.38364774, g: 0.69532585, b: 1, a: 1}
+    - _SandConcentration: 1
+    m_Colors: []
   m_BuildTextureStacks: []

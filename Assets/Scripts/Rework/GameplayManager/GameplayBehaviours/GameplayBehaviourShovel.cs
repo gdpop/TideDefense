@@ -26,7 +26,10 @@ namespace TideDefense
                 _gameplayManager.gameplayChannel.onClickGrid += CallbackOnClickGrid;
             }
 
-            _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.DropTool, ControlHintType.FillBucket);
+            _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.DropTool);
+
+            if(!_gameplayManager.bucket.isFull)
+                _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.FillBucket); 
 
         }
 
@@ -52,7 +55,7 @@ namespace TideDefense
                     _gameplayManager.UIChannel.onHideControlHint.Invoke(ControlHintType.FillBucket);
                     
             }
-            else
+            else if(gridCell.isEmpty)
                 _gameplayManager.DropTool(_gameplayManager.shovel, gridCell);
         }
 

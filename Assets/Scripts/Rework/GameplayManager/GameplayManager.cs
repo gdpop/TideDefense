@@ -25,8 +25,8 @@ namespace TideDefense
         }
 
         [SerializeField]
-        private RempartsManager _rempartsManager = null;
-        public RempartsManager rempartsManager
+        private FortificationManager _rempartsManager = null;
+        public FortificationManager rempartsManager
         {
             get { return _rempartsManager; }
         }

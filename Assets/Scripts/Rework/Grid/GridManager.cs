@@ -307,6 +307,38 @@ namespace TideDefense
             }
         }
 
+
+        public void SetSandCastleOnGrid(SandCastle sandCastle)
+        {
+            List<GridCellVisual> cellsAroundCastle = GetGridCellsAroundPosition(sandCastle.transform.position, 0.25f);
+
+            foreach (GridCellVisual cellVisual in cellsAroundCastle)
+            {
+                GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(cellVisual.coords);
+                Debug.Log($"CellModel at coords { cellModel.coords } is holding the castle");
+                cellModel.building = sandCastle;
+            }
+        }
+
+        public List<GridCellVisual> GetGridCellsAroundPosition(Vector3 position, float radius)
+        {
+            List<GridCellVisual> cellsInRadius = new List<GridCellVisual>();
+
+            for (int x = 0; x < _xLength; x++)
+            {
+                for (int z = 0; z < _zLength; z++)
+                {
+                    GridCellVisual cellVisual = _gridCellVisualHash[x][z];
+
+                    float distance = Vector3.Magnitude(cellVisual.transform.position - position);
+
+                    if(distance < radius)
+                        cellsInRadius.Add(cellVisual);
+                }
+            }
+            return cellsInRadius;
+        }  
+
         #endregion
 
 		#region Grid Gizmos

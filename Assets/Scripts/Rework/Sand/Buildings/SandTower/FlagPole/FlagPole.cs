@@ -8,14 +8,14 @@ namespace TideDefense
     {
 		#region Fields
 
-        private Rempart _rempart = null;
+        private SandTower _rempart = null;
 
         private void Awake()
         {
             _flag.transform.localPosition = Vector3.zero;
         }
 
-        public void Initialize(Rempart rempart)
+        public void Initialize(SandTower rempart)
         {
             _rempart = rempart;
         }
