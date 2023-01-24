@@ -1350,9 +1350,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _origin: {fileID: 913817125}
   _lerpingSpeed: 100
+  _currentDirection: {x: 0, y: 0}
+  _currentInertia: {x: 0, y: 0}
+  _maxInertia: 1
+  _acceleration: 0.1
+  _friction: 1
   _startTheta: 33
   _minTheta: 20
   _maxTheta: 75
+  _thetaInertia: 50
   _sphericalTransform: {fileID: 1879406211}
 --- !u!1 &1726339817
 GameObject:

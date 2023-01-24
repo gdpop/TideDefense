@@ -44,6 +44,7 @@ namespace TideDefense
 
             foreach (ControlHintType type in Enum.GetValues(typeof(ControlHintType)))
             {
+                
                 VisualElement element = root.Q<VisualElement>(type.ToString());
 
 				if(element != null)
