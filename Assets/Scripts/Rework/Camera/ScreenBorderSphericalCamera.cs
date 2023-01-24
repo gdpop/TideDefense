@@ -9,6 +9,7 @@ namespace TideDefense
 	[ExecuteInEditMode]
     public class ScreenBorderSphericalCamera : SphericalCameraController
     {
+        [Header("ScreenBorderSphericalCamera")]
         [SerializeField]
         private GameplayChannel _gameplayChannel = null;
 
@@ -44,8 +45,9 @@ namespace TideDefense
             InitializeTresholds();
         }
 
-        protected void Start()
+        protected override void Start()
         {
+            base.Start();
             if (_gameplayChannel != null)
                 _gameplayChannel.onSetActiveSphericalCamera += CallbackSetActive;
         }

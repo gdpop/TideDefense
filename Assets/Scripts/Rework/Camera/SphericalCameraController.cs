@@ -10,6 +10,12 @@ namespace CodesmithWorkshop
 		#region Fields
 
         [SerializeField]
+        protected SphericalCoordinatesTransform _sphericalTransform = null;
+
+        [SerializeField]
+        protected Transform _origin = null;
+
+        [SerializeField]
         protected bool _isActive = true;
         protected bool isActive
         {
@@ -17,33 +23,17 @@ namespace CodesmithWorkshop
             set { _isActive = value; }
         }
 
-        [SerializeField]
-        protected Transform _origin = null;
+        public SphericalCoordinates _startingCoordinates = new SphericalCoordinates();
 
-        [Header("Controls values")]
+        [Header("Rotation Settings")]
         [SerializeField]
-        protected Vector2Int _currentDirection = new Vector2Int();
-
-        [SerializeField]
-        protected Vector2 _currentInertia = new Vector2();
+        protected float _maxRotationInertia = 1f;
 
         [SerializeField]
-        protected float _maxInertia = 1f;
+        protected float _rotationAcceleration = 0.01f;
 
         [SerializeField]
-        protected float _acceleration = 0.01f;
-
-        [SerializeField]
-        protected float _friction = 0.01f;
-
-        protected Tween _horizontalFrictionTween = null;
-        protected Tween _vertialFrictionTween = null;
-
-		#region Theta
-
-        [Header("Theta")]
-        [SerializeField]
-        protected float _startTheta = 33f;
+        protected float _rotationDecelerationDuration = 0.01f;
 
         [SerializeField]
         protected float _minTheta = 20f;
@@ -51,25 +41,48 @@ namespace CodesmithWorkshop
         [SerializeField]
         protected float _maxTheta = 75f;
 
+        protected Vector2Int _rotationInertia = new Vector2Int();
+        protected Vector2 _currentRotationInertia = new Vector2();
+        protected Tween _horizontalRotationFrictionTween = null;
+        protected Tween _vertialRotationFrictionTween = null;
         protected float _currentTheta = 0f;
 
 		#endregion
 
-        [SerializeField]
-        protected SphericalCoordinatesTransform _sphericalTransform = null;
+        #region Zoom settings
 
-		#endregion
+        // TODO Manage zoom on camera ?
+        // [SerializeField]
+        // protected float _maxZoomInertia = 1f;
+
+        // [SerializeField]
+        // protected float _zoomAcceleration = 0.01f;
+
+        // [SerializeField]
+        // protected float _minRadius = 20f;
+
+        // [SerializeField]
+        // protected float _maxRadius = 75f;
+
+        // private float _currentZoomInertia = 0f;
+
+        #endregion
 
 		#region Methods
 
+        #region MonoBehaviour
+
+        protected virtual void Start()
+        {
+            _sphericalTransform.coordinates = _startingCoordinates;
+        }
+
         protected virtual void OnEnable()
         {
-            _horizontalFrictionTween = DOVirtual.DelayedCall(0f, () => { });
-            _horizontalFrictionTween.Complete();
-            _vertialFrictionTween = DOVirtual.DelayedCall(0f, () => { });
-            _vertialFrictionTween.Complete();
-
-            _sphericalTransform.theta = _startTheta;
+            _horizontalRotationFrictionTween = DOVirtual.DelayedCall(0f, () => { });
+            _horizontalRotationFrictionTween.Complete();
+            _vertialRotationFrictionTween = DOVirtual.DelayedCall(0f, () => { });
+            _vertialRotationFrictionTween.Complete();
         }
 
         protected virtual void Update()
@@ -82,12 +95,13 @@ namespace CodesmithWorkshop
             if (!_isActive)
                 return;
 
-            _sphericalTransform.phi += _currentInertia.x * _currentDirection.x;
+            _sphericalTransform.coordinates.phi += _currentRotationInertia.x * _rotationInertia.x;
 
-            _currentTheta = _sphericalTransform.theta += _currentInertia.y * _currentDirection.y;
+            _currentTheta = _sphericalTransform.coordinates.theta +=
+                _currentRotationInertia.y * _rotationInertia.y;
             _currentTheta = Mathf.Clamp(_currentTheta, _minTheta, _maxTheta);
 
-            _sphericalTransform.theta = _currentTheta;
+            _sphericalTransform.coordinates.theta = _currentTheta;
         }
 
         protected virtual void LateUpdate()
@@ -98,41 +112,52 @@ namespace CodesmithWorkshop
             _sphericalTransform.transform.LookAt(_origin);
         }
 
+        #endregion
+
+
         protected void ManageHorizontalMotion(bool isLeft, bool isRight)
         {
             if (isLeft)
             {
-                if (_horizontalFrictionTween != null)
-                    _horizontalFrictionTween.Kill();
+                if (_horizontalRotationFrictionTween != null)
+                    _horizontalRotationFrictionTween.Kill();
 
-                if (_currentDirection.x == 1)
-                    _currentInertia.x = 0;
+                if (_rotationInertia.x == 1)
+                    _currentRotationInertia.x = 0;
 
-                _currentDirection.x = -1;
-                _currentInertia.x += _acceleration;
-                _currentInertia.x = Mathf.Clamp(_currentInertia.x, 0f, _maxInertia);
+                _rotationInertia.x = -1;
+                _currentRotationInertia.x += _rotationAcceleration;
+                _currentRotationInertia.x = Mathf.Clamp(
+                    _currentRotationInertia.x,
+                    0f,
+                    _maxRotationInertia
+                );
             }
             else if (isRight)
             {
-                if (_horizontalFrictionTween != null)
-                    _horizontalFrictionTween.Kill();
+                if (_horizontalRotationFrictionTween != null)
+                    _horizontalRotationFrictionTween.Kill();
 
-                if (_currentDirection.x == -1)
-                    _currentInertia.x = 0;
+                if (_rotationInertia.x == -1)
+                    _currentRotationInertia.x = 0;
 
-                _currentDirection.x = 1;
-                _currentInertia.x += _acceleration;
-                _currentInertia.x = Mathf.Clamp(_currentInertia.x, 0f, _maxInertia);
-            }
-            else if (_currentInertia.x > 0 && !_horizontalFrictionTween.active)
-            {
-                _horizontalFrictionTween = DOVirtual.Float(
-                    _currentInertia.x,
+                _rotationInertia.x = 1;
+                _currentRotationInertia.x += _rotationAcceleration;
+                _currentRotationInertia.x = Mathf.Clamp(
+                    _currentRotationInertia.x,
                     0f,
-                    _friction,
+                    _maxRotationInertia
+                );
+            }
+            else if (_currentRotationInertia.x > 0 && !_horizontalRotationFrictionTween.active)
+            {
+                _horizontalRotationFrictionTween = DOVirtual.Float(
+                    _currentRotationInertia.x,
+                    0f,
+                    _rotationDecelerationDuration,
                     (float value) =>
                     {
-                        _currentInertia.x = value;
+                        _currentRotationInertia.x = value;
                     }
                 );
             }
@@ -142,41 +167,52 @@ namespace CodesmithWorkshop
         {
             if (isUp)
             {
-                if (_vertialFrictionTween != null)
-                    _vertialFrictionTween.Kill();
+                if (_vertialRotationFrictionTween != null)
+                    _vertialRotationFrictionTween.Kill();
 
-                if (_currentDirection.y == -1)
-                    _currentInertia.y = 0;
+                if (_rotationInertia.y == -1)
+                    _currentRotationInertia.y = 0;
 
-                _currentDirection.y = 1;
-                _currentInertia.y += _acceleration;
-                _currentInertia.y = Mathf.Clamp(_currentInertia.y, 0f, _maxInertia);
+                _rotationInertia.y = 1;
+                _currentRotationInertia.y += _rotationAcceleration;
+                _currentRotationInertia.y = Mathf.Clamp(
+                    _currentRotationInertia.y,
+                    0f,
+                    _maxRotationInertia
+                );
             }
             else if (isDown)
             {
-                if (_vertialFrictionTween != null)
-                    _vertialFrictionTween.Kill();
+                if (_vertialRotationFrictionTween != null)
+                    _vertialRotationFrictionTween.Kill();
 
-                if (_currentDirection.y == 1)
-                    _currentInertia.y = 0;
+                if (_rotationInertia.y == 1)
+                    _currentRotationInertia.y = 0;
 
-                _currentDirection.y = -1;
-                _currentInertia.y += _acceleration;
-                _currentInertia.y = Mathf.Clamp(_currentInertia.y, 0f, _maxInertia);
-            }
-            else if (_currentInertia.y > 0 && !_vertialFrictionTween.active)
-            {
-                _vertialFrictionTween = DOVirtual.Float(
-                    _currentInertia.y,
+                _rotationInertia.y = -1;
+                _currentRotationInertia.y += _rotationAcceleration;
+                _currentRotationInertia.y = Mathf.Clamp(
+                    _currentRotationInertia.y,
                     0f,
-                    _friction,
+                    _maxRotationInertia
+                );
+            }
+            else if (_currentRotationInertia.y > 0 && !_vertialRotationFrictionTween.active)
+            {
+                _vertialRotationFrictionTween = DOVirtual.Float(
+                    _currentRotationInertia.y,
+                    0f,
+                    _rotationDecelerationDuration,
                     (float value) =>
                     {
-                        _currentInertia.y = value;
+                        _currentRotationInertia.y = value;
                     }
                 );
             }
         }
+
+
+
 
 		#endregion
     }

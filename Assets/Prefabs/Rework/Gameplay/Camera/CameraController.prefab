@@ -43,16 +43,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0994f31a68189d54187524799b923089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isActive: 1
+  _sphericalTransform: {fileID: 0}
   _origin: {fileID: 0}
-  _currentDirection: {x: -1, y: -1}
-  _currentInertia: {x: 0, y: 0}
-  _maxInertia: 1
-  _acceleration: 0.1
-  _friction: 0.5
-  _startTheta: 33
+  _isActive: 1
+  _startingCoordinates:
+    origin: {x: 1.505, y: 0.193, z: 1.227}
+    radius: 4
+    phi: 329
+    theta: 31
+  _maxRotationInertia: 1
+  _rotationAcceleration: 0.2
+  _rotationDecelerationDuration: 1
   _minTheta: 20
   _maxTheta: 75
-  _sphericalTransform: {fileID: 0}
   _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
   _tresholdPercentage: 0.1
