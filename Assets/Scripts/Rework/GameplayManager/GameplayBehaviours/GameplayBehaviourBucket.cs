@@ -21,6 +21,10 @@ namespace TideDefense
 
             if (_gameplayManager.gameplayChannel != null)
             {
+                //Invoke
+                _gameplayManager.gameplayChannel.onSetActiveSphericalCamera.Invoke(false);
+
+                // Subscribe
                 _gameplayManager.gameplayChannel.onClickGrid += CallbackOnClickGrid;
 
                 _gameplayManager.gameplayChannel.OnStartHoldClickGrid += CallbackStartHoldClickGrid;
@@ -31,11 +35,14 @@ namespace TideDefense
                 _gameplayManager.gameplayChannel.OnCancelHoldClickGrid +=
                     CallbackCancelHoldClickGrid;
             }
-            _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.DropTool);
+            if (_gameplayManager.UIChannel != null)
+                _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.DropTool);
 
             if (_gameplayManager.bucket.isFull)
             {
-                _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.BuildSandTower);
+                _gameplayManager.UIChannel.onDisplayControlHint.Invoke(
+                    ControlHintType.BuildSandTower
+                );
                 _gameplayManager.gridManager.DisplayBuildableHints();
             }
         }
@@ -54,7 +61,7 @@ namespace TideDefense
 
         public virtual void CallbackOnClickGrid(GridCellModel gridCell, RaycastHit hit)
         {
-            if(gridCell.isEmpty)
+            if (gridCell.isEmpty)
                 _gameplayManager.DropTool(_gameplayManager.bucket, gridCell);
         }
 
@@ -68,7 +75,10 @@ namespace TideDefense
         {
             if (_gameplayManager.bucket.isFull)
             {
-                _gameplayManager.rempartsManager.BuildSandTower(clickedCell, _gameplayManager.bucket.content.sandConcentration);
+                _gameplayManager.rempartsManager.BuildSandTower(
+                    clickedCell,
+                    _gameplayManager.bucket.content.sandConcentration
+                );
                 _gameplayManager.bucket.Empty();
                 _gameplayManager.UIChannel.onHideControlHint.Invoke(ControlHintType.BuildSandTower);
             }

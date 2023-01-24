@@ -17,6 +17,8 @@ namespace TideDefense
     )]
     public class GameplayChannel : ScriptableObject
     {
+        public BoolDelegate onSetActiveSphericalCamera = null;
+
         // Click Grid
         public ClickGrid onClickGrid = null;
 
@@ -37,6 +39,8 @@ namespace TideDefense
 
         protected void OnEnable()
         {
+            onSetActiveSphericalCamera = (bool isActive)=>{};
+
             onChangeTool = (BeachTool tool) => { };
             onClickTool = (BeachTool tool) => { };
             onHoverTool = (BeachTool tool) => { };

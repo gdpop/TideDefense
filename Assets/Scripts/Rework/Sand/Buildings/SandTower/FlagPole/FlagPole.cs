@@ -47,11 +47,6 @@ namespace TideDefense
         [SerializeField]
         private Transform _highAnchor = null;
 
-        public void RaiseFlag()
-        {
-            _flag.transform.DOLocalMove(_highAnchor.localPosition, 3f);
-        }
-
         public void RefreshFlagHeight(float damageTaken)
         {
             // float fromNormalized = (_rempart.health - damageTaken) / _rempart.maxHealth;

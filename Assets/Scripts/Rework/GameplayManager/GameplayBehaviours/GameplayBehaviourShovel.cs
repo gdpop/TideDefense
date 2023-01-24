@@ -23,6 +23,10 @@ namespace TideDefense
 
             if (_gameplayManager.gameplayChannel != null)
             {
+                //Invoke
+                _gameplayManager.gameplayChannel.onSetActiveSphericalCamera.Invoke(false);
+
+                // Subscribe
                 _gameplayManager.gameplayChannel.onClickGrid += CallbackOnClickGrid;
             }
 

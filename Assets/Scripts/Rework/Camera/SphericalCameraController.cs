@@ -1,77 +1,86 @@
-namespace TideDefense
+namespace CodesmithWorkshop
 {
     using System;
     using UnityEngine;
     using VirtuoseReality.Utils.TransformTools;
     using DG.Tweening;
 
-    [ExecuteInEditMode]
     public class SphericalCameraController : MonoBehaviour
     {
 		#region Fields
 
         [SerializeField]
-        private Transform _origin = null;
+        protected bool _isActive = true;
+        protected bool isActive
+        {
+            get { return _isActive; }
+            set { _isActive = value; }
+        }
+
+        [SerializeField]
+        protected Transform _origin = null;
 
         [Header("Controls values")]
         [SerializeField]
-        private Vector2Int _currentDirection = new Vector2Int();
+        protected Vector2Int _currentDirection = new Vector2Int();
 
         [SerializeField]
-        private Vector2 _currentInertia = new Vector2();
+        protected Vector2 _currentInertia = new Vector2();
 
         [SerializeField]
-        private float _maxInertia = 1f;
+        protected float _maxInertia = 1f;
 
         [SerializeField]
-        private float _acceleration = 0.01f;
+        protected float _acceleration = 0.01f;
 
         [SerializeField]
-        private float _friction = 0.01f;
+        protected float _friction = 0.01f;
 
-        private Tween _horizontalFrictionTween = null;
-        private Tween _vertialFrictionTween = null;
+        protected Tween _horizontalFrictionTween = null;
+        protected Tween _vertialFrictionTween = null;
 
 		#region Theta
 
         [Header("Theta")]
         [SerializeField]
-        private float _startTheta = 33f;
+        protected float _startTheta = 33f;
 
         [SerializeField]
-        private float _minTheta = 20f;
+        protected float _minTheta = 20f;
 
         [SerializeField]
-        private float _maxTheta = 75f;
+        protected float _maxTheta = 75f;
 
-        private float _currentTheta = 0f;
+        protected float _currentTheta = 0f;
 
 		#endregion
 
         [SerializeField]
-        private SphericalCoordinatesTransform _sphericalTransform = null;
+        protected SphericalCoordinatesTransform _sphericalTransform = null;
 
 		#endregion
 
 		#region Methods
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             _horizontalFrictionTween = DOVirtual.DelayedCall(0f, () => { });
             _horizontalFrictionTween.Complete();
             _vertialFrictionTween = DOVirtual.DelayedCall(0f, () => { });
             _vertialFrictionTween.Complete();
-            
+
             _sphericalTransform.theta = _startTheta;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             // Computes Inertia on x axis (Phi angle)
-            ManageHorizontalMotion(Input.GetKey(KeyCode.Q), Input.GetKey(KeyCode.D));
+            // ManageHorizontalMotion(Input.GetKey(KeyCode.Q), Input.GetKey(KeyCode.D));
 
             // Computes Inertia on y axis (Theta angle)
-            ManageVerticalMotion(Input.GetKey(KeyCode.Z), Input.GetKey(KeyCode.S));
+            // ManageVerticalMotion(Input.GetKey(KeyCode.Z), Input.GetKey(KeyCode.S));
+            if (!_isActive)
+                return;
 
             _sphericalTransform.phi += _currentInertia.x * _currentDirection.x;
 
@@ -81,14 +90,17 @@ namespace TideDefense
             _sphericalTransform.theta = _currentTheta;
         }
 
-        private void LateUpdate()
+        protected virtual void LateUpdate()
         {
+            if (!_isActive)
+                return;
+
             _sphericalTransform.transform.LookAt(_origin);
         }
 
-        private void ManageHorizontalMotion(bool isLeft, bool isRight)
+        protected void ManageHorizontalMotion(bool isLeft, bool isRight)
         {
-            if (Input.GetKey(KeyCode.Q))
+            if (isLeft)
             {
                 if (_horizontalFrictionTween != null)
                     _horizontalFrictionTween.Kill();
@@ -100,7 +112,7 @@ namespace TideDefense
                 _currentInertia.x += _acceleration;
                 _currentInertia.x = Mathf.Clamp(_currentInertia.x, 0f, _maxInertia);
             }
-            else if (Input.GetKey(KeyCode.D))
+            else if (isRight)
             {
                 if (_horizontalFrictionTween != null)
                     _horizontalFrictionTween.Kill();
@@ -126,7 +138,7 @@ namespace TideDefense
             }
         }
 
-        private void ManageVerticalMotion(bool isUp, bool isDown)
+        protected void ManageVerticalMotion(bool isUp, bool isDown)
         {
             if (isUp)
             {
@@ -165,10 +177,6 @@ namespace TideDefense
                 );
             }
         }
-
-        #region Screen Border Control
-            
-        #endregion
 
 		#endregion
     }

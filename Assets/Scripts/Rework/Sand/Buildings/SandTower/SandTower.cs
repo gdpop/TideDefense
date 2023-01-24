@@ -30,7 +30,6 @@ namespace TideDefense
         {
             Initialize(manager, gridCell);
             SetHealthFromSandConcentration(sandConcentration);
-            _flagPole.RaiseFlag();
         }
 
         #region Health
