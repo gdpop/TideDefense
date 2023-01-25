@@ -3,6 +3,7 @@ namespace TideDefense
     using System;
     using PierreMizzi.TilesetUtils;
     using UnityEngine;
+    using ToolBox.Pools;
 
     public class FortificationManager : MonoBehaviour
     {
@@ -83,6 +84,19 @@ namespace TideDefense
         }
 
 
+        #region Foundation
+
+        [SerializeField] private RempartFoundation _foundationPrefab = null;
+            
+        private void InitializeRempartFoundation()
+        {
+            _foundationPrefab.gameObject.Populate(12);
+        }
+
+        #endregion
+
 		#endregion
+
+        
     }
 }

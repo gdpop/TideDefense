@@ -4,8 +4,16 @@ namespace TideDefense
     using PierreMizzi.MouseInteractable;
     using UnityEngine;
 
+
+    // TODO : 
     public class BuildRempartHandle : MonoBehaviour
     {
+        
+        private FortificationManager _fortificationManager = null;
+
+        [SerializeField] private GridCellVisual _gridCell = null;
+        public GridCellVisual gridCell { get { return _gridCell; } set { _gridCell = value; } }
+
         #region Raycast in plane
 
         private Plane _plane;
@@ -18,6 +26,8 @@ namespace TideDefense
 
         #region Handle Clickable
 
+        [SerializeField]
+        private Transform _debugTransform = null;
         [SerializeField]
         private HoldClickable _clickable = null;
         private bool _isClicked = false;
@@ -80,7 +90,6 @@ namespace TideDefense
         private void CallbackMouseDown(RaycastHit hit)
         {
             _isClicked = true;
-            Debug.Log("Is Clicked !");
         }
 
         private void UpdateHandle()
@@ -105,43 +114,19 @@ namespace TideDefense
                     0f
                 );
 
-                // Amount of foundation to display
+                // Number of foundation to display
                 float length = _positionOnPlane.magnitude;
                 length -= _foundationTreshold;
                 length = Mathf.Max(0f, length);
-                // Debug.Log(length);
                 int amount = Mathf.FloorToInt(length / _cellSize);
-                Debug.Log(amount);
                 DisplayFoundation(amount);
             }
-
-            RaycastHit hit;
-            if (Physics.Raycast(_screenRay, out hit, 100))
-            {
-                _debugPhysicTransform.position = hit.point;
-            }
         }
-
-        private void OnDrawGizmos()
-        {
-            _camera = Camera.main;
-            // Gizmos.DrawLine(
-            //     _camera.transform.position,
-            //     _camera.transform.position + _screenRay.GetPoint(5)
-            // );
-        }
-
-        [SerializeField]
-        private Transform _debugTransform = null;
-
-        [SerializeField]
-        private Transform _debugPhysicTransform = null;
 
         private void ReleaseHandle()
         {
             _isClicked = false;
             _isHandling = false;
-            // _debugTransform.localPosition = Vector3.zero;
 
             Debug.Log("Is Release !");
         }
