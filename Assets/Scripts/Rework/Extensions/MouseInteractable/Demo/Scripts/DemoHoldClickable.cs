@@ -14,7 +14,9 @@ namespace PierreMizzi.MouseInteractable
             );
             if (leftClickBehaviour != null)
             {
+                leftClickBehaviour.onMouseDown += CallbackOnMouseDown;
                 leftClickBehaviour.onClick += CallbackClick;
+                
                 leftClickBehaviour.onStartHoldClick += CallbackStartHoldClick;
                 leftClickBehaviour.onProgressHoldClick += CallbackProgressHoldClick;
                 leftClickBehaviour.onCompleteHoldClick += CallbackCompleteHoldClick;
@@ -26,6 +28,12 @@ namespace PierreMizzi.MouseInteractable
         {
             Debug.Log($"CallbackClick");
         }
+
+        void CallbackOnMouseDown(RaycastHit hit)
+        {
+            Debug.Log($"CallbackOnMouseDown");
+        }
+
 
         void CallbackStartHoldClick()
         {

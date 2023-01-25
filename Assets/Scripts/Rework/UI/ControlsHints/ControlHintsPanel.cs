@@ -39,9 +39,6 @@ namespace TideDefense
         {
             VisualElement root = _document.rootVisualElement;
 
-            VisualElement grabToolButton = root.Q<VisualElement>("GrabTool");
-            Debug.Log(grabToolButton != null);
-
             foreach (ControlHintType type in Enum.GetValues(typeof(ControlHintType)))
             {
                 

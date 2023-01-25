@@ -7,6 +7,7 @@ namespace PierreMizzi.MouseInteractable
 
     public delegate void RaycastDelegate(RaycastHit hit);
 
+    // TODO Rename that into click Behaviour
     [Serializable]
     public class HoldClickBehaviour
     {
@@ -24,6 +25,7 @@ namespace PierreMizzi.MouseInteractable
         public HoldClickBehaviour()
         {
             onClick = (RaycastHit hit) => { };
+            onMouseDown = (RaycastHit hit) => { };
 
             onStartHoldClick = () => { };
             onProgressHoldClick = (float value) => { };
@@ -32,6 +34,7 @@ namespace PierreMizzi.MouseInteractable
         }
 
         public RaycastDelegate onClick;
+        public RaycastDelegate onMouseDown;
 
         public Action onStartHoldClick;
         public FloatEvent onProgressHoldClick;

@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 1059945289}
   - component: {fileID: 1059945288}
   - component: {fileID: 1059945287}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Demo_LongClickable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -625,3 +625,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28cafc5ef8af1f34db57e48950efd61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 16384

@@ -4,6 +4,9 @@ namespace TideDefense
     {
         None,
 
+		// Camera
+		RotateSphericalCamera,
+
 		// General
         GrabTool,
 		DropTool,

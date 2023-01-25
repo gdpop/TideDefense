@@ -8,9 +8,12 @@ namespace PierreMizzi.MouseInteractable
     {
         private InteractableManager _interactableManager = null;
 
+        [SerializeField]
+        private LayerMask _layerMask;
+
         private void Start()
         {
-            _interactableManager = new InteractableManager();
+            _interactableManager = new InteractableManager(_layerMask);
         }
 
         private void Update()

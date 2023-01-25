@@ -36,7 +36,12 @@ namespace TideDefense
                     CallbackCancelHoldClickGrid;
             }
             if (_gameplayManager.UIChannel != null)
+            {
                 _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.DropTool);
+                _gameplayManager.UIChannel.onHideControlHint.Invoke(
+                    ControlHintType.RotateSphericalCamera
+                );
+            }
 
             if (_gameplayManager.bucket.isFull)
             {

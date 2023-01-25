@@ -31,10 +31,12 @@ namespace TideDefense
             }
 
             _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.DropTool);
+            _gameplayManager.UIChannel.onHideControlHint.Invoke(
+                ControlHintType.RotateSphericalCamera
+            );
 
-            if(!_gameplayManager.bucket.isFull)
-                _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.FillBucket); 
-
+            if (!_gameplayManager.bucket.isFull)
+                _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.FillBucket);
         }
 
         public override void Deactivate()
@@ -55,11 +57,10 @@ namespace TideDefense
                 SoundManager.PlaySound(SoundDataIDStatic.SHOVEL_DIG);
 
                 FillBucket(gridCell, hit);
-                if(_gameplayManager.bucket.isFull)
+                if (_gameplayManager.bucket.isFull)
                     _gameplayManager.UIChannel.onHideControlHint.Invoke(ControlHintType.FillBucket);
-                    
             }
-            else if(gridCell.isEmpty)
+            else if (gridCell.isEmpty)
                 _gameplayManager.DropTool(_gameplayManager.shovel, gridCell);
         }
 

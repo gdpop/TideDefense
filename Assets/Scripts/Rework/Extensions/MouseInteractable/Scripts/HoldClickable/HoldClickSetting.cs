@@ -13,6 +13,7 @@ namespace PierreMizzi.MouseInteractable
 
         // Runtime
         public HoldClickable currentHoldClickable = null;
+        public HoldClickBehaviour currentClickBehaviour = null;
 
         public float currentHoldTime = 0f;
 
@@ -56,36 +57,52 @@ namespace PierreMizzi.MouseInteractable
             );
         }
 
+        public void SetClickable(HoldClickable clickable)
+        {
+            currentHoldClickable = clickable;
+            currentClickBehaviour = currentHoldClickable.GetBehaviour(mouseButtonID);
+        }
+
+        public void UnsetClickable()
+        {
+            currentHoldClickable = null;
+            currentClickBehaviour = null;
+        }
+
         public void InvokeClick(RaycastHit hit)
         {
-            if (currentHoldClickable != null)
-                currentHoldClickable.GetBehaviour(mouseButtonID).onClick.Invoke(hit);
+            if (currentClickBehaviour != null)
+                currentClickBehaviour.onClick.Invoke(hit);
+        }
+
+        public void InvokeOnMouseDown(RaycastHit hit)
+        {
+            if (currentClickBehaviour != null)
+                currentClickBehaviour.onMouseDown.Invoke(hit);
         }
 
         public void InvokeStartHoldClick()
         {
-            if (currentHoldClickable != null)
-                currentHoldClickable.GetBehaviour(mouseButtonID).onStartHoldClick.Invoke();
+            if (currentClickBehaviour != null)
+                currentClickBehaviour.onStartHoldClick.Invoke();
         }
 
         public void InvokeCompleteHoldClick()
         {
-            if (currentHoldClickable != null)
-                currentHoldClickable.GetBehaviour(mouseButtonID).onCompleteHoldClick.Invoke();
+            if (currentClickBehaviour != null)
+                currentClickBehaviour.onCompleteHoldClick.Invoke();
         }
 
         public void InvokeCancelHoldClick()
         {
-            if (currentHoldClickable != null)
-                currentHoldClickable.GetBehaviour(mouseButtonID).onCancelHoldClick.Invoke();
+            if (currentClickBehaviour != null)
+                currentClickBehaviour.onCancelHoldClick.Invoke();
         }
 
         public void InvokeProgressHoldClick()
         {
-            if (currentHoldClickable != null)
-                currentHoldClickable
-                    .GetBehaviour(mouseButtonID)
-                    .onProgressHoldClick.Invoke(currentHoldProgress);
+            if (currentClickBehaviour != null)
+                currentClickBehaviour.onProgressHoldClick.Invoke(currentHoldProgress);
         }
     }
 }

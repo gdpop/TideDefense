@@ -15,6 +15,7 @@ namespace TideDefense
         public override void Activate()
         {
             _gameplayManager.UIChannel.onHideAllControlHint.Invoke();
+            _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.RotateSphericalCamera);
             _gameplayManager.gameplayChannel.onSetActiveSphericalCamera.Invoke(true);
         }
 
