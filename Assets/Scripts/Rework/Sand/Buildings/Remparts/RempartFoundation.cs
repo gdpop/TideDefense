@@ -1,16 +1,6 @@
-using UnityEngine;
-
-public class RempartFoundation : MonoBehaviour
+namespace TideDefense
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    using UnityEngine;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public class RempartFoundation : Building { }
 }

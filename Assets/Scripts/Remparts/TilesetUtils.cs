@@ -27,5 +27,16 @@ namespace PierreMizzi.TilesetUtils
             new Vector2Int(0, -1),	// South
             new Vector2Int(-1, 0),  // West
         };
+
+        /// <summary> 
+		///	Neighboord coordinates from a rotation on a trigonometric circle
+		/// </summary>
+        public static List<Vector2Int> trigNeighboorsCoordinatesFour = new List<Vector2Int>(4)
+        {
+            new Vector2Int(1, 0), 	// 0°
+            new Vector2Int(0, 1), 	// 90°
+            new Vector2Int(-1, 0),  // 180°
+            new Vector2Int(0, -1),	// 270°
+        };
     }
 }

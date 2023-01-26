@@ -149,7 +149,7 @@ namespace TideDefense
             float normalizedElapsedPercentage = elapsedPercentage * 2f;
             float amountDamageDealt = _seaChannel.damageDealtByWave.Evaluate(normalizedElapsedPercentage);
 
-            Debug.Log($"normalized : {normalizedElapsedPercentage} | damageDealt : {amountDamageDealt}");
+            // Debug.Log($"normalized : {normalizedElapsedPercentage} | damageDealt : {amountDamageDealt}");
 
             building.InflictDamage(amountDamageDealt);
         }

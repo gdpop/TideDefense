@@ -40,14 +40,15 @@ namespace TideDefense
 
         public virtual void Initialize(FortificationManager manager, GridCellModel cellModel)
         {
-            _gridCell = gridCell;
+            _gridCell = cellModel;
+            _gridCell.building = this;
             _fortificationManager = manager;
         }
 
 		public virtual void InflictDamage(float damageTaken)
         {
             _health -= damageTaken;
-            Debug.Log($"Building {name} : health : {_health}");
+            // Debug.Log($"Building {name} : health : {_health}");
 
             if (_health <= 0)
                 _fortificationManager.DestroyBuilding(this);

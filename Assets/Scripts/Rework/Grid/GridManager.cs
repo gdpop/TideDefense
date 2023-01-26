@@ -18,18 +18,31 @@ namespace TideDefense
         ///</summary>
         [SerializeField]
         protected int _xLength = 12;
+        public int xLength
+        {
+            get { return _xLength; }
+        }
 
         /// <summary>
         /// Amount of row from the sea the ear of the beach
         ///</summary>
         [SerializeField]
         protected int _zLength = 12;
+        public int zLength
+        {
+            get { return _zLength; }
+        }
 
         /// <summary>
         /// Dimension of the size of a square cell, in m
         /// </summary>
         [SerializeField]
         protected float _cellSize = 0.25f;
+
+        public float cellSize
+        {
+            get { return _cellSize; }
+        }
 
         [SerializeField]
         private GameplayChannel _gameplayChannel = null;
@@ -143,7 +156,7 @@ namespace TideDefense
 
         public void CallbackCompleteHoldClickLeft(GridCellVisual visual)
         {
-            Debug.Log("Completed !" +visual.coords);
+            Debug.Log("Completed !" + visual.coords);
             GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(
                 visual.coords
             );
@@ -307,15 +320,19 @@ namespace TideDefense
             }
         }
 
-
         public void SetSandCastleOnGrid(SandCastle sandCastle)
         {
-            List<GridCellVisual> cellsAroundCastle = GetGridCellsAroundPosition(sandCastle.transform.position, 0.25f);
+            List<GridCellVisual> cellsAroundCastle = GetGridCellsAroundPosition(
+                sandCastle.transform.position,
+                0.25f
+            );
 
             foreach (GridCellVisual cellVisual in cellsAroundCastle)
             {
-                GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(cellVisual.coords);
-                Debug.Log($"CellModel at coords { cellModel.coords } is holding the castle");
+                GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(
+                    cellVisual.coords
+                );
+                Debug.Log($"CellModel at coords {cellModel.coords} is holding the castle");
                 cellModel.building = sandCastle;
             }
         }
@@ -332,12 +349,12 @@ namespace TideDefense
 
                     float distance = Vector3.Magnitude(cellVisual.transform.position - position);
 
-                    if(distance < radius)
+                    if (distance < radius)
                         cellsInRadius.Add(cellVisual);
                 }
             }
             return cellsInRadius;
-        }  
+        }
 
         #endregion
 

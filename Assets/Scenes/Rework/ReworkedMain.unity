@@ -619,7 +619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _xLength: 12
-  _zLength: 12
+  _zLength: 10
   _cellSize: 0.25
   _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
   _gridCellVisualContainer: {fileID: 79505003}
@@ -960,7 +960,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeChannel: {fileID: 11400000, guid: db4350a1275f45845a3c084178f9727b, type: 2}
-  _seaChannel: {fileID: 11400000, guid: 5d55e33d958a093489b8240536192dc1, type: 2}
+  _seaChannel: {fileID: 11400000, guid: 024f7480de087094e940292002f7e725, type: 2}
   _seaTransform: {fileID: 1836497765}
   _beach: {fileID: 374885262}
   _beachSlope: 5
@@ -1706,9 +1706,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridManager: {fileID: 477670696}
+  _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
   _prefabSandTower: {fileID: 3919147030147858698, guid: 2b78dbc0df6d7fc4b907bffb5e182493, type: 3}
   _fortificationContainer: {fileID: 1739542203}
   _sandCastle: {fileID: 1815023534}
+  _foundationPrefab: {fileID: 8831274018687523525, guid: 1142f3cb3602c2544ab8c4232fef4d09, type: 3}
+  _foundationPrefabPoolCount: 12
+  _foundationContainer: {fileID: 0}
 --- !u!1 &1620342898
 GameObject:
   m_ObjectHideFlags: 0

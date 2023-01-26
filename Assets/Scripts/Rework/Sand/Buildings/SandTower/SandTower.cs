@@ -36,7 +36,7 @@ namespace TideDefense
             float sandConcentration
         )
         {
-            Initialize(manager, gridCell);
+            Initialize(manager, cellModel);
             SetHealthFromSandConcentration(sandConcentration);
 
             _foundationBuilder.Initialize(this);

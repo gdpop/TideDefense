@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace TideDefense
 {
     public class GameplayBehaviourIdle : BaseGameplayBehaviour
@@ -15,15 +17,24 @@ namespace TideDefense
         public override void Activate()
         {
             _gameplayManager.UIChannel.onHideAllControlHint.Invoke();
-            _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.RotateSphericalCamera);
+            _gameplayManager.UIChannel.onDisplayControlHint.Invoke(
+                ControlHintType.RotateSphericalCamera
+            );
             _gameplayManager.gameplayChannel.onSetActiveSphericalCamera.Invoke(true);
+
+            if (_gameplayManager.gameplayChannel != null)
+                _gameplayManager.gameplayChannel.onClickGrid += CallbackOnClickGrid;
+        }
+
+        private void CallbackOnClickGrid(GridCellModel gridCell, RaycastHit hit)
+        {
+            _gameplayManager.rempartsManager.BuildSandTower(gridCell, 0.75f);
         }
 
         public override void Deactivate()
         {
-            // Debug.Log($"Deactivate {this}");
+            if (_gameplayManager.gameplayChannel != null)
+                _gameplayManager.gameplayChannel.onClickGrid -= CallbackOnClickGrid;
         }
-        
-
     }
 }

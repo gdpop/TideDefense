@@ -13,6 +13,11 @@ namespace TideDefense
         [SerializeField]
         private GridManager _gridManager = null;
 
+        public GridManager gridManager
+        {
+            get { return _gridManager; }
+        }
+
         [SerializeField]
         private GameplayChannel _gameplayChannel = null;
 
@@ -67,21 +72,19 @@ namespace TideDefense
                 Quaternion.identity,
                 _fortificationContainer
             );
-
             tower.Initialize(this, gridCell, sandWaterConcentration);
             _sandTowers.Add(tower);
-
-            gridCell.building = tower;
         }
 
         public void DestroyBuilding(Building rempart)
         {
+            rempart.gridCell.building = null;
+
             Debug.Log($"Amount Sand Tower : {_sandTowers.Count}");
             if (rempart.GetType() == typeof(SandTower))
                 _sandTowers.Remove((SandTower)rempart);
             Debug.Log($"Amount Sand Tower : {_sandTowers.Count}");
 
-            rempart.gridCell.building = null;
             Destroy(rempart.gameObject);
         }
 
@@ -114,18 +117,46 @@ namespace TideDefense
 
         #region Foundation
 
-
-
+        [Header("Foundation")]
         [SerializeField]
-        private RempartFoundation _foundationPrefab = null;
-        public RempartFoundation foundationPrefab
+        private GameObject _foundationPrefab = null;
+        public GameObject foundationPrefab
         {
             get { return _foundationPrefab; }
         }
 
+        [SerializeField]
+        private int _foundationPrefabPoolCount = 12;
+        public int foundationPrefabPoolCount
+        {
+            get { return _foundationPrefabPoolCount; }
+            set { _foundationPrefabPoolCount = value; }
+        }
+
+        private List<RempartFoundation> _foundations = new List<RempartFoundation>();
+
+        /// <summary>
+        /// The amount of RempartFoundation possibly selectable by RempartFoundationBuilders
+        /// Cannot create more RempartFoundation than the biggest side of the grid
+        /// </summary>
+        public int handledFoundationPrefabAmount
+        {
+            get { return Mathf.Max(_gridManager.xLength, _gridManager.zLength) - 1; }
+        }
+
         private void InitializeFoundations()
         {
-            _foundationPrefab.gameObject.Populate(12);
+            _foundationPrefab.Populate(foundationPrefabPoolCount);
+        }
+
+        public void BuildFoundation(
+            SandTower tower,
+            RempartFoundation foundation,
+            Vector2Int coords
+        )
+        {
+            foundation.transform.SetParent(_fortificationContainer);
+            _foundations.Add(foundation);
         }
 
         public void CallbackOnChangeTool(BeachTool beachTool)

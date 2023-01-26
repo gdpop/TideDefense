@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5c14b3d1dfa1954c9716228c466ab46, type: 3}
+  m_Name: SeaChannel_Debug
+  m_EditorClassIdentifier: 
+  _minTideBeachCoverage: 1
+  _maxTideBeachCoverage: 1
+  _waveCrashEase:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.5298743
+      outSlope: 1.5298743
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.0971223
+    - serializedVersion: 3
+      time: 0.35588354
+      value: 0.41861084
+      inSlope: 0.8562635
+      outSlope: 0.8562635
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6269183
+      value: 0.5724827
+      inSlope: 0.7214066
+      outSlope: 0.7214066
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1.5405711
+      outSlope: 1.5405711
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07348412
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _waveCrashDuration: 5
+  _minDelayBetweenWaves: 1
+  _maxDelayBewteenWaves: 2
+  _minWaveStrength: 0.2
+  _maxWaveStrength: 0.3
+  _minDelayWaveSegments: 0.1
+  _maxDelayWaveSegments: 0.15
+  _strengthIndividualWaveSegment:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.5
+      inSlope: -0.5
+      outSlope: -0.5
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.5
+      outSlope: -0.5
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _damageDealtByWave:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 66
+      inSlope: -0.07007045
+      outSlope: -0.07007045
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.20195271
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07656735
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
