@@ -2,17 +2,29 @@ namespace TideDefense
 {
     using CodesmithWorkshop.Useful;
     using PierreMizzi.MouseInteractable;
+    using ToolBox.Pools;
     using UnityEngine;
 
-
-    // TODO : 
-    public class BuildRempartHandle : MonoBehaviour
+    /// <summary>
+    /// Drag & drop rempart foundation on the beach, originated from a Sand Tower
+    /// Floats above a Sand Tower when the shovel is grabbed
+    /// </summary>
+    public class RempartFoundationBuilder : MonoBehaviour
     {
-        
         private FortificationManager _fortificationManager = null;
 
-        [SerializeField] private GridCellVisual _gridCell = null;
-        public GridCellVisual gridCell { get { return _gridCell; } set { _gridCell = value; } }
+        [SerializeField]
+        private GridCellModel _gridCell = null;
+        public GridCellModel gridCell
+        {
+            get { return _gridCell; }
+            set { _gridCell = value; }
+        }
+
+        public SandTower _sandTower = null;
+
+        [SerializeField]
+        public GameObject _visual = null;
 
         #region Raycast in plane
 
@@ -28,17 +40,26 @@ namespace TideDefense
 
         [SerializeField]
         private Transform _debugTransform = null;
+
         [SerializeField]
         private HoldClickable _clickable = null;
         private bool _isClicked = false;
         private bool _isHandling = false;
 
+        /// <summary>
+        /// Current side targeted by the player when building foundation
+        /// 0 = Right, 1 = forward, 2 = Left, 3 = backward
+        /// </summary>
+        private int _handledSide = 0;
+
+        /// <summary>
+        /// Amount of rempartFoundation layed by the player while targeting
+        /// </summary>
+        private int _handledAmountFoundation = 0;
+
         #endregion
 
         #region Foundation
-
-        [SerializeField]
-        private SandTower _sandTower = null;
 
         [SerializeField]
         private Transform _fondationContainer = null;
@@ -49,6 +70,7 @@ namespace TideDefense
 
         #endregion
 
+        #region MonoBehaviour
 
         private void Start()
         {
@@ -59,7 +81,6 @@ namespace TideDefense
             HideAllFoundation();
 
             _foundationTreshold = Mathf.Sqrt(Mathf.Pow(_cellSize / 2f, 2f) * 2f);
-            Debug.Log(_foundationTreshold);
         }
 
         private void Update()
@@ -74,6 +95,22 @@ namespace TideDefense
                     ReleaseHandle();
             }
         }
+
+        #endregion
+
+        public void Activate()
+        {
+            _visual.SetActive(true);
+            _clickable.isInteractable = true;
+        }
+
+        public void Deactivate()
+        {
+            _visual.SetActive(true);
+            _clickable.isInteractable = true;
+        }
+
+        #region Handle Clickable
 
         private void InitializeClickable()
         {
@@ -90,6 +127,7 @@ namespace TideDefense
         private void CallbackMouseDown(RaycastHit hit)
         {
             _isClicked = true;
+            Debug.Log("CallbackMouseDown");
         }
 
         private void UpdateHandle()
@@ -107,10 +145,10 @@ namespace TideDefense
                     Mathf.Rad2Deg * Mathf.Atan2(_positionOnPlane.z, _positionOnPlane.x);
                 rotation = UtilsClass.ToFullAngle(rotation);
                 rotation = UtilsClass.OffsetFullAngle(rotation, 45f);
-                int sideInt = Mathf.FloorToInt(rotation / 90f);
+                _handledSide = Mathf.FloorToInt(rotation / 90f);
                 _fondationContainer.transform.localRotation = Quaternion.Euler(
                     0f,
-                    sideInt * -90f,
+                    _handledSide * -90f,
                     0f
                 );
 
@@ -118,8 +156,8 @@ namespace TideDefense
                 float length = _positionOnPlane.magnitude;
                 length -= _foundationTreshold;
                 length = Mathf.Max(0f, length);
-                int amount = Mathf.FloorToInt(length / _cellSize);
-                DisplayFoundation(amount);
+                _handledAmountFoundation = Mathf.FloorToInt(length / _cellSize);
+                DisplayFoundation(_handledAmountFoundation);
             }
         }
 
@@ -128,7 +166,20 @@ namespace TideDefense
             _isClicked = false;
             _isHandling = false;
 
-            Debug.Log("Is Release !");
+            Debug.Log($"Side : {_handledSide} | Amount : {_handledAmountFoundation}");
+
+            _handledSide = -1; 
+            _handledAmountFoundation = 0;
+        }
+
+        #endregion
+
+        #region Foundation
+
+        public void Initialize(SandTower tower)
+        {
+            _sandTower = tower;
+            // _sandTower.fortificationManager.foundationPrefab.gameObject.Reuse
         }
 
         private void HideAllFoundation()
@@ -144,5 +195,7 @@ namespace TideDefense
                 child.gameObject.SetActive(child.GetSiblingIndex() <= amount - 1);
             }
         }
+
+        #endregion
     }
 }
