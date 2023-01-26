@@ -1,7 +1,7 @@
-UnityEngine;
 
 namespace TideDefense
 {
+    using UnityEngine;
     public class SeaManager : MonoBehaviour
     {
         [SerializeField]
