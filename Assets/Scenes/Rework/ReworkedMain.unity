@@ -1712,7 +1712,6 @@ MonoBehaviour:
   _sandCastle: {fileID: 1815023534}
   _foundationPrefab: {fileID: 8831274018687523525, guid: 1142f3cb3602c2544ab8c4232fef4d09, type: 3}
   _foundationPrefabPoolCount: 12
-  _foundationContainer: {fileID: 0}
 --- !u!1 &1620342898
 GameObject:
   m_ObjectHideFlags: 0

@@ -78,7 +78,7 @@ namespace TideDefense
 
         public void DestroyBuilding(Building rempart)
         {
-            rempart.gridCell.building = null;
+            rempart.gridCellModel.building = null;
 
             Debug.Log($"Amount Sand Tower : {_sandTowers.Count}");
             if (rempart.GetType() == typeof(SandTower))
@@ -155,6 +155,8 @@ namespace TideDefense
             Vector2Int coords
         )
         {
+            GridCellModel cellModel = _gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(coords);
+            foundation.Initialize(this, cellModel);
             foundation.transform.SetParent(_fortificationContainer);
             _foundations.Add(foundation);
         }
@@ -177,6 +179,20 @@ namespace TideDefense
         {
             foreach (SandTower tower in _sandTowers)
                 tower.DeactivateFoundationBuilder();
+        }
+
+        public void StartHandleFoundationBuilder(SandTower handlingSandTower)
+        {
+            foreach (SandTower sandTower in _sandTowers)
+            {
+                if(sandTower != handlingSandTower)
+                    sandTower.DeactivateFoundationBuilder();
+            }
+        }
+
+        public void ReleaseHandleFoundationBuilder()
+        {
+            ActivateFoundationBuilders();
         }
 
         #endregion

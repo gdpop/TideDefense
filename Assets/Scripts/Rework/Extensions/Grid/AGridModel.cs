@@ -121,13 +121,13 @@ namespace PierreMizzi.Grid
         {
             if (coords.x < 0 || _xLength - 1 < coords.x)
             {
-                Debug.LogWarning($"{coords.x}:{coords.y} : {coords.x} is wrong");
+                // Debug.LogWarning($"{coords.x}:{coords.y} : {coords.x} is wrong");
                 return false;
             }
 
             if (coords.y < 0 || _zLength - 1 < coords.y)
             {
-                Debug.LogWarning($"{coords.x}:{coords.y} : {coords.y} is wrong");
+                // Debug.LogWarning($"{coords.x}:{coords.y} : {coords.y} is wrong");
                 return false;
             }
 

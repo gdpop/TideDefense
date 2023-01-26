@@ -9,12 +9,6 @@ namespace TideDefense
 		#region Fields
 
         private SandTower _rempart = null;
-
-        private void Awake()
-        {
-            _flag.transform.localPosition = Vector3.zero;
-        }
-
         public void Initialize(SandTower rempart)
         {
             _rempart = rempart;

@@ -14,11 +14,11 @@ namespace TideDefense
             set { _fortificationManager = value; }
         }
 
-		private GridCellModel _gridCell = null;
-        public GridCellModel gridCell
+		private GridCellModel _gridCellModel = null;
+        public GridCellModel gridCellModel
         {
-            get { return _gridCell; }
-            set { _gridCell = value; }
+            get { return _gridCellModel; }
+            set { _gridCellModel = value; }
         }
 
 		protected float _health = 100f;
@@ -40,8 +40,8 @@ namespace TideDefense
 
         public virtual void Initialize(FortificationManager manager, GridCellModel cellModel)
         {
-            _gridCell = cellModel;
-            _gridCell.building = this;
+            _gridCellModel = cellModel;
+            _gridCellModel.building = this;
             _fortificationManager = manager;
         }
 

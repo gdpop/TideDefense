@@ -1,5 +1,7 @@
 namespace TideDefense
 {
+    using System.Collections.Generic;
+    using PierreMizzi.TilesetUtils;
     using UnityEngine;
     using VirtuoseReality.Rendering;
 
@@ -21,6 +23,15 @@ namespace TideDefense
 
         #endregion
 
+        #region Rempart Foundation Builder
+
+        private List<Building> _neighboorBuildings = new List<Building>();
+
+        [SerializeField]
+        private List<GameObject> _linkingFoundations = new List<GameObject>();
+
+        #endregion
+
         #endregion
 
         #region Methods
@@ -28,6 +39,7 @@ namespace TideDefense
         private void Awake()
         {
             _flagPole.Initialize(this);
+            _neighboorBuildings = new List<Building>(4) { null, null, null, null };
         }
 
         public void Initialize(
@@ -41,6 +53,8 @@ namespace TideDefense
 
             _foundationBuilder.Initialize(this);
             _foundationBuilder.Deactivate();
+
+            ManageLinkingFoundation(-1);
         }
 
         #region Health
@@ -74,12 +88,39 @@ namespace TideDefense
 
         public void ActivateFoundationBuilder()
         {
+            RefreshNeighboorBuildings();
             _foundationBuilder.Activate();
         }
 
         public void DeactivateFoundationBuilder()
         {
             _foundationBuilder.Deactivate();
+        }
+
+        public void ManageLinkingFoundation(int selectedSide)
+        {
+            int count = _linkingFoundations.Count;
+            for (int i = 0; i < count; i++)
+            {
+                _linkingFoundations[i].SetActive(i == selectedSide);
+            }
+        }
+
+        public void RefreshNeighboorBuildings()
+        {
+            Vector2Int coords;
+            GridCellModel cellModel;
+            int count = TilesetUtils.trigNeighboorsCoordinatesFour.Count;
+            for (int i = 0; i < count; i++)
+            {
+                coords = gridCellModel.coords + TilesetUtils.trigNeighboorsCoordinatesFour[i];
+                cellModel =
+                    _fortificationManager.gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(
+                        coords
+                    );
+
+                _neighboorBuildings[i] = cellModel.building;
+            }
         }
 
         #endregion

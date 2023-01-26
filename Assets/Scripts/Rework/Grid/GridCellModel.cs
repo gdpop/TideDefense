@@ -4,7 +4,7 @@ namespace TideDefense
 
     public class GridCellModel : AGridCell
     {
-        public Building building;
+        public Building building = null;
         public BeachTool currentTool = null;
 
         public bool isEmpty

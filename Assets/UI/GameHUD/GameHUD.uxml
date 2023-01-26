@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="GameHUD/ControlsHints/ControlHintText.uss" />
+    <Style src="GameHUD.uss" />
     <ui:VisualElement name="Root" style="align-items: center; height: 100%; width: 100%; justify-content: flex-end;">
         <ui:VisualElement name="ControlsHintsContainer" style="flex-direction: row; height: 54px; justify-content: space-around; align-items: stretch; -unity-background-scale-mode: stretch-to-fill; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; flex-basis: initial; width: 313px;">
             <ui:VisualElement name="LeftClickContainer" style="align-items: flex-end; justify-content: center; width: 111px;">

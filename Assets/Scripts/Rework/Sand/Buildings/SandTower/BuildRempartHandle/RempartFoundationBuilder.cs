@@ -108,7 +108,7 @@ namespace TideDefense
 
         public void Deactivate()
         {
-            _visual.SetActive(true);
+            _visual.SetActive(false);
             _clickable.isInteractable = true;
         }
 
@@ -122,20 +122,20 @@ namespace TideDefense
                     InteractableManager.MOUSE_LEFT
                 );
 
-                leftClick.onMouseDown += CallbackMouseDown;
+                leftClick.onMouseDown += CallbackStartHandle;
             }
         }
 
-        private void CallbackMouseDown(RaycastHit hit)
+        private void CallbackStartHandle(RaycastHit hit)
         {
             _isClicked = true;
             ManageFoundationsInitialization();
+            _manager.StartHandleFoundationBuilder(_sandTower);
         }
 
         private void UpdateHandle()
         {
             _screenRay = _camera.ScreenPointToRay(Input.mousePosition);
-            Vector3 testPosition;
 
             if (_plane.Raycast(_screenRay, out _enter))
             {
@@ -172,6 +172,7 @@ namespace TideDefense
 
             Debug.Log($"Side : {_selectedSide} | Amount : {_selectedFoundationAmount}");
             ManageFoundationsReleasing();
+            _manager.ReleaseHandleFoundationBuilder();
 
             _selectedSide = -1;
             _selectedFoundationAmount = 0;
@@ -244,8 +245,10 @@ namespace TideDefense
                 if (!validCoords)
                     break;
 
+                _sandTower.ManageLinkingFoundation(_selectedSide);
+
                 cellModel = _manager.gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(
-                    GetHandledCoords(amount)
+                    coords
                 );
 
                 if ((i <= amount - 1) && validCoords && cellModel.isEmpty)
@@ -256,11 +259,7 @@ namespace TideDefense
                     );
                 }
                 else
-                    foundation.gameObject.SetActive(true);
-
-                foundation.gameObject.SetActive(
-                    (i <= amount - 1) && validCoords && cellModel.isEmpty
-                );
+                    foundation.gameObject.SetActive(false);
             }
         }
 
@@ -269,7 +268,7 @@ namespace TideDefense
         /// </summary>
         private Vector2Int GetHandledCoords(int amount)
         {
-            return _sandTower.gridCell.coords
+            return _sandTower.gridCellModel.coords
                 + (TilesetUtils.trigNeighboorsCoordinatesFour[_selectedSide] * amount);
         }
 

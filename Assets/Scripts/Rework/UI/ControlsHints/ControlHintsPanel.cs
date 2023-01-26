@@ -27,6 +27,8 @@ namespace TideDefense
 
         [SerializeField]
         private UIDocument _document = null;
+        
+        
 
 
 		private Dictionary<ControlHintType, VisualElement> _controlHintLabels = new Dictionary<ControlHintType, VisualElement>();
