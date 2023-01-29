@@ -26,6 +26,7 @@ namespace TideDefense
         #region Rempart Foundation Builder
 
         private List<Building> _neighboorBuildings = new List<Building>();
+        
 
         [SerializeField]
         private List<GameObject> _linkingFoundations = new List<GameObject>();
