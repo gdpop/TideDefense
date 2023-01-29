@@ -5,9 +5,9 @@ namespace TideDefense
 {
     public class GameplayBehaviourBucket : BaseGameplayBehaviour
     {
-        public new ToolType state
+        public new BeachToolType state
         {
-            get { return ToolType.Bucket; }
+            get { return BeachToolType.Bucket; }
         }
 
         public GameplayBehaviourBucket(GameplayManager manager)

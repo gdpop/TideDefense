@@ -9,9 +9,9 @@ namespace TideDefense
 
         protected GameplayManager _gameplayManager = null;
 
-        public ToolType state
+        public BeachToolType state
         {
-            get { return ToolType.None; }
+            get { return BeachToolType.None; }
         }
 
         public BaseGameplayBehaviour() { }

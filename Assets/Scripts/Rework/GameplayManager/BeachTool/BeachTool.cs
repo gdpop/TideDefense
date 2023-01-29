@@ -14,8 +14,8 @@ namespace TideDefense
         protected GameplayManager _manager = null;
 
         [SerializeField]
-        private ToolType _toolType = ToolType.None;
-        public ToolType toolType
+        private BeachToolType _toolType = BeachToolType.None;
+        public BeachToolType toolType
         {
             get { return _toolType; }
         }

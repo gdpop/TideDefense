@@ -2,10 +2,12 @@ namespace TideDefense
 {
     using System.Collections.Generic;
     using DG.Tweening;
+    using PierreMizzi.TilesetUtils;
     using UnityEngine;
-	using VirtuoseReality.Extension.AudioManager;
+    using VirtuoseReality.Extension.AudioManager;
+    using VirtuoseReality.Helpers;
 
-	public class GameplayManager : MonoBehaviour
+    public class GameplayManager : MonoBehaviour
     {
 		#region Fields
 
@@ -53,8 +55,8 @@ namespace TideDefense
         }
 
         [SerializeField]
-        private Bucket _bucket = null;
-        public Bucket bucket
+        private ContainerTool _bucket = null;
+        public ContainerTool bucket
         {
             get { return _bucket; }
         }
@@ -70,12 +72,15 @@ namespace TideDefense
 
         private BaseGameplayBehaviour _currentStateBehaviour = null;
 
-        private Dictionary<ToolType, BaseGameplayBehaviour> _stateBehaviours =
-            new Dictionary<ToolType, BaseGameplayBehaviour>();
+        private Dictionary<BeachToolType, BaseGameplayBehaviour> _stateBehaviours =
+            new Dictionary<BeachToolType, BaseGameplayBehaviour>();
 
         #endregion
 
         #region Beach Tool
+
+        [SerializeField]
+        private List<BeachTool> _availableTools = new List<BeachTool>();
 
         /// <summary>
         /// Tool that does nothing. onChangeTool.Invoke(null); does nothing so I use it here
@@ -135,8 +140,9 @@ namespace TideDefense
 
             // Initialize the bucket as dropped on the beach
             InitializeStateBehaviour();
-            InitializeTool(_bucket);
-            InitializeTool(_shovel);
+
+            foreach (BeachTool beachTool in _availableTools)
+                InitializeTool(beachTool);
         }
 
         private void OnDestroy()
@@ -155,17 +161,17 @@ namespace TideDefense
 
         private void InitializeStateBehaviour()
         {
-            _stateBehaviours = new Dictionary<ToolType, BaseGameplayBehaviour>()
+            _stateBehaviours = new Dictionary<BeachToolType, BaseGameplayBehaviour>()
             {
-                { ToolType.None, new GameplayBehaviourIdle(this) },
-                { ToolType.Shovel, new GameplayBehaviourShovel(this) },
-                { ToolType.Bucket, new GameplayBehaviourBucket(this) },
+                { BeachToolType.None, new GameplayBehaviourIdle(this) },
+                { BeachToolType.Shovel, new GameplayBehaviourShovel(this) },
+                { BeachToolType.Bucket, new GameplayBehaviourBucket(this) },
             };
 
-            ChangeStateBehaviour(ToolType.None);
+            ChangeStateBehaviour(BeachToolType.None);
         }
 
-        private void ChangeStateBehaviour(ToolType toolType)
+        private void ChangeStateBehaviour(BeachToolType toolType)
         {
             if (_stateBehaviours[toolType] != null)
             {
@@ -260,9 +266,8 @@ namespace TideDefense
                     _currentTool.transform.localPosition = _grabBucketAnchor.localPosition;
                     _currentTool.SetGrabbed();
                 });
-        
+
             SoundManager.PlaySound(SoundDataIDStatic.BEACH_TOOL_GRAB);
-            
         }
 
         private void LockBucketJoint()
@@ -304,10 +309,61 @@ namespace TideDefense
 
                     SetCurrentTool(_noneTool);
                 });
-       
-            SoundManager.PlaySound(SoundDataIDStatic.BEACH_TOOL_DROP);
 
+            SoundManager.PlaySound(SoundDataIDStatic.BEACH_TOOL_DROP);
         }
+
+        #region Display Diggable
+
+        [ContextMenu("DisplayDiggable")]
+        public void DisplayDiggableHints()
+        {
+            // List of coordinates where there is multiple BeachToolType.Container around
+            List<Vector2Int> duplicateDiggableCoords = new List<Vector2Int>();
+            // Key = Coords in the grid, Value = Offset to find the tool next to hit
+            Dictionary<Vector2Int, Vector2Int> coordWithOffsetCoords =
+                new Dictionary<Vector2Int, Vector2Int>();
+
+            foreach (BeachTool tool in _availableTools)
+            {
+                if (BitMaskHelper.CheckMask((int)tool.toolType, (int)BeachToolType.Container))
+                {
+                    Vector2Int tilesetCoords = new Vector2Int();
+                    Vector2Int neighboorCoords = new Vector2Int();
+
+                    // We go through all 8 surrouding cells
+                    for (int i = 0; i < TilesetUtils.neighboorsCoordinatesEight.Count; i++)
+                    {
+                        tilesetCoords = TilesetUtils.neighboorsCoordinatesEight[i];
+                        neighboorCoords = tool.currentGridCell.coords + tilesetCoords;
+
+                        if (
+                            !duplicateDiggableCoords.Contains(neighboorCoords)
+                            && !coordWithOffsetCoords.ContainsKey(neighboorCoords)
+                        )
+                        {
+                            coordWithOffsetCoords.Add(neighboorCoords, -tilesetCoords);
+                        }
+                        else
+                        {
+                            Debug.Log($"The cell is shared ! : {neighboorCoords}");
+                            if(duplicateDiggableCoords.Contains(neighboorCoords))
+                                duplicateDiggableCoords.Add(neighboorCoords);
+                            
+                            if(coordWithOffsetCoords.ContainsKey(neighboorCoords))
+                                coordWithOffsetCoords.Remove(neighboorCoords);
+                        }
+                    }
+                }
+            }
+
+
+            _gridManager.DisplayDiggableHints(coordWithOffsetCoords);
+        }
+
+        public void HideDiggableHints() { }
+
+        #endregion
 
         #endregion
 

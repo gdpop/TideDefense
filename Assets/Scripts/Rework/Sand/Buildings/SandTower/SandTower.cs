@@ -76,7 +76,7 @@ namespace TideDefense
 
         public void SetHealthFromSandConcentration(float sandConcentration)
         {
-            _materialPropertyBlock.SetFloat(Bucket.SAND_CONCENTRATION_PROPERTY, sandConcentration);
+            _materialPropertyBlock.SetFloat(ContainerTool.SAND_CONCENTRATION_PROPERTY, sandConcentration);
             _quality = _qualityFromSandConcentration.Evaluate(sandConcentration);
 
             _health = _maxHealth + (_quality * _qualityCoef);

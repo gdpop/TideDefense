@@ -163,9 +163,9 @@ namespace TideDefense
 
         public void CallbackOnChangeTool(BeachTool beachTool)
         {
-            if (beachTool.toolType == ToolType.Shovel)
+            if (beachTool.toolType == BeachToolType.Shovel)
                 ActivateFoundationBuilders();
-            else if (beachTool.toolType == ToolType.None)
+            else if (beachTool.toolType == BeachToolType.None)
                 DeactivateFoundationBuilders();
         }
 

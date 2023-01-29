@@ -79,6 +79,13 @@ namespace TideDefense
 
 		#endregion
 
+        #region Diggable
+
+        [Header("Diggable")]
+        [SerializeField]
+        private List<DiggableHintSetting> _diggableHintSettings = new List<DiggableHintSetting>();
+        #endregion
+
 		#endregion
 
 		#region Methods
@@ -109,14 +116,6 @@ namespace TideDefense
         #endregion
 
 		#region Gameplay
-
-        private void CallbackOnClickBeach(RaycastHit hit)
-        {
-            GridCellModel gridCell = gridModel.GetCellFromWorldPosition<GridCellModel>(hit.point);
-
-            if (gridCell != null)
-                _gameplayChannel.onClickGrid.Invoke(gridCell, hit);
-        }
 
         public void DropToolOnGrid(BeachTool tool, GridCellModel gridCell)
         {
@@ -235,7 +234,7 @@ namespace TideDefense
                     // We found the GridCell containing the bucket !
                     if (
                         cellModel.currentTool != null
-                        && cellModel.currentTool.toolType == ToolType.Bucket
+                        && cellModel.currentTool.toolType == BeachToolType.Bucket
                     )
                     {
                         Vector2Int neighboorCoords = new Vector2Int();
@@ -266,6 +265,34 @@ namespace TideDefense
                             }
                         }
                         break;
+                    }
+                }
+            }
+        }
+
+        public void DisplayDiggableHints(Dictionary<Vector2Int, Vector2Int> coordWithOffsetCoords)
+        {
+            GridCellModel cellModel;
+            GridCellModel cellModelTool;
+            GridCellVisual cellVisual;
+            DiggableHintSetting setting;
+            foreach (KeyValuePair<Vector2Int, Vector2Int> pair in coordWithOffsetCoords)
+            {
+                // We can do something if the coordinates are valid
+                if (gridModel.CheckValidCoordinates(pair.Key))
+                {
+                    cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(pair.Key);
+                    cellModelTool = gridModel.GetCellFromCoordinates<GridCellModel>(
+                        pair.Key + pair.Value
+                    );
+
+                    // We can do something if the cell is empty
+                    if (cellModel.isEmpty)
+                    {
+                        setting = _diggableHintSettings.Find(item => item.toolType == cellModelTool.currentTool.toolType);
+
+                        cellVisual = _gridCellVisualHash[pair.Key.x][pair.Key.y];
+                        cellVisual.DisplayDiggableHints(setting);
                     }
                 }
             }

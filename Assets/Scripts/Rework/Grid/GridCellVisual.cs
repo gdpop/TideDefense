@@ -24,6 +24,7 @@ namespace TideDefense
         #region Hints
 
         public GameObject _diggableHintSprite = null;
+        public SpriteRenderer _diggableHintBackground = null;
         public GameObject _buildableHintSprite = null;
 
         #endregion
@@ -70,6 +71,12 @@ namespace TideDefense
 
         public void DisplayDiggableHints()
         {
+            _diggableHintSprite.SetActive(true);
+        }
+
+        public void DisplayDiggableHints(DiggableHintSetting setting)
+        {
+            _diggableHintBackground.color = setting.color;
             _diggableHintSprite.SetActive(true);
         }
 

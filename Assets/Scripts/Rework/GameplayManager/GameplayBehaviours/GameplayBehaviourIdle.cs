@@ -4,9 +4,9 @@ namespace TideDefense
 {
     public class GameplayBehaviourIdle : BaseGameplayBehaviour
     {
-        public new ToolType state
+        public new BeachToolType state
         {
-            get { return ToolType.None; }
+            get { return BeachToolType.None; }
         }
 
         public GameplayBehaviourIdle(GameplayManager manager)

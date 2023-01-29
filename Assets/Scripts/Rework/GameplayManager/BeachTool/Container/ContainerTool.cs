@@ -28,7 +28,7 @@ namespace TideDefense
     
     */
 
-    public class Bucket : BeachTool
+    public class ContainerTool : BeachTool
     {
 		#region Fields
 
@@ -36,27 +36,26 @@ namespace TideDefense
 
         [Header("Content Visual")]
         [SerializeField]
-        private Transform _bucketContentVisual = null;
+        protected Transform _bucketContentVisual = null;
 
         [SerializeField]
-        private Transform _contentVisualEmptyAnchor = null;
+        protected Transform _contentVisualEmptyAnchor = null;
 
         [SerializeField]
-        private Transform _contentVisualFullAnchor = null;
+        protected Transform _contentVisualFullAnchor = null;
 
-        private SandWaterFilling _content = new SandWaterFilling();
+        protected SandWaterFilling _content = new SandWaterFilling();
 
-        public SandWaterFilling content {
-            get{
-                return _content;
-            }
+        public SandWaterFilling content
+        {
+            get { return _content; }
         }
 
         [SerializeField]
-        private float _maxQuantity = 1f;
+        protected float _maxQuantity = 1f;
 
         [SerializeField]
-        private MaterialPropertyBlockModifier _contentVisualPropertyBlock = null;
+        protected MaterialPropertyBlockModifier _contentVisualPropertyBlock = null;
 
         public static string SAND_CONCENTRATION_PROPERTY = "_SandConcentration";
 
@@ -87,7 +86,7 @@ namespace TideDefense
 
 		#region Content
 
-        public void FillBucket(SandWaterFilling added)
+        public virtual void Fill(SandWaterFilling added)
         {
             // If what's added is too much, we only take what we need to fill the bucket
             // added.sandConcentration is the same
@@ -101,11 +100,15 @@ namespace TideDefense
 
             _content = _content + added;
             RefreshContentVisual(fromContent);
-            // Debug.Log("_content");
-            // Debug.Log(_content.ToString());
         }
 
-        private void InitializeContent()
+        public virtual void Empty()
+        {
+            _content.quantity = 0;
+            ResetContentVisual();
+        }
+
+        protected virtual void InitializeContent()
         {
             _content = new SandWaterFilling();
 
@@ -115,7 +118,7 @@ namespace TideDefense
             );
         }
 
-        public void RefreshContentVisual(SandWaterFilling fromContent)
+        public virtual void RefreshContentVisual(SandWaterFilling fromContent)
         {
             DOVirtual.Float(
                 fromContent.quantity,
@@ -135,7 +138,7 @@ namespace TideDefense
             );
         }
 
-        private Vector3 GetContentVisualLocalPosFromQuantity(float quantity)
+        protected Vector3 GetContentVisualLocalPosFromQuantity(float quantity)
         {
             return Vector3.Lerp(
                 _contentVisualEmptyAnchor.localPosition,
@@ -144,13 +147,7 @@ namespace TideDefense
             );
         }
 
-        public void Empty()
-        {
-            _content.quantity = 0;
-            ResetContentVisual();
-        }
-
-        private void ResetContentVisual()
+        protected virtual void ResetContentVisual()
         {
             _bucketContentVisual.gameObject.SetActive(false);
         }

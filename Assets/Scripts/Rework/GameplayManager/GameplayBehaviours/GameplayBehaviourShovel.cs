@@ -6,9 +6,9 @@ namespace TideDefense
 {
     public class GameplayBehaviourShovel : BaseGameplayBehaviour
     {
-        public new ToolType state
+        public new BeachToolType state
         {
-            get { return ToolType.Shovel; }
+            get { return BeachToolType.Shovel; }
         }
 
         public GameplayBehaviourShovel(GameplayManager manager)
@@ -76,7 +76,7 @@ namespace TideDefense
             );
             // Debug.Log("Filling");
             // Debug.Log(filling.ToString());
-            _gameplayManager.bucket.FillBucket(filling);
+            _gameplayManager.bucket.Fill(filling);
         }
 
         /// <summary>

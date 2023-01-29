@@ -48,14 +48,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec243e84560883478816eb6ef0c305d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toolType: 1
+  _toolType: 3
   status: 1
   _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
   _interactableBoxCollider: {fileID: 1102918535372186740}
   _holdClickable: {fileID: 544728692590333890}
   _hoverable: {fileID: 4714137656133117095}
   _hoverDuration: 0.1
-  _hoverYOffset: 0.1
+  _hoverYOffset: 0.05
   _grabBoxCollider: {fileID: 863926731}
   _bucketContentVisual: {fileID: 5774146014012106553}
   _contentVisualEmptyAnchor: {fileID: 3703410740350092644}
