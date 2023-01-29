@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7689d2766dad640badd1a20112ed3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toolType: 2
+  _toolType: 8
   status: 1
   _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
   _interactableBoxCollider: {fileID: 6115956122589171843}

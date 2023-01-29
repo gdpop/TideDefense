@@ -1,6 +1,7 @@
 namespace TideDefense
 {
-    using System.Collections.Generic;
+	using System;
+	using System.Collections.Generic;
     using PierreMizzi.TilesetUtils;
     using UnityEngine;
 
@@ -155,7 +156,6 @@ namespace TideDefense
 
         public void CallbackCompleteHoldClickLeft(GridCellVisual visual)
         {
-            Debug.Log("Completed !" + visual.coords);
             GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(
                 visual.coords
             );
@@ -199,7 +199,7 @@ namespace TideDefense
                 List<GridCellVisual> column = new List<GridCellVisual>();
                 for (int z = 0; z < _zLength; z++)
                 {
-                    GridCellVisual visual = Object.Instantiate(
+                    GridCellVisual visual = UnityEngine.Object.Instantiate(
                         _gridCellVisualPrefab,
                         _gridCellVisualContainer
                     );
@@ -216,7 +216,7 @@ namespace TideDefense
                 _gridCellVisualHash.Add(column);
             }
         }
-
+        [Obsolete]
         public void DisplayDiggableHints()
         {
             Vector2Int coords = new Vector2Int();

@@ -630,10 +630,10 @@ MonoBehaviour:
   _diggableHintSettings:
   - name: Bucket
     color: {r: 0.20000002, g: 0.427451, b: 0.21176472, a: 0.5019608}
-    toolType: 3
+    toolType: 6
   - name: RempartMold_Path
     color: {r: 0.93725497, g: 0.6431373, b: 0.098039225, a: 0.5019608}
-    toolType: 9
+    toolType: 18
 --- !u!1 &497398431
 GameObject:
   m_ObjectHideFlags: 0

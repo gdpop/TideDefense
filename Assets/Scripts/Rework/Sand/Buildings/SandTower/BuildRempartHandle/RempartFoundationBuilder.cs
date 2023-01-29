@@ -130,7 +130,6 @@ namespace TideDefense
         {
             _isClicked = true;
             ManageFoundationsInitialization();
-            _manager.StartHandleFoundationBuilder(_sandTower);
         }
 
         private void UpdateHandle()
@@ -172,7 +171,7 @@ namespace TideDefense
 
             Debug.Log($"Side : {_selectedSide} | Amount : {_selectedFoundationAmount}");
             ManageFoundationsReleasing();
-            _manager.ReleaseHandleFoundationBuilder();
+            // _manager.ReleaseHandleFoundationBuilder();
 
             _selectedSide = -1;
             _selectedFoundationAmount = 0;

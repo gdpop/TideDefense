@@ -46,15 +46,6 @@ namespace TideDefense
             _gridManager.SetSandCastleOnGrid(_sandCastle);
 
             InitializeFoundations();
-
-            if (_gameplayChannel != null)
-                _gameplayChannel.onChangeTool += CallbackOnChangeTool;
-        }
-
-        private void OnDestroy()
-        {
-            if (_gameplayChannel != null)
-                _gameplayChannel.onChangeTool -= CallbackOnChangeTool;
         }
 
         #endregion
@@ -155,44 +146,12 @@ namespace TideDefense
             Vector2Int coords
         )
         {
-            GridCellModel cellModel = _gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(coords);
+            GridCellModel cellModel = _gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(
+                coords
+            );
             foundation.Initialize(this, cellModel);
             foundation.transform.SetParent(_fortificationContainer);
             _foundations.Add(foundation);
-        }
-
-        public void CallbackOnChangeTool(BeachTool beachTool)
-        {
-            if (beachTool.toolType == BeachToolType.Shovel)
-                ActivateFoundationBuilders();
-            else if (beachTool.toolType == BeachToolType.None)
-                DeactivateFoundationBuilders();
-        }
-
-        public void ActivateFoundationBuilders()
-        {
-            foreach (SandTower tower in _sandTowers)
-                tower.ActivateFoundationBuilder();
-        }
-
-        public void DeactivateFoundationBuilders()
-        {
-            foreach (SandTower tower in _sandTowers)
-                tower.DeactivateFoundationBuilder();
-        }
-
-        public void StartHandleFoundationBuilder(SandTower handlingSandTower)
-        {
-            foreach (SandTower sandTower in _sandTowers)
-            {
-                if(sandTower != handlingSandTower)
-                    sandTower.DeactivateFoundationBuilder();
-            }
-        }
-
-        public void ReleaseHandleFoundationBuilder()
-        {
-            ActivateFoundationBuilders();
         }
 
         #endregion

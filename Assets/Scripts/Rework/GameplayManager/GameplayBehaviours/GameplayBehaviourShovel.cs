@@ -1,6 +1,7 @@
 using PierreMizzi.TilesetUtils;
 using UnityEngine;
 using VirtuoseReality.Extension.AudioManager;
+using VirtuoseReality.Helpers;
 
 namespace TideDefense
 {
@@ -19,7 +20,7 @@ namespace TideDefense
         public override void Activate()
         {
             base.Activate();
-            _gameplayManager.gridManager.DisplayDiggableHints();
+            _gameplayManager.DisplayDiggableHints();
 
             if (_gameplayManager.gameplayChannel != null)
             {
@@ -52,19 +53,19 @@ namespace TideDefense
 
         public virtual void CallbackOnClickGrid(GridCellModel gridCell, RaycastHit hit)
         {
-            if (CheckGridCellNeighboorToBucket(gridCell))
+            ContainerTool containerTool = CheckGridCellNeighboorToContainer(gridCell);
+
+            if (containerTool != null)
             {
                 SoundManager.PlaySound(SoundDataIDStatic.SHOVEL_DIG);
 
-                FillBucket(gridCell, hit);
-                if (_gameplayManager.bucket.isFull)
-                    _gameplayManager.UIChannel.onHideControlHint.Invoke(ControlHintType.FillBucket);
+                FillContainerTool(containerTool, hit);
             }
             else if (gridCell.isEmpty)
-                _gameplayManager.DropTool(_gameplayManager.shovel, gridCell);
+                _gameplayManager.DropTool(_gameplayManager.currentTool, gridCell);
         }
 
-        public void FillBucket(GridCellModel gridCell, RaycastHit hit)
+        public void FillContainerTool(ContainerTool containerTool, RaycastHit hit)
         {
             float wetness = _gameplayManager.seaManager.beach.GetWetnessFromWorldPosition(
                 hit.point
@@ -74,26 +75,33 @@ namespace TideDefense
                 _gameplayManager.shovelFillingQuantity,
                 SandWaterFilling.GetSandConcentrationFromWetness(wetness)
             );
-            // Debug.Log("Filling");
-            // Debug.Log(filling.ToString());
-            _gameplayManager.bucket.Fill(filling);
+            containerTool.Fill(filling);
         }
 
-        /// <summary>
-        /// Verify if the clicked GridCell while grabbing the shovel is next to the bucket
-        /// If it's next to the bucket, we fill it
-        /// </summary>
-        public virtual bool CheckGridCellNeighboorToBucket(GridCellModel clickedgridCell)
+        public ContainerTool CheckGridCellNeighboorToContainer(GridCellModel clickedgridCell)
         {
             Vector2Int checkedCoords = new Vector2Int();
+            GridCellModel cellModel;
             foreach (Vector2Int offset in TilesetUtils.neighboorsCoordinatesEight)
             {
-                checkedCoords = _gameplayManager.bucket.currentGridCell.coords + offset;
-
-                if (checkedCoords == clickedgridCell.coords)
-                    return true;
+                checkedCoords = clickedgridCell.coords + offset;
+                cellModel =
+                    _gameplayManager.gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(
+                        checkedCoords
+                    );
+                if (
+                    cellModel != null
+                    && cellModel.currentTool != null
+                    && BitMaskHelper.CheckMask(
+                        (int)cellModel.currentTool.toolType,
+                        (int)BeachToolType.Container
+                    )
+                )
+                {
+                    return (ContainerTool)cellModel.currentTool;
+                }
             }
-            return false;
+            return null;
         }
     }
 }

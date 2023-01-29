@@ -6,16 +6,16 @@ namespace TideDefense
     [Flags]
     public enum BeachToolType
     {
-        None = 0,
+        None = 1,
 
-        Container = 1,
-        Primary = 2,
-        Shovel = 4,
+        Container = 2,
+        Primary = 4,
+        Shovel = 8,
 
-        Path = 8,
-        Corner = 16,
-        Triple = 32,
-        Foursome = 64,
+        Path = 16,
+        Corner = 32,
+        Triple = 64,
+        Foursome = 128,
 
         Bucket = Container | Primary,
 

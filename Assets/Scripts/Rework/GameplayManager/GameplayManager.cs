@@ -91,6 +91,11 @@ namespace TideDefense
         [SerializeField]
         private BeachTool _currentTool = null;
 
+        public BeachTool currentTool
+        {
+            get { return _currentTool; }
+        }
+
         [SerializeField]
         private float _hoverBucketYOffset = 0.5f;
 
@@ -165,7 +170,9 @@ namespace TideDefense
             {
                 { BeachToolType.None, new GameplayBehaviourIdle(this) },
                 { BeachToolType.Shovel, new GameplayBehaviourShovel(this) },
-                { BeachToolType.Bucket, new GameplayBehaviourBucket(this) },
+                { BeachToolType.Container, new GameplayBehaviourBucket(this) },
+                // { BeachToolType.Bucket, new GameplayBehaviourBucket(this) },
+                // { BeachToolType.RempartMoldPath, new GameplayBehaviourBucket(this) },
             };
 
             ChangeStateBehaviour(BeachToolType.None);
@@ -173,10 +180,13 @@ namespace TideDefense
 
         private void ChangeStateBehaviour(BeachToolType toolType)
         {
-            if (_stateBehaviours[toolType] != null)
+            foreach (KeyValuePair<BeachToolType, BaseGameplayBehaviour> pair in _stateBehaviours)
             {
-                _currentStateBehaviour = _stateBehaviours[toolType];
-                _currentStateBehaviour.Activate();
+                if (BitMaskHelper.CheckMask((int)toolType, (int)pair.Key))
+                {
+                    _currentStateBehaviour = pair.Value;
+                    _currentStateBehaviour.Activate();
+                }
             }
         }
 
@@ -315,7 +325,6 @@ namespace TideDefense
 
         #region Display Diggable
 
-        [ContextMenu("DisplayDiggable")]
         public void DisplayDiggableHints()
         {
             // List of coordinates where there is multiple BeachToolType.Container around
@@ -346,17 +355,16 @@ namespace TideDefense
                         }
                         else
                         {
-                            Debug.Log($"The cell is shared ! : {neighboorCoords}");
-                            if(duplicateDiggableCoords.Contains(neighboorCoords))
+                            // Debug.Log($"The cell is shared ! : {neighboorCoords}");
+                            if (duplicateDiggableCoords.Contains(neighboorCoords))
                                 duplicateDiggableCoords.Add(neighboorCoords);
-                            
-                            if(coordWithOffsetCoords.ContainsKey(neighboorCoords))
+
+                            if (coordWithOffsetCoords.ContainsKey(neighboorCoords))
                                 coordWithOffsetCoords.Remove(neighboorCoords);
                         }
                     }
                 }
             }
-
 
             _gridManager.DisplayDiggableHints(coordWithOffsetCoords);
         }

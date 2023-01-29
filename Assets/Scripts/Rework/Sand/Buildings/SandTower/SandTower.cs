@@ -13,9 +13,6 @@ namespace TideDefense
         [SerializeField]
         private MaterialPropertyBlockModifier _materialPropertyBlock = null;
 
-        [SerializeField]
-        private RempartFoundationBuilder _foundationBuilder = null;
-
         #region Flag Pole
 
         [SerializeField]
@@ -52,8 +49,6 @@ namespace TideDefense
             Initialize(manager, cellModel);
             SetHealthFromSandConcentration(sandConcentration);
 
-            _foundationBuilder.Initialize(this);
-            _foundationBuilder.Deactivate();
 
             ManageLinkingFoundation(-1);
         }
@@ -87,16 +82,6 @@ namespace TideDefense
 
         #region Rempart Foundation Builder
 
-        public void ActivateFoundationBuilder()
-        {
-            RefreshNeighboorBuildings();
-            _foundationBuilder.Activate();
-        }
-
-        public void DeactivateFoundationBuilder()
-        {
-            _foundationBuilder.Deactivate();
-        }
 
         public void ManageLinkingFoundation(int selectedSide)
         {
