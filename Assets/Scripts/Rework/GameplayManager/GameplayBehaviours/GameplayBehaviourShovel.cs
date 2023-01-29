@@ -94,7 +94,7 @@ namespace TideDefense
                     && cellModel.currentTool != null
                     && BitMaskHelper.CheckMask(
                         (int)cellModel.currentTool.toolType,
-                        (int)BeachToolType.Container
+                        (int)BeachToolType.Mold
                     )
                 )
                 {

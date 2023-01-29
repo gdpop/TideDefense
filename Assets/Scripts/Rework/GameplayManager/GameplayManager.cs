@@ -170,9 +170,7 @@ namespace TideDefense
             {
                 { BeachToolType.None, new GameplayBehaviourIdle(this) },
                 { BeachToolType.Shovel, new GameplayBehaviourShovel(this) },
-                { BeachToolType.Container, new GameplayBehaviourBucket(this) },
-                // { BeachToolType.Bucket, new GameplayBehaviourBucket(this) },
-                // { BeachToolType.RempartMoldPath, new GameplayBehaviourBucket(this) },
+                { BeachToolType.Mold, new GameplayBehaviourMold(this) },
             };
 
             ChangeStateBehaviour(BeachToolType.None);
@@ -335,7 +333,7 @@ namespace TideDefense
 
             foreach (BeachTool tool in _availableTools)
             {
-                if (BitMaskHelper.CheckMask((int)tool.toolType, (int)BeachToolType.Container))
+                if (BitMaskHelper.CheckMask((int)tool.toolType, (int)BeachToolType.Mold))
                 {
                     Vector2Int tilesetCoords = new Vector2Int();
                     Vector2Int neighboorCoords = new Vector2Int();

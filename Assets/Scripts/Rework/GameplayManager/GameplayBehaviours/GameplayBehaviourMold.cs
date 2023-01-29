@@ -3,17 +3,18 @@ using UnityEngine;
 
 namespace TideDefense
 {
-    public class GameplayBehaviourBucket : BaseGameplayBehaviour
+    public class GameplayBehaviourMold : BaseGameplayBehaviour
     {
         public new BeachToolType state
         {
             get { return BeachToolType.Bucket; }
         }
 
-        public GameplayBehaviourBucket(GameplayManager manager)
+        public GameplayBehaviourMold(GameplayManager manager)
         {
             _gameplayManager = manager;
         }
+
 
         public override void Activate()
         {
