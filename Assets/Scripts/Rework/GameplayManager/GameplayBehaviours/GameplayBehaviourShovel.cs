@@ -36,8 +36,7 @@ namespace TideDefense
                 ControlHintType.RotateSphericalCamera
             );
 
-            if (!_gameplayManager.bucket.isFull)
-                _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.FillBucket);
+            // _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.FillBucket);
         }
 
         public override void Deactivate()
@@ -62,7 +61,8 @@ namespace TideDefense
                 FillContainerTool(containerTool, hit);
             }
             else if (gridCell.isEmpty)
-                _gameplayManager.DropTool(_gameplayManager.currentTool, gridCell);
+                _gameplayManager.DropTool_Reworked(gridCell);
+            // _gameplayManager.DropTool(_gameplayManager.currentTool, gridCell);
         }
 
         public void FillContainerTool(MouldTool containerTool, RaycastHit hit)

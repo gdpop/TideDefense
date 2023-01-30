@@ -47,27 +47,6 @@ namespace TideDefense
             get { return _gridManager; }
         }
 
-        [SerializeField]
-        private Transform _gameplayContainer = null;
-        public Transform gameplayContainer
-        {
-            get { return _gameplayContainer; }
-        }
-
-        [SerializeField]
-        private MouldTool _bucket = null;
-        public MouldTool bucket
-        {
-            get { return _bucket; }
-        }
-
-        [SerializeField]
-        private Shovel _shovel = null;
-        public Shovel shovel
-        {
-            get { return _shovel; }
-        }
-
         #region State Behaviour
 
         private BaseGameplayBehaviour _currentStateBehaviour = null;
@@ -97,23 +76,6 @@ namespace TideDefense
         }
 
         [SerializeField]
-        private float _hoverBucketYOffset = 0.5f;
-
-        private Vector3 _hoverBucketOffset = new Vector3();
-
-        [SerializeField]
-        private Rigidbody _bucketConnectedBody = null;
-
-        [SerializeField]
-        private Rigidbody _bucketJoint = null;
-
-        [SerializeField]
-        private float _grabDropTweenDuration = 0f;
-
-        [SerializeField]
-        private Transform _grabBucketAnchor = null;
-
-        [SerializeField]
         private float _shovelFillingQuantity = 0.25f;
         public float shovelFillingQuantity
         {
@@ -129,17 +91,10 @@ namespace TideDefense
 
 		#region MonoBehaviour
 
-        private void Awake()
-        {
-            _hoverBucketOffset.y = _hoverBucketYOffset;
-        }
-
         private void Start()
         {
             if (_gameplayChannel != null)
             {
-                _gameplayChannel.onHoverBeach += CallbackOnHoverGrid;
-
                 _gameplayChannel.onClickTool += CallbackOnClickTool;
             }
 
@@ -154,8 +109,6 @@ namespace TideDefense
         {
             if (_gameplayChannel != null)
             {
-                _gameplayChannel.onHoverBeach -= CallbackOnHoverGrid;
-
                 _gameplayChannel.onClickTool -= CallbackOnClickTool;
             }
         }
@@ -190,11 +143,6 @@ namespace TideDefense
 
         #endregion
 
-        private void CallbackOnHoverGrid(RaycastHit hit)
-        {
-            _bucketConnectedBody.MovePosition(hit.point + _hoverBucketOffset);
-        }
-
         #region Grid Manager
 
         public void DropToolOnGrid(BeachTool tool, GridCellModel gridCell)
@@ -228,7 +176,7 @@ namespace TideDefense
         public void CallbackOnClickTool(BeachTool tool)
         {
             if (_currentTool == null)
-                GrabTool(tool);
+                GrabTool_Reworked(tool);
         }
 
         public void SetCurrentTool(BeachTool tool)
@@ -239,86 +187,41 @@ namespace TideDefense
             _gameplayChannel.onChangeTool.Invoke(_currentTool);
         }
 
-        public void GrabTool(BeachTool tool)
+        [SerializeField]
+        private BeachToolHolder _toolHolder = null;
+
+
+        public void GrabTool_Reworked(BeachTool tool)
         {
             // GridCell no longers hold the tool
             PickToolOnGrid(tool, tool.currentGridCell);
 
             SetCurrentTool(tool);
 
-            // Tween to lerp the tool from the ground to the mouse
-            Vector3 from = _currentTool.transform.position;
-            LockBucketJoint();
-
-            DOVirtual
-                .Float(
-                    0f,
-                    1f,
-                    _grabDropTweenDuration,
-                    (float value) =>
-                    {
-                        _bucketJoint.transform.position = _bucketConnectedBody.position;
-                        _currentTool.transform.position = Vector3.Lerp(
-                            from,
-                            _grabBucketAnchor.position,
-                            value
-                        );
-                    }
-                )
-                .SetEase(Ease.OutCirc)
-                .OnComplete(() =>
+            _toolHolder.GrabTool(
+                tool,
+                () =>
                 {
-                    // Let the tool hang free
-                    FreeBucketJoint();
-                    _currentTool.transform.SetParent(_bucketJoint.transform);
-                    _currentTool.transform.localPosition = _grabBucketAnchor.localPosition;
                     _currentTool.SetGrabbed();
-                });
-
-            SoundManager.PlaySound(SoundDataIDStatic.BEACH_TOOL_GRAB);
+                }
+            );
         }
 
-        private void LockBucketJoint()
+        public void DropTool_Reworked(GridCellModel gridCell)
         {
-            _bucketJoint.isKinematic = true;
-            _bucketJoint.useGravity = false;
-            _bucketJoint.angularDrag = 0;
-            _bucketJoint.angularVelocity = Vector3.zero;
-            _bucketJoint.transform.position = _bucketConnectedBody.position;
-            _bucketJoint.transform.localRotation = Quaternion.identity;
-        }
-
-        private void FreeBucketJoint()
-        {
-            _bucketJoint.isKinematic = false;
-            _bucketJoint.useGravity = true;
-            _bucketJoint.angularDrag = 0;
-            _bucketJoint.angularVelocity = Vector3.zero;
-            _bucketJoint.transform.position = _bucketConnectedBody.position;
-            _bucketJoint.transform.localRotation = Quaternion.identity;
-        }
-
-        public void DropTool(BeachTool tool, GridCellModel gridCell)
-        {
-            LockBucketJoint();
-            tool.transform.SetParent(_gameplayContainer);
-
             Vector3 to = _gridManager.gridModel.GetCellWorldPositionFromCoordinates(
                 gridCell.coords
             );
 
-            tool.transform
-                .DOMove(to, _grabDropTweenDuration)
-                .SetEase(Ease.OutCirc)
-                .OnComplete(() =>
+            _toolHolder.DropTool(
+                to,
+                () =>
                 {
-                    DropToolOnGrid(tool, gridCell);
-                    tool.SetDropped(gridCell);
-
+                    DropToolOnGrid(_currentTool, gridCell);
+                    _currentTool.SetDropped(gridCell);
                     SetCurrentTool(_noneTool);
-                });
-
-            SoundManager.PlaySound(SoundDataIDStatic.BEACH_TOOL_DROP);
+                }
+            );
         }
 
         #region Display Diggable

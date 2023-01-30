@@ -151,7 +151,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 545097907}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &241336067
 GameObject:
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 332468422}
   - component: {fileID: 332468421}
   m_Layer: 0
-  m_Name: BeachTool_FixedJoint
+  m_Name: Joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -277,8 +277,8 @@ Transform:
   m_Children:
   - {fileID: 1989086576}
   - {fileID: 2112888093}
-  m_Father: {fileID: 545097907}
-  m_RootOrder: 8
+  m_Father: {fileID: 1272601414}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &353324108
 GameObject:
@@ -825,9 +825,8 @@ Transform:
   - {fileID: 1102918533977379860}
   - {fileID: 5798785236532636955}
   - {fileID: 1524704240}
-  - {fileID: 1989171640}
-  - {fileID: 332468423}
   - {fileID: 79505003}
+  - {fileID: 1272601414}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1032,23 +1031,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
   _UIChannel: {fileID: 11400000, guid: c5368b283b60a2e40afad9044b3e1aa5, type: 2}
-  _fortificationManager: {fileID: 0}
+  _fortificationManager: {fileID: 1311810054}
   _seaManager: {fileID: 773745104}
   _gridManager: {fileID: 477670696}
-  _gameplayContainer: {fileID: 545097907}
-  _bucket: {fileID: 1102918533977379861}
-  _shovel: {fileID: 5798785236532636950}
   _availableTools:
   - {fileID: 1102918533977379861}
   - {fileID: 5798785236532636950}
   - {fileID: 739252948}
   _currentTool: {fileID: 0}
-  _hoverBucketYOffset: 0.5
-  _bucketConnectedBody: {fileID: 1989171641}
-  _bucketJoint: {fileID: 332468422}
-  _grabDropTweenDuration: 0.2
-  _grabBucketAnchor: {fileID: 1989086576}
   _shovelFillingQuantity: 0.25
+  _toolHolder: {fileID: 1272601415}
 --- !u!1 &864297812
 GameObject:
   m_ObjectHideFlags: 0
@@ -1685,6 +1677,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211334994}
   m_CullTransparentMesh: 1
+--- !u!1 &1272601413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1272601414}
+  - component: {fileID: 1272601415}
+  m_Layer: 0
+  m_Name: BeachToolHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1272601414
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272601413}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1989171640}
+  - {fileID: 332468423}
+  m_Father: {fileID: 545097907}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1272601415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272601413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43dfd552b3421294e969848627606f11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
+  _gameplayContainer: {fileID: 545097907}
+  _groundOffset: {x: 0, y: 0.5, z: 0}
+  _tweenDuration: 0.5
+  _connectedBody: {fileID: 1989171641}
+  _joint: {fileID: 332468422}
+  _anchor: {fileID: 1989086576}
 --- !u!1 &1311810052
 GameObject:
   m_ObjectHideFlags: 0
@@ -2169,7 +2213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1989086576}
   m_Layer: 0
-  m_Name: GrabBucketAnchor
+  m_Name: Anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2200,7 +2244,7 @@ GameObject:
   - component: {fileID: 1989171640}
   - component: {fileID: 1989171641}
   m_Layer: 0
-  m_Name: BeachTool_ConnectedBody
+  m_Name: ConnectedBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2218,8 +2262,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 508750266}
-  m_Father: {fileID: 545097907}
-  m_RootOrder: 7
+  m_Father: {fileID: 1272601414}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1989171641
 Rigidbody:
