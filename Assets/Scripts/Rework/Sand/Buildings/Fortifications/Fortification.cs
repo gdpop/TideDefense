@@ -33,10 +33,14 @@ namespace TideDefense
 
         protected virtual void SetHealthFromSandConcentration(float sandConcentration)
         {
-            _materialPropertyBlock.SetFloat(
-                MouldTool.SAND_CONCENTRATION_PROPERTY,
-                sandConcentration
-            );
+            if (_materialPropertyBlock != null)
+            {
+                _materialPropertyBlock.SetFloat(
+                    MouldTool.SAND_CONCENTRATION_PROPERTY,
+                    sandConcentration
+                );
+            }
+
             _quality = _fortificationChannel.qualityFromSandConcentration.Evaluate(
                 sandConcentration
             );

@@ -24,12 +24,10 @@ namespace TideDefense
         [SerializeField]
         private SandTower _prefabSandTower = null;
 
-        private List<SandTower> _sandTowers = new List<SandTower>();
-
         [SerializeField]
         private Transform _fortificationContainer = null;
 
-        private List<Fortification> _fortifications = new List<Fortification>();
+        private List<Building> _buildings = new List<Building>();
 
         [SerializeField]
         private SandCastle _sandCastle = null;
@@ -52,23 +50,6 @@ namespace TideDefense
 
         #endregion
 
-        public void BuildSandTower(GridCellModel gridCell, float sandWaterConcentration)
-        {
-            Vector3 worldPosition = _gridManager.gridModel.GetCellWorldPositionFromCoordinates(
-                gridCell.coords
-            );
-
-            // Build Sand Tower
-            SandTower tower = UnityEngine.Object.Instantiate(
-                _prefabSandTower,
-                worldPosition,
-                Quaternion.identity,
-                _fortificationContainer
-            );
-            tower.Initialize(this, gridCell, sandWaterConcentration);
-            _sandTowers.Add(tower);
-        }
-
         public void CastMould(MouldTool tool, GridCellModel gridCell, float sandWaterConcentration)
         {
             Vector3 worldPosition = _gridManager.gridModel.GetCellWorldPositionFromCoordinates(
@@ -83,17 +64,55 @@ namespace TideDefense
             );
 
             fortification.Initialize(this, gridCell, sandWaterConcentration);
-            _fortifications.Add(fortification);
+            _buildings.Add(fortification);
+
+            RefreshLinkingRemparts();
         }
 
-        public void DestroyBuilding(Building rempart)
+        public void DestroyBuilding(Building building)
         {
-            rempart.gridCellModel.building = null;
+            building.gridCellModel.building = null;
 
-            if (rempart.GetType() == typeof(SandTower))
-                _sandTowers.Remove((SandTower)rempart);
+            if (_buildings.Contains(building))
+                _buildings.Remove(building);
 
-            Destroy(rempart.gameObject);
+            Destroy(building.gameObject);
+        }
+
+        private void RefreshLinkingRemparts()
+        {
+            SandTower sandTower;
+            Vector2Int coords;
+            GridCellModel cellModel;
+            List<int> linkingRempartsIndex = new List<int>();
+
+            foreach (Building building in _buildings)
+            {
+                if (building.TryGetComponent(out sandTower))
+                {
+                    linkingRempartsIndex.Clear();
+                    // We check every neighboords to see if their is a fortification in place
+                    for (int i = 0; i < TilesetUtils.neighboorsCoordinatesFour.Count; i++)
+                    {
+                        coords =
+                            sandTower.gridCellModel.coords
+                            + TilesetUtils.neighboorsCoordinatesFour[i];
+
+                        if (!_gridManager.gridModel.CheckValidCoordinates(coords))
+                            continue;
+
+                        cellModel = _gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(
+                            coords
+                        );
+
+                        //If there is one, we add the index of the direction into linkingRempartsIndex
+                        if (cellModel.building != null)
+                            linkingRempartsIndex.Add(i);
+                    }
+                    // We tellt he send tower which linkingRemparts to display
+                    sandTower.RefreshLinkingRemparts(linkingRempartsIndex);
+                }
+            }
         }
 
         [Obsolete]

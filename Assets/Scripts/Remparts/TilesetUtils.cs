@@ -18,14 +18,14 @@ namespace PierreMizzi.TilesetUtils
         };
 
 		/// <summary> 
-		///	Clockwise neighboor coordinates on a grid
+		///	Clockwise neighboor coordinates on a grid starting from the Top
 		/// </summary>
         public static List<Vector2Int> neighboorsCoordinatesFour = new List<Vector2Int>(4)
         {
-            new Vector2Int(0, 1), 	// North
-            new Vector2Int(1, 0), 	// East
-            new Vector2Int(0, -1),	// South
-            new Vector2Int(-1, 0),  // West
+            new Vector2Int(0, 1), 	// Top
+            new Vector2Int(1, 0), 	// Right
+            new Vector2Int(0, -1),	// Bot
+            new Vector2Int(-1, 0),  // Left
         };
 
         /// <summary> 

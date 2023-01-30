@@ -26,7 +26,7 @@ namespace PierreMizzi.MouseInteractable
         public InteractableManager()
         {
             _camera = Camera.main;
-            _leftHoldClickSetting = new HoldClickSetting(MOUSE_LEFT, 1f, 3f);
+            _leftHoldClickSetting = new HoldClickSetting(MOUSE_LEFT, 0.5f, 1f);
             Debug.Log(_interactableLayerMask.value);
         }
 
@@ -34,7 +34,7 @@ namespace PierreMizzi.MouseInteractable
         {
             _interactableLayerMask = interactableLayerMask;
             _camera = Camera.main;
-            _leftHoldClickSetting = new HoldClickSetting(MOUSE_LEFT, 1f, 3f);
+            _leftHoldClickSetting = new HoldClickSetting(MOUSE_LEFT, 0.5f, 1f);
         }
 
         public void Update()

@@ -14,12 +14,14 @@ namespace TideDefense
         [SerializeField]
         private FlagPole _flagPole = null;
 
+        [SerializeField]
+        protected List<MaterialPropertyBlockModifier> _materialPropertyBlocks =
+            new List<MaterialPropertyBlockModifier>();
+
         #endregion
 
         #region Linking Remparts
 
-        private List<Building> _neighboorBuildings = new List<Building>();
-        
 
         [SerializeField]
         private List<GameObject> _linkingRemparts = new List<GameObject>();
@@ -33,7 +35,6 @@ namespace TideDefense
         protected virtual void Awake()
         {
             _flagPole.Initialize(this);
-            _neighboorBuildings = new List<Building>(4) { null, null, null, null };
         }
 
         public override void Initialize(
@@ -57,6 +58,10 @@ namespace TideDefense
         protected override void SetHealthFromSandConcentration(float sandConcentration)
         {
             base.SetHealthFromSandConcentration(sandConcentration);
+
+            foreach (MaterialPropertyBlockModifier modifier in _materialPropertyBlocks)
+                modifier.SetFloat(MouldTool.SAND_CONCENTRATION_PROPERTY, sandConcentration);
+
             _flagPole.RefreshFlagColor(_quality);
         }
 
@@ -64,12 +69,12 @@ namespace TideDefense
 
         #region Linking Remparts
 
-        public void ManageLinkingRemparts(int selectedSide)
+        public void RefreshLinkingRemparts(List<int> linkingRempartsIndex)
         {
             int count = _linkingRemparts.Count;
             for (int i = 0; i < count; i++)
             {
-                _linkingRemparts[i].SetActive(i == selectedSide);
+                _linkingRemparts[i].SetActive(linkingRempartsIndex.Contains(i));
             }
         }
 
