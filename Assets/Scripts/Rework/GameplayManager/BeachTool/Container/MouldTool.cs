@@ -1,5 +1,7 @@
 namespace TideDefense
 {
+    using System;
+    using System.Collections.Generic;
     using DG.Tweening;
     using PierreMizzi.TilesetUtils;
     using UnityEngine;
@@ -28,7 +30,7 @@ namespace TideDefense
     
     */
 
-    public class ContainerTool : BeachTool
+    public class MouldTool : BeachTool
     {
 		#region Fields
 
@@ -65,6 +67,16 @@ namespace TideDefense
         }
 
 		#endregion
+
+        #region Mould
+
+
+        public Fortification mouldedShape
+        {
+            get { return null; }
+        }
+
+        #endregion
 
 		#endregion
 
@@ -150,6 +162,15 @@ namespace TideDefense
         protected virtual void ResetContentVisual()
         {
             _bucketContentVisual.gameObject.SetActive(false);
+        }
+
+		#endregion
+
+        #region Mould
+
+        public virtual Fortification GetCastedObject()
+        {
+            throw new NotImplementedException();
         }
 
 		#endregion

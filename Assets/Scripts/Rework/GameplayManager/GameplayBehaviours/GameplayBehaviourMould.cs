@@ -3,18 +3,22 @@ using UnityEngine;
 
 namespace TideDefense
 {
-    public class GameplayBehaviourMold : BaseGameplayBehaviour
+    public class GameplayBehaviourMould : BaseGameplayBehaviour
     {
         public new BeachToolType state
         {
             get { return BeachToolType.Bucket; }
         }
 
-        public GameplayBehaviourMold(GameplayManager manager)
+        public MouldTool currentContainer
+        {
+            get { return (MouldTool)_gameplayManager.currentTool; }
+        }
+
+        public GameplayBehaviourMould(GameplayManager manager)
         {
             _gameplayManager = manager;
         }
-
 
         public override void Activate()
         {
@@ -44,7 +48,7 @@ namespace TideDefense
                 );
             }
 
-            if (_gameplayManager.bucket.isFull)
+            if (currentContainer.isFull)
             {
                 _gameplayManager.UIChannel.onDisplayControlHint.Invoke(
                     ControlHintType.BuildSandTower
@@ -79,13 +83,13 @@ namespace TideDefense
 
         private void CallbackCompleteHoldClickGrid(GridCellModel clickedCell)
         {
-            if (_gameplayManager.bucket.isFull)
+            if (currentContainer.isFull)
             {
-                _gameplayManager.rempartsManager.BuildSandTower(
+                _gameplayManager.fortificationManager.BuildSandTower(
                     clickedCell,
-                    _gameplayManager.bucket.content.sandConcentration
+                    currentContainer.content.sandConcentration
                 );
-                _gameplayManager.bucket.Empty();
+                currentContainer.Empty();
                 _gameplayManager.UIChannel.onHideControlHint.Invoke(ControlHintType.BuildSandTower);
             }
         }

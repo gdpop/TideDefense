@@ -53,7 +53,7 @@ namespace TideDefense
 
         public virtual void CallbackOnClickGrid(GridCellModel gridCell, RaycastHit hit)
         {
-            ContainerTool containerTool = CheckGridCellNeighboorToContainer(gridCell);
+            MouldTool containerTool = CheckGridCellNeighboorToContainer(gridCell);
 
             if (containerTool != null)
             {
@@ -65,7 +65,7 @@ namespace TideDefense
                 _gameplayManager.DropTool(_gameplayManager.currentTool, gridCell);
         }
 
-        public void FillContainerTool(ContainerTool containerTool, RaycastHit hit)
+        public void FillContainerTool(MouldTool containerTool, RaycastHit hit)
         {
             float wetness = _gameplayManager.seaManager.beach.GetWetnessFromWorldPosition(
                 hit.point
@@ -78,7 +78,7 @@ namespace TideDefense
             containerTool.Fill(filling);
         }
 
-        public ContainerTool CheckGridCellNeighboorToContainer(GridCellModel clickedgridCell)
+        public MouldTool CheckGridCellNeighboorToContainer(GridCellModel clickedgridCell)
         {
             Vector2Int checkedCoords = new Vector2Int();
             GridCellModel cellModel;
@@ -94,11 +94,11 @@ namespace TideDefense
                     && cellModel.currentTool != null
                     && BitMaskHelper.CheckMask(
                         (int)cellModel.currentTool.toolType,
-                        (int)BeachToolType.Mold
+                        (int)BeachToolType.Mould
                     )
                 )
                 {
-                    return (ContainerTool)cellModel.currentTool;
+                    return (MouldTool)cellModel.currentTool;
                 }
             }
             return null;

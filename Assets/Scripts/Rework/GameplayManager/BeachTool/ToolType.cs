@@ -8,7 +8,7 @@ namespace TideDefense
     {
         None = 1,
 
-        Mold = 2,
+        Mould = 2,
         Primary = 4,
         Shovel = 8,
 
@@ -17,11 +17,11 @@ namespace TideDefense
         Triple = 64,
         Foursome = 128,
 
-        Bucket = Mold | Primary,
+        Bucket = Mould | Primary,
 
-        RempartMoldPath = Path | Mold,
-        RempartMoldCorner = Corner | Mold,
-        RempartMoldTriple = Triple | Mold,
-        RempartMoldFoursome = Foursome | Mold
+        RempartMoldPath = Path | Mould,
+        RempartMoldCorner = Corner | Mould,
+        RempartMoldTriple = Triple | Mould,
+        RempartMoldFoursome = Foursome | Mould
     }
 }

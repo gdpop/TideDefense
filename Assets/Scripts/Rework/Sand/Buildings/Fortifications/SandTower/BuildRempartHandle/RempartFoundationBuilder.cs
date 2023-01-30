@@ -244,7 +244,7 @@ namespace TideDefense
                 if (!validCoords)
                     break;
 
-                _sandTower.ManageLinkingFoundation(_selectedSide);
+                // _sandTower.ManageLinkingRemparts(_selectedSide);
 
                 cellModel = _manager.gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(
                     coords

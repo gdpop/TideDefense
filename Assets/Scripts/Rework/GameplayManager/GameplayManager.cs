@@ -27,10 +27,10 @@ namespace TideDefense
         }
 
         [SerializeField]
-        private FortificationManager _rempartsManager = null;
-        public FortificationManager rempartsManager
+        private FortificationManager _fortificationManager = null;
+        public FortificationManager fortificationManager
         {
-            get { return _rempartsManager; }
+            get { return _fortificationManager; }
         }
 
         [SerializeField]
@@ -55,8 +55,8 @@ namespace TideDefense
         }
 
         [SerializeField]
-        private ContainerTool _bucket = null;
-        public ContainerTool bucket
+        private MouldTool _bucket = null;
+        public MouldTool bucket
         {
             get { return _bucket; }
         }
@@ -170,7 +170,7 @@ namespace TideDefense
             {
                 { BeachToolType.None, new GameplayBehaviourIdle(this) },
                 { BeachToolType.Shovel, new GameplayBehaviourShovel(this) },
-                { BeachToolType.Mold, new GameplayBehaviourMold(this) },
+                { BeachToolType.Mould, new GameplayBehaviourMould(this) },
             };
 
             ChangeStateBehaviour(BeachToolType.None);
@@ -333,7 +333,7 @@ namespace TideDefense
 
             foreach (BeachTool tool in _availableTools)
             {
-                if (BitMaskHelper.CheckMask((int)tool.toolType, (int)BeachToolType.Mold))
+                if (BitMaskHelper.CheckMask((int)tool.toolType, (int)BeachToolType.Mould))
                 {
                     Vector2Int tilesetCoords = new Vector2Int();
                     Vector2Int neighboorCoords = new Vector2Int();

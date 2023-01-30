@@ -67,18 +67,28 @@ namespace TideDefense
             _sandTowers.Add(tower);
         }
 
+        public void CastMould(GridCellModel gridCell, MouldTool tool)
+        {
+            Vector3 worldPosition = _gridManager.gridModel.GetCellWorldPositionFromCoordinates(
+                gridCell.coords
+            );
+
+            Fortification fortification = tool.GetCastedObject();
+            
+
+        }
+
         public void DestroyBuilding(Building rempart)
         {
             rempart.gridCellModel.building = null;
 
-            Debug.Log($"Amount Sand Tower : {_sandTowers.Count}");
             if (rempart.GetType() == typeof(SandTower))
                 _sandTowers.Remove((SandTower)rempart);
-            Debug.Log($"Amount Sand Tower : {_sandTowers.Count}");
 
             Destroy(rempart.gameObject);
         }
 
+        [Obsolete]
         public int GetRempartNeighboorsFromCoords(Vector2Int coords)
         {
             string bitmask = "";
