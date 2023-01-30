@@ -10,7 +10,7 @@ namespace TideDefense
             get { return BeachToolType.Bucket; }
         }
 
-        public MouldTool currentContainer
+        public MouldTool currentMould
         {
             get { return (MouldTool)_gameplayManager.currentTool; }
         }
@@ -48,7 +48,7 @@ namespace TideDefense
                 );
             }
 
-            if (currentContainer.isFull)
+            if (currentMould.isFull)
             {
                 _gameplayManager.UIChannel.onDisplayControlHint.Invoke(
                     ControlHintType.BuildSandTower
@@ -73,7 +73,6 @@ namespace TideDefense
         {
             if (gridCell.isEmpty)
                 _gameplayManager.DropTool_Reworked(gridCell);
-                // _gameplayManager.DropTool(_gameplayManager.currentTool, gridCell);
         }
 
        #region HoldClick
@@ -84,13 +83,14 @@ namespace TideDefense
 
         private void CallbackCompleteHoldClickGrid(GridCellModel clickedCell)
         {
-            if (currentContainer.isFull)
+            if (currentMould.isFull)
             {
-                _gameplayManager.fortificationManager.BuildSandTower(
+                _gameplayManager.fortificationManager.CastMould(
+                    currentMould,
                     clickedCell,
-                    currentContainer.content.sandConcentration
+                    currentMould.content.sandConcentration
                 );
-                currentContainer.Empty();
+                currentMould.Empty();
                 _gameplayManager.UIChannel.onHideControlHint.Invoke(ControlHintType.BuildSandTower);
             }
         }

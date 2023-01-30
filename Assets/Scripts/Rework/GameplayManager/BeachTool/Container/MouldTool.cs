@@ -3,32 +3,8 @@ namespace TideDefense
     using System;
     using System.Collections.Generic;
     using DG.Tweening;
-    using PierreMizzi.TilesetUtils;
     using UnityEngine;
     using VirtuoseReality.Rendering;
-
-    /*
-    
-        [Bucket dropped]
-
-        [Bucket Grabbed]
-        [ ] IF Ready To Build
-            - Display construction grid
-
-        Sand
-        [ ] Hover water - Long Left Click
-            - Fill with water
-        [ ] Hover water - Long Right Click
-            - Empty Bucket
-
-        Water
-        [x] Hover sand - Left Click
-            - Drop
-
-        [ ] Hover sand - Long Right Click - IF Ready to Build
-            - Create Rempart
-    
-    */
 
     public class MouldTool : BeachTool
     {
@@ -70,10 +46,9 @@ namespace TideDefense
 
         #region Mould
 
-
-        public Fortification mouldedShape
+        public virtual MouldShape mouldedShape
         {
-            get { return null; }
+            get { throw new NotImplementedException(); }
         }
 
         #endregion
@@ -167,11 +142,6 @@ namespace TideDefense
 		#endregion
 
         #region Mould
-
-        public virtual Fortification GetCastedObject()
-        {
-            throw new NotImplementedException();
-        }
 
 		#endregion
 

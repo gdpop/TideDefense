@@ -28,7 +28,7 @@ namespace TideDefense
 
         private void CallbackOnClickGrid(GridCellModel gridCell, RaycastHit hit)
         {
-            _gameplayManager.fortificationManager.BuildSandTower(gridCell, 0.75f);
+            // _gameplayManager.fortificationManager.BuildSandTower(gridCell, 0.75f);
         }
 
         public override void Deactivate()

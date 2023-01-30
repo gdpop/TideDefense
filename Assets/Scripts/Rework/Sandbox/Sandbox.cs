@@ -45,19 +45,26 @@ public class Sandbox : MonoBehaviour
 
     #region Manage Rotation
 
+    private bool _updateRotation = false;
+
+    public bool updateRotation
+    {
+        get { return _updateRotation; }
+        set { _updateRotation = value; }
+    }
+
     // Scrolling Settings
     private float _scrollingValue = 0f;
 
     [SerializeField]
-    private float _scrollingSpeed = 0.01f;
+    private float _scrollingSpeed = 0.1f;
 
     // Rotation Settings
     private int _currentStep = 0;
     private int _lastStep = 0;
 
-    private int _direction = 0;
-
-    [SerializeField] private float _rotationSpeed = 0.5f;
+    [SerializeField]
+    private float _rotationSpeed = 0.5f;
 
     [SerializeField]
     private List<float> _allowedRotation = new List<float>();
@@ -71,12 +78,13 @@ public class Sandbox : MonoBehaviour
 
     protected virtual void Update()
     {
-        ManageRotation();
+        if (_updateRotation)
+            ManageRotation();
     }
 
-		#endregion
+    #endregion
 
-		#region Manage rotation
+    #region Manage rotation
 
     public void ManageRotation()
     {
@@ -86,8 +94,6 @@ public class Sandbox : MonoBehaviour
 
         if (_currentStep != _lastStep)
         {
-            _direction = _currentStep - _lastStep;
-            Debug.Log($"New step : from {_lastStep} to{_currentStep} | direction {_direction}");
             _lastStep = _currentStep;
             Rotate();
         }
@@ -96,12 +102,11 @@ public class Sandbox : MonoBehaviour
     public void Rotate()
     {
         _allowedRotationIndex = Mathf.FloorToInt(Mathf.Abs(_currentStep) % _allowedRotation.Count);
-        Debug.Log($"allowedRotationIndex : { _allowedRotationIndex }");
         Vector3 eulerAngles = new Vector3(0f, _allowedRotation[_allowedRotationIndex], 0f);
         transform.DOLocalRotate(eulerAngles, _rotationSpeed).SetEase(Ease.InQuad);
     }
 
-		#endregion
+    #endregion
 
     #endregion
 }

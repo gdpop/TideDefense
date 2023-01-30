@@ -57,4 +57,4 @@ MonoBehaviour:
   _minTheta: 20
   _maxTheta: 75
   _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
-  _tresholdPercentage: 0.1
+  _tresholdPercentage: 0.05

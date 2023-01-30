@@ -128,8 +128,6 @@ namespace TideDefense
             _interactableBoxCollider.enabled = true;
             _grabBoxCollider.enabled = false;
 
-            transform.rotation = Quaternion.identity;
-
             // Used by hover animation
             _currentPosition = transform.position;
             _hoveredPosition = transform.position + new Vector3(0f, _hoverYOffset, 0f);

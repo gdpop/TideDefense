@@ -10,9 +10,9 @@ namespace TideDefense
         [Header("Mould")]
 
         [SerializeField]
-        protected Fortification _mouldedShape = null;
+        protected MouldShape _mouldedShape;
 
-		public new Fortification mouldedShape
+		public override MouldShape mouldedShape
         {
             get { return _mouldedShape; }
         }

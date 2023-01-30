@@ -11,28 +11,30 @@ namespace TideDefense
 
         [Header("Mould")]
         [SerializeField]
-        protected List<Fortification> _mouldedShapes = new List<Fortification>();
-
-        public new Fortification mouldedShape
+        private int _mouldShapeIndex = 0;
+        public int mouldShapeIndex
         {
-            get { return null; }
+            get { return _mouldShapeIndex; }
+            set
+            {
+                if (0 <= value && value < _mouldedShapes.Count)
+                    _mouldShapeIndex = value;
+                else
+                    Debug.LogError("For me, that's impossible");
+            }
         }
 
-		#endregion
-
-		#region Manage Rotation
-
-        // Scrolling Settings
-        private float _scrollingValue = 0f;
-
         [SerializeField]
-        private float _scrollingSpeed = 1f;
+        protected List<MouldShape> _mouldedShapes = new List<MouldShape>();
+        public List<MouldShape> mouldedShapes
+        {
+            get { return _mouldedShapes; }
+        }
 
-        // Rotation Settings
-        [SerializeField]
-        private float _stepTreshold = 2f;
-        private int _currentStep = 0;
-        private int _lastStep = 0;
+        public override MouldShape mouldedShape
+        {
+            get { return _mouldedShapes[_mouldShapeIndex]; }
+        }
 
 		#endregion
 
@@ -42,26 +44,6 @@ namespace TideDefense
 
 		#region MonoBehaviour
 
-        protected virtual void Update()
-        {
-            ManageRotation();
-        }
-
-		#endregion
-
-		#region Manage rotation
-
-        public void ManageRotation()
-        {
-            _scrollingValue += Input.mouseScrollDelta.y * _scrollingSpeed;
-
-            _currentStep = Mathf.FloorToInt(_scrollingValue / _stepTreshold);
-
-            if (_currentStep != _lastStep)
-            {
-                Debug.Log($"New step : from {_lastStep} to{_currentStep}");
-            }
-        }
 
 		#endregion
 

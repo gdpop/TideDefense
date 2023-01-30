@@ -29,6 +29,8 @@ namespace TideDefense
         [SerializeField]
         private Transform _fortificationContainer = null;
 
+        private List<Fortification> _fortifications = new List<Fortification>();
+
         [SerializeField]
         private SandCastle _sandCastle = null;
 
@@ -67,15 +69,21 @@ namespace TideDefense
             _sandTowers.Add(tower);
         }
 
-        public void CastMould(GridCellModel gridCell, MouldTool tool)
+        public void CastMould(MouldTool tool, GridCellModel gridCell, float sandWaterConcentration)
         {
             Vector3 worldPosition = _gridManager.gridModel.GetCellWorldPositionFromCoordinates(
                 gridCell.coords
             );
 
-            Fortification fortification = tool.GetCastedObject();
-            
+            Fortification fortification = UnityEngine.Object.Instantiate(
+                tool.mouldedShape.shape,
+                worldPosition,
+                Quaternion.identity,
+                _fortificationContainer
+            );
 
+            fortification.Initialize(this, gridCell, sandWaterConcentration);
+            _fortifications.Add(fortification);
         }
 
         public void DestroyBuilding(Building rempart)
