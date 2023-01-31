@@ -14,20 +14,12 @@ namespace TideDefense
 
         public TimeChannel _timeChannel = null;
 
-        [SerializeField]
-        private Sandbox _seaManager = null;
-
+        private SeaManager _seaManager = null;
         private float _timeOffset = 0f;
-
         private Vector3 _startPosition = new Vector3();
-
         private Vector3 _computedPosition = new Vector3();
 
 		#region Apparition Movement
-
-        [Header("Apparition")]
-        [SerializeField]
-        private float _apparitionDuration = 1f;
 
         private Vector3 _apparitionPosition = new Vector3();
 
@@ -35,29 +27,17 @@ namespace TideDefense
 
 		#region Forward Movement
 
-        [Header("Forward")]
-        [SerializeField]
-        private float _forwardSpeed = 0.1f;
-
         private Vector3 _forwardPosition = new Vector3();
 
 		#endregion
 
 		#region Up & Down Movement
 
-        [Header("Up & Down")]
-        [SerializeField]
-        private float _upAndDownSpeed = 1f;
-        private float _upAndDownSpeedSaved = 0f;
-
-        [SerializeField]
-        private float _upAndDownAmplitude = 1f;
-
+        private Vector3 _upAndDownPosition = new Vector3();
+        private float _upAndDownSpeed = 0f;
         private float _upAndDownValue = 0f;
-
         private float _upAndDownTime = 0;
 
-        private Vector3 _upAndDownPosition = new Vector3();
 
 		#endregion
 
@@ -75,8 +55,6 @@ namespace TideDefense
             {
                 _timeChannel.onUpdateCurrentDeltaTime += CallbackUpdateCurrentDeltaTime;
             }
-
-            InitializeMovement();
         }
 
         private void Update()
@@ -98,10 +76,10 @@ namespace TideDefense
 
 
 
-        public void InitializeMovement()
+        public void Initialize(SeaManager seaManager)
         {
-            _startPosition = _seaManager.GetSpawnPosition();
-            transform.localPosition = _startPosition;
+            _startPosition = transform.localPosition;
+			_seaManager = seaManager;
             InitializeApparition();
         }
 
@@ -125,14 +103,13 @@ namespace TideDefense
 
         public void InitializeApparition()
         {
-            _upAndDownSpeedSaved = _upAndDownSpeed;
             _upAndDownSpeed = 0f;
 
             DOVirtual
                 .Float(
                     0f,
-                    -_seaManager.submergedOffsetY,
-                    _apparitionDuration,
+                    -_seaManager.floatingSettings.submergedOffsetY,
+                    _seaManager.floatingSettings.apparitionDuration,
                     (float value) =>
                     {
                         _apparitionPosition.y = value;
@@ -141,7 +118,7 @@ namespace TideDefense
                 .SetEase(Ease.OutBack)
                 .OnComplete(() =>
                 {
-                    _upAndDownSpeed = _upAndDownSpeedSaved;
+                    _upAndDownSpeed = _seaManager.floatingSettings.upAndDownSpeed;
                 });
         }
 
@@ -151,7 +128,7 @@ namespace TideDefense
 
         public void ManageForward(float deltaTime)
         {
-            _forwardPosition.z += deltaTime * _forwardSpeed;
+            _forwardPosition.z += deltaTime * _seaManager.floatingSettings.forwardSpeed;
         }
 
 		#endregion
@@ -161,8 +138,7 @@ namespace TideDefense
         public void ManageUpAndDown(float deltaTime)
         {
             _upAndDownTime += deltaTime * _upAndDownSpeed;
-            _upAndDownValue = Mathf.Sin(_upAndDownTime) * _upAndDownAmplitude;
-            // _upAndDownValue = UtilsClass.MinusPlusToZeroPlus(_upAndDownValue);
+            _upAndDownValue = Mathf.Sin(_upAndDownTime) * _seaManager.floatingSettings._upAndDownAmplitude;
 
             _upAndDownPosition.y = _upAndDownValue;
         }

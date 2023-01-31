@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CodesmithWorkshop.Useful;
 using DG.Tweening;
+using TideDefense;
 using ToolBox.Pools;
 using UnityEngine;
 
@@ -118,38 +119,47 @@ public class Sandbox : MonoBehaviour
     private Bounds _floatingSpawnZone = new Bounds();
 
     [SerializeField]
-    private Vector2 _floatingSpawnZoneDimensions = new Vector2();
+    private FloatingObject _floatingPrefab = null;
+
+    [SerializeField]
+    private FloatingObjectSettings _floatingSettings = null;
+    public FloatingObjectSettings floatingSettings
+    {
+        get { return _floatingSettings; }
+    }
 
     [SerializeField]
     private Transform _originSpawnZone = null;
-
-    [SerializeField]
-    private float _submergedOffsetY = 1f;
-
-    public float submergedOffsetY
-    {
-        get { return _submergedOffsetY; }
-    }
 
     private Vector3 _submergedOffset;
 
     private void OnEnable()
     {
-        _submergedOffset = new Vector3(0, _submergedOffsetY, 0);
+        _submergedOffset = new Vector3(0, _floatingSettings.submergedOffsetY, 0);
     }
 
     private void Update()
     {
         UpdateFloatingSpawnZone();
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            SpawnFloatingObject();
+        }
+    }
+
+    private void SpawnFloatingObject()
+    {
+        FloatingObject floating = Instantiate(_floatingPrefab, GetSpawnPosition(), Quaternion.identity, _originSpawnZone);
+        floating.Initialize(null);
     }
 
     private void UpdateFloatingSpawnZone()
     {
         _floatingSpawnZone.center = _originSpawnZone.position;
         _floatingSpawnZone.extents = new Vector3(
-            _floatingSpawnZoneDimensions.x,
+            _floatingSettings.floatingSpawnZoneDimensions.x,
             0f,
-            _floatingSpawnZoneDimensions.y
+            _floatingSettings.floatingSpawnZoneDimensions.y
         );
     }
 
@@ -161,7 +171,6 @@ public class Sandbox : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(_originSpawnZone.position, 0.2f);
-
         Gizmos.DrawWireCube(_floatingSpawnZone.center, _floatingSpawnZone.extents * 2f);
     }
 

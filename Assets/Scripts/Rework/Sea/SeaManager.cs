@@ -125,10 +125,9 @@ namespace TideDefense
 
 		#region MonoBehaviour
 
-        protected void Awake() { }
-
         protected void Start()
         {
+            Start_Ressources();
             if (_timeChannel != null)
             {
                 _timeChannel.onUpdateCurrentDeltaTime += CallbackUpdateCurrentDeltaTime;
@@ -137,9 +136,19 @@ namespace TideDefense
             StartCoroutine("DelayBetweenWaveBehaviour");
         }
 
+        private void Update()
+        {
+            Update_Ressources();
+        }
+
         private void LateUpdate()
         {
             UpdateBeachCoveragePerSegment();
+        }
+
+        private void OnDrawGizmos()
+        {
+            OnDrawGizmos_Resources();
         }
 
 		#endregion
@@ -240,7 +249,7 @@ namespace TideDefense
         }
 
         #endregion
-		
+
         #endregion
     }
 }
