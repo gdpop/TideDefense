@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TideDefense
 {
-    public class SeaManager : MonoBehaviour
+    public partial class SeaManager : MonoBehaviour
     {
 		#region Fields
 
@@ -223,8 +223,6 @@ namespace TideDefense
 
 		#endregion
 
-		#endregion
-
         #region Wetness
 
         public void UpdateBeachCoveragePerSegment()
@@ -238,10 +236,11 @@ namespace TideDefense
 
                 _beachCoverageSegments[i] = beachCoveragePerSegment;
             }
-            // Debug.Log($"Segment[0] : beachCoverage with _tideLevel : {_beachCoverageSegments[0]}");
             _beach.UpdateWetness(_beachCoverageSegments);
         }
 
+        #endregion
+		
         #endregion
     }
 }
