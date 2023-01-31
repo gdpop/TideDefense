@@ -14,6 +14,7 @@ namespace TideDefense
 		#region Fields
 
         public TimeChannel _timeChannel = null;
+        
         private SeaManager _seaManager = null;
         private float _timeOffset = 0f;
         private Vector3 _startPosition = new Vector3();
@@ -75,6 +76,7 @@ namespace TideDefense
         {
             if (_state != FloatingObjectState.WashingUp)
                 UpdateMovement();
+                
         }
 
         private void LateUpdate()

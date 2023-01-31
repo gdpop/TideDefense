@@ -540,7 +540,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &452683429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,7 +646,7 @@ GameObject:
   - component: {fileID: 497398433}
   - component: {fileID: 497398434}
   m_Layer: 0
-  m_Name: GameHUD
+  m_Name: ControlHintsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -983,10 +983,10 @@ MonoBehaviour:
   _floatingContainer: {fileID: 1990994118}
   _timeChannel: {fileID: 11400000, guid: db4350a1275f45845a3c084178f9727b, type: 2}
   _seaChannel: {fileID: 11400000, guid: 024f7480de087094e940292002f7e725, type: 2}
-  _seaTransform: {fileID: 1836497765}
   _beach: {fileID: 374885262}
   _beachSlope: 5
   _beachBottom: {fileID: 374885259}
+  _seaTransform: {fileID: 1836497765}
   _seaSpreadOffset: 0.2
   _tideProgressSpeed: 0.01
   _wavePrefab: {fileID: 5967860573822579037, guid: 0d9c12d340504e046be3dc8178f654b0, type: 3}
