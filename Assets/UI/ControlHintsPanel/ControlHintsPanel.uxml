@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="GameHUD.uss" />
+    <Style src="ControlHintsPanel.uss" />
     <ui:VisualElement name="Root" style="align-items: center; height: 100%; width: 100%; justify-content: flex-end;">
         <ui:VisualElement name="ControlsHintsContainer" style="flex-direction: row; height: 54px; justify-content: space-around; align-items: stretch; -unity-background-scale-mode: stretch-to-fill; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; flex-basis: initial; width: 313px;">
             <ui:VisualElement name="LeftClickContainer" style="align-items: flex-end; justify-content: center; width: 111px;">
@@ -8,7 +8,7 @@
                 <ui:Label text="Fill bucket" display-tooltip-when-elided="true" name="FillBucket" class="ControlsHintsLabel" />
             </ui:VisualElement>
             <ui:VisualElement name="VisualElement" style="width: 30%; align-items: center;">
-                <ui:IMGUIContainer name="MouseIcon" style="background-image: url(&apos;/Assets/Sprites/HUD/InGame/computer-mouse.png&apos;); -unity-background-scale-mode: scale-to-fit; width: 103px; bottom: auto; position: absolute; height: 124px; left: auto; -unity-background-image-tint-color: rgba(255, 255, 255, 0.56); top: -22px;" />
+                <ui:IMGUIContainer name="MouseIcon" style="background-image: url(&apos;/Assets/Sprites/HUD/ControlHintsPanel/computer-mouse.png&apos;); -unity-background-scale-mode: scale-to-fit; width: 103px; bottom: auto; position: absolute; height: 124px; left: auto; -unity-background-image-tint-color: rgba(255, 255, 255, 0.56); top: -22px;" />
             </ui:VisualElement>
             <ui:VisualElement name="LeftClickContainer" style="align-items: flex-start; justify-content: center; width: 111px;">
                 <ui:Label text="Build sand tower" display-tooltip-when-elided="true" name="BuildSandTower" class="ControlsHintsLabel" />
