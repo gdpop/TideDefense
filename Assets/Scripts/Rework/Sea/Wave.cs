@@ -24,19 +24,19 @@ namespace TideDefense
 
         [SerializeField]
         private List<WaveSegment> _waveSegments = new List<WaveSegment>();
+        public List<WaveSegment> waveSegments
+        {
+            get { return _waveSegments; }
+        }
 
         public int amountWaveSegment
         {
-            get 
-            {
-                return _waveSegments.Count;
-            }
+            get { return _waveSegments.Count; }
         }
 
         private bool _isCrashing = false;
 
         private int _amountWaveSegmentDisappeared = 0;
-
 
 		#endregion
 
@@ -115,7 +115,7 @@ namespace TideDefense
         {
             if (0 <= waveSegmentIndex && waveSegmentIndex < _waveSegments.Count)
             {
-                return _waveSegments[waveSegmentIndex].beachCoverage;
+                return _waveSegments[waveSegmentIndex].currentBeachCoverage;
             }
             else
                 return -1f;
@@ -126,7 +126,9 @@ namespace TideDefense
 
         private void PlayRandomWaveSound()
         {
-            string randomSoundDataID = UtilsClass.PickRandomInList<string>(_seaChannel.waveSoundDataIDs);
+            string randomSoundDataID = UtilsClass.PickRandomInList<string>(
+                _seaChannel.waveSoundDataIDs
+            );
             SoundManager.PlaySound(randomSoundDataID);
         }
     }

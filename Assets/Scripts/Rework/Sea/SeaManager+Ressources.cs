@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CodesmithWorkshop.Useful;
 using UnityEngine;
 
@@ -12,8 +13,7 @@ namespace TideDefense
 
 		#region Floating Objects
 
-        private Bounds _floatingSpawnZone = new Bounds();
-
+        [Header("Floating Objects")]
         [SerializeField]
         private FloatingObject _floatingPrefab = null;
 
@@ -24,8 +24,17 @@ namespace TideDefense
             get { return _floatingSettings; }
         }
 
+        public Vector3 washUpLimit
+        {
+            get { return _currentTidePosition - _floatingSettings.washUpOffset; }
+        }
+
         [SerializeField]
         private Transform _floatingContainer = null;
+
+        private List<FloatingObject> _floatingObjects = new List<FloatingObject>();
+
+        private Bounds _floatingSpawnZone = new Bounds();
 
         private Vector3 _submergedOffset;
 
@@ -55,6 +64,8 @@ namespace TideDefense
 
         private void OnDrawGizmos_Resources()
         {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(washUpLimit, washUpLimit + new Vector3(2, 0, 0));
             Gizmos.DrawWireCube(_floatingSpawnZone.center, _floatingSpawnZone.extents * 2f);
         }
 
@@ -67,6 +78,7 @@ namespace TideDefense
                 Quaternion.identity,
                 _floatingContainer
             );
+            _floatingObjects.Add(floating);
             floating.Initialize(this);
         }
 
@@ -86,6 +98,51 @@ namespace TideDefense
         {
             return _floatingSpawnZone.RandomPosition() + _submergedOffset;
         }
+
+        #region Wash
+
+        public void WashUpFloatingObject()
+        {
+            foreach (FloatingObject floating in _floatingObjects)
+            {
+                if (floating.state == FloatingObjectState.Waiting)
+                {
+                    WaveSegment segment = FindClosestWaveSegment(floating, _currentWave);
+                    Vector3 toPosition = PositionFromBeachCoverave(
+                        _tideBeachCoverage
+                            + segment.totalBeachCoverage * _floatingSettings.apexBeachCoveragePercent
+                    );
+
+                    floating.WashUp(toPosition, segment.totalDelay);
+                }
+            }
+        }
+
+        public WaveSegment FindClosestWaveSegment(FloatingObject floating, Wave wave)
+        {
+            WaveSegment segment = null;
+            float distance = 0;
+            float lastDistance = 999;
+
+            int count = wave.waveSegments.Count;
+            for (int i = 0; i < count; i++)
+            {
+                segment = wave.waveSegments[i];
+                distance = Vector3.Distance(
+                    floating.transform.position,
+                    segment.transform.position
+                );
+
+                if (lastDistance < distance)
+                    return wave.waveSegments[i - 1];
+                else
+                    lastDistance = distance;
+            }
+
+            return segment;
+        }
+
+        #endregion
 
 		#endregion
 

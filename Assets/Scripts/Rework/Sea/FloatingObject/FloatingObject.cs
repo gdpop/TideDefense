@@ -3,6 +3,7 @@ namespace TideDefense
     using CodesmithWorkshop.Useful;
     using DG.Tweening;
     using UnityEngine;
+    using UnityEngine.Events;
 
     // Apparition
     // Progression
@@ -13,11 +14,17 @@ namespace TideDefense
 		#region Fields
 
         public TimeChannel _timeChannel = null;
-
         private SeaManager _seaManager = null;
         private float _timeOffset = 0f;
         private Vector3 _startPosition = new Vector3();
-        private Vector3 _computedPosition = new Vector3();
+
+        [SerializeField]
+        private FloatingObjectState _state = FloatingObjectState.None;
+        public FloatingObjectState state
+        {
+            get { return _state; }
+            set { _state = value; }
+        }
 
 		#region Apparition Movement
 
@@ -29,6 +36,8 @@ namespace TideDefense
 
         private Vector3 _forwardPosition = new Vector3();
 
+        private float _forwardSpeed = 0f;
+
 		#endregion
 
 		#region Up & Down Movement
@@ -38,8 +47,13 @@ namespace TideDefense
         private float _upAndDownValue = 0f;
         private float _upAndDownTime = 0;
 
-
 		#endregion
+
+        #region Wash Up
+
+        public UnityEvent _onWashedUp = new UnityEvent();
+
+        #endregion
 
 		#endregion
 
@@ -59,7 +73,19 @@ namespace TideDefense
 
         private void Update()
         {
-            UpdateMovement();
+            if (_state != FloatingObjectState.WashingUp)
+                UpdateMovement();
+        }
+
+        private void LateUpdate()
+        {
+            if (
+                _state == FloatingObjectState.Floating
+                && transform.position.z >= _seaManager.washUpLimit.z
+            )
+            {
+                StopForwardMovement();
+            }
         }
 
         private void OnDestroy()
@@ -74,19 +100,25 @@ namespace TideDefense
 
 		#region Behaviour
 
-
-
         public void Initialize(SeaManager seaManager)
         {
             _startPosition = transform.localPosition;
-			_seaManager = seaManager;
+            _seaManager = seaManager;
+            _forwardSpeed = _seaManager.floatingSettings.forwardSpeed;
             InitializeApparition();
+            _state = FloatingObjectState.Floating;
         }
 
         public void UpdateMovement()
         {
             transform.localPosition =
                 _startPosition + (_apparitionPosition + _upAndDownPosition + _forwardPosition);
+        }
+
+        public void StopForwardMovement()
+        {
+            _forwardSpeed = 0f;
+            _state = FloatingObjectState.Waiting;
         }
 
         public void CallbackUpdateCurrentDeltaTime(float deltaTime)
@@ -128,7 +160,7 @@ namespace TideDefense
 
         public void ManageForward(float deltaTime)
         {
-            _forwardPosition.z += deltaTime * _seaManager.floatingSettings.forwardSpeed;
+            _forwardPosition.z += deltaTime * _forwardSpeed;
         }
 
 		#endregion
@@ -138,12 +170,33 @@ namespace TideDefense
         public void ManageUpAndDown(float deltaTime)
         {
             _upAndDownTime += deltaTime * _upAndDownSpeed;
-            _upAndDownValue = Mathf.Sin(_upAndDownTime) * _seaManager.floatingSettings._upAndDownAmplitude;
+            _upAndDownValue =
+                Mathf.Sin(_upAndDownTime) * _seaManager.floatingSettings.upAndDownAmplitude;
 
             _upAndDownPosition.y = _upAndDownValue;
         }
 
 		#endregion
+
+        #region WashUp
+
+        public void WashUp(Vector3 position, float totalDelay)
+        {
+            _state = FloatingObjectState.WashingUp;
+            _upAndDownSpeed = 0;
+            position.x = transform.position.x;
+
+            transform
+                .DOMove(position, _seaManager.floatingSettings.washUpDuration)
+                .SetEase(_seaManager.floatingSettings.washUpEase)
+                .SetDelay(totalDelay)
+                .OnComplete(() =>
+                {
+                    _onWashedUp.Invoke();
+                });
+        }
+
+        #endregion
 
 		#endregion
     }

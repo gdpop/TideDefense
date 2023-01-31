@@ -9,17 +9,16 @@ namespace TideDefense
     {
 		#region Fields
 
+        [Header("Channels")]
         [SerializeField]
         private TimeChannel _timeChannel = null;
 
         [SerializeField]
         private SeaChannel _seaChannel = null;
 
-        [SerializeField]
-        private Transform _seaTransform = null;
-
 		#region Beach
 
+        [Header("Beach")]
         [SerializeField]
         private Beach _beach = null;
 
@@ -37,6 +36,10 @@ namespace TideDefense
 		#endregion
 
 		#region Tide
+
+        [Header("Tide")]
+        [SerializeField]
+        private Transform _seaTransform = null;
 
         /// <summary>
         ///	Small distance so the visual object of the sea goes into the beach
@@ -183,8 +186,7 @@ namespace TideDefense
 
             _seaTransform.localScale = new Vector3(_seaTransform.localScale.x, 1f, _seaSpread);
 
-            _currentTidePosition =
-                _beachBottom.position + _beachBottom.forward * _tideBeachCoverage;
+            _currentTidePosition = PositionFromBeachCoverave(_tideBeachCoverage);
             _currentTidePosition.x = 0;
         }
 
@@ -217,6 +219,8 @@ namespace TideDefense
             _currentWave = UnityEngine.Object.Instantiate(_wavePrefab).GetComponent<Wave>();
             _currentWave.Initialize(this);
             _currentWave.onDisappear += CallbackDestroyCurrentWave;
+
+            WashUpFloatingObject();
         }
 
         /// <summary>
@@ -249,6 +253,11 @@ namespace TideDefense
         }
 
         #endregion
+
+        public Vector3 PositionFromBeachCoverave(float beachCoverage)
+        {
+            return _beachBottom.position + _beachBottom.forward * beachCoverage;
+        }
 
         #endregion
     }

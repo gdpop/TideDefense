@@ -18,4 +18,40 @@ MonoBehaviour:
   apparitionDuration: 2
   forwardSpeed: 0.1
   upAndDownSpeed: 3
-  _upAndDownAmplitude: 0.01
+  upAndDownAmplitude: 0.01
+  washUpOffset: {x: 0, y: 0, z: 0.19}
+  apexBeachCoveragePercent: 0.85
+  washUpDuration: 3
+  washUpEase:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.5298743
+      outSlope: 1.5298743
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.0971223
+    - serializedVersion: 3
+      time: 0.5994317
+      value: 1.0005833
+      inSlope: 0.69105226
+      outSlope: 0.69105226
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.19307853
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.591513
+      outSlope: -0.591513
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20654123
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

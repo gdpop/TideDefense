@@ -27,13 +27,27 @@ namespace TideDefense
         /// </summary>
         private int _segmentIndex = 0;
 
+        private float _currentBeachCoverage = 0f;
 
-        private float _beachCoverage = 0f;
-
-        /// <summary> 
+        /// <summary>
         /// Similar to SeaManager.tideLevel. Represent how much he covers the beach with it's length
         /// </summary>
-        public float beachCoverage { get { return _beachCoverage; } }
+        public float currentBeachCoverage
+        {
+            get { return _currentBeachCoverage; }
+        }
+
+        private float _totalBeachCoverage = 0f;
+        public float totalBeachCoverage
+        {
+            get { return _totalBeachCoverage; }
+        }
+
+        private float _totalDelay = 0f;
+        public float totalDelay
+        {
+            get { return _totalDelay; }
+        }
 
         private Tween _crashingTween = null;
 
@@ -62,7 +76,13 @@ namespace TideDefense
 
         #endregion
 
-        public void CrashOnBeach(Wave wave, int firstSegmentIndex, float delay, int strongestSegmentIndex, float strength)
+        public void CrashOnBeach(
+            Wave wave,
+            int firstSegmentIndex,
+            float delay,
+            int strongestSegmentIndex,
+            float strength
+        )
         {
             _wave = wave;
 
@@ -73,11 +93,16 @@ namespace TideDefense
 
             // TODO : Switch from linear function to curved function
             // How much delay should be applied based on firstSegmentIndex.The further the longer. Creates this "curve" effect of the wave
-            float totalDelay = Mathf.Abs(_segmentIndex - firstSegmentIndex) * delay;
+            _totalDelay = Mathf.Abs(_segmentIndex - firstSegmentIndex) * delay;
 
             // Manage the individual strength of each segment for more chaotic looking wave
-            float individualStrength = Mathf.Abs(_segmentIndex - strongestSegmentIndex) / (float)_wave.amountWaveSegment;
-            individualStrength = _seaChannel.strengthIndividualWaveSegment.Evaluate(individualStrength); 
+            float individualStrength =
+                Mathf.Abs(_segmentIndex - strongestSegmentIndex) / (float)_wave.amountWaveSegment;
+            individualStrength = _seaChannel.strengthIndividualWaveSegment.Evaluate(
+                individualStrength
+            );
+
+            _totalBeachCoverage = strength + individualStrength;
 
             _crashingTween = DOVirtual
                 .Float(
@@ -86,13 +111,17 @@ namespace TideDefense
                     _seaChannel.waveCrashDuration,
                     (float value) =>
                     {
-                        _beachCoverage = Mathf.Lerp(0f, strength + individualStrength, Mathf.Sin(value));
-                        _visualLocalScale.z = beachCoverage;
+                        _currentBeachCoverage = Mathf.Lerp(
+                            0f,
+                            _totalBeachCoverage,
+                            Mathf.Sin(value)
+                        );
+                        _visualLocalScale.z = currentBeachCoverage;
                         _visualTransform.localScale = _visualLocalScale;
                     }
                 )
                 .SetEase(_seaChannel.waveCrashEase)
-                .SetDelay(totalDelay)
+                .SetDelay(_totalDelay)
                 .OnComplete(ReturnedToSea);
         }
 
@@ -147,7 +176,9 @@ namespace TideDefense
         private void ManageDamagedBuilding(Building building, float elapsedPercentage)
         {
             float normalizedElapsedPercentage = elapsedPercentage * 2f;
-            float amountDamageDealt = _seaChannel.damageDealtByWave.Evaluate(normalizedElapsedPercentage);
+            float amountDamageDealt = _seaChannel.damageDealtByWave.Evaluate(
+                normalizedElapsedPercentage
+            );
 
             // Debug.Log($"normalized : {normalizedElapsedPercentage} | damageDealt : {amountDamageDealt}");
 
@@ -155,7 +186,5 @@ namespace TideDefense
         }
 
         #endregion
-
-
     }
 }

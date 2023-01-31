@@ -23,6 +23,16 @@ namespace TideDefense
 
         [Header("Up and Down")]
         public float upAndDownSpeed = 1f;
-        public float _upAndDownAmplitude = 1f;
+        public float upAndDownAmplitude = 0.01f;
+
+
+        [Header("WashUp")]
+        public Vector3 washUpOffset = new Vector3();
+
+        public float apexBeachCoveragePercent = 0.75f;
+
+        public float washUpDuration = 3f; 
+
+        public AnimationCurve washUpEase = null;
     }
 }
