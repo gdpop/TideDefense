@@ -154,6 +154,11 @@ namespace TideDefense
             OnDrawGizmos_Resources();
         }
 
+        private void OnDestroy()
+        {
+            OnDestroy_FloatingSequencer();
+        }
+
 		#endregion
 
 		#region Tide

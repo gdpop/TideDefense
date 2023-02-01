@@ -12,14 +12,14 @@ namespace TideDefense
     )]
     public class FloatingSequencerChannel : ScriptableObject
     {
-        public MessageBottleDelegate onCreateMessageBottle = null;
-
-        public BeachToolDelegate onCreateBeachTool = null;
+        public MessageBottleDelegate onCreateMessageBottle;
+        public BeachToolDelegate onCreateBeachTool;
 
         private void OnEnable()
         {
             onCreateMessageBottle = (MessageBottleData data) => { };
             onCreateBeachTool = (BeachTool tool) => { };
         }
+
     }
 }

@@ -107,7 +107,6 @@ namespace TideDefense
 
         public void UpdateMovement()
         {
-            Debug.Log("UpdateMovement");
             transform.localPosition =
                 _startPosition + (_apparitionPosition + _upAndDownPosition + _forwardPosition);
         }
@@ -120,8 +119,6 @@ namespace TideDefense
 
         public void CallbackUpdateCurrentDeltaTime(float deltaTime)
         {
-            Debug.Log("CallbackUpdateCurrentDeltaTime");
-
             ManageForward(deltaTime);
             ManageUpAndDown(deltaTime);
         }

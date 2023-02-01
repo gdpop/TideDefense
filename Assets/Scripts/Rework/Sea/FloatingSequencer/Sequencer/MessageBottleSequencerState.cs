@@ -22,9 +22,8 @@ namespace TideDefense
             int layerIndex
         )
         {
-            Debug.Log("Enter - MessageBottleSequencerState");
-            base.OnStateEnter(animator, stateInfo, layerIndex);
             _sequencerChannel.onCreateMessageBottle.Invoke(_data);
+            base.OnStateEnter(animator, stateInfo, layerIndex);
         }
 
         override public void OnStateExit(

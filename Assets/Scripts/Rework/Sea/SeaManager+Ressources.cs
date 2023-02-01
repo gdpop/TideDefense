@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CodesmithWorkshop.Useful;
+using DG.Tweening;
 using UnityEngine;
 
 namespace TideDefense
@@ -78,7 +79,13 @@ namespace TideDefense
                 _sequencerChannel.onCreateMessageBottle += CallbackCreateMessageBottle;
             }
 
-            _sequencerController.SetTrigger(START_SEQUENCER);
+            DOVirtual.DelayedCall(
+                4f,
+                () =>
+                {
+                    _sequencerController.SetTrigger(START_SEQUENCER);
+                }
+            );
         }
 
         private void Update_Ressources()
@@ -119,6 +126,12 @@ namespace TideDefense
             );
             _floatingObjects.Add(floating);
             floating.Initialize(this, data);
+        }
+
+        [ContextMenu("Test")]
+        public void Test()
+        {
+            _sequencerChannel.onCreateMessageBottle.Invoke(null);
         }
 
         public void CallbackCreateBeachTool(BeachTool tool) { }

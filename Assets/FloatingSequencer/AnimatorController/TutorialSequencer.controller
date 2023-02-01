@@ -20,7 +20,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32394a1bb5cb0ed48a869d3250c5474d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sequencerChannel: {fileID: 11400000, guid: 4b3d1556f8c883a4f837ec2d422c488a, type: 2}
+  _sequencerChannel: {fileID: 11400000, guid: 84a5e188406f22746b4829fb72442ede, type: 2}
   _type: 2
   _minDelay: 1
   _maxDelay: 1

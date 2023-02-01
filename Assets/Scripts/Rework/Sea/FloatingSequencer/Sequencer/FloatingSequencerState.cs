@@ -45,7 +45,6 @@ namespace TideDefense
             int layerIndex
         )
         {
-            CreateFloatingObject();
             StartDelay();
         }
 
@@ -60,12 +59,6 @@ namespace TideDefense
             AnimatorStateInfo stateInfo,
             int layerIndex
         ) { }
-
-        #endregion
-
-        #region Behaviour
-
-        protected virtual void CreateFloatingObject() { }
 
         #endregion
 
