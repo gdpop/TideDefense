@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b30352f47ef8ab42beb0f250010f036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _UIChannel: {fileID: 11400000, guid: c5368b283b60a2e40afad9044b3e1aa5, type: 2}
+  _clickable: {fileID: 8648676380483261449}
 --- !u!1001 &4703530602438526127
 PrefabInstance:
   m_ObjectHideFlags: 0

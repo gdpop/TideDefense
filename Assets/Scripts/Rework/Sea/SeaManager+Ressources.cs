@@ -13,20 +13,27 @@ namespace TideDefense
 
 		#region Floating Objects
 
+        [Header("Sequencer")]
+        [SerializeField]
+        private FloatingSequencerChannel _sequencerChannel = null;
+
+        [SerializeField]
+        private Animator _sequencerController = null;
+
+        private const string START_SEQUENCER = "StartSequencer";
+
         [Header("Floating Objects")]
         [SerializeField]
         private FloatingObject _floatingPrefab = null;
+
+        [SerializeField]
+        private FloatingMessageBottle _floatingMessageBottle = null;
 
         [SerializeField]
         private FloatingObjectSettings _floatingSettings = null;
         public FloatingObjectSettings floatingSettings
         {
             get { return _floatingSettings; }
-        }
-
-        public Vector3 washUpLimit
-        {
-            get { return _currentTidePosition - _floatingSettings.washUpOffset; }
         }
 
         [SerializeField]
@@ -37,6 +44,19 @@ namespace TideDefense
         private Bounds _floatingSpawnZone = new Bounds();
 
         private Vector3 _submergedOffset;
+
+        [Header("Wash Up")]
+        [SerializeField]
+        private Transform _washedUpContainer = null;
+        public Transform washedUpContainer
+        {
+            get { return _washedUpContainer; }
+        }
+
+        public Vector3 washUpLimit
+        {
+            get { return _currentTidePosition - _floatingSettings.washUpOffset; }
+        }
 
 		#endregion
 
@@ -51,15 +71,23 @@ namespace TideDefense
         private void Start_Ressources()
         {
             _submergedOffset = new Vector3(0, _floatingSettings.submergedOffsetY, 0);
+
+            if (_sequencerChannel != null)
+            {
+                _sequencerChannel.onCreateBeachTool += CallbackCreateBeachTool;
+                _sequencerChannel.onCreateMessageBottle += CallbackCreateMessageBottle;
+            }
+
+            _sequencerController.SetTrigger(START_SEQUENCER);
         }
 
         private void Update_Ressources()
         {
             UpdateFloatingContainer();
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                SpawnFloatingObject();
-            }
+            // if (Input.GetKeyDown(KeyCode.K))
+            // {
+            //     SpawnFloatingObject();
+            // }
         }
 
         private void OnDrawGizmos_Resources()
@@ -69,7 +97,32 @@ namespace TideDefense
             Gizmos.DrawWireCube(_floatingSpawnZone.center, _floatingSpawnZone.extents * 2f);
         }
 
+        private void OnDestroy_FloatingSequencer()
+        {
+            if (_sequencerChannel != null)
+            {
+                _sequencerChannel.onCreateBeachTool -= CallbackCreateBeachTool;
+                _sequencerChannel.onCreateMessageBottle -= CallbackCreateMessageBottle;
+            }
+        }
+
 		#endregion
+
+        public void CallbackCreateMessageBottle(MessageBottleData data)
+        {
+            Debug.Log("CallbackCreateMessageBottle");
+            FloatingMessageBottle floating = Instantiate(
+                _floatingMessageBottle,
+                GetSpawnPosition(),
+                Quaternion.identity,
+                _floatingContainer
+            );
+            _floatingObjects.Add(floating);
+            floating.Initialize(this, data);
+        }
+
+        public void CallbackCreateBeachTool(BeachTool tool) { }
+
         private void SpawnFloatingObject()
         {
             FloatingObject floating = Instantiate(
@@ -80,6 +133,14 @@ namespace TideDefense
             );
             _floatingObjects.Add(floating);
             floating.Initialize(this);
+        }
+
+        public void DestroyFloatingObject(FloatingObject floating)
+        {
+            if (_floatingObjects.Contains(floating))
+                _floatingObjects.Remove(floating);
+
+            Destroy(floating.gameObject);
         }
 
         private void UpdateFloatingContainer()
@@ -99,7 +160,7 @@ namespace TideDefense
             return _floatingSpawnZone.RandomPosition() + _submergedOffset;
         }
 
-        #region Wash
+        #region Wash Up
 
         public void WashUpFloatingObject()
         {
@@ -110,7 +171,8 @@ namespace TideDefense
                     WaveSegment segment = FindClosestWaveSegment(floating, _currentWave);
                     Vector3 toPosition = PositionFromBeachCoverave(
                         _tideBeachCoverage
-                            + segment.totalBeachCoverage * _floatingSettings.apexBeachCoveragePercent
+                            + segment.totalBeachCoverage
+                                * _floatingSettings.apexBeachCoveragePercent
                     );
 
                     floating.WashUp(toPosition, segment.totalDelay);
