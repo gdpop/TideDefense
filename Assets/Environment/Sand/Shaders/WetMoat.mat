@@ -2,23 +2,35 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WetMoat
   m_Shader: {fileID: -6465566751694194690, guid: 0cc148b2b0d0ac745bba3f1beecee284, type: 3}
-  m_ShaderKeywords: 
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_154f531b51d74436b80df196c9facd4a:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_79269e6906cb4b7db92dbc0d69f3bb53:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_ca4a0729db5f42a6bfa4a30db3052d98:
         m_Texture: {fileID: 2800000, guid: ed014625e9df04442bdc53fec813a073, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -39,9 +51,33 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
+    - Vector1_28599955cea541d388b66a21eba5548e: 0
     - Vector1_2a074314da2f4bfea9d709ae1276d787: 0.5
+    - Vector1_4066bfd56dee4116a72ad8444a900ddc: 1
+    - Vector1_61b2c32f9c0f4a6db5acfc937cf9fc84: 0
+    - Vector1_6557205580cf4ba4a221f7db561800c2: 1
+    - Vector1_8b8a131a4d314c7ba2fd2b707c2f42a0: 0
+    - Vector1_b8c5d321564348419151ee43937c7a9a: 0
+    - _QueueControl: 0
+    - _QueueOffset: 0
     m_Colors:
     - Color_5950da9668cc4811bb415b6db472cb0e: {r: 0.6226415, g: 0.39115742, b: 0.085172676, a: 0}
+    - Vector4_95205c3aece44092bed46390ada3ab09: {r: 1, g: 1, b: 0, a: 0}
+    - Vector4_b211e1502d6544a7933367831344bb76: {r: 1, g: 1, b: 0, a: 0}
     - Vector4_b5a5993465e74d65a92421cc81f4dd64: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &3286633080701269611
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7

@@ -1,3 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement />
+    <Style src="project://database/Assets/UI/Sandbox/Sandbox.uss?fileID=7433441132597879392&amp;guid=5ccfb6d3af9d5674e8af8ee30866e496&amp;type=3#Sandbox" />
+    <ui:VisualElement name="Root" style="width: 100%; height: 100%; align-items: center; justify-content: space-around;">
+        <ui:VisualElement name="TestBox" class="testBox tonFils" />
+    </ui:VisualElement>
 </ui:UXML>

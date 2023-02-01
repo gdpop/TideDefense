@@ -1,0 +1,13 @@
+.testBox {
+    position: absolute;
+    background-color: red;
+    transition-property: background-color;
+    transition-duration: 4;
+}
+
+.testBox:hover {
+    background-color: blue;
+}
+
+.display {
+}
