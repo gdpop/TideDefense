@@ -5,6 +5,7 @@ using DG.Tweening;
 using TideDefense;
 using ToolBox.Pools;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [ExecuteInEditMode]
 public class Sandbox : MonoBehaviour
@@ -113,66 +114,112 @@ public class Sandbox : MonoBehaviour
 
     #endregion
 
-
     #region SeaManager+Ressource
 
-    private Bounds _floatingSpawnZone = new Bounds();
+    // private Bounds _floatingSpawnZone = new Bounds();
+
+    // [SerializeField]
+    // private FloatingObject _floatingPrefab = null;
+
+    // [SerializeField]
+    // private FloatingObjectSettings _floatingSettings = null;
+    // public FloatingObjectSettings floatingSettings
+    // {
+    //     get { return _floatingSettings; }
+    // }
+
+    // [SerializeField]
+    // private Transform _originSpawnZone = null;
+
+    // private Vector3 _submergedOffset;
+
+    // private void OnEnable()
+    // {
+    //     _submergedOffset = new Vector3(0, _floatingSettings.submergedOffsetY, 0);
+    // }
+
+    // private void Update()
+    // {
+    //     UpdateFloatingSpawnZone();
+    //     if(Input.GetKeyDown(KeyCode.K))
+    //     {
+    //         SpawnFloatingObject();
+    //     }
+    // }
+
+    // private void SpawnFloatingObject()
+    // {
+    //     FloatingObject floating = Instantiate(_floatingPrefab, GetSpawnPosition(), Quaternion.identity, _originSpawnZone);
+    //     floating.Initialize(null);
+    // }
+
+    // private void UpdateFloatingSpawnZone()
+    // {
+    //     _floatingSpawnZone.center = _originSpawnZone.position;
+    //     _floatingSpawnZone.extents = new Vector3(
+    //         _floatingSettings.floatingSpawnZoneDimensions.x,
+    //         0f,
+    //         _floatingSettings.floatingSpawnZoneDimensions.y
+    //     );
+    // }
+
+    // public Vector3 GetSpawnPosition()
+    // {
+    //     return _floatingSpawnZone.RandomPosition() + _submergedOffset;
+    // }
+
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.DrawWireSphere(_originSpawnZone.position, 0.2f);
+    //     Gizmos.DrawWireCube(_floatingSpawnZone.center, _floatingSpawnZone.extents * 2f);
+    // }
+
+    #endregion
+
+    #region UI BUILDER TEST
 
     [SerializeField]
-    private FloatingObject _floatingPrefab = null;
+    private UIDocument _document = null;
 
-    [SerializeField]
-    private FloatingObjectSettings _floatingSettings = null;
-    public FloatingObjectSettings floatingSettings
-    {
-        get { return _floatingSettings; }
-    }
+    private VisualElement _background = null;
 
-    [SerializeField]
-    private Transform _originSpawnZone = null;
+    private const string VA_BACKGROUND = "BACKGROUND";
+    private const string VA_BOX_CONTAINER = "BoxContainer";
+    private const string ANIM_BACKGROUND_DISPLAY = "animation-background-display";
 
-    private Vector3 _submergedOffset;
+    [ContextMenu("TestAddClassForTransition")]
+    public void TestAddClassForTransition() {
 
-    private void OnEnable()
-    {
-        _submergedOffset = new Vector3(0, _floatingSettings.submergedOffsetY, 0);
-    }
+        VisualElement root = _document.rootVisualElement;
 
-    private void Update()
-    {
-        UpdateFloatingSpawnZone();
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            SpawnFloatingObject();
-        }
-    }
+        _background = root.Query<VisualElement>(VA_BOX_CONTAINER);
 
-    private void SpawnFloatingObject()
-    {
-        FloatingObject floating = Instantiate(_floatingPrefab, GetSpawnPosition(), Quaternion.identity, _originSpawnZone);
-        floating.Initialize(null);
-    }
+        _background.ToggleInClassList(ANIM_BACKGROUND_DISPLAY);
+     }
 
-    private void UpdateFloatingSpawnZone()
-    {
-        _floatingSpawnZone.center = _originSpawnZone.position;
-        _floatingSpawnZone.extents = new Vector3(
-            _floatingSettings.floatingSpawnZoneDimensions.x,
-            0f,
-            _floatingSettings.floatingSpawnZoneDimensions.y
-        );
-    }
 
-    public Vector3 GetSpawnPosition()
-    {
-        return _floatingSpawnZone.RandomPosition() + _submergedOffset;
-    }
+     private const string VA_BUTTON = "Button";
+     private const string ANIM_BUTTON_ANIMATE = "animate";
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(_originSpawnZone.position, 0.2f);
-        Gizmos.DrawWireCube(_floatingSpawnZone.center, _floatingSpawnZone.extents * 2f);
-    }
+    [ContextMenu("TestAddClassForTransitionButton")]
+    public void TestAddClassForTransitionButton() {
+
+        VisualElement root = _document.rootVisualElement;
+
+        VisualElement button = root.Query<VisualElement>(VA_BUTTON);
+
+        button.schedule.Execute(() => button.AddToClassList(ANIM_BUTTON_ANIMATE)).StartingIn(100);
+     }
+
+         [ContextMenu("TestAddClassForTransitionButton - Out")]
+    public void TestAddClassForTransitionButtonOut() {
+
+        VisualElement root = _document.rootVisualElement;
+
+        VisualElement button = root.Query<VisualElement>(VA_BUTTON);
+
+        button.schedule.Execute(() => button.ToggleInClassList(ANIM_BUTTON_ANIMATE)).StartingIn(100);
+     }
 
     #endregion
 }

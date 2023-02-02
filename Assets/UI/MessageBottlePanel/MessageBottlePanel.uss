@@ -1,0 +1,43 @@
+.background {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.fade-in-out {
+    opacity: 0;
+    transition: opacity 2s;
+}
+
+.fade-in-out.animate {
+    opacity: 1;
+}
+
+#MessageContainer {
+    width: 60%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url('project://database/Assets/Sprites/HUD/MessageBottle/ParchmentBackground.png?fileID=21300000&guid=c8b564221a2dd83468a1ea91d33b3619&type=3#ParchmentBackground');
+    -unity-background-scale-mode: scale-to-fit;
+    opacity: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+#Text {
+    width: 100%;
+    height: 35%;
+    white-space: normal;
+    -unity-text-align: upper-left;
+    color: rgb(48, 28, 17);
+    font-size: 18px;
+    -unity-font-style: bold;
+    -unity-font: url('project://database/Assets/Sprites/HUD/MessageBottle/Fonts/AnnieUseYourTelescope-Regular.ttf?fileID=12800000&guid=79e5ec1c2ee63c84fbc1fed514b386f1&type=3#AnnieUseYourTelescope-Regular');
+    text-overflow: clip;
+    padding-left: 10%;
+    padding-right: 15%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}

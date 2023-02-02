@@ -1,13 +1,28 @@
-.testBox {
-    position: absolute;
-    background-color: red;
-    transition-property: background-color;
-    transition-duration: 4;
+#BoxContainer
+{
+	background-color: black;
+	transition-property: opacity;
+	transition-duration: 5s;
 }
 
-.testBox:hover {
-    background-color: blue;
+.animation-background-display
+{
+	opacity: 0;
 }
 
-.display {
+.button {
+    transition-property: translate opacity;
+    transition-timing-function: ease-out linear;
+    transition-duration: 0.3s 0.3s;
+    transition-delay: 0.2s 0.2s;
+    translate: -10 0;
+    opacity: 0;
 }
+
+.button.animate {
+    translate: 0 0;
+    opacity: 1;
+}
+
+
+
