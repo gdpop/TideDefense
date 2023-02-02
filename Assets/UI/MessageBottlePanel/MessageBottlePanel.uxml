@@ -1,8 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/MessageBottlePanel/MessageBottlePanel.uss?fileID=7433441132597879392&amp;guid=50793a13701816545b9f0ddf79752a13&amp;type=3#MessageBottlePanel" />
-    <ui:VisualElement name="Root" style="width: 100%; height: 100%; flex-direction: column; align-items: center; justify-content: center; background-color: rgba(0, 0, 0, 0.4);">
-        <ui:VisualElement name="MessageContainer" class="messageContainer">
-            <ui:Label text="The Pixel Parchment UI Kit is a completely free UI set which can be used by any one (including both commercial and non commercial projects) to create their games with.&#10;This game comes pre-coded into Ren&apos;Py - so you don&apos;t have to code anything if you don&apos;t want to! " display-tooltip-when-elided="true" name="Text" class="Text text" />
+    <ui:VisualElement name="Root" style="width: 100%; height: 100%; flex-direction: column; align-items: center; justify-content: center;">
+        <ui:VisualElement name="Background" style="flex-grow: 1; width: 100%; height: 100%; align-items: center; justify-content: center;">
+            <ui:VisualElement name="MessageContainer" class="messageContainer">
+                <ui:Label text="The Pixel Parchment UI Kit is a completely free UI set which can be used by any one (including both commercial and non commercial projects) to create their games with.&#10;This game comes pre-coded into Ren&apos;Py - so you don&apos;t have to code anything if you don&apos;t want to! " display-tooltip-when-elided="true" name="TextLabel" class="Text text" />
+            </ui:VisualElement>
+            <ui:Button text="Close" display-tooltip-when-elided="true" name="CloseButton" class="CloseButton" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

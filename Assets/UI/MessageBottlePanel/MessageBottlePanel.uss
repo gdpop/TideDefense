@@ -1,30 +1,43 @@
-.background {
+
+:root
+{
+    --displayHideDuration: 1s;
+} 
+
+.background-fade-in-out {
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color var(--displayHideDuration);
+}
+
+.background-fade-in-out.animate {
     background-color: rgba(0, 0, 0, 0.75);
-}
-
-.fade-in-out {
-    opacity: 0;
-    transition: opacity 2s;
-}
-
-.fade-in-out.animate {
-    opacity: 1;
 }
 
 #MessageContainer {
     width: 60%;
-    height: 100%;
+    height: 55%;
     background-color: rgba(0, 0, 0, 0);
     background-image: url('project://database/Assets/Sprites/HUD/MessageBottle/ParchmentBackground.png?fileID=21300000&guid=c8b564221a2dd83468a1ea91d33b3619&type=3#ParchmentBackground');
-    -unity-background-scale-mode: scale-to-fit;
-    opacity: 1;
+    -unity-background-scale-mode: scale-and-crop;
     justify-content: center;
     align-items: center;
 }
 
-#Text {
+.message-container {
+    opacity: 0;
+    scale: 0.75;
+    transition-property: opacity scale;
+    transition-duration: var(--displayHideDuration);
+}
+
+.message-container.animate {
+    opacity: 1;
+    scale: 1;
+}
+
+#TextLabel {
     width: 100%;
-    height: 35%;
+    height: 100%;
     white-space: normal;
     -unity-text-align: upper-left;
     color: rgb(48, 28, 17);
@@ -34,10 +47,46 @@
     text-overflow: clip;
     padding-left: 10%;
     padding-right: 15%;
-    padding-top: 5%;
-    padding-bottom: 5%;
+    padding-top: 15%;
+    padding-bottom: 15%;
     margin-left: 0;
     margin-right: 0;
     margin-top: 0;
     margin-bottom: 0;
+}
+
+#CloseButton {
+    height: 77px;
+    width: 202px;
+    font-size: 33px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    background-color: rgb(211, 182, 143);
+    transition-property: font-size background-color;
+    transition-duration: 0.3s;
+}
+
+#CloseButton:hover {
+    font-size: 40px;
+    background-color: rgb(255, 219, 171);
+}
+
+.close-button-display-hide {
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.close-button-display-hide.animate {
+    opacity: 1;
 }

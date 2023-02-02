@@ -13,4 +13,14 @@ MonoBehaviour:
   m_Name: MB_T_Welcome
   m_EditorClassIdentifier: 
   _type: 1
-  _text: 
+  _text: 'Welcome to Tide Defense
+
+    Have you ever wondered what happens to message
+    bottles thrown into the sea ? They end up here, in this small, anonymous creek
+    long forgotten.
+
+    This Sand Castle has been built to store them, but tides
+    and waves may cause it''s doom.
+
+    Use what the Sea offers you to protect the
+    Sand Castle and it''s content. '

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using PierreMizzi.MouseInteractable;
 using UnityEngine;
 
@@ -50,8 +48,8 @@ namespace TideDefense
 
         private void CallbackOnClick(RaycastHit hit)
         {
-            Debug.Log("Clicked MESSAGE BOTTLE !");
             _UIChannel.onDisplayMessageBottle.Invoke(_data);
+            Destroy(gameObject);
         }
 
         #endregion
