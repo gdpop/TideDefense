@@ -220,6 +220,14 @@ namespace CodesmithWorkshop.Useful
                 return list[Random.Range(0, list.Count)];
         }
 
+        public static T PickRandom<T>(this List<T> list)
+        {
+            if (list.Count == 0)
+                return default(T);
+            else
+                return list[Random.Range(0, list.Count)];
+        }
+
         // Vector3 because Input.mousePosition also is ... don't ask me why
         public static Vector3 MiddleScreenPosition
         {

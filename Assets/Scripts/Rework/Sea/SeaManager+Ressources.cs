@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using CodesmithWorkshop.Useful;
 using DG.Tweening;
 using UnityEngine;
@@ -46,6 +47,20 @@ namespace TideDefense
 
         private Vector3 _submergedOffset;
 
+        [Header("Narration")]
+        [SerializeField]
+        private float _minDelayMessageNarration = 20;
+
+        [SerializeField]
+        private float _maxDelayMessageNarration = 40;
+        private float _currentDelayMessageNarration = 0;
+
+        [SerializeField]
+        private List<MessageBottleData> _narrationMessageBottleDatas =
+            new List<MessageBottleData>();
+
+        private IEnumerator _spawnNarrationMessageCoroutine = null;
+
         [Header("Wash Up")]
         [SerializeField]
         private Transform _washedUpContainer = null;
@@ -65,9 +80,7 @@ namespace TideDefense
 
 		#region Methods
 
-		#region Floating Objects
-
-		#region MonoBehaviour
+        #region MonoBehaviour
 
         private void Start_Ressources()
         {
@@ -79,22 +92,13 @@ namespace TideDefense
                 _sequencerChannel.onCreateMessageBottle += CallbackCreateMessageBottle;
             }
 
-            DOVirtual.DelayedCall(
-                4f,
-                () =>
-                {
-                    _sequencerController.SetTrigger(START_SEQUENCER);
-                }
-            );
+            _sequencerController.SetTrigger(START_SEQUENCER);
+            StartSpawningNarrationMessage();
         }
 
         private void Update_Ressources()
         {
             UpdateFloatingContainer();
-            // if (Input.GetKeyDown(KeyCode.K))
-            // {
-            //     SpawnFloatingObject();
-            // }
         }
 
         private void OnDrawGizmos_Resources()
@@ -115,9 +119,11 @@ namespace TideDefense
 
 		#endregion
 
-        public void CallbackCreateMessageBottle(MessageBottleData data)
+
+		#region Floating Objects
+
+        public void CreateMessageBottle(MessageBottleData data)
         {
-            Debug.Log("CallbackCreateMessageBottle");
             FloatingMessageBottle floating = Instantiate(
                 _floatingMessageBottle,
                 GetSpawnPosition(),
@@ -128,25 +134,14 @@ namespace TideDefense
             floating.Initialize(this, data);
         }
 
-        [ContextMenu("Test")]
-        public void Test()
+        #region Floating Sequencer
+
+        public void CallbackCreateMessageBottle(MessageBottleData data)
         {
-            _sequencerChannel.onCreateMessageBottle.Invoke(null);
+            CreateMessageBottle(data);
         }
 
         public void CallbackCreateBeachTool(BeachTool tool) { }
-
-        private void SpawnFloatingObject()
-        {
-            FloatingObject floating = Instantiate(
-                _floatingPrefab,
-                GetSpawnPosition(),
-                Quaternion.identity,
-                _floatingContainer
-            );
-            _floatingObjects.Add(floating);
-            floating.Initialize(this);
-        }
 
         public void DestroyFloatingObject(FloatingObject floating)
         {
@@ -172,6 +167,54 @@ namespace TideDefense
         {
             return _floatingSpawnZone.RandomPosition() + _submergedOffset;
         }
+
+        #endregion
+
+        #region Narration
+
+        private void StartSpawningNarrationMessage()
+        {
+            if (_spawnNarrationMessageCoroutine == null)
+            {
+                _spawnNarrationMessageCoroutine = SpawnNarrationMessage();
+                StartCoroutine(_spawnNarrationMessageCoroutine);
+            }
+        }
+
+        private void StopSpawningNarrationMessage()
+        {
+            if (_spawnNarrationMessageCoroutine != null)
+            {
+                StopCoroutine(_spawnNarrationMessageCoroutine);
+                _spawnNarrationMessageCoroutine = null;
+            }
+        }
+
+        public IEnumerator SpawnNarrationMessage()
+        {
+            while (true)
+            {
+                _currentDelayMessageNarration = Random.Range(
+                    _minDelayMessageNarration,
+                    _maxDelayMessageNarration
+                );
+
+                yield return new WaitForSeconds(_currentDelayMessageNarration);
+
+                CreateMessageNarration();
+
+                yield return null;
+            }
+        }
+
+        private void CreateMessageNarration()
+        {
+            MessageBottleData data = _narrationMessageBottleDatas.PickRandom<MessageBottleData>();
+            CreateMessageBottle(data);
+            _narrationMessageBottleDatas.Remove(data);
+        }
+
+        #endregion
 
         #region Wash Up
 
