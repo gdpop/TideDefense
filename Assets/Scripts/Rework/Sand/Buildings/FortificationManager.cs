@@ -13,18 +13,7 @@ namespace TideDefense
 
         [SerializeField]
         private GridManager _gridManager = null;
-
-        public GridManager gridManager
-        {
-            get { return _gridManager; }
-        }
-
-        [SerializeField]
-        private GameplayChannel _gameplayChannel = null;
-
-        [SerializeField]
-        private SandTower _prefabSandTower = null;
-
+      
         [SerializeField]
         private Transform _fortificationContainer = null;
 
@@ -45,8 +34,6 @@ namespace TideDefense
 
             // Sand Castle
             _gridManager.SetSandCastleOnGrid(_sandCastle);
-
-            InitializeFoundations();
         }
 
         #endregion
@@ -146,55 +133,6 @@ namespace TideDefense
             return enumValue;
         }
 
-        #region Foundation
-
-        [Header("Foundation")]
-        [SerializeField]
-        private GameObject _foundationPrefab = null;
-        public GameObject foundationPrefab
-        {
-            get { return _foundationPrefab; }
-        }
-
-        [SerializeField]
-        private int _foundationPrefabPoolCount = 12;
-        public int foundationPrefabPoolCount
-        {
-            get { return _foundationPrefabPoolCount; }
-            set { _foundationPrefabPoolCount = value; }
-        }
-
-        private List<RempartFoundation> _foundations = new List<RempartFoundation>();
-
-        /// <summary>
-        /// The amount of RempartFoundation possibly selectable by RempartFoundationBuilders
-        /// Cannot create more RempartFoundation than the biggest side of the grid
-        /// </summary>
-        public int handledFoundationPrefabAmount
-        {
-            get { return Mathf.Max(_gridManager.xLength, _gridManager.zLength) - 1; }
-        }
-
-        private void InitializeFoundations()
-        {
-            _foundationPrefab.Populate(foundationPrefabPoolCount);
-        }
-
-        public void BuildFoundation(
-            SandTower tower,
-            RempartFoundation foundation,
-            Vector2Int coords
-        )
-        {
-            GridCellModel cellModel = _gridManager.gridModel.GetCellFromCoordinates<GridCellModel>(
-                coords
-            );
-            foundation.Initialize(this, cellModel);
-            foundation.transform.SetParent(_fortificationContainer);
-            _foundations.Add(foundation);
-        }
-
-        #endregion
 
 		#endregion
     }

@@ -2,8 +2,9 @@ namespace TideDefense
 {
     using UnityEngine;
 
-    public delegate void MessageBottleDelegate(MessageBottleData data);
-    public delegate void BeachToolDelegate(BeachTool tool);
+    public delegate void FloatingMessageBottleDelegate(MessageBottleData data);
+    public delegate void FloatingBeachToolDelegate(BeachTool tool);
+    public delegate void WashedUpObjectDelegate(WashedUpObject washedUp);
 
     [CreateAssetMenu(
         fileName = "FloatingSequencerChannel",
@@ -12,15 +13,17 @@ namespace TideDefense
     )]
     public class FloatingSequencerChannel : ScriptableObject
     {
-        public MessageBottleDelegate onCreateMessageBottle;
-        public BeachToolDelegate onCreateBeachTool;
-
+        public FloatingMessageBottleDelegate onCreateMessageBottle;
+        public FloatingBeachToolDelegate onCreateBeachTool;
+        public WashedUpObjectDelegate onCreatedWashedUpObject;
 
 
         private void OnEnable()
         {
             onCreateMessageBottle = (MessageBottleData data) => { };
             onCreateBeachTool = (BeachTool tool) => { };
+
+            onCreatedWashedUpObject =(WashedUpObject value)=>{};
         }
 
     }

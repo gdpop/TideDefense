@@ -17,7 +17,7 @@ namespace TideDefense
 
 		#region Message Bottle
 
-        public MessageBottleDelegate onDisplayMessageBottle = null;
+        public FloatingMessageBottleDelegate onDisplayMessageBottle = null;
         public Action onHideMessageBottle = null;
 
 		#endregion

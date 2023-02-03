@@ -76,7 +76,7 @@ namespace TideDefense
         {
             if (
                 _state == FloatingObjectState.Floating
-                && transform.position.z >= _seaManager.washUpLimit.z
+                && transform.position.z >= _seaManager.limitBeforeWashUp.z
             )
             {
                 StopForwardMovement();

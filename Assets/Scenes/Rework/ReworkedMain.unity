@@ -1324,6 +1324,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e8e178b11f475b641b6a19ce404afd85, type: 2}
   - {fileID: 11400000, guid: 3cea648ea33678b4b9b33155dcbc2341, type: 2}
   _washedUpContainer: {fileID: 325324650}
+  _washedUpObjectBeachCoverageOffset: 2
+  _washedUpObjectRandomRange: 1
+  testObject: {fileID: 6492487309484062594, guid: 384ba590004dd864ea3c44e30821a984, type: 3}
   _timeChannel: {fileID: 11400000, guid: db4350a1275f45845a3c084178f9727b, type: 2}
   _seaChannel: {fileID: 11400000, guid: 024f7480de087094e940292002f7e725, type: 2}
   _beach: {fileID: 374885262}
@@ -2156,12 +2159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridManager: {fileID: 477670696}
-  _gameplayChannel: {fileID: 11400000, guid: c3e39d95462e2944594797abfa256e7b, type: 2}
-  _prefabSandTower: {fileID: 3919147030147858698, guid: 2b78dbc0df6d7fc4b907bffb5e182493, type: 3}
   _fortificationContainer: {fileID: 1739542203}
   _sandCastle: {fileID: 1815023534}
-  _foundationPrefab: {fileID: 8831274018687523525, guid: 1142f3cb3602c2544ab8c4232fef4d09, type: 3}
-  _foundationPrefabPoolCount: 12
 --- !u!1001 &1524704239
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -176,7 +176,7 @@ namespace TideDefense
         public void CallbackOnClickTool(BeachTool tool)
         {
             if (_currentTool == null)
-                GrabTool_Reworked(tool);
+                GrabTool(tool);
         }
 
         public void SetCurrentTool(BeachTool tool)
@@ -191,11 +191,8 @@ namespace TideDefense
         private BeachToolHolder _toolHolder = null;
 
 
-        public void GrabTool_Reworked(BeachTool tool)
+        public void GrabTool(BeachTool tool)
         {
-            // GridCell no longers hold the tool
-            PickToolOnGrid(tool, tool.currentGridCell);
-
             SetCurrentTool(tool);
 
             _toolHolder.GrabTool(
@@ -205,9 +202,16 @@ namespace TideDefense
                     _currentTool.SetGrabbed();
                 }
             );
+
+            if(tool.isWashedUp)
+            {
+                _availableTools.Add(tool);
+                tool.isWashedUp = false;
+            }else
+                PickToolOnGrid(tool, tool.currentGridCell);
         }
 
-        public void DropTool_Reworked(GridCellModel gridCell)
+        public void DropTool(GridCellModel gridCell)
         {
             Vector3 to = _gridManager.gridModel.GetCellWorldPositionFromCoordinates(
                 gridCell.coords

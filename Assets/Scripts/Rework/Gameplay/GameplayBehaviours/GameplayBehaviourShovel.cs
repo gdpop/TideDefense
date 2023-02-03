@@ -61,7 +61,7 @@ namespace TideDefense
                 FillContainerTool(containerTool, hit);
             }
             else if (gridCell.isEmpty)
-                _gameplayManager.DropTool_Reworked(gridCell);
+                _gameplayManager.DropTool(gridCell);
             // _gameplayManager.DropTool(_gameplayManager.currentTool, gridCell);
         }
 

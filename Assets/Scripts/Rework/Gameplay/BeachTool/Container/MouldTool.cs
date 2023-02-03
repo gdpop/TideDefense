@@ -141,7 +141,13 @@ namespace TideDefense
 
 		#endregion
 
-        #region Mould
+        #region Washed Up
+
+        public override void InitializeWashedUp()
+        {
+            base.InitializeWashedUp();
+            InitializeContent();
+        }
 
 		#endregion
 

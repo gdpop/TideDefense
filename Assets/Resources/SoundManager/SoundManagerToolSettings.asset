@@ -20,6 +20,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1669c4ebd04b2554497fe0b0231fa70a, type: 2}
   - {fileID: 11400000, guid: 057edd80a12b71f4e97abd865fa4f867, type: 2}
   - {fileID: 11400000, guid: 5ed592d6dcf4ef24d8c22b01b9e38621, type: 2}
+  - {fileID: 11400000, guid: d63d27c80287cb0469aab6aa5b338d22, type: 2}
   m_generatedSoundDataID: "\r\n\t\t\tpublic static class SoundDataIDStatic\r\n\t\t\t
     { \r\r\n\t\t\t/*\r\n\t\t\t\tAmbients\r\n\t\t\t*/\r\n\t\tpublic static readonly
     string AMBIENT_BEACH_AND_CALM_SEA = \"AmbientBeachAndCalmSea\"; \r\r\n\t\t\t/*\r\n\t\t\t\tMusic\r\n\t\t\t*/\r\n\t\tpublic
@@ -29,9 +30,11 @@ MonoBehaviour:
     = \"BeachToolHoverIn\"; \rpublic static readonly string BEACH_TOOL_HOVER_OUT
     = \"BeachToolHoverOut\"; \rpublic static readonly string DROP_BEACH_TOOL_SHOVEL
     = \"DropBeachTool_Shovel\"; \rpublic static readonly string SHOVEL_DIG = \"ShovelDig\";
+    \rpublic static readonly string CREATE_FORTIFICATION = \"CreateFortification\";
     \r\r\n\t\t\t/*\r\n\t\t\t\tSFX_SeaAndWaves\r\n\t\t\t*/\r\n\t\tpublic static readonly
     string WAVE01 = \"Wave01\"; \rpublic static readonly string WAVE02 = \"Wave02\";
     \rpublic static readonly string WAVE03 = \"Wave03\"; \rpublic static readonly
     string WAVE04 = \"Wave04\"; \rpublic static readonly string WAVE05 = \"Wave05\";
-    \r } \r \r\n\t\t\t\r\n\t\t"
+    \r\r\n\t\t\t/*\r\n\t\t\t\tSFX_Others\r\n\t\t\t*/\r\n\t\tpublic static readonly
+    string OPEN_MESSAGE_BOTTLE = \"OpenMessageBottle\"; \r } \r \r\n\t\t\t\r\n\t\t"
   _path: SoundManager

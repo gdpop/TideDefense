@@ -46,7 +46,7 @@ namespace TideDefense
         [SerializeField]
         private Hoverable _hoverable = null;
 
-		#region Hover Animation
+		#region Hoverable
 
         [Header("Hover Animation")]
         [SerializeField]
@@ -72,6 +72,13 @@ namespace TideDefense
 
 		#endregion
 
+        #region Washed Up
+            
+        private bool _isWashedUp = false;
+        public bool isWashedUp { get { return _isWashedUp; } set {_isWashedUp = value;}}
+
+        #endregion
+
 		#endregion
 
 		#region Methods
@@ -95,13 +102,13 @@ namespace TideDefense
 
 		#endregion
 
-		#region Tool parent class ?
+		#region Parent Class
 
         public virtual void Initialize(GameplayManager manager)
         {
             _manager = manager;
-            
         }
+
 
         protected void CallbackOnChangeTool(BeachTool tool)
         {
@@ -133,13 +140,7 @@ namespace TideDefense
             _hoveredPosition = transform.position + new Vector3(0f, _hoverYOffset, 0f);
 
             SoundManager.PlaySound(SoundDataIDStatic.DROP_BEACH_TOOL_SHOVEL);
-
-            // Debug.Log(
-            //     $"{toolType} has been drop on the grid : ({gridCell.coords.x}, {gridCell.coords.y} | tool {currentGridCell.currentTool})"
-            // );
         }
-
-		#endregion
 
 		#endregion
 
@@ -197,6 +198,28 @@ namespace TideDefense
                     .SetEase(Ease.OutCubic);
             }
         }
+
+		#endregion
+
+        #region Washed Up
+
+        public virtual void InitializeWashedUp()
+        {
+            status = ToolStatus.Dropped;
+            _isGrabbed = false;
+
+            _isWashedUp = true;
+
+            _interactableBoxCollider.enabled = true;
+            _grabBoxCollider.enabled = false;
+
+            _currentPosition = transform.position;
+            _hoveredPosition = transform.position + new Vector3(0f, _hoverYOffset, 0f);
+        }
+
+
+            
+        #endregion
 
 		#endregion
     }

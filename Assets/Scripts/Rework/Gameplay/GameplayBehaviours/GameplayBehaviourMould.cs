@@ -72,7 +72,7 @@ namespace TideDefense
         public virtual void CallbackOnClickGrid(GridCellModel gridCell, RaycastHit hit)
         {
             if (gridCell.isEmpty)
-                _gameplayManager.DropTool_Reworked(gridCell);
+                _gameplayManager.DropTool(gridCell);
         }
 
        #region HoldClick

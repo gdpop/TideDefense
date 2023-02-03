@@ -21,7 +21,6 @@ namespace TideDefense
 
         [SerializeField]
         private Animator _sequencerController = null;
-
         private const string START_SEQUENCER = "StartSequencer";
 
         [Header("Floating Objects")]
@@ -47,6 +46,14 @@ namespace TideDefense
 
         private Vector3 _submergedOffset;
 
+        /// <summary>
+        /// When floatingObject reach this possition in the sea, the stop moving and are about to be wahed-up on the beach
+        /// </summary>
+        public Vector3 limitBeforeWashUp
+        {
+            get { return _currentTidePosition - _floatingSettings.washUpOffset; }
+        }
+
         [Header("Narration")]
         [SerializeField]
         private float _minDelayMessageNarration = 20;
@@ -61,6 +68,10 @@ namespace TideDefense
 
         private IEnumerator _spawnNarrationMessageCoroutine = null;
 
+		#endregion
+
+        #region Washed Up Object
+
         [Header("Wash Up")]
         [SerializeField]
         private Transform _washedUpContainer = null;
@@ -69,12 +80,10 @@ namespace TideDefense
             get { return _washedUpContainer; }
         }
 
-        public Vector3 washUpLimit
-        {
-            get { return _currentTidePosition - _floatingSettings.washUpOffset; }
-        }
-
-		#endregion
+        [SerializeField] private float _washedUpObjectBeachCoverageOffset = 2f;
+        [SerializeField] private float _washedUpObjectRandomRange = 1;
+            
+        #endregion
 
 		#endregion
 
@@ -90,6 +99,7 @@ namespace TideDefense
             {
                 _sequencerChannel.onCreateBeachTool += CallbackCreateBeachTool;
                 _sequencerChannel.onCreateMessageBottle += CallbackCreateMessageBottle;
+                _sequencerChannel.onCreatedWashedUpObject += CallbackCreateWashedUpObject;
             }
 
             _sequencerController.SetTrigger(START_SEQUENCER);
@@ -104,7 +114,7 @@ namespace TideDefense
         private void OnDrawGizmos_Resources()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(washUpLimit, washUpLimit + new Vector3(2, 0, 0));
+            Gizmos.DrawLine(limitBeforeWashUp, limitBeforeWashUp + new Vector3(2, 0, 0));
             Gizmos.DrawWireCube(_floatingSpawnZone.center, _floatingSpawnZone.extents * 2f);
         }
 
@@ -114,11 +124,11 @@ namespace TideDefense
             {
                 _sequencerChannel.onCreateBeachTool -= CallbackCreateBeachTool;
                 _sequencerChannel.onCreateMessageBottle -= CallbackCreateMessageBottle;
+                _sequencerChannel.onCreatedWashedUpObject -= CallbackCreateWashedUpObject;
             }
         }
 
 		#endregion
-
 
 		#region Floating Objects
 
@@ -225,7 +235,7 @@ namespace TideDefense
                 if (floating.state == FloatingObjectState.Waiting)
                 {
                     WaveSegment segment = FindClosestWaveSegment(floating, _currentWave);
-                    Vector3 toPosition = PositionFromBeachCoverave(
+                    Vector3 toPosition = GetPositionFromBeachCoverage(
                         _tideBeachCoverage
                             + segment.totalBeachCoverage
                                 * _floatingSettings.apexBeachCoveragePercent
@@ -263,6 +273,32 @@ namespace TideDefense
         #endregion
 
 		#endregion
+
+        #region Washed Up Objects
+
+        [SerializeField] private WashedUpObject testObject = null;
+
+        [ContextMenu("TestWashedUp")]
+        public void TestWashedUp()
+        {
+            CallbackCreateWashedUpObject(testObject);
+        }
+
+        private void CallbackCreateWashedUpObject(WashedUpObject washedUpObject)
+        {
+            Vector3 rndPosition = GetRandomWashedUpPosition();
+            WashedUpObject newWashedUp = Instantiate(washedUpObject, rndPosition, Quaternion.identity, _washedUpContainer);
+            newWashedUp.Initialize();
+        }
+
+        private Vector3 GetRandomWashedUpPosition()
+        {
+            Vector3 randomPosition = GetPositionFromBeachCoverage(_tideBeachCoverage  + _washedUpObjectBeachCoverageOffset);
+            randomPosition.x = _beach.transform.position.x + Random.Range(-_washedUpObjectRandomRange, _washedUpObjectRandomRange);
+            return randomPosition;
+        }
+            
+        #endregion
 
 		#endregion
     }

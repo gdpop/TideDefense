@@ -33,6 +33,10 @@ MonoBehaviour:
   - m_ID: ShovelDig
     m_clip: {fileID: 8300000, guid: 8cf1284ae7ee712438e31557e67f8d98, type: 3}
     m_mixer: {fileID: 2753936300719616674, guid: cb2a3666e93b31146ba7a4c9ea38c02e, type: 2}
+  - m_ID: CreateFortification
+    m_clip: {fileID: 8300000, guid: 3a46cdbcc57f2cf44b438bb96aa7272f, type: 3}
+    m_mixer: {fileID: 2753936300719616674, guid: cb2a3666e93b31146ba7a4c9ea38c02e, type: 2}
   m_generateStatic: 1
-  m_audioClips: []
+  m_audioClips:
+  - {fileID: 8300000, guid: 3a46cdbcc57f2cf44b438bb96aa7272f, type: 3}
   m_mixerGroup: {fileID: 2753936300719616674, guid: cb2a3666e93b31146ba7a4c9ea38c02e, type: 2}

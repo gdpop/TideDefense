@@ -107,6 +107,10 @@ namespace TideDefense
         public void GrabTool(BeachTool tool, Action onComplete)
         {
             _currentTool = tool;
+
+            if(_currentTool.isWashedUp)
+                CorrectRotation();
+
             // Tween to lerp the tool from the ground to the mouse
             Vector3 from = _currentTool.transform.position;
             LockBucketJoint();
@@ -153,6 +157,11 @@ namespace TideDefense
             StopRotation();
 
             SoundManager.PlaySound(SoundDataIDStatic.BEACH_TOOL_DROP);
+        }
+
+        private void CorrectRotation()
+        {
+            _currentTool.transform.DORotate(Vector3.zero, _tweenDuration);
         }
 
 		#endregion

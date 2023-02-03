@@ -191,7 +191,7 @@ namespace TideDefense
 
             _seaTransform.localScale = new Vector3(_seaTransform.localScale.x, 1f, _seaSpread);
 
-            _currentTidePosition = PositionFromBeachCoverave(_tideBeachCoverage);
+            _currentTidePosition = GetPositionFromBeachCoverage(_tideBeachCoverage);
             _currentTidePosition.x = 0;
         }
 
@@ -259,7 +259,7 @@ namespace TideDefense
 
         #endregion
 
-        public Vector3 PositionFromBeachCoverave(float beachCoverage)
+        public Vector3 GetPositionFromBeachCoverage(float beachCoverage)
         {
             return _beachBottom.position + _beachBottom.forward * beachCoverage;
         }
