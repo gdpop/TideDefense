@@ -109,7 +109,6 @@ namespace TideDefense
             _manager = manager;
         }
 
-
         protected void CallbackOnChangeTool(BeachTool tool)
         {
             _isGrabbed = tool.toolType == _toolType;
@@ -205,16 +204,26 @@ namespace TideDefense
 
         public virtual void InitializeWashedUp()
         {
+            // General Status
+            _isWashedUp = true;
             status = ToolStatus.Dropped;
             _isGrabbed = false;
 
-            _isWashedUp = true;
 
+            // Hover animation
+            _currentPosition = transform.position;
+            _hoveredPosition = transform.position + new Vector3(0f, _hoverYOffset, 0f);
+
+
+            // Interactions
             _interactableBoxCollider.enabled = true;
             _grabBoxCollider.enabled = false;
 
-            _currentPosition = transform.position;
-            _hoveredPosition = transform.position + new Vector3(0f, _hoverYOffset, 0f);
+            if (_gameplayChannel != null)
+                _gameplayChannel.onChangeTool += CallbackOnChangeTool;
+
+            InitializeHoverable();
+            InitializeClickable();
         }
 
 

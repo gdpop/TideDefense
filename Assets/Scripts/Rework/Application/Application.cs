@@ -13,6 +13,16 @@ namespace TideDefense
 
         [SerializeField] private Transform _soundSourceContainer = null;
 
+        [SerializeField] private ApplicationChannel _applicationChannel = null;
+
+        private void Awake() {
+            #if !UNITY_EDITOR
+
+            _applicationChannel.playTutorial = true;
+
+            #endif
+        }
+
         private void Start()
         {
             _interactableManager = new InteractableManager(_interactableLayer);

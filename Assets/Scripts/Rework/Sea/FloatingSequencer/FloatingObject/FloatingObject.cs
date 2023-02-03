@@ -14,7 +14,6 @@ namespace TideDefense
 		#region Fields
 
         public TimeChannel _timeChannel = null;
-
         protected SeaManager _seaManager = null;
         private float _timeOffset = 0f;
         private Vector3 _startPosition = new Vector3();
@@ -26,6 +25,8 @@ namespace TideDefense
             get { return _state; }
             set { _state = value; }
         }
+
+        [SerializeField] protected Transform _objectContainer = null;
 
 		#region Apparition Movement
 
@@ -49,11 +50,6 @@ namespace TideDefense
         private float _upAndDownTime = 0;
 
 		#endregion
-
-        #region Wash Up
-
-
-        #endregion
 
 		#endregion
 
@@ -174,7 +170,7 @@ namespace TideDefense
 
 		#endregion
 
-        #region WashUp
+        #region Wash Up
 
         public void WashUp(Vector3 position, float totalDelay)
         {

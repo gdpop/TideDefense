@@ -1,15 +1,15 @@
 namespace TideDefense
 {
     using System.Collections.Generic;
-    using DG.Tweening;
     using PierreMizzi.TilesetUtils;
     using UnityEngine;
-    using VirtuoseReality.Extension.AudioManager;
     using VirtuoseReality.Helpers;
 
     public class GameplayManager : MonoBehaviour
     {
 		#region Fields
+
+        [SerializeField] private ApplicationChannel _applicationChannel = null;
 
         [SerializeField]
         private GameplayChannel _gameplayChannel = null;
@@ -66,6 +66,9 @@ namespace TideDefense
         /// </summary>
         private BeachTool _noneTool = new BeachTool();
 
+        [SerializeField]
+        private BeachToolHolder _toolHolder = null;
+
         [Header("Tool")]
         [SerializeField]
         private BeachTool _currentTool = null;
@@ -101,8 +104,10 @@ namespace TideDefense
             // Initialize the bucket as dropped on the beach
             InitializeStateBehaviour();
 
-            foreach (BeachTool beachTool in _availableTools)
-                InitializeTool(beachTool);
+            if(_applicationChannel.playTutorial)
+                _seaManager.PlayTutorial();
+            else
+                _seaManager.PlayWithoutTutorial();
         }
 
         private void OnDestroy()
@@ -186,10 +191,6 @@ namespace TideDefense
             ChangeStateBehaviour(_currentTool.toolType);
             _gameplayChannel.onChangeTool.Invoke(_currentTool);
         }
-
-        [SerializeField]
-        private BeachToolHolder _toolHolder = null;
-
 
         public void GrabTool(BeachTool tool)
         {

@@ -243,6 +243,11 @@ namespace CodesmithWorkshop.Useful
             );
         }
 
+        public static Quaternion RandomRotation()
+        {
+            return Quaternion.Euler(Random.Range(0f, 359f), Random.Range(0f, 359f), Random.Range(0f, 359f));
+        }
+
 		#region Visual
 
         public static string MainTexProperty = "_MainTex";

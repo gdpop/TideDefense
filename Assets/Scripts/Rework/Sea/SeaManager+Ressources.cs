@@ -3,6 +3,7 @@ using System.Collections;
 using CodesmithWorkshop.Useful;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Playables;
 
 namespace TideDefense
 {
@@ -21,6 +22,8 @@ namespace TideDefense
 
         [SerializeField]
         private Animator _sequencerController = null;
+        [SerializeField] private RuntimeAnimatorController _tutorialPlayable;
+        [SerializeField] private RuntimeAnimatorController _withoutTutorialPlayable;
         private const string START_SEQUENCER = "StartSequencer";
 
         [Header("Floating Objects")]
@@ -102,7 +105,6 @@ namespace TideDefense
                 _sequencerChannel.onCreatedWashedUpObject += CallbackCreateWashedUpObject;
             }
 
-            _sequencerController.SetTrigger(START_SEQUENCER);
             StartSpawningNarrationMessage();
         }
 
@@ -129,6 +131,22 @@ namespace TideDefense
         }
 
 		#endregion
+
+        #region Behaviour
+
+        public void PlayTutorial()
+        {
+            _sequencerController.runtimeAnimatorController = _tutorialPlayable;
+            _sequencerController.SetTrigger(START_SEQUENCER);
+        }
+
+        public void PlayWithoutTutorial()
+        {
+            _sequencerController.runtimeAnimatorController = _withoutTutorialPlayable;
+            _sequencerController.SetTrigger(START_SEQUENCER);
+        }
+            
+        #endregion
 
 		#region Floating Objects
 

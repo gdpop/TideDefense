@@ -2,6 +2,7 @@ namespace TideDefense
 {
 	using UnityEngine;
 	using UnityEngine.Events;
+	using CodesmithWorkshop.Useful;
 	
 	public class WashedUpObject : MonoBehaviour {
 		
@@ -19,7 +20,7 @@ namespace TideDefense
 
 	public virtual void Initialize()
 	{
-		Quaternion rndRotation = Quaternion.Euler(Random.Range(0f, 359f), Random.Range(0f, 359f), Random.Range(0f, 359f));
+		Quaternion rndRotation = UtilsClass.RandomRotation();
 		_washedUpContainer.rotation = rndRotation;
 		onInitialize.Invoke();
 

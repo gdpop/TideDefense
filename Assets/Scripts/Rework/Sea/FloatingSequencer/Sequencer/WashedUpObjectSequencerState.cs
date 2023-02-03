@@ -2,13 +2,15 @@ using UnityEngine;
 
 namespace TideDefense
 {
-    public class MessageBottleSequencerState : FloatingSequencerState
+    using System.Collections.Generic;
+
+    public class WashedUpObjectSequencerState : FloatingSequencerState
     {
 		#region Fields
 
-		[Header("Message Bottle")]
+		[Header("Object")]
         [SerializeField]
-        private MessageBottleData _data = null;
+        private List<WashedUpObject> _washedUpObjects = null;
 
 		#endregion
 
@@ -22,7 +24,9 @@ namespace TideDefense
             int layerIndex
         )
         {
-            _sequencerChannel.onCreateMessageBottle.Invoke(_data);
+            foreach (WashedUpObject washedUp in _washedUpObjects)
+                _sequencerChannel.onCreatedWashedUpObject(washedUp);   
+
             base.OnStateEnter(animator, stateInfo, layerIndex);
         }
 
