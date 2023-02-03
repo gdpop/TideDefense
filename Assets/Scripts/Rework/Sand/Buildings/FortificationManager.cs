@@ -5,6 +5,7 @@ namespace TideDefense
     using UnityEngine;
     using ToolBox.Pools;
     using System.Collections.Generic;
+    using VirtuoseReality.Extension.AudioManager;
 
     public class FortificationManager : MonoBehaviour
     {
@@ -67,6 +68,8 @@ namespace TideDefense
             _buildings.Add(fortification);
 
             RefreshLinkingRemparts();
+
+            SoundManager.PlaySound(SoundDataIDStatic.CREATE_FORTIFICATION);
         }
 
         public void DestroyBuilding(Building building)

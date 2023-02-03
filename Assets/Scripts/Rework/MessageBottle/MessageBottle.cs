@@ -1,5 +1,6 @@
 using PierreMizzi.MouseInteractable;
 using UnityEngine;
+using VirtuoseReality.Extension.AudioManager;
 
 namespace TideDefense
 {
@@ -48,6 +49,7 @@ namespace TideDefense
 
         private void CallbackOnClick(RaycastHit hit)
         {
+            SoundManager.PlaySound(SoundDataIDStatic.OPEN_MESSAGE_BOTTLE);
             _UIChannel.onDisplayMessageBottle.Invoke(_data);
             Destroy(gameObject);
         }

@@ -17,6 +17,8 @@ namespace TideDefense
         {
             base.Initialize(seaManager);
             _bottle.Initialize(data);
+
+            _bottle.transform.rotation = Quaternion.Euler(20f, Random.Range(0, 359), 0);
         }
 
         protected override void WashUpComplete()
