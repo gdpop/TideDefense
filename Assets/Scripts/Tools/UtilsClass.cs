@@ -248,6 +248,14 @@ namespace CodesmithWorkshop.Useful
             return Quaternion.Euler(Random.Range(0f, 359f), Random.Range(0f, 359f), Random.Range(0f, 359f));
         }
 
+        public static Quaternion RandomRotation(Vector3 minRotation, Vector3 maxRotation){
+            return Quaternion.Euler(
+                Random.Range(minRotation.x, maxRotation.x),
+                Random.Range(minRotation.y, maxRotation.y),
+                Random.Range(minRotation.z, maxRotation.z)
+            );
+        }
+
 		#region Visual
 
         public static string MainTexProperty = "_MainTex";

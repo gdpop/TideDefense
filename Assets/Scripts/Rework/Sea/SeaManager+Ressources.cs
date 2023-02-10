@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Collections;
 using CodesmithWorkshop.Useful;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Playables;
+using System;
 
 namespace TideDefense
 {
@@ -18,7 +18,7 @@ namespace TideDefense
 
         [Header("Sequencer")]
         [SerializeField]
-        private FloatingSequencerChannel _sequencerChannel = null;
+        private SequencerChannel _sequencerChannel = null;
 
         [SerializeField]
         private Animator _sequencerController = null;
@@ -100,7 +100,7 @@ namespace TideDefense
 
             if (_sequencerChannel != null)
             {
-                _sequencerChannel.onCreateBeachTool += CallbackCreateBeachTool;
+                _sequencerChannel.onCreateFloatingBeach += CallbackCreateBeachTool;
                 _sequencerChannel.onCreateMessageBottle += CallbackCreateMessageBottle;
                 _sequencerChannel.onCreatedWashedUpObject += CallbackCreateWashedUpObject;
             }
@@ -124,7 +124,7 @@ namespace TideDefense
         {
             if (_sequencerChannel != null)
             {
-                _sequencerChannel.onCreateBeachTool -= CallbackCreateBeachTool;
+                _sequencerChannel.onCreateFloatingBeach -= CallbackCreateBeachTool;
                 _sequencerChannel.onCreateMessageBottle -= CallbackCreateMessageBottle;
                 _sequencerChannel.onCreatedWashedUpObject -= CallbackCreateWashedUpObject;
             }
@@ -154,7 +154,7 @@ namespace TideDefense
         {
             FloatingMessageBottle floating = Instantiate(
                 _floatingMessageBottle,
-                GetSpawnPosition(),
+                GetFloatingRandomPosition(),
                 Quaternion.identity,
                 _floatingContainer
             );
@@ -169,7 +169,13 @@ namespace TideDefense
             CreateMessageBottle(data);
         }
 
-        public void CallbackCreateBeachTool(BeachTool tool) { }
+        public void CallbackCreateBeachTool(FloatingBeachTool floatingTool)
+        {
+            FloatingBeachTool newFloating = Instantiate(floatingTool, GetFloatingRandomPosition(), Quaternion.identity, _floatingContainer);
+
+            newFloating.Initialize(this);
+            _floatingObjects.Add(newFloating);
+        }
 
         public void DestroyFloatingObject(FloatingObject floating)
         {
@@ -191,7 +197,7 @@ namespace TideDefense
             );
         }
 
-        public Vector3 GetSpawnPosition()
+        public Vector3 GetFloatingRandomPosition()
         {
             return _floatingSpawnZone.RandomPosition() + _submergedOffset;
         }
@@ -222,7 +228,7 @@ namespace TideDefense
         {
             while (true)
             {
-                _currentDelayMessageNarration = Random.Range(
+                _currentDelayMessageNarration = UnityEngine.Random.Range(
                     _minDelayMessageNarration,
                     _maxDelayMessageNarration
                 );
@@ -312,7 +318,7 @@ namespace TideDefense
         private Vector3 GetRandomWashedUpPosition()
         {
             Vector3 randomPosition = GetPositionFromBeachCoverage(_tideBeachCoverage  + _washedUpObjectBeachCoverageOffset);
-            randomPosition.x = _beach.transform.position.x + Random.Range(-_washedUpObjectRandomRange, _washedUpObjectRandomRange);
+            randomPosition.x = _beach.transform.position.x + UnityEngine.Random.Range(-_washedUpObjectRandomRange, _washedUpObjectRandomRange);
             return randomPosition;
         }
             

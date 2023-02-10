@@ -81,3 +81,5 @@ MonoBehaviour:
       m_Calls: []
   _object: {fileID: 0}
   _washedUpContainer: {fileID: 750121123}
+  _minRotation: {x: 0, y: 0, z: 0}
+  _maxRotation: {x: 359, y: 359, z: 359}

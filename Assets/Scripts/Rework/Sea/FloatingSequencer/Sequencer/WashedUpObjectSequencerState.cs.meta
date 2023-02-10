@@ -4,7 +4,7 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - _sequencerChannel: {fileID: 11400000, guid: 84a5e188406f22746b4829fb72442ede, type: 2}
+  - _sequencerChannel: {fileID: 11400000, guid: ce43ed051f69a364b98a27d316977a7c, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

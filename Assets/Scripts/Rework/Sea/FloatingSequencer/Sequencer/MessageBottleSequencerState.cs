@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TideDefense
 {
-    public class MessageBottleSequencerState : FloatingSequencerState
+    public class MessageBottleSequencerState : FloatingObjectSequencerState
     {
 		#region Fields
 

@@ -143,9 +143,9 @@ namespace TideDefense
 
         #region Washed Up
 
-        public override void InitializeWashedUp()
+        public override void WashUpComplete()
         {
-            base.InitializeWashedUp();
+            base.WashUpComplete();
             InitializeContent();
         }
 

@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 46f3ff51d0eec9a4a8acc457d181f437
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _sequencerChannel: {fileID: 11400000, guid: ce43ed051f69a364b98a27d316977a7c, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

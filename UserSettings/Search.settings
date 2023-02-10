@@ -7,7 +7,7 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
-	"last_search.310DEAF1" = "Sandbox"
+	"last_search.310DEAF1" = "p: t:Animator"
 	"OpenInspectorPreview.310DEAF1" = "0"
 	"currentGroup.310DEAF1" = "all"
 }
@@ -57,6 +57,8 @@ objectSelectors = {
 }
 recentSearches = [
 	""
+	"Sequencer"
+	"S"
 	"OP"
 	"Se"
 ]

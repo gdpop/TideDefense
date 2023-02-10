@@ -4,7 +4,7 @@ namespace TideDefense
 {
     using System.Collections.Generic;
 
-    public class WashedUpObjectSequencerState : FloatingSequencerState
+    public class WashedUpObjectSequencerState : ASequencerState
     {
 		#region Fields
 

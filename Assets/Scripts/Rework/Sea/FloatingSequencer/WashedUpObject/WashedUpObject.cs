@@ -16,12 +16,18 @@ namespace TideDefense
 
 	#endregion 
 
+	#region Random Rotation
+
+	[SerializeField] private Vector3 _minRotation = new Vector3(0, 0, 0);
+	[SerializeField] private Vector3 _maxRotation = new Vector3(359, 359, 359);
+		
+	#endregion
+
 	#region Methods 
 
 	public virtual void Initialize()
 	{
-		Quaternion rndRotation = UtilsClass.RandomRotation();
-		_washedUpContainer.rotation = rndRotation;
+		_washedUpContainer.rotation = UtilsClass.RandomRotation(_minRotation, _maxRotation);
 		onInitialize.Invoke();
 
 		_object.transform.SetParent(transform.parent);

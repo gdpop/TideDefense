@@ -204,10 +204,10 @@ namespace TideDefense
                 }
             );
 
-            if(tool.isWashedUp)
+            if(!_availableTools.Contains(tool))
             {
+                tool.Initialize(this);
                 _availableTools.Add(tool);
-                tool.isWashedUp = false;
             }else
                 PickToolOnGrid(tool, tool.currentGridCell);
         }

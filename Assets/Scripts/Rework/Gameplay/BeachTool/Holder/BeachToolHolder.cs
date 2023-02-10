@@ -109,7 +109,10 @@ namespace TideDefense
             _currentTool = tool;
 
             if(_currentTool.isWashedUp)
+            {
                 CorrectRotation();
+                _currentTool.isWashedUp = false;
+            }
 
             // Tween to lerp the tool from the ground to the mouse
             Vector3 from = _currentTool.transform.position;

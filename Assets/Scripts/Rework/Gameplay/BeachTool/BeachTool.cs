@@ -102,7 +102,7 @@ namespace TideDefense
 
 		#endregion
 
-		#region Parent Class
+		#region Behaviour
 
         public virtual void Initialize(GameplayManager manager)
         {
@@ -111,8 +111,16 @@ namespace TideDefense
 
         protected void CallbackOnChangeTool(BeachTool tool)
         {
-            _isGrabbed = tool.toolType == _toolType;
-            _hoverable.isInteractable = tool == null;
+            if(tool.toolType == _toolType)
+            {
+                _isGrabbed = true;
+                SetNonInteractable();
+            }
+            else
+            {
+                _isGrabbed = false;
+                SetInteractable();
+            }
         }
 
         public virtual void SetGrabbed()
@@ -121,8 +129,7 @@ namespace TideDefense
             currentGridCell = null;
             _isGrabbed = true;
 
-            _interactableBoxCollider.enabled = false;
-            _grabBoxCollider.enabled = true;
+            SetNonInteractable();
         }
 
         public virtual void SetDropped(GridCellModel gridCell)
@@ -131,14 +138,31 @@ namespace TideDefense
             currentGridCell = gridCell;
             _isGrabbed = false;
 
-            _interactableBoxCollider.enabled = true;
-            _grabBoxCollider.enabled = false;
+            SetInteractable();
 
             // Used by hover animation
             _currentPosition = transform.position;
             _hoveredPosition = transform.position + new Vector3(0f, _hoverYOffset, 0f);
 
             SoundManager.PlaySound(SoundDataIDStatic.DROP_BEACH_TOOL_SHOVEL);
+        }
+
+        private void SetInteractable()
+        {
+            _holdClickable.isInteractable = true;
+
+            // Needed so it can hang from the BeahToolHolder
+            _interactableBoxCollider.enabled = true;
+            _grabBoxCollider.enabled = false;
+        }
+
+        private void SetNonInteractable()
+        {
+            _holdClickable.isInteractable = false;
+
+            // Needed so it can hang from the BeahToolHolder
+            _interactableBoxCollider.enabled = false;
+            _grabBoxCollider.enabled = true;
         }
 
 		#endregion
@@ -200,9 +224,14 @@ namespace TideDefense
 
 		#endregion
 
-        #region Washed Up
+        #region Sequencer
 
-        public virtual void InitializeWashedUp()
+        public virtual void StartFloating()
+        {
+            SetInteractable();
+        }
+
+        public virtual void WashUpComplete()
         {
             // General Status
             _isWashedUp = true;
@@ -216,8 +245,7 @@ namespace TideDefense
 
 
             // Interactions
-            _interactableBoxCollider.enabled = true;
-            _grabBoxCollider.enabled = false;
+            SetInteractable();
 
             if (_gameplayChannel != null)
                 _gameplayChannel.onChangeTool += CallbackOnChangeTool;
@@ -225,7 +253,6 @@ namespace TideDefense
             InitializeHoverable();
             InitializeClickable();
         }
-
 
             
         #endregion

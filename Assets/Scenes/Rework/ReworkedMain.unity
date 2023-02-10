@@ -1280,7 +1280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0811998eed83874192994b8224dc84a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sequencerChannel: {fileID: 11400000, guid: 84a5e188406f22746b4829fb72442ede, type: 2}
+  _sequencerChannel: {fileID: 11400000, guid: ce43ed051f69a364b98a27d316977a7c, type: 2}
   _sequencerController: {fileID: 636176818}
   _tutorialPlayable: {fileID: 9100000, guid: a912934e488c5ed4d9e2e274b36b8ce9, type: 2}
   _withoutTutorialPlayable: {fileID: 9100000, guid: 6c2ed23a4da32ff499bb529eeebfadaa, type: 2}

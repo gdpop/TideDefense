@@ -51,6 +51,14 @@ namespace TideDefense
 
 		#endregion
 
+        #region Random Rotation
+
+        [SerializeField] private Vector3 _minRotation = new Vector3(0, 0, 0);
+
+        [SerializeField] private Vector3 _maxRotation = new Vector3(360, 360, 360);
+            
+        #endregion
+
 		#endregion
 
 		#region Methods
@@ -89,8 +97,9 @@ namespace TideDefense
 
 		#region Behaviour
 
-        public void Initialize(SeaManager seaManager)
+        public virtual void Initialize(SeaManager seaManager)
         {
+            _objectContainer.rotation = UtilsClass.RandomRotation(_minRotation, _maxRotation);
             _startPosition = transform.localPosition;
             _seaManager = seaManager;
             _forwardSpeed = _seaManager.floatingSettings.forwardSpeed;

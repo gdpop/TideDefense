@@ -16,9 +16,11 @@ namespace TideDefense
 
 		#region Methods
 
-        public void Initialize(SeaManager seaManager, MessageBottleData data)
+        public override void Initialize(SeaManager seaManager)
         {
             base.Initialize(seaManager);
+            _tool.StartFloating();
+            Debug.Log("Test");
 
             _objectContainer.transform.rotation = UtilsClass.RandomRotation();
         }
@@ -26,7 +28,7 @@ namespace TideDefense
         protected override void WashUpComplete()
         {
             _tool.transform.SetParent(_seaManager.washedUpContainer);
-			_tool.InitializeWashedUp();
+			_tool.WashUpComplete();
 			
             _seaManager.DestroyFloatingObject(this);
         }

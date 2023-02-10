@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
@@ -34,17 +32,23 @@ namespace TideDefense
             int layerIndex
         )
         {
-            StartDelay();
+            StartDelay(animator);
         }
 
         #endregion
 
         #region Delay
 
-        protected void StartDelay()
+        protected void StartDelay(Animator animator)
         {
             _delay = Random.Range(_minDelay, _maxDelay);
-            // DOVirtual.DelayedCall(_delay, ExitState);
+            DOVirtual.DelayedCall(
+                _delay,
+                () =>
+                {
+                    animator.SetTrigger(ASequencerState.TRIGGER_NEXT);
+                }
+            );
         }
 
         #endregion
