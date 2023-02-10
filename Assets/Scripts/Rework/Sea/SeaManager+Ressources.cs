@@ -310,6 +310,7 @@ namespace TideDefense
 
         private void CallbackCreateWashedUpObject(WashedUpObject washedUpObject)
         {
+            Debug.Log(washedUpObject);
             Vector3 rndPosition = GetRandomWashedUpPosition();
             WashedUpObject newWashedUp = Instantiate(washedUpObject, rndPosition, Quaternion.identity, _washedUpContainer);
             newWashedUp.Initialize();

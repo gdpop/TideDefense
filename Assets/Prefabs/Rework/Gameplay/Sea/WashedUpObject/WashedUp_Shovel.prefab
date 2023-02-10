@@ -108,7 +108,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6492487309484062594, guid: 384ba590004dd864ea3c44e30821a984, type: 3}
       propertyPath: onInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: InitializeWashedUp
+      value: WashUpComplete
       objectReference: {fileID: 0}
     - target: {fileID: 6492487309484062594, guid: 384ba590004dd864ea3c44e30821a984, type: 3}
       propertyPath: onInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

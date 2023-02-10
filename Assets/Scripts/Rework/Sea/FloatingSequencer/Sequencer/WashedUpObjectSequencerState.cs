@@ -25,7 +25,10 @@ namespace TideDefense
         )
         {
             foreach (WashedUpObject washedUp in _washedUpObjects)
-                _sequencerChannel.onCreatedWashedUpObject(washedUp);   
+            {
+                Debug.Log(washedUp.name);
+                _sequencerChannel.onCreatedWashedUpObject.Invoke(washedUp);   
+            }
 
             base.OnStateEnter(animator, stateInfo, layerIndex);
         }
