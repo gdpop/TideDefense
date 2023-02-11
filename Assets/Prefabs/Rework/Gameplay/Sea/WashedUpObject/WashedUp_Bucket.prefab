@@ -17,6 +17,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6492487309484062594, guid: 384ba590004dd864ea3c44e30821a984, type: 3}
+      propertyPath: onWashUpComplete.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6492487309484062594, guid: 384ba590004dd864ea3c44e30821a984, type: 3}
       propertyPath: onInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
@@ -24,6 +28,10 @@ PrefabInstance:
       propertyPath: onInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4595278801554847170}
+    - target: {fileID: 6492487309484062594, guid: 384ba590004dd864ea3c44e30821a984, type: 3}
+      propertyPath: onWashUpComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6492487309484062594, guid: 384ba590004dd864ea3c44e30821a984, type: 3}
       propertyPath: onInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 1
@@ -33,11 +41,31 @@ PrefabInstance:
       value: WashUpComplete
       objectReference: {fileID: 0}
     - target: {fileID: 6492487309484062594, guid: 384ba590004dd864ea3c44e30821a984, type: 3}
+      propertyPath: onWashUpComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4595278801554847170}
+    - target: {fileID: 6492487309484062594, guid: 384ba590004dd864ea3c44e30821a984, type: 3}
+      propertyPath: onWashUpComplete.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6492487309484062594, guid: 384ba590004dd864ea3c44e30821a984, type: 3}
+      propertyPath: onWashUpComplete.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: WashUpComplete
+      objectReference: {fileID: 0}
+    - target: {fileID: 6492487309484062594, guid: 384ba590004dd864ea3c44e30821a984, type: 3}
       propertyPath: onInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: TideDefense.MouldTool, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6492487309484062594, guid: 384ba590004dd864ea3c44e30821a984, type: 3}
+      propertyPath: onWashUpComplete.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TideDefense.MouldTool, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6492487309484062594, guid: 384ba590004dd864ea3c44e30821a984, type: 3}
       propertyPath: onInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6492487309484062594, guid: 384ba590004dd864ea3c44e30821a984, type: 3}
+      propertyPath: onWashUpComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8402077930698145727, guid: 384ba590004dd864ea3c44e30821a984, type: 3}

@@ -109,7 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sequencerChannel: {fileID: 11400000, guid: ce43ed051f69a364b98a27d316977a7c, type: 2}
   _floatingObjects:
-  - {fileID: 394701090626276662, guid: 03906d51919156448885fb87a75d5fba, type: 3}
+  - {fileID: 3780705916464986259, guid: 03906d51919156448885fb87a75d5fba, type: 3}
 --- !u!1102 &-3091475054480777387
 AnimatorState:
   serializedVersion: 6

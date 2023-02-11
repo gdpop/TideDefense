@@ -228,7 +228,7 @@ namespace TideDefense
 
         public virtual void StartFloating()
         {
-            SetInteractable();
+            SetNonInteractable();
         }
 
         public virtual void WashUpComplete()

@@ -53,13 +53,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6dffec2d9becea4691a314bbda55b24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sequencerChannel: {fileID: 11400000, guid: 84a5e188406f22746b4829fb72442ede, type: 2}
-  _type: 1
-  _minDelay: 1
-  _maxDelay: 1
+  _sequencerChannel: {fileID: 11400000, guid: ce43ed051f69a364b98a27d316977a7c, type: 2}
   _washedUpObjects:
-  - {fileID: 7372660196202927753, guid: 9ffd7e0fb144a5647a8a1af3a519602f, type: 3}
   - {fileID: 7904670032561524741, guid: 391f12e942f7525499a67b216e7207fb, type: 3}
+  - {fileID: 7372660196202927753, guid: 9ffd7e0fb144a5647a8a1af3a519602f, type: 3}
   - {fileID: 4255329130578358298, guid: 581d0d2e9888cfc45a1975894f492679, type: 3}
 --- !u!1102 &-548420013269486018
 AnimatorState:

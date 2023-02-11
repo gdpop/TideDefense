@@ -8,7 +8,7 @@ namespace TideDefense
 		
 	#region Fields 
 
-	public UnityEvent onInitialize = null;
+	public UnityEvent onWashUpComplete = null;
 
 	public GameObject _object = null;
 
@@ -28,7 +28,7 @@ namespace TideDefense
 	public virtual void Initialize()
 	{
 		_washedUpContainer.rotation = UtilsClass.RandomRotation(_minRotation, _maxRotation);
-		onInitialize.Invoke();
+		onWashUpComplete.Invoke();
 
 		_object.transform.SetParent(transform.parent);
 		Destroy(gameObject);

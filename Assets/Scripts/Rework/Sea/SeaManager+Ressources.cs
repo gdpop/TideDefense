@@ -22,8 +22,12 @@ namespace TideDefense
 
         [SerializeField]
         private Animator _sequencerController = null;
-        [SerializeField] private RuntimeAnimatorController _tutorialPlayable;
-        [SerializeField] private RuntimeAnimatorController _withoutTutorialPlayable;
+
+        [SerializeField]
+        private RuntimeAnimatorController _tutorialPlayable;
+
+        [SerializeField]
+        private RuntimeAnimatorController _withoutTutorialPlayable;
         private const string START_SEQUENCER = "StartSequencer";
 
         [Header("Floating Objects")]
@@ -83,9 +87,12 @@ namespace TideDefense
             get { return _washedUpContainer; }
         }
 
-        [SerializeField] private float _washedUpObjectBeachCoverageOffset = 2f;
-        [SerializeField] private float _washedUpObjectRandomRange = 1;
-            
+        [SerializeField]
+        private float _washedUpObjectBeachCoverageOffset = 2f;
+
+        [SerializeField]
+        private float _washedUpObjectRandomRange = 1;
+
         #endregion
 
 		#endregion
@@ -100,7 +107,7 @@ namespace TideDefense
 
             if (_sequencerChannel != null)
             {
-                _sequencerChannel.onCreateFloatingBeach += CallbackCreateBeachTool;
+                _sequencerChannel.onCreateFloatingObject += CreateFloatingObject;
                 _sequencerChannel.onCreateMessageBottle += CallbackCreateMessageBottle;
                 _sequencerChannel.onCreatedWashedUpObject += CallbackCreateWashedUpObject;
             }
@@ -124,7 +131,7 @@ namespace TideDefense
         {
             if (_sequencerChannel != null)
             {
-                _sequencerChannel.onCreateFloatingBeach -= CallbackCreateBeachTool;
+                _sequencerChannel.onCreateFloatingObject -= CreateFloatingObject;
                 _sequencerChannel.onCreateMessageBottle -= CallbackCreateMessageBottle;
                 _sequencerChannel.onCreatedWashedUpObject -= CallbackCreateWashedUpObject;
             }
@@ -145,7 +152,7 @@ namespace TideDefense
             _sequencerController.runtimeAnimatorController = _withoutTutorialPlayable;
             _sequencerController.SetTrigger(START_SEQUENCER);
         }
-            
+
         #endregion
 
 		#region Floating Objects
@@ -162,19 +169,25 @@ namespace TideDefense
             floating.Initialize(this, data);
         }
 
+        public void CreateFloatingObject(FloatingObject floatingObject)
+        {
+            Debug.Log(floatingObject.name);
+            FloatingObject floating = Instantiate(
+                floatingObject,
+                GetFloatingRandomPosition(),
+                Quaternion.identity,
+                _floatingContainer
+            );
+
+            _floatingObjects.Add(floating);
+            floating.Initialize(this);
+        }
+
         #region Floating Sequencer
 
         public void CallbackCreateMessageBottle(MessageBottleData data)
         {
             CreateMessageBottle(data);
-        }
-
-        public void CallbackCreateBeachTool(FloatingBeachTool floatingTool)
-        {
-            FloatingBeachTool newFloating = Instantiate(floatingTool, GetFloatingRandomPosition(), Quaternion.identity, _floatingContainer);
-
-            newFloating.Initialize(this);
-            _floatingObjects.Add(newFloating);
         }
 
         public void DestroyFloatingObject(FloatingObject floating)
@@ -300,7 +313,8 @@ namespace TideDefense
 
         #region Washed Up Objects
 
-        [SerializeField] private WashedUpObject testObject = null;
+        [SerializeField]
+        private WashedUpObject testObject = null;
 
         [ContextMenu("TestWashedUp")]
         public void TestWashedUp()
@@ -312,17 +326,26 @@ namespace TideDefense
         {
             Debug.Log(washedUpObject);
             Vector3 rndPosition = GetRandomWashedUpPosition();
-            WashedUpObject newWashedUp = Instantiate(washedUpObject, rndPosition, Quaternion.identity, _washedUpContainer);
+            WashedUpObject newWashedUp = Instantiate(
+                washedUpObject,
+                rndPosition,
+                Quaternion.identity,
+                _washedUpContainer
+            );
             newWashedUp.Initialize();
         }
 
         private Vector3 GetRandomWashedUpPosition()
         {
-            Vector3 randomPosition = GetPositionFromBeachCoverage(_tideBeachCoverage  + _washedUpObjectBeachCoverageOffset);
-            randomPosition.x = _beach.transform.position.x + UnityEngine.Random.Range(-_washedUpObjectRandomRange, _washedUpObjectRandomRange);
+            Vector3 randomPosition = GetPositionFromBeachCoverage(
+                _tideBeachCoverage + _washedUpObjectBeachCoverageOffset
+            );
+            randomPosition.x =
+                _beach.transform.position.x
+                + UnityEngine.Random.Range(-_washedUpObjectRandomRange, _washedUpObjectRandomRange);
             return randomPosition;
         }
-            
+
         #endregion
 
 		#endregion

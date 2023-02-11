@@ -13,6 +13,9 @@ namespace TideDefense
     {
 		#region Fields
 
+        public UnityEvent onStartFloating = null;
+        public UnityEvent onWashUpComplete = null;
+
         public TimeChannel _timeChannel = null;
         protected SeaManager _seaManager = null;
         private float _timeOffset = 0f;
@@ -26,7 +29,8 @@ namespace TideDefense
             set { _state = value; }
         }
 
-        [SerializeField] protected Transform _objectContainer = null;
+        [SerializeField]
+        protected Transform _objectContainer = null;
 
 		#region Apparition Movement
 
@@ -53,10 +57,12 @@ namespace TideDefense
 
         #region Random Rotation
 
-        [SerializeField] private Vector3 _minRotation = new Vector3(0, 0, 0);
+        [SerializeField]
+        private Vector3 _minRotation = new Vector3(0, 0, 0);
 
-        [SerializeField] private Vector3 _maxRotation = new Vector3(360, 360, 360);
-            
+        [SerializeField]
+        private Vector3 _maxRotation = new Vector3(360, 360, 360);
+
         #endregion
 
 		#endregion
@@ -99,12 +105,18 @@ namespace TideDefense
 
         public virtual void Initialize(SeaManager seaManager)
         {
-            _objectContainer.rotation = UtilsClass.RandomRotation(_minRotation, _maxRotation);
-            _startPosition = transform.localPosition;
+            // Behaviour
             _seaManager = seaManager;
-            _forwardSpeed = _seaManager.floatingSettings.forwardSpeed;
-            InitializeApparition();
             _state = FloatingObjectState.Floating;
+            onStartFloating.Invoke();
+
+            // Settings
+            _objectContainer.rotation = UtilsClass.RandomRotation(_minRotation, _maxRotation);
+
+            // Floating Movement
+            InitializeApparition();
+            _startPosition = transform.localPosition;
+            _forwardSpeed = _seaManager.floatingSettings.forwardSpeed;
 
             if (_timeChannel != null)
                 _timeChannel.onUpdateCurrentDeltaTime += CallbackUpdateCurrentDeltaTime;
@@ -114,12 +126,6 @@ namespace TideDefense
         {
             transform.localPosition =
                 _startPosition + (_apparitionPosition + _upAndDownPosition + _forwardPosition);
-        }
-
-        public void StopForwardMovement()
-        {
-            _forwardSpeed = 0f;
-            _state = FloatingObjectState.Waiting;
         }
 
         public void CallbackUpdateCurrentDeltaTime(float deltaTime)
@@ -164,6 +170,12 @@ namespace TideDefense
             _forwardPosition.z += deltaTime * _forwardSpeed;
         }
 
+        public void StopForwardMovement()
+        {
+            _forwardSpeed = 0f;
+            _state = FloatingObjectState.Waiting;
+        }
+
 		#endregion
 
 		#region Up & Down
@@ -194,7 +206,10 @@ namespace TideDefense
                 .OnComplete(WashUpComplete);
         }
 
-        protected virtual void WashUpComplete() { }
+        protected virtual void WashUpComplete()
+        {
+            onWashUpComplete.Invoke();
+        }
 
         #endregion
 
