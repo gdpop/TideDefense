@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using CodesmithWorkshop.Useful;
 using UnityEngine;
-using UnityEngine.Playables;
-using System;
+using System.Linq;
 
 namespace TideDefense
 {
@@ -28,14 +27,12 @@ namespace TideDefense
 
         [SerializeField]
         private RuntimeAnimatorController _withoutTutorialPlayable;
+
         private const string START_SEQUENCER = "StartSequencer";
 
         [Header("Floating Objects")]
         [SerializeField]
         private FloatingObject _floatingPrefab = null;
-
-        [SerializeField]
-        private FloatingMessageBottle _floatingMessageBottle = null;
 
         [SerializeField]
         private FloatingObjectSettings _floatingSettings = null;
@@ -61,21 +58,20 @@ namespace TideDefense
             get { return _currentTidePosition - _floatingSettings.washUpOffset; }
         }
 
-        [Header("Narration")]
-        [SerializeField]
-        private float _minDelayMessageNarration = 20;
-
-        [SerializeField]
-        private float _maxDelayMessageNarration = 40;
-        private float _currentDelayMessageNarration = 0;
-
-        [SerializeField]
-        private List<MessageBottleData> _narrationMessageBottleDatas =
-            new List<MessageBottleData>();
-
         private IEnumerator _spawnNarrationMessageCoroutine = null;
 
 		#endregion
+
+        #region Message Bottle
+
+        [SerializeField]
+        private MessageBottleSettings _messageBottleSettings = null;
+
+        private List<MessageBottleData> _narrationMessageBottleDatas = new List<MessageBottleData>();
+
+        private float _currentDelayMessageNarration = 0;
+
+        #endregion
 
         #region Washed Up Object
 
@@ -103,6 +99,8 @@ namespace TideDefense
 
         private void Start_Ressources()
         {
+            _narrationMessageBottleDatas = _messageBottleSettings.narrationMessageBottleDatas;
+
             _submergedOffset = new Vector3(0, _floatingSettings.submergedOffsetY, 0);
 
             if (_sequencerChannel != null)
@@ -160,7 +158,7 @@ namespace TideDefense
         public void CreateMessageBottle(MessageBottleData data)
         {
             FloatingMessageBottle floating = Instantiate(
-                _floatingMessageBottle,
+                _messageBottleSettings.PrefabFromType(data.type),
                 GetFloatingRandomPosition(),
                 Quaternion.identity,
                 _floatingContainer
@@ -171,7 +169,6 @@ namespace TideDefense
 
         public void CreateFloatingObject(FloatingObject floatingObject)
         {
-            Debug.Log(floatingObject.name);
             FloatingObject floating = Instantiate(
                 floatingObject,
                 GetFloatingRandomPosition(),
@@ -242,11 +239,13 @@ namespace TideDefense
             while (true)
             {
                 _currentDelayMessageNarration = UnityEngine.Random.Range(
-                    _minDelayMessageNarration,
-                    _maxDelayMessageNarration
+                    _messageBottleSettings.minDelayMessageNarration,
+                    _messageBottleSettings.maxDelayMessageNarration
                 );
 
-                yield return new WaitForSeconds(_currentDelayMessageNarration);
+                yield return new WaitForSeconds(
+                    _currentDelayMessageNarration
+                );
 
                 CreateMessageNarration();
 
@@ -256,9 +255,11 @@ namespace TideDefense
 
         private void CreateMessageNarration()
         {
-            MessageBottleData data = _narrationMessageBottleDatas.PickRandom<MessageBottleData>();
+            Debug.Log(_narrationMessageBottleDatas.Count);
+            MessageBottleData data = _messageBottleSettings.narrationMessageBottleDatas.PickRandom<MessageBottleData>();
             CreateMessageBottle(data);
             _narrationMessageBottleDatas.Remove(data);
+            Debug.Log("Après" + _narrationMessageBottleDatas.Count);
         }
 
         #endregion
@@ -324,7 +325,6 @@ namespace TideDefense
 
         private void CallbackCreateWashedUpObject(WashedUpObject washedUpObject)
         {
-            Debug.Log(washedUpObject);
             Vector3 rndPosition = GetRandomWashedUpPosition();
             WashedUpObject newWashedUp = Instantiate(
                 washedUpObject,

@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: 7c3280c998e0080409c9524331cf5025
+guid: aeed0265e3baeb64bbb8ebbffb72c41a
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - _timeChannel: {fileID: 11400000, guid: db4350a1275f45845a3c084178f9727b, type: 2}
-  - _bottle: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

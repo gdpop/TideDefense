@@ -1,6 +1,7 @@
 namespace TideDefense
 {
     using UnityEngine;
+    using System;
 
     [CreateAssetMenu(
         fileName = "MessageBottleData",

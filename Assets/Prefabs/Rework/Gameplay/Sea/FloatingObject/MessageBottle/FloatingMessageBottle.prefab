@@ -42,9 +42,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 8025213652222907779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c3280c998e0080409c9524331cf5025, type: 3}
+  m_Script: {fileID: 11500000, guid: aeed0265e3baeb64bbb8ebbffb72c41a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onStartFloating:
+    m_PersistentCalls:
+      m_Calls: []
+  onWashUpComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7118070107914144759}
+        m_TargetAssemblyTypeName: TideDefense.MessageBottle, Assembly-CSharp
+        m_MethodName: SetWashedUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _timeChannel: {fileID: 11400000, guid: db4350a1275f45845a3c084178f9727b, type: 2}
   _state: 0
   _objectContainer: {fileID: 7118070107914144758}
