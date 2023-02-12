@@ -72,6 +72,7 @@ namespace TideDefense
         private void RefreshLinkingRemparts()
         {
             SandTower sandTower;
+            Vector2Int direction;
             Vector2Int coords;
             GridCellModel cellModel;
             List<int> linkingRempartsIndex = new List<int>();
@@ -84,9 +85,10 @@ namespace TideDefense
                     // We check every neighboords to see if their is a fortification in place
                     for (int i = 0; i < TilesetUtils.neighboorsCoordinatesFour.Count; i++)
                     {
+                        direction = TilesetUtils.neighboorsCoordinatesFour[i];
                         coords =
                             sandTower.gridCellModel.coords
-                            + TilesetUtils.neighboorsCoordinatesFour[i];
+                            + direction;
 
                         if (!_gridManager.gridModel.CheckValidCoordinates(coords))
                             continue;
@@ -96,7 +98,7 @@ namespace TideDefense
                         );
 
                         //If there is one, we add the index of the direction into linkingRempartsIndex
-                        if (cellModel.building != null)
+                        if (cellModel.building != null && CheckLink(direction, cellModel.building.tilesetType))
                             linkingRempartsIndex.Add(i);
                     }
                     // We tellt he send tower which linkingRemparts to display
@@ -131,6 +133,14 @@ namespace TideDefense
             // Debug.Log(enumValue);
 
             return enumValue;
+        }
+
+        public bool CheckLink(Vector2Int direction, TilesetTypeFour tilesetType)
+        {
+            if(TilesetUtils.directionToLinkableTilesetTypes.ContainsKey(direction))
+                return TilesetUtils.directionToLinkableTilesetTypes[direction].Contains(tilesetType);
+            else
+                return false;
         }
 
 

@@ -6,7 +6,7 @@ public enum TilesetTypeFour
 	Single = 0,
 
 	Path_Right_Left = 5,
-	Path_Top_Bot = 10,
+	Path_Up_Down = 10,
 
 	Straight_Bot = 2,
 	Straight_Left = 1,

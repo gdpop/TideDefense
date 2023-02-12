@@ -5,12 +5,17 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4927884875710065535, guid: 5252d139796e590418669631d36795e6, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 8490822814134871468, guid: 9e9c8497f107aaa4783e4cf34b8227c8, type: 3}
+    - target: {fileID: 8378454282097510480, guid: 5252d139796e590418669631d36795e6, type: 3}
+      propertyPath: _tilesetType
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8378454282097510481, guid: 5252d139796e590418669631d36795e6, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -60,4 +65,7 @@ PrefabInstance:
       value: Rempart_Path_TB
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5252d139796e590418669631d36795e6, type: 3}

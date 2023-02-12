@@ -1,27 +1,34 @@
 namespace TideDefense
 {
-	using UnityEngine;
-	
-	public class Building : MonoBehaviour {
+    using UnityEngine;
 
-
+    public class Building : MonoBehaviour
+    {
 		#region Health
 
-		protected FortificationManager _fortificationManager = null;
+        protected FortificationManager _fortificationManager = null;
         public FortificationManager fortificationManager
         {
             get { return _fortificationManager; }
             set { _fortificationManager = value; }
         }
 
-		private GridCellModel _gridCellModel = null;
+        [SerializeField]
+        private TilesetTypeFour _tilesetType = TilesetTypeFour.Empty;
+        public TilesetTypeFour tilesetType
+        {
+            get { return _tilesetType; }
+            set { _tilesetType = value; }
+        }
+
+        private GridCellModel _gridCellModel = null;
         public GridCellModel gridCellModel
         {
             get { return _gridCellModel; }
             set { _gridCellModel = value; }
         }
 
-		protected float _health = 100f;
+        protected float _health = 100f;
         public float health
         {
             get { return _health; }
@@ -45,7 +52,7 @@ namespace TideDefense
             _fortificationManager = manager;
         }
 
-		public virtual void InflictDamage(float damageTaken)
+        public virtual void InflictDamage(float damageTaken)
         {
             _health -= damageTaken;
             // Debug.Log($"Building {name} : health : {_health}");
@@ -53,11 +60,11 @@ namespace TideDefense
             if (_health <= 0)
                 _fortificationManager.DestroyBuilding(this);
         }
-		
-		#endregion 
-		
-		#region Methods 
-		
+
 		#endregion
-	}
+
+		#region Methods
+
+		#endregion
+    }
 }
