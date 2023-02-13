@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7912887f8d116df4a8def1192f73fce7, type: 3}
   m_Name: ApplicationChannel
   m_EditorClassIdentifier: 
-  _playTutorial: 0
+  _playTutorial: 1

@@ -31,6 +31,10 @@ namespace TideDefense
 
         [SerializeField]
         protected Transform _objectContainer = null;
+        public Transform objectContainer
+        {
+            get { return _objectContainer; }
+        }
 
 		#region Apparition Movement
 

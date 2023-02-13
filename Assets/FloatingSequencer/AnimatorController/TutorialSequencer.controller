@@ -41,6 +41,21 @@ MonoBehaviour:
   _minDelay: 1
   _maxDelay: 1
   _delay: 0
+--- !u!114 &-7338419543394829390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88a5f50562e053e4198c3259bf199253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sequencerChannel: {fileID: 11400000, guid: ce43ed051f69a364b98a27d316977a7c, type: 2}
+  _floatingObjects: []
+  _data: {fileID: 11400000, guid: 1f8d28374fe11f34c9366ed26e4c3932, type: 2}
 --- !u!114 &-3984601599738475780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -268,9 +283,9 @@ AnimatorState:
   m_Transitions:
   - {fileID: -3456696443223750583}
   m_StateMachineBehaviours:
-  - {fileID: -3958437164365964667}
   - {fileID: 2738976943645520305}
   - {fileID: -171319799069552873}
+  - {fileID: -7338419543394829390}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

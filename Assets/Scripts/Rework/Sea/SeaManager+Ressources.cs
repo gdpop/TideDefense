@@ -67,7 +67,8 @@ namespace TideDefense
         [SerializeField]
         private MessageBottleSettings _messageBottleSettings = null;
 
-        private List<MessageBottleData> _narrationMessageBottleDatas = new List<MessageBottleData>();
+        private List<MessageBottleData> _narrationMessageBottleDatas =
+            new List<MessageBottleData>();
 
         private float _currentDelayMessageNarration = 0;
 
@@ -105,9 +106,13 @@ namespace TideDefense
 
             if (_sequencerChannel != null)
             {
-                _sequencerChannel.onCreateFloatingObject += CreateFloatingObject;
-                _sequencerChannel.onCreateMessageBottle += CallbackCreateMessageBottle;
+                _sequencerChannel.onCreateFloatingObject += CallbackCreateFloatingObject;
                 _sequencerChannel.onCreatedWashedUpObject += CallbackCreateWashedUpObject;
+
+                _sequencerChannel.onCreateFloatingMessageBottle +=
+                    CallbackCreateFloatingMessageBottle;
+                _sequencerChannel.onCreateWashedUpMessageBottle +=
+                    CallbackCreateWashedUpMessageBottle;
             }
 
             StartSpawningNarrationMessage();
@@ -129,8 +134,9 @@ namespace TideDefense
         {
             if (_sequencerChannel != null)
             {
-                _sequencerChannel.onCreateFloatingObject -= CreateFloatingObject;
-                _sequencerChannel.onCreateMessageBottle -= CallbackCreateMessageBottle;
+                _sequencerChannel.onCreateFloatingObject -= CallbackCreateFloatingObject;
+                _sequencerChannel.onCreateFloatingMessageBottle -=
+                    CallbackCreateFloatingMessageBottle;
                 _sequencerChannel.onCreatedWashedUpObject -= CallbackCreateWashedUpObject;
             }
         }
@@ -155,19 +161,7 @@ namespace TideDefense
 
 		#region Floating Objects
 
-        public void CreateMessageBottle(MessageBottleData data)
-        {
-            FloatingMessageBottle floating = Instantiate(
-                _messageBottleSettings.PrefabFromType(data.type),
-                GetFloatingRandomPosition(),
-                Quaternion.identity,
-                _floatingContainer
-            );
-            _floatingObjects.Add(floating);
-            floating.Initialize(this, data);
-        }
-
-        public void CreateFloatingObject(FloatingObject floatingObject)
+        public void CallbackCreateFloatingObject(FloatingObject floatingObject)
         {
             FloatingObject floating = Instantiate(
                 floatingObject,
@@ -181,11 +175,6 @@ namespace TideDefense
         }
 
         #region Floating Sequencer
-
-        public void CallbackCreateMessageBottle(MessageBottleData data)
-        {
-            CreateMessageBottle(data);
-        }
 
         public void DestroyFloatingObject(FloatingObject floating)
         {
@@ -213,6 +202,50 @@ namespace TideDefense
         }
 
         #endregion
+
+        #region Message Bottle
+
+        public void CreateFloatingMessageBottle(MessageBottleData data)
+        {
+            Debug.Log("On arrive ici ");
+            FloatingObject floating = Instantiate(
+                _floatingPrefab,
+                GetFloatingRandomPosition(),
+                Quaternion.identity,
+                _floatingContainer
+            );
+
+            MessageBottle message = Instantiate(
+                _messageBottleSettings.PrefabFromType(data.type),
+                Vector3.zero,
+                Quaternion.identity,
+                floating.objectContainer
+            );
+
+            message.Initialize(data);
+            message.transform.localPosition = Vector3.zero;
+
+            floating.onWashUpComplete.AddListener(message.SetWashedUp);
+            _floatingObjects.Add(floating);
+            floating.Initialize(this);
+        }
+
+        public void CallbackCreateFloatingMessageBottle(MessageBottleData data)
+        {
+            CreateFloatingMessageBottle(data);
+        }
+
+        public void CallbackCreateWashedUpMessageBottle(MessageBottleData data)
+        {
+            MessageBottle bottle = Instantiate(
+                _messageBottleSettings.PrefabFromType(data.type),
+                GetRandomWashedUpPosition(),
+                UtilsClass.RandomRotation(),
+                _washedUpContainer
+            );
+            bottle.Initialize(data);
+            bottle.SetWashedUp();
+        }
 
         #region Narration
 
@@ -243,9 +276,7 @@ namespace TideDefense
                     _messageBottleSettings.maxDelayMessageNarration
                 );
 
-                yield return new WaitForSeconds(
-                    _currentDelayMessageNarration
-                );
+                yield return new WaitForSeconds(_currentDelayMessageNarration);
 
                 CreateMessageNarration();
 
@@ -256,11 +287,14 @@ namespace TideDefense
         private void CreateMessageNarration()
         {
             Debug.Log(_narrationMessageBottleDatas.Count);
-            MessageBottleData data = _messageBottleSettings.narrationMessageBottleDatas.PickRandom<MessageBottleData>();
-            CreateMessageBottle(data);
+            MessageBottleData data =
+                _messageBottleSettings.narrationMessageBottleDatas.PickRandom<MessageBottleData>();
+            CreateFloatingMessageBottle(data);
             _narrationMessageBottleDatas.Remove(data);
             Debug.Log("Après" + _narrationMessageBottleDatas.Count);
         }
+
+        #endregion
 
         #endregion
 

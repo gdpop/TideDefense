@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82fbe03ffa7d6f844a76fbebe154b31a, type: 3}
   m_Name: MessageBottleSettings
   m_EditorClassIdentifier: 
-  narrationMessageBottle: {fileID: 4620355715574854328, guid: 48a57578e994446458b5f6487f516e5f, type: 3}
-  tutorialMessageBottle: {fileID: 5479139141377092655, guid: df8166958624487409759dea278654bf, type: 3}
+  narrationMessageBottle: {fileID: 2626312681398684011, guid: 7fdbf4c0b25289f4a9122331a0744ad1, type: 3}
+  tutorialMessageBottle: {fileID: 6646763240063093527, guid: ad3d8f0ae949ce44ba94756651b20ce9, type: 3}
   minDelayMessageNarration: 120
   maxDelayMessageNarration: 200
   narrationMessageBottleDatas:

@@ -11,10 +11,10 @@ namespace TideDefense
     public class MessageBottleSettings : ScriptableObject
     {
         [SerializeField]
-        private FloatingMessageBottle narrationMessageBottle = null;
+        private MessageBottle narrationMessageBottle = null;
 
         [SerializeField]
-        private FloatingMessageBottle tutorialMessageBottle = null;
+        private MessageBottle tutorialMessageBottle = null;
 
         [Header("Narration")]
         public float minDelayMessageNarration = 20;
@@ -23,7 +23,7 @@ namespace TideDefense
 
         public List<MessageBottleData> narrationMessageBottleDatas = new List<MessageBottleData>();
 
-        public FloatingMessageBottle PrefabFromType(MessageBottleType type)
+        public MessageBottle PrefabFromType(MessageBottleType type)
         {
             switch (type)
             {

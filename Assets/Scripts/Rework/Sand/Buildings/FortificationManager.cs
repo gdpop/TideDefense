@@ -3,7 +3,6 @@ namespace TideDefense
     using System;
     using PierreMizzi.TilesetUtils;
     using UnityEngine;
-    using ToolBox.Pools;
     using System.Collections.Generic;
     using VirtuoseReality.Extension.AudioManager;
 
@@ -13,7 +12,7 @@ namespace TideDefense
 
         [SerializeField]
         private GridManager _gridManager = null;
-      
+
         [SerializeField]
         private Transform _fortificationContainer = null;
 
@@ -86,9 +85,7 @@ namespace TideDefense
                     for (int i = 0; i < TilesetUtils.neighboorsCoordinatesFour.Count; i++)
                     {
                         direction = TilesetUtils.neighboorsCoordinatesFour[i];
-                        coords =
-                            sandTower.gridCellModel.coords
-                            + direction;
+                        coords = sandTower.gridCellModel.coords + direction;
 
                         if (!_gridManager.gridModel.CheckValidCoordinates(coords))
                             continue;
@@ -98,7 +95,10 @@ namespace TideDefense
                         );
 
                         //If there is one, we add the index of the direction into linkingRempartsIndex
-                        if (cellModel.building != null && CheckLink(direction, cellModel.building.tilesetType))
+                        if (
+                            cellModel.building != null
+                            && CheckLink(direction, cellModel.building.tilesetType)
+                        )
                             linkingRempartsIndex.Add(i);
                     }
                     // We tellt he send tower which linkingRemparts to display
@@ -137,12 +137,13 @@ namespace TideDefense
 
         public bool CheckLink(Vector2Int direction, TilesetTypeFour tilesetType)
         {
-            if(TilesetUtils.directionToLinkableTilesetTypes.ContainsKey(direction))
-                return TilesetUtils.directionToLinkableTilesetTypes[direction].Contains(tilesetType);
+            if (TilesetUtils.directionToLinkableTilesetTypes.ContainsKey(direction))
+                return TilesetUtils.directionToLinkableTilesetTypes[direction].Contains(
+                    tilesetType
+                );
             else
                 return false;
         }
-
 
 		#endregion
     }

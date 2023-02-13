@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fa7544b6ce48bf4caad6b706021ed05, type: 3}
+  m_Name: MB_T_01
+  m_EditorClassIdentifier: 
+  _type: 1
+  _text: 'Welcome to Tide Defense
+
+    Have you ever wondered what happens to message
+    bottles thrown into the sea ? They end up here, in this small, anonymous creek
+    long forgotten.
+
+    This Sand Castle has been built to store them, but tides
+    and waves may cause it''s doom.
+
+    Use what the Sea offers you to protect the
+    Sand Castle and it''s content. '

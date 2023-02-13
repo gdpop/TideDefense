@@ -5,7 +5,7 @@ namespace TideDefense
 
     public delegate void WashedUpObjectDelegate(WashedUpObject washedUpObject);
     public delegate void FloatingObjectDelegate(FloatingObject floatingObject);
-    public delegate void FloatingMessageBottleDelegate(MessageBottleData data);
+    public delegate void MessageBottleDelegate(MessageBottleData data);
 
     [CreateAssetMenu(
         fileName = "FloatingSequencerChannel",
@@ -16,7 +16,8 @@ namespace TideDefense
     {
         public WashedUpObjectDelegate onCreatedWashedUpObject;
         public FloatingObjectDelegate onCreateFloatingObject;
-        public FloatingMessageBottleDelegate onCreateMessageBottle;
+        public MessageBottleDelegate onCreateFloatingMessageBottle;
+        public MessageBottleDelegate onCreateWashedUpMessageBottle;
 
 
         private void OnEnable()
@@ -25,7 +26,8 @@ namespace TideDefense
             onCreatedWashedUpObject = (WashedUpObject washedUpObject)=>{};
             onCreateFloatingObject = (FloatingObject floatingObject) => { };
 
-            onCreateMessageBottle = (MessageBottleData data) => { };
+            onCreateFloatingMessageBottle = (MessageBottleData data) => { };
+            onCreateWashedUpMessageBottle = (MessageBottleData data) => { };
         }
 
     }

@@ -2,12 +2,13 @@ using UnityEngine;
 
 namespace TideDefense
 {
-    public class MessageBottleSequencerState : FloatingObjectSequencerState
+    public class FloatingMessageBottleSequencer : FloatingObjectSequencerState
     {
 		#region Fields
 
 		[Header("Message Bottle")]
         [SerializeField]
+        
         private MessageBottleData _data = null;
 
 		#endregion
@@ -22,7 +23,7 @@ namespace TideDefense
             int layerIndex
         )
         {
-            _sequencerChannel.onCreateMessageBottle.Invoke(_data);
+            _sequencerChannel.onCreateFloatingMessageBottle.Invoke(_data);
             base.OnStateEnter(animator, stateInfo, layerIndex);
         }
 
