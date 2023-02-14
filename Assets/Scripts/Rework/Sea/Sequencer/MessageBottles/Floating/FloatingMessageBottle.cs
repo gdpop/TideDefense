@@ -24,6 +24,7 @@ namespace TideDefense
         protected override void WashUpComplete()
         {
             _bottle.transform.SetParent(_seaManager.washedUpContainer);
+            onWashUpComplete.Invoke();
             _bottle.SetWashedUp();
             _seaManager.DestroyFloatingObject(this);
         }

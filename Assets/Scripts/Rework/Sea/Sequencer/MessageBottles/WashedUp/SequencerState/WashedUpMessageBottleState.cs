@@ -15,7 +15,7 @@ namespace TideDefense
             int layerIndex
         )
         {
-            _sequencerChannel.onCreateFloatingMessageBottle.Invoke(_data);
+            _sequencerChannel.onCreateWashedUpMessageBottle.Invoke(_data);
             base.OnStateEnter(animator, animatorStateInfo, layerIndex);
         }
     }

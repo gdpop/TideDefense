@@ -135,9 +135,11 @@ namespace TideDefense
             if (_sequencerChannel != null)
             {
                 _sequencerChannel.onCreateFloatingObject -= CallbackCreateFloatingObject;
+                _sequencerChannel.onCreatedWashedUpObject -= CallbackCreateWashedUpObject;
                 _sequencerChannel.onCreateFloatingMessageBottle -=
                     CallbackCreateFloatingMessageBottle;
-                _sequencerChannel.onCreatedWashedUpObject -= CallbackCreateWashedUpObject;
+                _sequencerChannel.onCreateWashedUpMessageBottle -=
+                    CallbackCreateWashedUpMessageBottle;
             }
         }
 
@@ -207,7 +209,6 @@ namespace TideDefense
 
         public void CreateFloatingMessageBottle(MessageBottleData data)
         {
-            Debug.Log("On arrive ici ");
             FloatingObject floating = Instantiate(
                 _floatingPrefab,
                 GetFloatingRandomPosition(),
@@ -341,6 +342,7 @@ namespace TideDefense
 
             return segment;
         }
+
 
         #endregion
 

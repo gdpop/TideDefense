@@ -63,7 +63,16 @@ namespace TideDefense
 
             if (_gameplayManager.gameplayChannel != null)
             {
+                // Subscribe
                 _gameplayManager.gameplayChannel.onClickGrid -= CallbackOnClickGrid;
+
+                _gameplayManager.gameplayChannel.OnStartHoldClickGrid -= CallbackStartHoldClickGrid;
+                _gameplayManager.gameplayChannel.OnProgressHoldClickGrid -=
+                    CallbackProgressHoldClickGrid;
+                _gameplayManager.gameplayChannel.OnCompleteHoldClickGrid -=
+                    CallbackCompleteHoldClickGrid;
+                _gameplayManager.gameplayChannel.OnCancelHoldClickGrid -=
+                    CallbackCancelHoldClickGrid;
             }
 
             _gameplayManager.gridManager.HideBuildableHints();
@@ -72,7 +81,9 @@ namespace TideDefense
         public virtual void CallbackOnClickGrid(GridCellModel gridCell, RaycastHit hit)
         {
             if (gridCell.isEmpty)
+            {
                 _gameplayManager.DropTool(gridCell);
+            }
         }
 
        #region HoldClick
@@ -92,6 +103,7 @@ namespace TideDefense
                 );
                 currentMould.Empty();
                 _gameplayManager.UIChannel.onHideControlHint.Invoke(ControlHintType.BuildSandTower);
+                _gameplayManager.gridManager.HideBuildableHints();
             }
         }
 

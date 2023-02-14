@@ -49,6 +49,7 @@ namespace TideDefense
 
         private void CallbackOnClick(RaycastHit hit)
         {
+            Debug.Log($"Click Message Bottle {_data.name}, {_data.text}");
             SoundManager.PlaySound(SoundDataIDStatic.OPEN_MESSAGE_BOTTLE);
             _UIChannel.onDisplayMessageBottle.Invoke(_data);
             Destroy(gameObject);

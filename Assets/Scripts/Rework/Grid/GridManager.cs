@@ -190,7 +190,7 @@ namespace TideDefense
 
         #endregion
 
-        #region Grid View
+        #region Diggable Hints
 
         public void InitializeGridView()
         {
@@ -214,59 +214,6 @@ namespace TideDefense
                     column.Add(visual);
                 }
                 _gridCellVisualHash.Add(column);
-            }
-        }
-        [Obsolete]
-        public void DisplayDiggableHints()
-        {
-            Vector2Int coords = new Vector2Int();
-
-            // We got throught the hash of GridCell of the model to find the GridCell containing the bucket
-            for (int x = 0; x < _xLength; x++)
-            {
-                for (int z = 0; z < _zLength; z++)
-                {
-                    coords = new Vector2Int(x, z);
-                    GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(
-                        coords
-                    );
-
-                    // We found the GridCell containing the bucket !
-                    if (
-                        cellModel.currentTool != null
-                        && cellModel.currentTool.toolType == BeachToolType.Bucket
-                    )
-                    {
-                        Vector2Int neighboorCoords = new Vector2Int();
-                        GridCellModel neighboorCellModel = null;
-                        GridCellVisual cellVisual = null;
-
-                        // We go through all 8 surrouding cells
-                        for (int i = 0; i < TilesetUtils.neighboorsCoordinatesEight.Count; i++)
-                        {
-                            neighboorCoords =
-                                cellModel.coords + TilesetUtils.neighboorsCoordinatesEight[i];
-                            // Check if the coords are not out of the grid AND check if the gridCell is empty
-                            if (gridModel.CheckValidCoordinates(neighboorCoords))
-                            {
-                                neighboorCellModel =
-                                    gridModel.GetCellFromCoordinates<GridCellModel>(
-                                        neighboorCoords
-                                    );
-
-                                // We check the cell is actually empty
-                                if (neighboorCellModel.isEmpty)
-                                {
-                                    cellVisual = _gridCellVisualHash[neighboorCoords.x][
-                                        neighboorCoords.y
-                                    ];
-                                    cellVisual.DisplayDiggableHints();
-                                }
-                            }
-                        }
-                        break;
-                    }
-                }
             }
         }
 
@@ -311,6 +258,10 @@ namespace TideDefense
                 }
             }
         }
+
+        #endregion
+        
+        #region Buildable Hints
 
         public void DisplayBuildableHints()
         {

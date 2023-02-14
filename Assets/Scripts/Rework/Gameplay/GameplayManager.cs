@@ -140,6 +140,9 @@ namespace TideDefense
             {
                 if (BitMaskHelper.CheckMask((int)toolType, (int)pair.Key))
                 {
+                    if(_currentStateBehaviour != null)
+                        _currentStateBehaviour.Deactivate();
+                        
                     _currentStateBehaviour = pair.Value;
                     _currentStateBehaviour.Activate();
                 }
@@ -194,8 +197,6 @@ namespace TideDefense
 
         public void GrabTool(BeachTool tool)
         {
-            SetCurrentTool(tool);
-
             _toolHolder.GrabTool(
                 tool,
                 () =>
@@ -210,6 +211,8 @@ namespace TideDefense
                 _availableTools.Add(tool);
             }else
                 PickToolOnGrid(tool, tool.currentGridCell);
+
+            SetCurrentTool(tool);
         }
 
         public void DropTool(GridCellModel gridCell)
@@ -227,6 +230,8 @@ namespace TideDefense
                     SetCurrentTool(_noneTool);
                 }
             );
+
+            ChangeStateBehaviour(BeachToolType.None);
         }
 
         #region Display Diggable

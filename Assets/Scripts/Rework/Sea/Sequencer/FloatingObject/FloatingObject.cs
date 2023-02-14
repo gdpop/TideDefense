@@ -212,7 +212,11 @@ namespace TideDefense
 
         protected virtual void WashUpComplete()
         {
+            foreach (Transform child in _objectContainer)
+                child.SetParent(_seaManager.washedUpContainer);
+                
             onWashUpComplete.Invoke();
+            _seaManager.DestroyFloatingObject(this);
         }
 
         #endregion

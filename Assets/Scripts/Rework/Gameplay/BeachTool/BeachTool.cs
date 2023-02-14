@@ -150,6 +150,7 @@ namespace TideDefense
         private void SetInteractable()
         {
             _holdClickable.isInteractable = true;
+            _hoverable.isInteractable = true;
 
             // Needed so it can hang from the BeahToolHolder
             _interactableBoxCollider.enabled = true;
@@ -159,6 +160,7 @@ namespace TideDefense
         private void SetNonInteractable()
         {
             _holdClickable.isInteractable = false;
+            _hoverable.isInteractable = false;
 
             // Needed so it can hang from the BeahToolHolder
             _interactableBoxCollider.enabled = false;

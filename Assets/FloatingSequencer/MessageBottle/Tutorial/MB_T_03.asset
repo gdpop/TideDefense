@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fa7544b6ce48bf4caad6b706021ed05, type: 3}
-  m_Name: MB_T_02
+  m_Name: MB_T_03
   m_EditorClassIdentifier: 
   _type: 1
-  _text: Click on a tool to pick it up. Click back on the ground to drop it.
+  _text: Grab the shovel and click next to the bucket to fill it with sand. Notice
+    the changing color of the sand based on it's wetness.
