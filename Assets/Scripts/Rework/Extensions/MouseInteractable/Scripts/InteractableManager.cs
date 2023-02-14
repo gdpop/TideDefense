@@ -18,6 +18,7 @@ namespace PierreMizzi.MouseInteractable
         #region Click
 
         private HoldClickSetting _leftHoldClickSetting = null;
+        private HoldClickSetting _rightHoldClickSetting = null;
 
         public HoldClickable _currentHoldClickable = null;
 
@@ -27,14 +28,16 @@ namespace PierreMizzi.MouseInteractable
         {
             _camera = Camera.main;
             _leftHoldClickSetting = new HoldClickSetting(MOUSE_LEFT, 0.5f, 1f);
-            Debug.Log(_interactableLayerMask.value);
+            _rightHoldClickSetting = new HoldClickSetting(MOUSE_RIGHT, 0.5f, 1f);
         }
 
         public InteractableManager(LayerMask interactableLayerMask)
         {
             _interactableLayerMask = interactableLayerMask;
+
             _camera = Camera.main;
             _leftHoldClickSetting = new HoldClickSetting(MOUSE_LEFT, 0.5f, 1f);
+            _rightHoldClickSetting = new HoldClickSetting(MOUSE_RIGHT, 0.5f, 1f);
         }
 
         public void Update()
@@ -50,15 +53,22 @@ namespace PierreMizzi.MouseInteractable
                     {
                         // Check if it's interactable
                         if (_currentHoldClickable.isInteractable)
+                        {
                             ManageHoldClickable(_currentHoldClickable, _leftHoldClickSetting, hit);
+                            ManageHoldClickable(_currentHoldClickable, _rightHoldClickSetting, hit);
+                        }
                         // If it's raycasted but no longer interactable, we leave it
                         else
+                        {
                             ManageLeavingHoldClickable(_leftHoldClickSetting, hit);
+                            ManageLeavingHoldClickable(_rightHoldClickSetting, hit);
+                        }
                     }
                     // If something different has been raycasted, we leave it
                     else if (CheckValidHoldClickable(_currentHoldClickable))
                     {
                         ManageLeavingHoldClickable(_leftHoldClickSetting, hit);
+                        ManageLeavingHoldClickable(_rightHoldClickSetting, hit);
                     }
                 }
 
@@ -82,6 +92,7 @@ namespace PierreMizzi.MouseInteractable
             else if (CheckValidHoldClickable(_currentHoldClickable))
             {
                 ManageLeavingHoldClickable(_leftHoldClickSetting, new RaycastHit());
+                ManageLeavingHoldClickable(_rightHoldClickSetting, new RaycastHit());
             }
         }
 
@@ -142,7 +153,7 @@ namespace PierreMizzi.MouseInteractable
                 setting.currentHoldTime = 0f;
                 setting.UnsetClickable();
             }
-            _currentHoldClickable = null;
+            // _currentHoldClickable = null;
         }
 
         private bool CheckValidHoldClickable(HoldClickable clickable)

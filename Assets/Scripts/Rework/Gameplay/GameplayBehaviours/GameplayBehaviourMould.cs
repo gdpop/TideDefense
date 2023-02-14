@@ -30,15 +30,8 @@ namespace TideDefense
                 _gameplayManager.gameplayChannel.onSetActiveSphericalCamera.Invoke(false);
 
                 // Subscribe
-                _gameplayManager.gameplayChannel.onClickGrid += CallbackOnClickGrid;
-
-                _gameplayManager.gameplayChannel.OnStartHoldClickGrid += CallbackStartHoldClickGrid;
-                _gameplayManager.gameplayChannel.OnProgressHoldClickGrid +=
-                    CallbackProgressHoldClickGrid;
-                _gameplayManager.gameplayChannel.OnCompleteHoldClickGrid +=
-                    CallbackCompleteHoldClickGrid;
-                _gameplayManager.gameplayChannel.OnCancelHoldClickGrid +=
-                    CallbackCancelHoldClickGrid;
+                _gameplayManager.gameplayChannel.onLeftClickGrid += CallbackLeftClickGrid;
+                _gameplayManager.gameplayChannel.onRightClickGrid += CallbackRightClickGrid;
             }
             if (_gameplayManager.UIChannel != null)
             {
@@ -64,21 +57,14 @@ namespace TideDefense
             if (_gameplayManager.gameplayChannel != null)
             {
                 // Subscribe
-                _gameplayManager.gameplayChannel.onClickGrid -= CallbackOnClickGrid;
-
-                _gameplayManager.gameplayChannel.OnStartHoldClickGrid -= CallbackStartHoldClickGrid;
-                _gameplayManager.gameplayChannel.OnProgressHoldClickGrid -=
-                    CallbackProgressHoldClickGrid;
-                _gameplayManager.gameplayChannel.OnCompleteHoldClickGrid -=
-                    CallbackCompleteHoldClickGrid;
-                _gameplayManager.gameplayChannel.OnCancelHoldClickGrid -=
-                    CallbackCancelHoldClickGrid;
+                _gameplayManager.gameplayChannel.onLeftClickGrid -= CallbackLeftClickGrid;
+                _gameplayManager.gameplayChannel.onRightClickGrid -= CallbackRightClickGrid;
             }
 
             _gameplayManager.gridManager.HideBuildableHints();
         }
 
-        public virtual void CallbackOnClickGrid(GridCellModel gridCell, RaycastHit hit)
+        public virtual void CallbackLeftClickGrid(GridCellModel gridCell, RaycastHit hit)
         {
             if (gridCell.isEmpty)
             {
@@ -86,19 +72,13 @@ namespace TideDefense
             }
         }
 
-       #region HoldClick
-
-        private void CallbackStartHoldClickGrid() { }
-
-        private void CallbackProgressHoldClickGrid(float value) { }
-
-        private void CallbackCompleteHoldClickGrid(GridCellModel clickedCell)
+        public virtual void CallbackRightClickGrid(GridCellModel gridCell, RaycastHit hit)
         {
             if (currentMould.isFull)
             {
                 _gameplayManager.fortificationManager.CastMould(
                     currentMould,
-                    clickedCell,
+                    gridCell,
                     currentMould.content.sandConcentration
                 );
                 currentMould.Empty();
@@ -106,9 +86,5 @@ namespace TideDefense
                 _gameplayManager.gridManager.HideBuildableHints();
             }
         }
-
-        private void CallbackCancelHoldClickGrid() { }
-
-       #endregion
     }
 }

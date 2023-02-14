@@ -23,7 +23,7 @@ namespace TideDefense
             _gameplayManager.gameplayChannel.onSetActiveSphericalCamera.Invoke(true);
 
             if (_gameplayManager.gameplayChannel != null)
-                _gameplayManager.gameplayChannel.onClickGrid += CallbackOnClickGrid;
+                _gameplayManager.gameplayChannel.onLeftClickGrid += CallbackOnClickGrid;
         }
 
         private void CallbackOnClickGrid(GridCellModel gridCell, RaycastHit hit)
@@ -34,7 +34,7 @@ namespace TideDefense
         public override void Deactivate()
         {
             if (_gameplayManager.gameplayChannel != null)
-                _gameplayManager.gameplayChannel.onClickGrid -= CallbackOnClickGrid;
+                _gameplayManager.gameplayChannel.onLeftClickGrid -= CallbackOnClickGrid;
         }
     }
 }

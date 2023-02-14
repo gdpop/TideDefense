@@ -20,13 +20,9 @@ namespace TideDefense
         public BoolDelegate onSetActiveSphericalCamera = null;
 
         // Click Grid
-        public ClickGrid onClickGrid = null;
+        public ClickGrid onLeftClickGrid = null;
+        public ClickGrid onRightClickGrid = null;
 
-        // Hold Click Grid
-        public Action OnStartHoldClickGrid;
-        public FloatEvent OnProgressHoldClickGrid;
-        public GridCellModelDelegate OnCompleteHoldClickGrid;
-        public Action OnCancelHoldClickGrid;
 
         // Hover Grid
         // public ClickGrid onHoverGrid = null;
@@ -45,12 +41,10 @@ namespace TideDefense
             onClickTool = (BeachTool tool) => { };
             onHoverTool = (BeachTool tool) => { };
 
-            onClickGrid = (GridCellModel clickedCell, RaycastHit hit) => { };
+            onLeftClickGrid = (GridCellModel clickedCell, RaycastHit hit) => { };
+            onRightClickGrid = (GridCellModel clickedCell, RaycastHit hit) => { };
 
-            OnStartHoldClickGrid = () => { };
-            OnProgressHoldClickGrid = (float value) => { };
-            OnCompleteHoldClickGrid = (GridCellModel clickedCell) => { };
-            OnCancelHoldClickGrid = () => { };
+
 
             onHoverBeach = (RaycastHit hit) => { };
 

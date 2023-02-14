@@ -28,7 +28,7 @@ namespace TideDefense
                 _gameplayManager.gameplayChannel.onSetActiveSphericalCamera.Invoke(false);
 
                 // Subscribe
-                _gameplayManager.gameplayChannel.onClickGrid += CallbackOnClickGrid;
+                _gameplayManager.gameplayChannel.onLeftClickGrid += CallbackOnClickGrid;
             }
 
             _gameplayManager.UIChannel.onDisplayControlHint.Invoke(ControlHintType.DropTool);
@@ -46,7 +46,7 @@ namespace TideDefense
 
             if (_gameplayManager.gameplayChannel != null)
             {
-                _gameplayManager.gameplayChannel.onClickGrid -= CallbackOnClickGrid;
+                _gameplayManager.gameplayChannel.onLeftClickGrid -= CallbackOnClickGrid;
             }
         }
 

@@ -1,7 +1,7 @@
 namespace TideDefense
 {
-	using System;
-	using System.Collections.Generic;
+    using System;
+    using System.Collections.Generic;
     using PierreMizzi.TilesetUtils;
     using UnityEngine;
 
@@ -135,39 +135,15 @@ namespace TideDefense
             GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(
                 visual.coords
             );
-            _gameplayChannel.onClickGrid.Invoke(cellModel, hit);
+            _gameplayChannel.onLeftClickGrid.Invoke(cellModel, hit);
         }
 
-        #endregion
-
-        #region HoldClickable Callback
-
-        public void CallbackStartHoldClickLeft(GridCellVisual visual)
-        {
-            if (_gameplayChannel != null)
-                _gameplayChannel.OnStartHoldClickGrid.Invoke();
-        }
-
-        public void CallbackProgressHoldClickLeft(GridCellVisual visual, float progress)
-        {
-            if (_gameplayChannel != null)
-                _gameplayChannel.OnProgressHoldClickGrid.Invoke(progress);
-        }
-
-        public void CallbackCompleteHoldClickLeft(GridCellVisual visual)
+        public void CallbackRightClick(GridCellVisual visual, RaycastHit hit)
         {
             GridCellModel cellModel = gridModel.GetCellFromCoordinates<GridCellModel>(
                 visual.coords
             );
-
-            if (_gameplayChannel != null)
-                _gameplayChannel.OnCompleteHoldClickGrid.Invoke(cellModel);
-        }
-
-        public void CallbackCancelHoldClickLeft(GridCellVisual visual)
-        {
-            if (_gameplayChannel != null)
-                _gameplayChannel.OnCancelHoldClickGrid.Invoke();
+            _gameplayChannel.onRightClickGrid.Invoke(cellModel, hit);
         }
 
         #endregion
@@ -236,7 +212,9 @@ namespace TideDefense
                     // We can do something if the cell is empty
                     if (cellModel.isEmpty)
                     {
-                        setting = _diggableHintSettings.Find(item => item.toolType == cellModelTool.currentTool.toolType);
+                        setting = _diggableHintSettings.Find(
+                            item => item.toolType == cellModelTool.currentTool.toolType
+                        );
 
                         cellVisual = _gridCellVisualHash[pair.Key.x][pair.Key.y];
                         cellVisual.DisplayDiggableHints(setting);
@@ -260,7 +238,7 @@ namespace TideDefense
         }
 
         #endregion
-        
+
         #region Buildable Hints
 
         public void DisplayBuildableHints()

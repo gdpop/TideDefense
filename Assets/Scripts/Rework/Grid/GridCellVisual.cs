@@ -104,6 +104,11 @@ namespace TideDefense
             _gridManager.CallbackLeftClick(this, hit);
         }
 
+        public void CallbackOnRightClick(RaycastHit hit)
+        {
+            _gridManager.CallbackRightClick(this, hit);
+        }
+
         #endregion
 
         #region HoldClickable
@@ -119,34 +124,14 @@ namespace TideDefense
 
                 holdLeftClickBehaviour.onClick += CallbackOnLeftClick;
 
-                holdLeftClickBehaviour.onStartHoldClick += CallbackStartHoldClickLeft;
-                holdLeftClickBehaviour.onProgressHoldClick += CallbackProgressHoldClickLeft;
-                holdLeftClickBehaviour.onCompleteHoldClick += CallbackCompleteHoldClickLeft;
-                holdLeftClickBehaviour.onCancelHoldClick += CallbackCancelHoldClickLeft;
+                HoldClickBehaviour holdRightClickBehaviour = _holdClickable.GetBehaviour(
+                    InteractableManager.MOUSE_RIGHT
+                );
+
+                holdRightClickBehaviour.onClick += CallbackOnRightClick;
             }
         }
 
-
-
-        public void CallbackStartHoldClickLeft()
-        {
-            _gridManager.CallbackStartHoldClickLeft(this);
-        }
-
-        public void CallbackProgressHoldClickLeft(float progress)
-        {
-            _gridManager.CallbackProgressHoldClickLeft(this, progress);
-        }
-
-        public void CallbackCompleteHoldClickLeft()
-        {
-            _gridManager.CallbackCompleteHoldClickLeft(this);
-        }
-
-        public void CallbackCancelHoldClickLeft()
-        {
-            _gridManager.CallbackCancelHoldClickLeft(this);
-        }
 
         #endregion
 
