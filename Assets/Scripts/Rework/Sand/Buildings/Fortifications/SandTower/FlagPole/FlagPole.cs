@@ -20,11 +20,11 @@ namespace TideDefense
         [SerializeField]
         private MaterialPropertyBlockModifier _materialPropertyBlock = null;
 
-        private const string QUALITY_PROPERTY = "_Quality";
+        private const string QUALITY_COLOR_PROPERTY = "_QualityColor";
 
-        public void RefreshFlagColor(float quality)
+        public void RefreshFlagColor(Color qualityColor)
         {
-            _materialPropertyBlock.SetFloat(QUALITY_PROPERTY, quality);
+            _materialPropertyBlock.SetProperty(QUALITY_COLOR_PROPERTY, qualityColor);
         }
 
 		#endregion

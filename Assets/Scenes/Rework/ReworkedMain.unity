@@ -2125,6 +2125,7 @@ MonoBehaviour:
   _gridManager: {fileID: 477670696}
   _fortificationContainer: {fileID: 1739542203}
   _sandCastle: {fileID: 1815023534}
+  _sandTowerTest: {fileID: 3919147030147858698, guid: 2b78dbc0df6d7fc4b907bffb5e182493, type: 3}
 --- !u!1 &1619937136
 GameObject:
   m_ObjectHideFlags: 0

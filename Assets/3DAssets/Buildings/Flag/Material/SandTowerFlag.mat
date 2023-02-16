@@ -63,4 +63,5 @@ Material:
     m_Colors:
     - _HightHealthColor: {r: 1, g: 0.696732, b: 0.2704402, a: 1}
     - _LowHealthColor: {r: 0.38364774, g: 0.69532585, b: 1, a: 1}
+    - _QualityColor: {r: 0.4117647, g: 0.4117647, b: 0.4117647, a: 1}
   m_BuildTextureStacks: []

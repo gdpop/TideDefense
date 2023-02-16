@@ -1,7 +1,6 @@
 namespace TideDefense
 {
     using System.Collections.Generic;
-    using PierreMizzi.TilesetUtils;
     using UnityEngine;
     using VirtuoseReality.Rendering;
 
@@ -37,16 +36,6 @@ namespace TideDefense
             _flagPole.Initialize(this);
         }
 
-        public override void Initialize(
-            FortificationManager manager,
-            GridCellModel cellModel,
-            float sandConcentration
-        )
-        {
-            base.Initialize(manager, cellModel, sandConcentration);
-            // ManageLinkingRemparts(-1);
-        }
-
         #region Health
 
         public override void InflictDamage(float damageTaken)
@@ -60,9 +49,10 @@ namespace TideDefense
             base.SetHealthFromSandConcentration(sandConcentration);
 
             foreach (MaterialPropertyBlockModifier modifier in _materialPropertyBlocks)
-                modifier.SetFloat(MouldTool.SAND_CONCENTRATION_PROPERTY, sandConcentration);
+                modifier.SetProperty(MouldTool.SAND_CONCENTRATION_PROPERTY, sandConcentration);
 
-            _flagPole.RefreshFlagColor(_quality);
+            Debug.Log($"{sandConcentration},{_quality}");
+            _flagPole.RefreshFlagColor(_fortificationChannel.GetColorFromQuality(_quality));
         }
 
         #endregion

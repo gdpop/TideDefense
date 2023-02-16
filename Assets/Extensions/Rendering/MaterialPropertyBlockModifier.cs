@@ -108,12 +108,25 @@ namespace VirtuoseReality.Rendering
             this.renderer.SetPropertyBlock(s_materialPropertyBlock, m_materialIndex);
         }
 
-        public void SetFloat(string propertyName, float value)
+        public void SetProperty(string propertyName, float value)
         {
             Property property = m_propreties.Find(item => item.name == propertyName);
+            if(property != null)
+            {
+                property.floatValue = value;
+                ApplyProperties();
+            }
+        }
 
-            property.floatValue = value;
-            ApplyProperties();
+        
+        public void SetProperty(string propertyName, Color value)
+        {
+            Property property = m_propreties.Find(item => item.name == propertyName);
+            if(property != null)
+            {
+                property.colorValue = value;
+                ApplyProperties();
+            }
         }
     }
 }

@@ -36,6 +36,7 @@ namespace TideDefense
         protected MaterialPropertyBlockModifier _contentVisualPropertyBlock = null;
 
         public static string SAND_CONCENTRATION_PROPERTY = "_SandConcentration";
+        public static string QUALITY_COLOR_PROPERTY = "_QualityColor";
 
         public bool isFull
         {
@@ -116,7 +117,7 @@ namespace TideDefense
                     _bucketContentVisual.localPosition = GetContentVisualLocalPosFromQuantity(
                         value
                     );
-                    _contentVisualPropertyBlock.SetFloat(
+                    _contentVisualPropertyBlock.SetProperty(
                         SAND_CONCENTRATION_PROPERTY,
                         _content.sandConcentration
                     );

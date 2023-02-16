@@ -13,7 +13,7 @@ namespace TideDefense
         [SerializeField]
         protected MaterialPropertyBlockModifier _materialPropertyBlock = null;
 
-        protected float _quality = 0f;
+        protected int _quality = -1;
 
 		#endregion
 
@@ -35,18 +35,21 @@ namespace TideDefense
         {
             if (_materialPropertyBlock != null)
             {
-                _materialPropertyBlock.SetFloat(
+                _materialPropertyBlock.SetProperty(
                     MouldTool.SAND_CONCENTRATION_PROPERTY,
                     sandConcentration
                 );
             }
 
-            _quality = _fortificationChannel.qualityFromSandConcentration.Evaluate(
+            _quality = Mathf.FloorToInt(_fortificationChannel.qualityFromSandConcentration.Evaluate(
                 sandConcentration
-            );
+            ));
+            
 
-            _health = _maxHealth + (_quality * _fortificationChannel.qualityCoef);
+            _health = _maxHealth + ((float)_quality * _fortificationChannel.qualityCoef);
+
         }
+
 		#endregion
 
 		#endregion
