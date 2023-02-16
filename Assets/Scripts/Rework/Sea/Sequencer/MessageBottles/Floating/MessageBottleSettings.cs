@@ -23,6 +23,9 @@ namespace TideDefense
 
         public List<MessageBottleData> narrationMessageBottleDatas = new List<MessageBottleData>();
 
+        [Header("Opening")]
+        public int openingDuration = 60;
+
         public MessageBottle PrefabFromType(MessageBottleType type)
         {
             switch (type)
