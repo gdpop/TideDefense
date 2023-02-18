@@ -74,17 +74,23 @@ namespace TideDefense
 
         public virtual void CallbackRightClickGrid(GridCellModel gridCell, RaycastHit hit)
         {
+            // if (currentMould.isFull)
+            // {
+            //     _gameplayManager.fortificationManager.CastMould(
+            //         currentMould,
+            //         gridCell,
+            //         currentMould.content.sandConcentration
+            //     );
+            //     currentMould.Empty();
+            //     _gameplayManager.UIChannel.onHideControlHint.Invoke(ControlHintType.BuildSandTower);
+            //     _gameplayManager.gridManager.HideBuildableHints();
+            // }
+
             if (currentMould.isFull)
             {
-                _gameplayManager.fortificationManager.CastMould(
-                    currentMould,
-                    gridCell,
-                    currentMould.content.sandConcentration
-                );
-                currentMould.Empty();
-                _gameplayManager.UIChannel.onHideControlHint.Invoke(ControlHintType.BuildSandTower);
-                _gameplayManager.gridManager.HideBuildableHints();
+                
             }
+
         }
     }
 }

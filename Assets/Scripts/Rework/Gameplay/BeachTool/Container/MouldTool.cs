@@ -12,6 +12,9 @@ namespace TideDefense
 
 		#region Content
 
+        [SerializeField]
+        private FortificationChannel _fortificationChannel = null;
+
         [Header("Content Visual")]
         [SerializeField]
         protected Transform _bucketContentVisual = null;
@@ -54,6 +57,20 @@ namespace TideDefense
 
         #endregion
 
+        #region Animation
+
+        [SerializeField] protected Animator _animator = null;
+
+        protected const string TRIGGER_CAST = "Cast";
+            
+        #endregion
+
+        #region Casting Animation
+
+        
+            
+        #endregion
+
 		#endregion
 
 		#region Methods
@@ -67,10 +84,6 @@ namespace TideDefense
         }
 
         #endregion
-
-		#region Mono Behaviour
-
-		#endregion
 
 		#region Content
 
