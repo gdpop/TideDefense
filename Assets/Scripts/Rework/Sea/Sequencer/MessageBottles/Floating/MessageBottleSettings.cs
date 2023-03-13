@@ -38,5 +38,20 @@ namespace TideDefense
                     return null;
             }
         }
+
+        [Header("Bottle Translator")]
+        [SerializeField]
+        private int _translationDuration = 120;
+        public int translationDuration
+        {
+            get { return _translationDuration; }
+        }
+
+        [SerializeField]
+        private AnimationCurve _penaltyDurationDealtByWave = null;
+        public AnimationCurve penaltyDurationDealtByWave
+        {
+            get { return _penaltyDurationDealtByWave; }
+        }
     }
 }

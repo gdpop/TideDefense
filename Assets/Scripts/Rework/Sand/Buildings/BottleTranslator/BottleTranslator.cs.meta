@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: d919c58d3b04b43428b89676ed8a9ec3
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _messageBottleSettings: {fileID: 11400000, guid: c1278c6ef7b68f8459907f73b18d854c, type: 2}
+  - _clickable: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
