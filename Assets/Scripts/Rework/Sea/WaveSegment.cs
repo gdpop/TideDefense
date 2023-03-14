@@ -164,25 +164,13 @@ namespace TideDefense
             );
 
             // Inflict damage to the rempart
-            ManageDamagedBuilding(collidedBuilding, elapsedPercentage);
+            collidedBuilding.ManageWaveCollision(elapsedPercentage);
         }
 
         private IEnumerator WaitForRewind()
         {
             yield return _crashingTween.WaitForRewind();
             ReturnedToSea();
-        }
-
-        private void ManageDamagedBuilding(Building building, float elapsedPercentage)
-        {
-            float normalizedElapsedPercentage = elapsedPercentage * 2f;
-            float amountDamageDealt = _seaChannel.damageDealtByWave.Evaluate(
-                normalizedElapsedPercentage
-            );
-
-            // Debug.Log($"normalized : {normalizedElapsedPercentage} | damageDealt : {amountDamageDealt}");
-
-            building.InflictDamage(amountDamageDealt);
         }
 
         #endregion

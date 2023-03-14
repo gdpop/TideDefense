@@ -41,13 +41,11 @@ namespace TideDefense
                 );
             }
 
-            _quality = Mathf.FloorToInt(_fortificationChannel.qualityFromSandConcentration.Evaluate(
-                sandConcentration
-            ));
-            
+            _quality = Mathf.FloorToInt(
+                _fortificationChannel.qualityFromSandConcentration.Evaluate(sandConcentration)
+            );
 
             _health = _maxHealth + ((float)_quality * _fortificationChannel.qualityCoef);
-
         }
 
 		#endregion

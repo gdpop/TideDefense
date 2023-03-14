@@ -20,8 +20,12 @@ namespace TideDefense
             get { return _qualityFromSandConcentration; }
         }
 
-        [SerializeField] private List<Color> _colorFromQuality = new List<Color>();
-        public List<Color> colorFromQuality { get { return _colorFromQuality; } }
+        [SerializeField]
+        private List<Color> _colorFromQuality = new List<Color>();
+        public List<Color> colorFromQuality
+        {
+            get { return _colorFromQuality; }
+        }
 
         [SerializeField]
         private float _qualityCoef = 100f;
@@ -32,13 +36,24 @@ namespace TideDefense
 
         public Color GetColorFromQuality(int quality)
         {
-            if(0 < quality && quality < _colorFromQuality.Count)
+            if (0 < quality && quality < _colorFromQuality.Count)
             {
                 return _colorFromQuality[quality];
             }
             else
                 return Color.black;
         }
+
+        #region Wave Dame
+
+        [SerializeField]
+        private AnimationCurve _damageDealtByWave;
+        public AnimationCurve damageDealtByWave
+        {
+            get { return _damageDealtByWave; }
+        }
+
+        #endregion
 
 		#endregion
     }

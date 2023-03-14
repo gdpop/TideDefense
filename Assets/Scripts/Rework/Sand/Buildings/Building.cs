@@ -52,10 +52,21 @@ namespace TideDefense
             _fortificationManager = manager;
         }
 
+        public virtual void ManageWaveCollision(float waveStrength)
+        {
+            Debug.Log($"waveElapsed : {waveStrength}");
+            float damageTaken = _fortificationManager.damageDealtByWave.Evaluate(waveStrength);
+            InflictDamage(damageTaken);
+        }
+
+        public virtual bool CheckHealthAfterCollision(float waveStrength)
+        {
+            return false;
+        }
+
         public virtual void InflictDamage(float damageTaken)
         {
             _health -= damageTaken;
-            // Debug.Log($"Building {name} : health : {_health}");
 
             if (_health <= 0)
                 _fortificationManager.DestroyBuilding(this);

@@ -21,6 +21,17 @@ namespace TideDefense
         [SerializeField]
         private SandCastle _sandCastle = null;
 
+        #region Wave Dame
+
+        [SerializeField]
+        private AnimationCurve _damageDealtByWave;
+        public AnimationCurve damageDealtByWave
+        {
+            get { return _damageDealtByWave; }
+        }
+
+        #endregion
+
 		#endregion
 
 		#region Methods
@@ -29,12 +40,8 @@ namespace TideDefense
 
         private void Start()
         {
-            _sandCastle.Initialize(this);
-
             // Sand Castle
             _gridManager.SetSandCastleOnGrid(_sandCastle);
-
-            TestIntialize();
         }
 
         #endregion
@@ -145,39 +152,6 @@ namespace TideDefense
                 );
             else
                 return false;
-        }
-
-        [SerializeField] private SandTower _sandTowerTest = null;
-
-
-        public void TestIntialize()
-        {
-            Fortification fortification = UnityEngine.Object.Instantiate(
-                _sandTowerTest,
-                new Vector3(1, 0, 0),
-                Quaternion.identity,
-                _fortificationContainer
-            );
-
-            fortification.Initialize(this, new GridCellModel(), 0.5f);
-
-            fortification = UnityEngine.Object.Instantiate(
-                _sandTowerTest,
-                new Vector3(3, 0, 0),
-                Quaternion.identity,
-                _fortificationContainer
-            );
-
-            fortification.Initialize(this, new GridCellModel(), 0.6f);
-
-            fortification = UnityEngine.Object.Instantiate(
-                _sandTowerTest,
-                new Vector3(5, 0, 0),
-                Quaternion.identity,
-                _fortificationContainer
-            );
-
-            fortification.Initialize(this, new GridCellModel(), 0.65f);
         }
 
 		#endregion

@@ -41,7 +41,7 @@ namespace TideDefense
         [SerializeField]
         private Transform _highAnchor = null;
 
-        public void RefreshFlagHeight(float damageTaken)
+        public void RefreshFlagHeight()
         {
             // float fromNormalized = (_rempart.health - damageTaken) / _rempart.maxHealth;
             Vector3 from = _flag.localPosition;

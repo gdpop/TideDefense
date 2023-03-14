@@ -37,3 +37,29 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e8e178b11f475b641b6a19ce404afd85, type: 2}
   - {fileID: 11400000, guid: 3cea648ea33678b4b9b33155dcbc2341, type: 2}
   - {fileID: 11400000, guid: 92900b1c50c53bf46990e1107934d7be, type: 2}
+  openingDuration: 60
+  _translationDuration: 5
+  _penaltyDurationDealtByWave:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 10
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

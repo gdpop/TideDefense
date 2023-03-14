@@ -40,8 +40,8 @@ namespace TideDefense
 
         public override void InflictDamage(float damageTaken)
         {
-            _flagPole.RefreshFlagHeight(damageTaken);
             base.InflictDamage(damageTaken);
+            _flagPole.RefreshFlagHeight();
         }
 
         protected override void SetHealthFromSandConcentration(float sandConcentration)
@@ -51,7 +51,7 @@ namespace TideDefense
             foreach (MaterialPropertyBlockModifier modifier in _materialPropertyBlocks)
                 modifier.SetProperty(MouldTool.SAND_CONCENTRATION_PROPERTY, sandConcentration);
 
-            Debug.Log($"{sandConcentration},{_quality}");
+            // Debug.Log($"{sandConcentration},{_quality}");
             _flagPole.RefreshFlagColor(_fortificationChannel.GetColorFromQuality(_quality));
         }
 
