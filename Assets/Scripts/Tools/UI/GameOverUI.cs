@@ -28,6 +28,14 @@ public class GameOverUI : UIPanel
         DeactivatePanel();
         MainMenu.StartGame();
     }
+    // The GameOver object is serialized inactive and UIPanel.ActivatePanel() only fades,
+    // so enable the object and its controls here.
+    public override void ActivatePanel()
+    {
+        gameObject.SetActive(true);
+        base.ActivatePanel();
+        ActivateControl();
+    }
     public override Tweener ShowAnimation()
     {
 
@@ -36,7 +44,17 @@ public class GameOverUI : UIPanel
     }
     void SetUI()
     {
+        int score = Mathf.FloorToInt(GameManager.Instance.TimeSurvived);
+        int bestScore = PlayerPrefs.GetInt("BestScore", 0);
+        if (score > bestScore)
+        {
+            bestScore = score;
+            PlayerPrefs.SetInt("BestScore", bestScore);
+            PlayerPrefs.Save();
+        }
 
+        Score.text = score.ToString();
+        BestScore.text = bestScore.ToString();
     }
     void FreeReviveAnimation()
     {
