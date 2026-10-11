@@ -88,11 +88,6 @@ public class Castle : Tile
         if (lifeInput <= 0)
             throw new System.Exception("Invalid input value");
 
-        int newLifePoints = _lifePoint += lifeInput;
-
-        if (newLifePoints >= maxLifePoints)
-            return;
-
         UpdateCastle(lifeInput);
     }
     public void RemoveLifePoint(int lifeInput)
@@ -100,20 +95,15 @@ public class Castle : Tile
         if (lifeInput <= 0)
             throw new System.Exception("Invalid input value");
 
-        int newLifePoints = _lifePoint += lifeInput;
+        UpdateCastle(-lifeInput);
 
-        if (newLifePoints <= 0)
-        {
+        if (_lifePoint <= 0)
             GameManager.Instance.EndGame();
-            return;
-        }
-
-        UpdateCastle(lifeInput);
     }
 
-    private void UpdateCastle(int lifeInput)
+    private void UpdateCastle(int lifeDelta)
     {
-        _lifePoint += lifeInput;
+        _lifePoint = Mathf.Clamp(_lifePoint + lifeDelta, 0, maxLifePoints);
     }
 
     private void AddUpgradePoint(int value) {
