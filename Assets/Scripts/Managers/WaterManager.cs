@@ -54,6 +54,11 @@ public class WaterManager : MonoBehaviour
         StartCoroutine("Tic");
     }
 
+    public void StopWater()
+    {
+        StopCoroutine("Tic");
+    }
+
 
     private void AscendingTide(bool ascend)
     {

@@ -2198,3 +2198,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec79db20312166c41a8d5e9434190265, type: 3}
+--- !u!1001 &1957315206
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8887664555563349839, guid: d78cc4d49c3294d91a84c40f39c0a4c6, type: 3}
+      propertyPath: m_Name
+      value: LaserSharpUICanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887664555563349843, guid: d78cc4d49c3294d91a84c40f39c0a4c6, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887664556922886350, guid: d78cc4d49c3294d91a84c40f39c0a4c6, type: 3}
+      propertyPath: isActiveOnStart
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887664556922886351, guid: d78cc4d49c3294d91a84c40f39c0a4c6, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887664556922886351, guid: d78cc4d49c3294d91a84c40f39c0a4c6, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8887664556922886351, guid: d78cc4d49c3294d91a84c40f39c0a4c6, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d78cc4d49c3294d91a84c40f39c0a4c6, type: 3}
